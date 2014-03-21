@@ -294,529 +294,534 @@ namespace TMS_Data
         static const int JOB__VMIP = 27;
 
         /**
+         * \brief Constant for JOB__RELATEDSTEPS feature
+         */
+        static const int JOB__RELATEDSTEPS = 28;
+
+        /**
          * \brief Constant for LISTJOBS__NBJOBS feature
          */
-        static const int LISTJOBS__NBJOBS = 28;
+        static const int LISTJOBS__NBJOBS = 29;
 
         /**
          * \brief Constant for LISTJOBS__NBRUNNINGJOBS feature
          */
-        static const int LISTJOBS__NBRUNNINGJOBS = 29;
+        static const int LISTJOBS__NBRUNNINGJOBS = 30;
 
         /**
          * \brief Constant for LISTJOBS__NBWAITINGJOBS feature
          */
-        static const int LISTJOBS__NBWAITINGJOBS = 30;
+        static const int LISTJOBS__NBWAITINGJOBS = 31;
 
         /**
          * \brief Constant for LISTJOBS__JOBS feature
          */
-        static const int LISTJOBS__JOBS = 31;
+        static const int LISTJOBS__JOBS = 32;
 
         /**
          * \brief Constant for SUBMITOPTIONS__NAME feature
          */
-        static const int SUBMITOPTIONS__NAME = 32;
+        static const int SUBMITOPTIONS__NAME = 33;
 
         /**
          * \brief Constant for SUBMITOPTIONS__QUEUE feature
          */
-        static const int SUBMITOPTIONS__QUEUE = 33;
+        static const int SUBMITOPTIONS__QUEUE = 34;
 
         /**
          * \brief Constant for SUBMITOPTIONS__WALLTIME feature
          */
-        static const int SUBMITOPTIONS__WALLTIME = 34;
+        static const int SUBMITOPTIONS__WALLTIME = 35;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MEMORY feature
          */
-        static const int SUBMITOPTIONS__MEMORY = 35;
+        static const int SUBMITOPTIONS__MEMORY = 36;
 
         /**
          * \brief Constant for SUBMITOPTIONS__NBCPU feature
          */
-        static const int SUBMITOPTIONS__NBCPU = 36;
+        static const int SUBMITOPTIONS__NBCPU = 37;
 
         /**
          * \brief Constant for SUBMITOPTIONS__NBNODESANDCPUPERNODE feature
          */
-        static const int SUBMITOPTIONS__NBNODESANDCPUPERNODE = 37;
+        static const int SUBMITOPTIONS__NBNODESANDCPUPERNODE = 38;
 
         /**
          * \brief Constant for SUBMITOPTIONS__OUTPUTPATH feature
          */
-        static const int SUBMITOPTIONS__OUTPUTPATH = 38;
+        static const int SUBMITOPTIONS__OUTPUTPATH = 39;
 
         /**
          * \brief Constant for SUBMITOPTIONS__ERRORPATH feature
          */
-        static const int SUBMITOPTIONS__ERRORPATH = 39;
+        static const int SUBMITOPTIONS__ERRORPATH = 40;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MAILNOTIFICATION feature
          */
-        static const int SUBMITOPTIONS__MAILNOTIFICATION = 40;
+        static const int SUBMITOPTIONS__MAILNOTIFICATION = 41;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MAILNOTIFYUSER feature
          */
-        static const int SUBMITOPTIONS__MAILNOTIFYUSER = 41;
+        static const int SUBMITOPTIONS__MAILNOTIFYUSER = 42;
 
         /**
          * \brief Constant for SUBMITOPTIONS__GROUP feature
          */
-        static const int SUBMITOPTIONS__GROUP = 42;
+        static const int SUBMITOPTIONS__GROUP = 43;
 
         /**
          * \brief Constant for SUBMITOPTIONS__WORKINGDIR feature
          */
-        static const int SUBMITOPTIONS__WORKINGDIR = 43;
+        static const int SUBMITOPTIONS__WORKINGDIR = 44;
 
         /**
          * \brief Constant for SUBMITOPTIONS__CPUTIME feature
          */
-        static const int SUBMITOPTIONS__CPUTIME = 44;
+        static const int SUBMITOPTIONS__CPUTIME = 45;
 
         /**
          * \brief Constant for SUBMITOPTIONS__SELECTQUEUEAUTOM feature
          */
-        static const int SUBMITOPTIONS__SELECTQUEUEAUTOM = 45;
+        static const int SUBMITOPTIONS__SELECTQUEUEAUTOM = 46;
 
         /**
          * \brief Constant for SUBMITOPTIONS__CRITERION feature
          */
-        static const int SUBMITOPTIONS__CRITERION = 46;
+        static const int SUBMITOPTIONS__CRITERION = 47;
 
         /**
          * \brief Constant for SUBMITOPTIONS__FILEPARAMS feature
          */
-        static const int SUBMITOPTIONS__FILEPARAMS = 47;
+        static const int SUBMITOPTIONS__FILEPARAMS = 48;
 
         /**
          * \brief Constant for SUBMITOPTIONS__TEXTPARAMS feature
          */
-        static const int SUBMITOPTIONS__TEXTPARAMS = 48;
+        static const int SUBMITOPTIONS__TEXTPARAMS = 49;
 
         /**
          * \brief Constant for SUBMITOPTIONS__WORKID feature
          */
-        static const int SUBMITOPTIONS__WORKID = 49;
+        static const int SUBMITOPTIONS__WORKID = 50;
 
         /**
          * \brief Constant for SUBMITOPTIONS__SPECIFICPARAMS feature
          */
-        static const int SUBMITOPTIONS__SPECIFICPARAMS = 50;
+        static const int SUBMITOPTIONS__SPECIFICPARAMS = 51;
 
         /**
          * \brief Constant for SUBMITOPTIONS__POSIX feature
          */
-        static const int SUBMITOPTIONS__POSIX = 51;
+        static const int SUBMITOPTIONS__POSIX = 52;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MACHINE feature
          */
-        static const int SUBMITOPTIONS__MACHINE = 52;
+        static const int SUBMITOPTIONS__MACHINE = 53;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__JOBID feature
          */
-        static const int LISTJOBSOPTIONS__JOBID = 53;
+        static const int LISTJOBSOPTIONS__JOBID = 54;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__NBCPU feature
          */
-        static const int LISTJOBSOPTIONS__NBCPU = 54;
+        static const int LISTJOBSOPTIONS__NBCPU = 55;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__FROMSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 55;
+        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 56;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__TOSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 56;
+        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 57;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__OWNER feature
          */
-        static const int LISTJOBSOPTIONS__OWNER = 57;
+        static const int LISTJOBSOPTIONS__OWNER = 58;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__STATUS feature
          */
-        static const int LISTJOBSOPTIONS__STATUS = 58;
+        static const int LISTJOBSOPTIONS__STATUS = 59;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__PRIORITY feature
          */
-        static const int LISTJOBSOPTIONS__PRIORITY = 59;
+        static const int LISTJOBSOPTIONS__PRIORITY = 60;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__QUEUE feature
          */
-        static const int LISTJOBSOPTIONS__QUEUE = 60;
+        static const int LISTJOBSOPTIONS__QUEUE = 61;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__MULTIPLESTATUS feature
          */
-        static const int LISTJOBSOPTIONS__MULTIPLESTATUS = 61;
+        static const int LISTJOBSOPTIONS__MULTIPLESTATUS = 62;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__BATCHJOB feature
          */
-        static const int LISTJOBSOPTIONS__BATCHJOB = 62;
+        static const int LISTJOBSOPTIONS__BATCHJOB = 63;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__WORKID feature
          */
-        static const int LISTJOBSOPTIONS__WORKID = 63;
+        static const int LISTJOBSOPTIONS__WORKID = 64;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__LISTALL feature
          */
-        static const int LISTJOBSOPTIONS__LISTALL = 64;
+        static const int LISTJOBSOPTIONS__LISTALL = 65;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__MACHINEID feature
          */
-        static const int LISTJOBSOPTIONS__MACHINEID = 65;
+        static const int LISTJOBSOPTIONS__MACHINEID = 66;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBID feature
          */
-        static const int PROGRESSOPTIONS__JOBID = 66;
+        static const int PROGRESSOPTIONS__JOBID = 67;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__USER feature
          */
-        static const int PROGRESSOPTIONS__USER = 67;
+        static const int PROGRESSOPTIONS__USER = 68;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__MACHINEID feature
          */
-        static const int PROGRESSOPTIONS__MACHINEID = 68;
+        static const int PROGRESSOPTIONS__MACHINEID = 69;
 
         /**
          * \brief Constant for LISTPROGRESSION__NBJOBS feature
          */
-        static const int LISTPROGRESSION__NBJOBS = 69;
+        static const int LISTPROGRESSION__NBJOBS = 70;
 
         /**
          * \brief Constant for LISTPROGRESSION__PROGRESS feature
          */
-        static const int LISTPROGRESSION__PROGRESS = 70;
+        static const int LISTPROGRESSION__PROGRESS = 71;
 
         /**
          * \brief Constant for PROGRESSION__JOBID feature
          */
-        static const int PROGRESSION__JOBID = 71;
+        static const int PROGRESSION__JOBID = 72;
 
         /**
          * \brief Constant for PROGRESSION__JOBNAME feature
          */
-        static const int PROGRESSION__JOBNAME = 72;
+        static const int PROGRESSION__JOBNAME = 73;
 
         /**
          * \brief Constant for PROGRESSION__WALLTIME feature
          */
-        static const int PROGRESSION__WALLTIME = 73;
+        static const int PROGRESSION__WALLTIME = 74;
 
         /**
          * \brief Constant for PROGRESSION__STARTTIME feature
          */
-        static const int PROGRESSION__STARTTIME = 74;
+        static const int PROGRESSION__STARTTIME = 75;
 
         /**
          * \brief Constant for PROGRESSION__ENDTIME feature
          */
-        static const int PROGRESSION__ENDTIME = 75;
+        static const int PROGRESSION__ENDTIME = 76;
 
         /**
          * \brief Constant for PROGRESSION__PERCENT feature
          */
-        static const int PROGRESSION__PERCENT = 76;
+        static const int PROGRESSION__PERCENT = 77;
 
         /**
          * \brief Constant for PROGRESSION__STATUS feature
          */
-        static const int PROGRESSION__STATUS = 77;
+        static const int PROGRESSION__STATUS = 78;
 
         /**
          * \brief Constant for LISTQUEUES__NBQUEUES feature
          */
-        static const int LISTQUEUES__NBQUEUES = 78;
+        static const int LISTQUEUES__NBQUEUES = 79;
 
         /**
          * \brief Constant for LISTQUEUES__QUEUES feature
          */
-        static const int LISTQUEUES__QUEUES = 79;
+        static const int LISTQUEUES__QUEUES = 80;
 
         /**
          * \brief Constant for QUEUE__NAME feature
          */
-        static const int QUEUE__NAME = 80;
+        static const int QUEUE__NAME = 81;
 
         /**
          * \brief Constant for QUEUE__MAXJOBCPU feature
          */
-        static const int QUEUE__MAXJOBCPU = 81;
+        static const int QUEUE__MAXJOBCPU = 82;
 
         /**
          * \brief Constant for QUEUE__MAXPROCCPU feature
          */
-        static const int QUEUE__MAXPROCCPU = 82;
+        static const int QUEUE__MAXPROCCPU = 83;
 
         /**
          * \brief Constant for QUEUE__MEMORY feature
          */
-        static const int QUEUE__MEMORY = 83;
+        static const int QUEUE__MEMORY = 84;
 
         /**
          * \brief Constant for QUEUE__WALLTIME feature
          */
-        static const int QUEUE__WALLTIME = 84;
+        static const int QUEUE__WALLTIME = 85;
 
         /**
          * \brief Constant for QUEUE__NODE feature
          */
-        static const int QUEUE__NODE = 85;
+        static const int QUEUE__NODE = 86;
 
         /**
          * \brief Constant for QUEUE__NBRUNNINGJOBS feature
          */
-        static const int QUEUE__NBRUNNINGJOBS = 86;
+        static const int QUEUE__NBRUNNINGJOBS = 87;
 
         /**
          * \brief Constant for QUEUE__NBJOBSINQUEUE feature
          */
-        static const int QUEUE__NBJOBSINQUEUE = 87;
+        static const int QUEUE__NBJOBSINQUEUE = 88;
 
         /**
          * \brief Constant for QUEUE__STATE feature
          */
-        static const int QUEUE__STATE = 88;
+        static const int QUEUE__STATE = 89;
 
         /**
          * \brief Constant for QUEUE__PRIORITY feature
          */
-        static const int QUEUE__PRIORITY = 89;
+        static const int QUEUE__PRIORITY = 90;
 
         /**
          * \brief Constant for QUEUE__DESCRIPTION feature
          */
-        static const int QUEUE__DESCRIPTION = 90;
+        static const int QUEUE__DESCRIPTION = 91;
 
         /**
          * \brief Constant for JOBRESULT__JOBID feature
          */
-        static const int JOBRESULT__JOBID = 91;
+        static const int JOBRESULT__JOBID = 92;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTPATH feature
          */
-        static const int JOBRESULT__OUTPUTPATH = 92;
+        static const int JOBRESULT__OUTPUTPATH = 93;
 
         /**
          * \brief Constant for JOBRESULT__ERRORPATH feature
          */
-        static const int JOBRESULT__ERRORPATH = 93;
+        static const int JOBRESULT__ERRORPATH = 94;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTDIR feature
          */
-        static const int JOBRESULT__OUTPUTDIR = 94;
+        static const int JOBRESULT__OUTPUTDIR = 95;
 
         /**
          * \brief Constant for LISTJOBRESULTS__NBJOBS feature
          */
-        static const int LISTJOBRESULTS__NBJOBS = 95;
+        static const int LISTJOBRESULTS__NBJOBS = 96;
 
         /**
          * \brief Constant for LISTJOBRESULTS__RESULTS feature
          */
-        static const int LISTJOBRESULTS__RESULTS = 96;
+        static const int LISTJOBRESULTS__RESULTS = 97;
 
         /**
          * \brief Constant for LOADCRITERION__LOADTYPE feature
          */
-        static const int LOADCRITERION__LOADTYPE = 97;
+        static const int LOADCRITERION__LOADTYPE = 98;
 
         /**
          * \brief Constant for WORK__SESSIONID feature
          */
-        static const int WORK__SESSIONID = 98;
+        static const int WORK__SESSIONID = 99;
 
         /**
          * \brief Constant for WORK__APPLICATIONID feature
          */
-        static const int WORK__APPLICATIONID = 99;
+        static const int WORK__APPLICATIONID = 100;
 
         /**
          * \brief Constant for WORK__SUBJECT feature
          */
-        static const int WORK__SUBJECT = 100;
+        static const int WORK__SUBJECT = 101;
 
         /**
          * \brief Constant for WORK__PRIORITY feature
          */
-        static const int WORK__PRIORITY = 101;
+        static const int WORK__PRIORITY = 102;
 
         /**
          * \brief Constant for WORK__STATUS feature
          */
-        static const int WORK__STATUS = 102;
+        static const int WORK__STATUS = 103;
 
         /**
          * \brief Constant for WORK__ENDDATE feature
          */
-        static const int WORK__ENDDATE = 103;
+        static const int WORK__ENDDATE = 104;
 
         /**
          * \brief Constant for WORK__OWNER feature
          */
-        static const int WORK__OWNER = 104;
+        static const int WORK__OWNER = 105;
 
         /**
          * \brief Constant for WORK__ESTIMATEDHOUR feature
          */
-        static const int WORK__ESTIMATEDHOUR = 105;
+        static const int WORK__ESTIMATEDHOUR = 106;
 
         /**
          * \brief Constant for WORK__DONERATIO feature
          */
-        static const int WORK__DONERATIO = 106;
+        static const int WORK__DONERATIO = 107;
 
         /**
          * \brief Constant for WORK__DESCRIPTION feature
          */
-        static const int WORK__DESCRIPTION = 107;
+        static const int WORK__DESCRIPTION = 108;
 
         /**
          * \brief Constant for WORK__DATECREATED feature
          */
-        static const int WORK__DATECREATED = 108;
+        static const int WORK__DATECREATED = 109;
 
         /**
          * \brief Constant for WORK__DATEENDED feature
          */
-        static const int WORK__DATEENDED = 109;
+        static const int WORK__DATEENDED = 110;
 
         /**
          * \brief Constant for WORK__DATESTARTED feature
          */
-        static const int WORK__DATESTARTED = 110;
+        static const int WORK__DATESTARTED = 111;
 
         /**
          * \brief Constant for WORK__LASTUPDATED feature
          */
-        static const int WORK__LASTUPDATED = 111;
+        static const int WORK__LASTUPDATED = 112;
 
         /**
          * \brief Constant for WORK__WORKID feature
          */
-        static const int WORK__WORKID = 112;
+        static const int WORK__WORKID = 113;
 
         /**
          * \brief Constant for WORK__PROJECTID feature
          */
-        static const int WORK__PROJECTID = 113;
+        static const int WORK__PROJECTID = 114;
 
         /**
          * \brief Constant for WORK__SUBMITDATE feature
          */
-        static const int WORK__SUBMITDATE = 114;
+        static const int WORK__SUBMITDATE = 115;
 
         /**
          * \brief Constant for WORK__MACHINEID feature
          */
-        static const int WORK__MACHINEID = 115;
+        static const int WORK__MACHINEID = 116;
 
         /**
          * \brief Constant for WORK__NBCPU feature
          */
-        static const int WORK__NBCPU = 116;
+        static const int WORK__NBCPU = 117;
 
         /**
          * \brief Constant for WORK__DUEDATE feature
          */
-        static const int WORK__DUEDATE = 117;
+        static const int WORK__DUEDATE = 118;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__APPLICATIONID feature
          */
-        static const int ADDWORKOPTIONS__APPLICATIONID = 118;
+        static const int ADDWORKOPTIONS__APPLICATIONID = 119;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__SUBJECT feature
          */
-        static const int ADDWORKOPTIONS__SUBJECT = 119;
+        static const int ADDWORKOPTIONS__SUBJECT = 120;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__PRIORITY feature
          */
-        static const int ADDWORKOPTIONS__PRIORITY = 120;
+        static const int ADDWORKOPTIONS__PRIORITY = 121;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__OWNER feature
          */
-        static const int ADDWORKOPTIONS__OWNER = 121;
+        static const int ADDWORKOPTIONS__OWNER = 122;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__ESTIMATEDHOUR feature
          */
-        static const int ADDWORKOPTIONS__ESTIMATEDHOUR = 122;
+        static const int ADDWORKOPTIONS__ESTIMATEDHOUR = 123;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__DESCRIPTION feature
          */
-        static const int ADDWORKOPTIONS__DESCRIPTION = 123;
+        static const int ADDWORKOPTIONS__DESCRIPTION = 124;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__PROJECTID feature
          */
-        static const int ADDWORKOPTIONS__PROJECTID = 124;
+        static const int ADDWORKOPTIONS__PROJECTID = 125;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__MACHINEID feature
          */
-        static const int ADDWORKOPTIONS__MACHINEID = 125;
+        static const int ADDWORKOPTIONS__MACHINEID = 126;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__NBCPU feature
          */
-        static const int ADDWORKOPTIONS__NBCPU = 126;
+        static const int ADDWORKOPTIONS__NBCPU = 127;
 
         /**
          * \brief Constant for CANCELOPTIONS__MACHINEID feature
          */
-        static const int CANCELOPTIONS__MACHINEID = 127;
+        static const int CANCELOPTIONS__MACHINEID = 128;
 
         /**
          * \brief Constant for CANCELOPTIONS__USER feature
          */
-        static const int CANCELOPTIONS__USER = 128;
+        static const int CANCELOPTIONS__USER = 129;
 
         /**
          * \brief Constant for CANCELOPTIONS__JOBID feature
          */
-        static const int CANCELOPTIONS__JOBID = 129;
+        static const int CANCELOPTIONS__JOBID = 130;
 
         /**
          * \brief Constant for JOBOUTPUTOPTIONS__MACHINEID feature
          */
-        static const int JOBOUTPUTOPTIONS__MACHINEID = 130;
+        static const int JOBOUTPUTOPTIONS__MACHINEID = 131;
 
         /**
          * \brief Constant for JOBOUTPUTOPTIONS__OUTPUTDIR feature
          */
-        static const int JOBOUTPUTOPTIONS__OUTPUTDIR = 131;
+        static const int JOBOUTPUTOPTIONS__OUTPUTDIR = 132;
 
         /**
          * \brief Constant for JOBOUTPUTOPTIONS__DAYS feature
          */
-        static const int JOBOUTPUTOPTIONS__DAYS = 132;
+        static const int JOBOUTPUTOPTIONS__DAYS = 133;
 
         // EClassifiers methods
 
@@ -1115,6 +1120,12 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getJob__vmIp();
+
+        /**
+         * \brief Returns the reflective object for feature relatedSteps of class Job
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getJob__relatedSteps();
 
         /**
          * \brief Returns the reflective object for feature nbJobs of class ListJobs
@@ -2009,6 +2020,11 @@ namespace TMS_Data
          * \brief The instance for the feature vmIp of class Job
          */
         ::ecore::EAttribute_ptr m_Job__vmIp;
+
+        /**
+         * \brief The instance for the feature relatedSteps of class Job
+         */
+        ::ecore::EAttribute_ptr m_Job__relatedSteps;
 
         /**
          * \brief The instance for the feature nbJobs of class ListJobs

@@ -378,6 +378,17 @@ namespace TMS_Data
          **/
         void setVmIp(::ecore::EString const& _vmIp);
 
+        /**
+         * \brief To get the relatedSteps
+         * \return The relatedSteps attribute value
+         **/
+        ::ecore::EString const& getRelatedSteps() const;
+        /**
+         * \brief To set the relatedSteps
+         * \param _relatedSteps The relatedSteps value
+         **/
+        void setRelatedSteps(::ecore::EString const& _relatedSteps);
+
         // References
 
 
@@ -458,6 +469,8 @@ namespace TMS_Data
         ::ecore::EString m_vmId;
 
         ::ecore::EString m_vmIp;
+
+        ::ecore::EString m_relatedSteps;
 
         // References
 

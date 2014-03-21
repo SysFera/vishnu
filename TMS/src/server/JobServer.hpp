@@ -185,7 +185,7 @@ private:
    * @param job The concerned job
    */
   void
-  finalizeExecution(int action, TMS_Data::Job& job);
+  updateJobRecordIntoDatabase(int action, TMS_Data::Job& job);
 
   /**
    * \brief Function to set the Working Directory

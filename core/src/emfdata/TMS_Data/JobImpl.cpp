@@ -218,6 +218,12 @@ void Job::_initialize()
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_vmIp);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::JOB__RELATEDSTEPS:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_relatedSteps);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -395,6 +401,12 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_vmIp);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::JOB__RELATEDSTEPS:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_relatedSteps);
+    }
+        return;
 
     }
     throw "Error";
@@ -475,6 +487,9 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return m_vmId != "";
     case ::TMS_Data::TMS_DataPackage::JOB__VMIP:
         return m_vmIp != "";
+    case ::TMS_Data::TMS_DataPackage::JOB__RELATEDSTEPS:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_relatedSteps);
 
     }
     throw "Error";

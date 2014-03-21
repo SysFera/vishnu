@@ -298,6 +298,7 @@ JsonObject::serialize(const TMS_Data::Job& job, int flag) {
   jsonProfile.setProperty("submitmachineid", job.getSubmitMachineId());
   jsonProfile.setProperty("submitmachinename", job.getSubmitMachineName());
   jsonProfile.setProperty("jobid", job.getJobId());
+  jsonProfile.setProperty("workid", job.getWorkId());
   jsonProfile.setProperty("jobname", job.getJobName());
   jsonProfile.setProperty("batchjobid", job.getBatchJobId());
   jsonProfile.setProperty("jobpath", job.getJobPath());

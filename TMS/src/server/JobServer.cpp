@@ -129,7 +129,7 @@ JobServer::submitJob(std::string& scriptContent,
     jobInfo.setOutputPath("");
     jobInfo.setOutputDir("");
     jobInfo.setStatus(vishnu::STATE_FAILED);
-    finalizeExecution(SubmitBatchAction, jobInfo);
+    updateJobRecordIntoDatabase(SubmitBatchAction, jobInfo);
     throw;
   }
   return JOB_ID;
@@ -175,7 +175,7 @@ JobServer::handleSshBatchExec(int action,
     break;
   case CancelBatchAction:
     sshJobExec.sshexec("CANCEL", "", jobSteps);
-    finalizeExecution(action, *(jobSteps.get()->getJobs().get(0)));
+    updateJobRecordIntoDatabase(action, *(jobSteps.get()->getJobs().get(0)));
     break;
   default:
     throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");
@@ -233,7 +233,7 @@ JobServer::handleNativeBatchExec(int action,
           handlerExitCode = batchServer->cancel(baseJobInfo.getBatchJobId());
         }
         baseJobInfo.setStatus(vishnu::STATE_CANCELLED);
-        finalizeExecution(action, baseJobInfo);
+        updateJobRecordIntoDatabase(action, baseJobInfo);
         break;
       default:
         throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
@@ -495,69 +495,16 @@ int JobServer::cancelJob(JsonObject* options)
   * \return The job data structure
 */
 TMS_Data::Job
-JobServer::getJobInfo(const std::string& jobId) {
-
-
+JobServer::getJobInfo(const std::string& jobId)
+{
   TMS_Data::ListJobs jobSteps;
+
   getJobStepInfo(jobId, jobSteps);
 
-  if (jobSteps.getJobs().size() != 1) {
-    throw TMSVishnuException(ERRCODE_INVALID_PARAM);
+  if (jobSteps.getJobs().size() == 0) {
+    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
   return *(jobSteps.getJobs().get(0));
-
-  //  std::string sqlQuery = boost::str(boost::format(
-  //                                      "SELECT vsessionid, submitMachineId, submitMachineName, jobId, "
-  //                                      "   jobName, jobPath, workId, outputPath, errorPath, outputDir, "
-  //                                      "   jobPrio, nbCpus, jobWorkingDir, job.status, submitDate, endDate, "
-  //                                      "   owner, jobQueue,wallClockLimit, groupName, jobDescription, memLimit,"
-  //                                      "   nbNodes, nbNodesAndCpuPerNode, batchJobId, userid, vmId, vmIp"
-  //                                      " FROM job, vsession, users "
-  //                                      " WHERE vsession.numsessionid=job.vsession_numsessionid "
-  //                                      "   AND vsession.users_numuserid=users.numuserid"
-  //                                      "   AND job.jobId='%1%';"
-  //                                      ) % mdatabaseInstance->escapeData(jobId));
-
-  //  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(sqlQuery));
-
-  //  if (sqlResult->getNbTuples() == 0) {
-  //    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
-  //  }
-
-  //  std::vector<std::string> results = sqlResult->get(0);
-  //  std::vector<std::string>::iterator curEntry = results.begin();
-
-  //  TMS_Data::Job job;
-  //  job.setSessionId(*curEntry);
-  //  job.setSubmitMachineId(*(++curEntry));
-  //  job.setSubmitMachineName(*(++curEntry));
-  //  job.setJobId(*(++curEntry));
-  //  job.setJobName(*(++curEntry));
-  //  job.setJobPath(*(++curEntry));
-  //  job.setWorkId(vishnu::convertToLong(*(++curEntry)));
-  //  job.setOutputPath(*(++curEntry));
-  //  job.setErrorPath(*(++curEntry));
-  //  job.setOutputDir(*(++curEntry));
-  //  job.setJobPrio(vishnu::convertToInt(*(++curEntry)));
-  //  job.setNbCpus(vishnu::convertToInt(*(++curEntry)));
-  //  job.setJobWorkingDir(*(++curEntry));
-  //  job.setStatus(vishnu::convertToInt(*(++curEntry)));
-  //  job.setSubmitDate(vishnu::string_to_time_t(*(++curEntry)));
-  //  job.setEndDate(vishnu::string_to_time_t(*(++curEntry)));
-  //  job.setOwner(*(++curEntry));
-  //  job.setJobQueue(*(++curEntry));
-  //  job.setWallClockLimit(vishnu::convertToInt(*(++curEntry)));
-  //  job.setGroupName(*(++curEntry));
-  //  job.setJobDescription(*(++curEntry));
-  //  job.setMemLimit(vishnu::convertToInt(*(++curEntry)));
-  //  job.setNbNodes(vishnu::convertToInt(*(++curEntry)));
-  //  job.setNbNodesAndCpuPerNode(*(++curEntry));
-  //  job.setBatchJobId(*(++curEntry));
-  //  job.setUserId(*(++curEntry));
-  //  job.setVmId(*(++curEntry));
-  //  job.setVmIp(*(++curEntry));
-
-  //  return job;
 }
 
 
@@ -571,11 +518,12 @@ void
 JobServer::getJobStepInfo(const std::string& jobId, TMS_Data::ListJobs& jobSteps)
 {
   std::string sqlQuery = boost::str(boost::format(
-                                      "SELECT vsessionid, submitMachineId, submitMachineName, jobId, "
-                                      "   jobName, jobPath, workId, outputPath, errorPath, outputDir, "
-                                      "   jobPrio, nbCpus, jobWorkingDir, job.status, submitDate, endDate, "
-                                      "   owner, jobQueue,wallClockLimit, groupName, jobDescription, memLimit,"
-                                      "   nbNodes, nbNodesAndCpuPerNode, batchJobId, userid, vmId, vmIp"
+                                      "SELECT vsessionid, submitMachineId, submitMachineName, "
+                                      "   jobId, jobName, batchJobId, jobPath, workId, relatedSteps, "
+                                      "   outputPath, errorPath, outputDir, jobWorkingDir, "
+                                      "   jobPrio, nbCpus, job.status, submitDate, endDate, "
+                                      "   owner, jobQueue,wallClockLimit, groupName, memLimit,"
+                                      "   nbNodes, nbNodesAndCpuPerNode, userid, vmId, vmIp, jobDescription"
                                       " FROM job, vsession, users "
                                       " WHERE vsession.numsessionid=job.vsession_numsessionid "
                                       "   AND vsession.users_numuserid=users.numuserid"
@@ -599,14 +547,16 @@ JobServer::getJobStepInfo(const std::string& jobId, TMS_Data::ListJobs& jobSteps
     job->setSubmitMachineName(*(++curEntry));
     job->setJobId(*(++curEntry));
     job->setJobName(*(++curEntry));
+    job->setBatchJobId(*(++curEntry));
     job->setJobPath(*(++curEntry));
     job->setWorkId(vishnu::convertToLong(*(++curEntry)));
+    job->setRelatedSteps(*(++curEntry));
     job->setOutputPath(*(++curEntry));
     job->setErrorPath(*(++curEntry));
     job->setOutputDir(*(++curEntry));
+    job->setJobWorkingDir(*(++curEntry));
     job->setJobPrio(vishnu::convertToInt(*(++curEntry)));
     job->setNbCpus(vishnu::convertToInt(*(++curEntry)));
-    job->setJobWorkingDir(*(++curEntry));
     job->setStatus(vishnu::convertToInt(*(++curEntry)));
     job->setSubmitDate(vishnu::string_to_time_t(*(++curEntry)));
     job->setEndDate(vishnu::string_to_time_t(*(++curEntry)));
@@ -614,14 +564,13 @@ JobServer::getJobStepInfo(const std::string& jobId, TMS_Data::ListJobs& jobSteps
     job->setJobQueue(*(++curEntry));
     job->setWallClockLimit(vishnu::convertToInt(*(++curEntry)));
     job->setGroupName(*(++curEntry));
-    job->setJobDescription(*(++curEntry));
     job->setMemLimit(vishnu::convertToInt(*(++curEntry)));
     job->setNbNodes(vishnu::convertToInt(*(++curEntry)));
     job->setNbNodesAndCpuPerNode(*(++curEntry));
-    job->setBatchJobId(*(++curEntry));
     job->setUserId(*(++curEntry));
     job->setVmId(*(++curEntry));
     job->setVmIp(*(++curEntry));
+    job->setJobDescription(*(++curEntry));
 
     jobSteps.getJobs().push_back(job);
     results.clear();
@@ -888,16 +837,36 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
     currentJobPtr->setJobPath(baseJobInfo.getJobPath());
     currentJobPtr->setOwner(baseJobInfo.getOwner());
     currentJobPtr->setJobId(baseJobInfo.getJobId());
-    finalizeExecution(SubmitBatchAction, *currentJobPtr);
+    updateJobRecordIntoDatabase(SubmitBatchAction, *currentJobPtr);
   } else {
-    for (int step = 0; step < jobSteps.getJobs().size(); ++step) {
+    int nbSteps = jobSteps.getJobs().size();
+
+    // first set steps' id and other default parameters
+    for (int step = 0; step < nbSteps; ++step) {
       TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(step);
+      currentJobPtr->setJobId(boost::str(boost::format("%1%.%2%") % baseJobInfo.getJobId() % step));
       currentJobPtr->setSubmitMachineId(baseJobInfo.getSubmitMachineId());
       currentJobPtr->setWorkId(baseJobInfo.getWorkId());
       currentJobPtr->setJobPath(baseJobInfo.getJobPath());
       currentJobPtr->setOwner(baseJobInfo.getOwner());
-      currentJobPtr->setJobId(boost::str(boost::format("%1%.%2%") % baseJobInfo.getJobId() % step));
-      finalizeExecution(SubmitBatchAction, *currentJobPtr);
+
+      // create an entry to the database for the step
+      mdatabaseInstance->process(boost::str(boost::format("INSERT INTO job (jobid, vsession_numsessionid)"
+                                                          " VALUES (%1%, %2%)"
+                                                          ) % currentJobPtr->getJobId() % muserSessionInfo.num_session));
+    }
+
+    // now each job's related steps and record to database
+    for (int step = 0; step < nbSteps; ++step) {
+      std::string relatedStepList =  "";
+      for (int relatedStep = 0; relatedStep < nbSteps; ++relatedStep) {
+        if (relatedStep == step) continue;
+        if (! relatedStepList.empty()) relatedStepList+=",";
+        relatedStepList+=jobSteps.getJobs().get(relatedStep)->getJobId();
+      }
+      TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(step);
+      currentJobPtr->setRelatedSteps(relatedStepList);
+      updateJobRecordIntoDatabase(SubmitBatchAction, *currentJobPtr);
     }
   }
 }
@@ -908,7 +877,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
  * @param job The concerned job
  */
 void
-JobServer::finalizeExecution(int action, TMS_Data::Job& job)
+JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
 {
   if (action == CancelBatchAction) {
     std::string query = (boost::format("UPDATE job set status=%1% where jobid='%2%';")
@@ -957,7 +926,8 @@ JobServer::finalizeExecution(int action, TMS_Data::Job& job)
     query+="outputDir='"+mdatabaseInstance->escapeData(job.getOutputDir())+"', ";
     query+= job.getWorkId()? "workId="+vishnu::convertToString(job.getWorkId())+", " : "";
     query+="vmId='"+mdatabaseInstance->escapeData(job.getVmId())+"', ";
-    query+="vmIp='"+mdatabaseInstance->escapeData(job.getVmIp())+"' ";
+    query+="vmIp='"+mdatabaseInstance->escapeData(job.getVmIp())+"', ";
+    query+="relatedSteps='"+mdatabaseInstance->escapeData(job.getRelatedSteps())+"'";
     query+="WHERE jobid='"+mdatabaseInstance->escapeData(job.getJobId())+"';";
 
     mdatabaseInstance->process(query);

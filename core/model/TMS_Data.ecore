@@ -157,6 +157,11 @@
         <details key="content" value="Holds the IP address of the virtual machine associated to the job"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relatedSteps" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="In case of multi-step job, this field contains a comma-separated list of related steps. &#xA;Otherwise the field should be empty"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListJobs" instanceTypeName="ListJobs">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbJobs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"

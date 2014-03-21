@@ -146,6 +146,10 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__vmIp = new ::ecore::EAttribute();
     m_Job__vmIp->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__VMIP);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__vmIp);
+    m_Job__relatedSteps = new ::ecore::EAttribute();
+    m_Job__relatedSteps->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::JOB__RELATEDSTEPS);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__relatedSteps);
 
     // ListJobs
     m_ListJobsEClass = new ::ecore::EClass();
@@ -1149,6 +1153,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__vmIp->setUnique(false);
     m_Job__vmIp->setDerived(false);
     m_Job__vmIp->setOrdered(true);
+    m_Job__relatedSteps->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Job__relatedSteps->setName("relatedSteps");
+    m_Job__relatedSteps->setDefaultValueLiteral("");
+    m_Job__relatedSteps->setLowerBound(0);
+    m_Job__relatedSteps->setUpperBound(1);
+    m_Job__relatedSteps->setTransient(false);
+    m_Job__relatedSteps->setVolatile(false);
+    m_Job__relatedSteps->setChangeable(true);
+    m_Job__relatedSteps->setUnsettable(false);
+    m_Job__relatedSteps->setID(false);
+    m_Job__relatedSteps->setUnique(true);
+    m_Job__relatedSteps->setDerived(false);
+    m_Job__relatedSteps->setOrdered(true);
     // ListJobs
     m_ListJobsEClass->setName("ListJobs");
     m_ListJobsEClass->setAbstract(false);
@@ -3161,6 +3179,10 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__vmIp()
 {
     return m_Job__vmIp;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__relatedSteps()
+{
+    return m_Job__relatedSteps;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobs__nbJobs()
 {

@@ -56,17 +56,17 @@ displayJob(TMS_Data::Job& job){
   std::string prefixOutputPath = (pos == std::string::npos)? job.getSubmitMachineName()+":" : "";
   pos = job.getErrorPath().find(":");
   std::string prefixErrorPath = (pos == std::string::npos)? job.getSubmitMachineName()+":" : "";
+  boost::posix_time::ptime pt;
 
-  cout << " Job                  : " << job.getJobId()  << " (Batch ID : "<<job.getBatchJobId() <<")";
+  cout << " Job                    : " << job.getJobId()  << " (Batch ID : "<<job.getBatchJobId() <<")";
   cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "-");
+  cout << "\n Related Jobs         : " << job.getRelatedSteps();
   cout << "\n User                 : " << job.getUserId();
   cout << "\n Session              : " << job.getSessionId();
   cout << "\n Machine              : " << job.getSubmitMachineId() << " (Host: " << job.getSubmitMachineName() << ")";
   cout << "\n Output path (remote) : " << prefixOutputPath+job.getOutputPath();
   cout << "\n Error path  (remote) : " << prefixErrorPath+job.getErrorPath();
   cout << "\n Output dir (remote)  : " << job.getOutputDir();
-
-  boost::posix_time::ptime pt;
   cout << "\n Job                  : " << job.getJobId()  << " (Batch/Process ID: " << job.getBatchJobId() <<")";
   if (! job.getVmId().empty()) {
     cout << "\n Virtual Machine      : " << job.getVmId() << " (IP: " << job.getVmIp()<< ")";

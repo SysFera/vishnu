@@ -521,7 +521,8 @@ CREATE TABLE job (
     wallclocklimit integer,
     workid bigint,
     vmId character varying(255),
-    vmIp character varying(255)
+    vmIp character varying(255),
+    relatedSteps character varying(255)
 );
 
 

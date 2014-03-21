@@ -781,5 +781,31 @@ void Job::setVmIp(::ecore::EString const& _vmIp)
 #endif
 }
 
+::ecore::EString const& Job::getRelatedSteps() const
+{
+    return m_relatedSteps;
+}
+
+void Job::setRelatedSteps(::ecore::EString const& _relatedSteps)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_relatedSteps = m_relatedSteps;
+#endif
+    m_relatedSteps = _relatedSteps;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__relatedSteps(),
+                _old_relatedSteps,
+                m_relatedSteps
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 
