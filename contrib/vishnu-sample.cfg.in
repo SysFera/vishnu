@@ -244,3 +244,6 @@ timeout=120
 
 # subscribe(M<FMS,TMS,UMS>): If not 0, the servers will try to register in the dispatcher
 subscribe=0
+
+# standalone(M<FMS,TMS,UMS>): If not 0, use setuid to change user in TMS, otherwise use ssh
+standalone=1
