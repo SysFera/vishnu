@@ -108,7 +108,7 @@ SSHJobExec::checkSshParams() {
 void
 SSHJobExec::sshexec(const std::string& actionName,
                     const std::string& script_path,
-                    boost::shared_ptr<TMS_Data::ListJobs> jobSteps) {
+                    TMS_Data::ListJobs& jobSteps) {
   checkSshParams();
   std::string submitOptionsSerializedPath;
 
@@ -191,7 +191,18 @@ SSHJobExec::sshexec(const std::string& actionName,
       LOG("sshexec: cannot parse result", mdebugLevel);
       merrorInfo.clear();
     }
-    jobSteps.reset(jobStepsPtr);
+    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+    jobSteps = *(ecoreFactory->createListJobs());
+    for (unsigned int j = 0; j < jobStepsPtr->getJobs().size(); j++) {
+      TMS_Data::Job_ptr job = ecoreFactory->createJob();
+      //copy the content and not the pointer
+      *job = *jobStepsPtr->getJobs().get(j);
+      jobSteps.getJobs().push_back(job);
+    }
+    jobSteps.setNbJobs(jobStepsPtr->getJobs().size());
+    jobSteps.setNbRunningJobs(jobStepsPtr->getNbRunningJobs());
+    jobSteps.setNbWaitingJobs(jobStepsPtr->getNbWaitingJobs());
+
     merrorInfo.append("stderr: ").append(vishnu::get_file_content(stderrFilePath, false));
   } else {
     TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
@@ -199,8 +210,8 @@ SSHJobExec::sshexec(const std::string& actionName,
     *jobPtr = jobJson.getJob();
     jobPtr->setStatus(vishnu::STATE_CANCELLED);
 
-    jobSteps.reset(new TMS_Data::ListJobs());
-    jobSteps.get()->getJobs().push_back(jobPtr);
+    jobSteps = TMS_Data::ListJobs();
+    jobSteps.getJobs().push_back(jobPtr);
 
   }
 

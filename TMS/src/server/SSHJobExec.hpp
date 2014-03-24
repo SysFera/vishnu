@@ -52,7 +52,7 @@ public:
   void
   sshexec(const std::string& serviceName,
           const std::string& script_path,
-          boost::shared_ptr<TMS_Data::ListJobs> jobSteps);
+          TMS_Data::ListJobs &jobSteps);
 
   /**
      * \brief Function to execute a script remotely

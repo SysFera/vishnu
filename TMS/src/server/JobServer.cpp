@@ -160,7 +160,7 @@ JobServer::handleSshBatchExec(int action,
                         options->encode());
 
   sshJobExec.setDebugLevel(mdebugLevel);
-  boost::shared_ptr<TMS_Data::ListJobs> jobSteps;
+  TMS_Data::ListJobs jobSteps;
 
   switch(action) {
   case SubmitBatchAction:
@@ -171,11 +171,11 @@ JobServer::handleSshBatchExec(int action,
     if (mbatchType != DELTACLOUD && mdebugLevel) {
       vishnu::deleteFile(scriptPath.c_str());
     }
-    updateAndSaveJobSteps(*(jobSteps.get()), baseJobInfo);
+    updateAndSaveJobSteps(jobSteps, baseJobInfo);
     break;
   case CancelBatchAction:
     sshJobExec.sshexec("CANCEL", "", jobSteps);
-    updateJobRecordIntoDatabase(action, *(jobSteps.get()->getJobs().get(0)));
+    updateJobRecordIntoDatabase(action, *(jobSteps.getJobs().get(0)));
     break;
   default:
     throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");
