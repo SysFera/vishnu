@@ -241,6 +241,7 @@ MYSQLDatabase::getConnection(int& id){
       // If lock fails-> the mutex was taken before trylock call
       if (locked) {
         // Try next connexion
+        sleep(2);
         continue;
       }
       else {
