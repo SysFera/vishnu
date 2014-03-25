@@ -355,7 +355,7 @@ int JobServer::cancelJob(JsonObject* options)
   if (!jobId.empty()){
     std::string reqTmp = (boost::format("select job.owner from job, vsession where job.jobid='%1%' and job.vsession_numsessionid=vsession.numsessionid and vsession.sessionkey='%2%'") %mdatabaseInstance->escapeData(jobId) %mdatabaseInstance->escapeData(mauthKey)).str();
     boost::scoped_ptr<DatabaseResult> sqlQueryResult(mdatabaseInstance->getResult(reqTmp));
-    if (sqlQueryResult->getNbTuples() == 0) {
+    if (sqlQueryResult->getNbTuples() == 0 && muserSessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
       throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
                                (boost::format("Only privileged users can cancel other users jobs")).str());
     }
