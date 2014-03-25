@@ -80,7 +80,7 @@ void add_param_to_profile(rpc_profile_t * profile, std::string s) {
 /**
  * @brief Adds a Int parameter to the profile
  * @param profile The profile
- * @param s The parameter to add represented as a string
+ * @param i The parameter to add represented as a string
  */
 void add_param_to_profile(rpc_profile_t * profile, int i) {
     assert (profile != NULL);
