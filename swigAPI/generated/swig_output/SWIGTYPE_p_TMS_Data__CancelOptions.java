@@ -8,18 +8,18 @@
 
 package com.sysfera.vishnu.api.vishnu.internal;
 
-public class SWIGTYPE_p_ecore__EClass {
+public class SWIGTYPE_p_TMS_Data__CancelOptions {
   private long swigCPtr;
 
-  protected SWIGTYPE_p_ecore__EClass(long cPtr, boolean futureUse) {
+  protected SWIGTYPE_p_TMS_Data__CancelOptions(long cPtr, boolean futureUse) {
     swigCPtr = cPtr;
   }
 
-  protected SWIGTYPE_p_ecore__EClass() {
+  protected SWIGTYPE_p_TMS_Data__CancelOptions() {
     swigCPtr = 0;
   }
 
-  protected static long getCPtr(SWIGTYPE_p_ecore__EClass obj) {
+  protected static long getCPtr(SWIGTYPE_p_TMS_Data__CancelOptions obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 }

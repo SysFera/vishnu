@@ -8,18 +8,18 @@
 
 package com.sysfera.vishnu.api.vishnu.internal;
 
-public class SWIGTYPE_p_ecore__EClass {
+public class SWIGTYPE_p_std__listT_ecorecpp__mapping__any_t {
   private long swigCPtr;
 
-  protected SWIGTYPE_p_ecore__EClass(long cPtr, boolean futureUse) {
+  protected SWIGTYPE_p_std__listT_ecorecpp__mapping__any_t(long cPtr, boolean futureUse) {
     swigCPtr = cPtr;
   }
 
-  protected SWIGTYPE_p_ecore__EClass() {
+  protected SWIGTYPE_p_std__listT_ecorecpp__mapping__any_t() {
     swigCPtr = 0;
   }
 
-  protected static long getCPtr(SWIGTYPE_p_ecore__EClass obj) {
+  protected static long getCPtr(SWIGTYPE_p_std__listT_ecorecpp__mapping__any_t obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 }
