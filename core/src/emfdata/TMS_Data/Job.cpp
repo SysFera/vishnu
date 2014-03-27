@@ -807,5 +807,31 @@ void Job::setRelatedSteps(::ecore::EString const& _relatedSteps)
 #endif
 }
 
+::ecore::EString const& Job::getSubmitError() const
+{
+    return m_submitError;
+}
+
+void Job::setSubmitError(::ecore::EString const& _submitError)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_submitError = m_submitError;
+#endif
+    m_submitError = _submitError;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__submitError(),
+                _old_submitError,
+                m_submitError
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 

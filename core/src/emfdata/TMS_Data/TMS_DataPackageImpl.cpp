@@ -150,6 +150,10 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__relatedSteps->setFeatureID(
             ::TMS_Data::TMS_DataPackage::JOB__RELATEDSTEPS);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__relatedSteps);
+    m_Job__submitError = new ::ecore::EAttribute();
+    m_Job__submitError->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::JOB__SUBMITERROR);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__submitError);
 
     // ListJobs
     m_ListJobsEClass = new ::ecore::EClass();
@@ -1167,6 +1171,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__relatedSteps->setUnique(true);
     m_Job__relatedSteps->setDerived(false);
     m_Job__relatedSteps->setOrdered(true);
+    m_Job__submitError->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Job__submitError->setName("submitError");
+    m_Job__submitError->setDefaultValueLiteral("");
+    m_Job__submitError->setLowerBound(0);
+    m_Job__submitError->setUpperBound(1);
+    m_Job__submitError->setTransient(false);
+    m_Job__submitError->setVolatile(false);
+    m_Job__submitError->setChangeable(true);
+    m_Job__submitError->setUnsettable(false);
+    m_Job__submitError->setID(false);
+    m_Job__submitError->setUnique(true);
+    m_Job__submitError->setDerived(false);
+    m_Job__submitError->setOrdered(true);
     // ListJobs
     m_ListJobsEClass->setName("ListJobs");
     m_ListJobsEClass->setAbstract(false);
@@ -3183,6 +3201,10 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__relatedSteps()
 {
     return m_Job__relatedSteps;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__submitError()
+{
+    return m_Job__submitError;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobs__nbJobs()
 {
