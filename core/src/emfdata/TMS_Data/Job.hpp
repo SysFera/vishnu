@@ -389,6 +389,17 @@ namespace TMS_Data
          **/
         void setRelatedSteps(::ecore::EString const& _relatedSteps);
 
+        /**
+         * \brief To get the submitError
+         * \return The submitError attribute value
+         **/
+        ::ecore::EString const& getSubmitError() const;
+        /**
+         * \brief To set the submitError
+         * \param _submitError The submitError value
+         **/
+        void setSubmitError(::ecore::EString const& _submitError);
+
         // References
 
 
@@ -471,6 +482,8 @@ namespace TMS_Data
         ::ecore::EString m_vmIp;
 
         ::ecore::EString m_relatedSteps;
+
+        ::ecore::EString m_submitError;
 
         // References
 
