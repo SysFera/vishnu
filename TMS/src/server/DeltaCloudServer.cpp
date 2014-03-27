@@ -38,14 +38,14 @@ DeltaCloudServer::~DeltaCloudServer() {
  * \brief Function to submit a job
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
- * \param job The job data structure
+ * \param jobSteps The result job steps
  * \param envp The list of environment variables used by submission function
  * \return raises an exception on error
  */
 int
 DeltaCloudServer::submit(const std::string& scriptPath,
                          const TMS_Data::SubmitOptions& options,
-                         TMS_Data::Job& job,
+                         TMS_Data::ListJobs& jobSteps,
                          char** envp) {
 
   initialize(); // Initialize Delatacloud API
@@ -84,7 +84,8 @@ DeltaCloudServer::submit(const std::string& scriptPath,
   param.value = strdup(mvmUserKey.c_str());
   params.push_back(param);
 
-  std::string vmName = "vishnu-job.vm."+job.getJobId();
+  TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
+  std::string vmName = "vishnu-job.vm."+jobPtr->getJobId(); //FIXME: jobPtr is newly created, so getJobId() is empty
   param.name = strdup("name");
   param.value = strdup(vmName.c_str());
   params.push_back(param);
@@ -116,7 +117,7 @@ DeltaCloudServer::submit(const std::string& scriptPath,
     throw TMSVishnuException(ERRCODE_UNKNOWN_BATCH_SCHEDULER, msg);
   }
 
-  vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instanceAddr->address); // Create the NODEFILE
+  vishnu::saveInFile(jobPtr->getOutputDir()+"/NODEFILE", instanceAddr->address); // Create the NODEFILE
   std::cout << boost::format("[TMS][INFO] Virtual machine started\n"
                              " ID: %1%\n"
                              " NAME: %2%\n"
@@ -127,37 +128,37 @@ DeltaCloudServer::submit(const std::string& scriptPath,
   SSHJobExec sshEngine(mvmUser, instanceAddr->address);
   int jobPid = -1;
   try {
-    jobPid = sshEngine.execRemoteScript(scriptPath.c_str(), mnfsServer, mnfsMountPoint, job.getOutputDir());
+    jobPid = sshEngine.execRemoteScript(scriptPath.c_str(), mnfsServer, mnfsMountPoint, jobPtr->getOutputDir());
   } catch(...) {
     throw;
   }
+  jobPtr->setBatchJobId(vishnu::convertToString(jobPid));
+  jobPtr->setJobName("PID_"+jobPtr->getBatchJobId());
+  jobPtr->setBatchJobId(vishnu::convertToString(jobPid));
+  jobPtr->setVmId(instance.id);
+  jobPtr->setStatus(vishnu::STATE_SUBMITTED);
+  jobPtr->setVmIp(instanceAddr->address);
+  jobPtr->setOutputPath(jobPtr->getOutputDir()+"/stdout");
+  jobPtr->setErrorPath(jobPtr->getOutputDir()+"/stderr");
+  jobPtr->setNbNodes(1);
 
-  job.setBatchJobId(vishnu::convertToString(jobPid));
-  job.setJobName("PID_"+job.getBatchJobId());
-  job.setBatchJobId(vishnu::convertToString(jobPid));
-  job.setVmId(instance.id);
-  job.setStatus(vishnu::STATE_SUBMITTED);
-  job.setVmIp(instanceAddr->address);
-  job.setOutputPath(job.getOutputDir()+"/stdout");
-  job.setErrorPath(job.getOutputDir()+"/stderr");
-  job.setNbNodes(1);
+  jobSteps.getJobs().push_back(jobPtr);
 
   deltacloud_free_instance(&instance);
   finalize();
+
   return 0;
 }
 
 /**
- * \brief Function to cancel job
- * \param jobDescr the description of the job in the form of jobId@vmId
+ * \brief Function to cancel job:  just shutdown and destroy the related VM
+ * \param vmId the VM ID
  * \return raises an exception on error
  */
 int
-DeltaCloudServer::cancel(const std::string& jobDescr) {
-
-  ListStrings jobInfos = getJobInfos(jobDescr.c_str(), 2);
+DeltaCloudServer::cancel(const std::string& vmId) {
   try {
-    releaseResources(jobInfos[1]); // Stop the virtual machine to release resources
+    releaseResources(vmId); // Stop the virtual machine to release resources
   } catch(...) {
     throw;
   }
@@ -300,7 +301,7 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
 }
 
 /**
- * \brief Function for cleaning up a deltacloud params list
+ * \brief Function to decompose job information
  * \param: jobDescr The description of the job in the form of param1@param2@...
  * \param: numParams The number of expected parameters
  */

@@ -26,23 +26,23 @@ public:
    * \brief Function to submit a job
    * \param scriptPath the path to the script containing the job characteristique
    * \param options the options to submit job
-   * \param job The job data structure
+   * \param jobSteps The result job steps
    * \param envp The list of environment variables used by submission function
    * \return raises an exception on error
    */
   int
   submit(const std::string& scriptPath,
-      const TMS_Data::SubmitOptions& options,
-      TMS_Data::Job& job,
-      char** envp=NULL);
+         const TMS_Data::SubmitOptions& options,
+         TMS_Data::ListJobs& jobSteps,
+         char** envp=NULL);
 
   /**
-   * \brief Function to cancel job
-   * \param jobDescr the description of the job in the form of jobId@vmId
+   * \brief Function to cancel job:  just shutdown and destroy the related VM
+   * \param vmId the VM ID
    * \return raises an exception on error
    */
   int
-  cancel(const std::string& jobDescr) ;
+  cancel(const std::string& vmId) ;
 
   /**
    * \brief Function to get the status of the job
@@ -75,7 +75,7 @@ public:
    * \param ignoredIds the list of job ids to ignore
    */
   void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-      const std::vector<std::string>& ignoredIds=std::vector<std::string>());
+                      const std::vector<std::string>& ignoredIds=std::vector<std::string>());
 
 private:
   /**
@@ -149,7 +149,7 @@ private:
   releaseResources(const std::string & vmid);
 
   /**
-   * \brief Function for cleaning up a deltacloud params list
+   * \brief Function to decompose job information
    * \param jobDescr The description of the job in the form of param1\@param2@...
    * \param numParams The number of expected parameters
    * \return ListStrings aka a vector of string parameters or throw exception on error
