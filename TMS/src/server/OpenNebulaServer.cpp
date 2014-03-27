@@ -29,15 +29,14 @@ OpenNebulaServer::OpenNebulaServer()
     mnfsServer(""),
     mnfsMountPoint("")
 {
-  if(mcloudEndpoint.empty()) {
-    mcloudEndpoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
-  }
-  if(mcloudUser.empty()) {
-    mcloudUser= vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
-  }
-  if(mcloudUserPassword.empty()) {
-    mcloudUserPassword = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
-  }
+  mcloudEndpoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
+  mcloudUser= vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
+  mcloudUserPassword = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
+  mcontextInitScript = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_CONTEXT_INIT], false);
+  mvirtualNetwork = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VIRTUAL_NET], false);
+  mvirtualNetworkMask = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VIRTUAL_NET_MASK], true);
+  mvirtualNetworkGateway = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VIRTUAL_NET_GATEWAY], true);
+  mvirtualNetworkDns = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VIRTUAL_NET_DNS], true);
 }
 
 OpenNebulaServer::~OpenNebulaServer() {
@@ -57,40 +56,55 @@ OpenNebulaServer::submit(const std::string& scriptPath,
                          TMS_Data::ListJobs& jobSteps,
                          char** envp)
 {
-  replaceEnvVariables(scriptPath.c_str());
+  replaceEnvVariables(scriptPath);
   OneRPCManager rpcManager(mcloudEndpoint);
   rpcManager.setMethod("one.vm.allocate");
   rpcManager.addParam(getSessionString());
   rpcManager.addParam(getKvmTemplate(options));
-  rpcManager.addParam(true);   // to create VM on hold state
+  rpcManager.addParam(false);   // to create VM on pending state
   rpcManager.execute();
+
+  if (! rpcManager.lastCallSucceeded()) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, rpcManager.getStringResult());
+  }
+
+  LOG(boost::str(boost::format("[INFO] Virtual machine created: %1%") % rpcManager.getIntResult()), 1);
 
   TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
   jobPtr->setVmId(vishnu::convertToString(rpcManager.getIntResult()));
-  //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
-  //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
-  jobPtr->setJobName("PID_"+jobPtr->getBatchJobId());
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
-  //FIXME: job.setVmIp(instanceAddr->address);
+  jobPtr->setJobName("PID_"+jobPtr->getBatchJobId());
   jobPtr->setOutputPath(jobPtr->getOutputDir()+"/stdout");
   jobPtr->setErrorPath(jobPtr->getOutputDir()+"/stderr");
   jobPtr->setNbNodes(1);
 
-  std::cout << boost::format("[TMS][INFO] Virtual machine create"
-                             " ID: %1%\n") % rpcManager.getIntResult();
   jobSteps.getJobs().push_back(jobPtr);
+
+  //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
   return 0;
 }
 
 /**
- * \brief Function to cancel job
+ * \brief Function to cancel job:  just shutdown and destroy the related VM
+ * \param vmId the VM ID
  * \param jobDescr the description of the job in the form of jobId@vmId
  * \return raises an exception on error
  */
 int
 OpenNebulaServer::cancel(const std::string& vmId)
 {
-  releaseResources(vmId);
+  OneRPCManager rpcManager(mcloudEndpoint);
+  rpcManager.setMethod("one.vm.action");
+  rpcManager.addParam(getSessionString());
+  rpcManager.addParam(std::string("delete"));
+  rpcManager.addParam(vishnu::convertToInt(vmId));
+  rpcManager.execute();
+
+  if (! rpcManager.lastCallSucceeded()) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, rpcManager.getStringResult());
+  }
+
+  LOG(boost::str(boost::format("[INFO] VM deleted: %1%") % vmId), 1);
   return 0;
 }
 
@@ -110,8 +124,8 @@ OpenNebulaServer::getJobState(const std::string& jobDescr) {
   std::string vmId = jobInfos[3];
 
   SSHJobExec sshEngine(vmUser, vmIp);
-  std::string statusFile = "/tmp/"+jobDescr;
-  std::string cmd = (boost::format("ps -o pid= -p %1% | wc -l > %2%")%pid %statusFile).str();
+  std::string statusFile = boost::str(boost::format("/tmp/%1%") % jobDescr);
+  std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
   sshEngine.execCmd(cmd, false);
 
   // Check if the job is completed
@@ -181,16 +195,21 @@ create_plugin_instance(void **instance)
 
 /**
  * \brief Function for cleaning up virtual machine
- * \param vmid The id of the virtual machine
+ * \param vmId The id of the virtual machine
  */
-void OpenNebulaServer::releaseResources(const std::string & vmid)
+void OpenNebulaServer::releaseResources(const std::string& vmId)
 {
   OneRPCManager rpcManager(mcloudEndpoint);
   rpcManager.setMethod("one.vm.action");
-  rpcManager.addParam("shutdown");
-  rpcManager.addParam(vishnu::convertToInt(vmid));
+  rpcManager.addParam(getSessionString());
+  rpcManager.addParam(std::string("stop"));
+  rpcManager.addParam(vishnu::convertToInt(vmId));
   rpcManager.execute();
+  if (! rpcManager.lastCallSucceeded()) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, rpcManager.getStringResult());
+  }
   //FIXME: check that the vm is shutdown and clear it
+  LOG(boost::str(boost::format("[INFO] VM deleted: %1%") % vmId), 1);
 }
 
 /**
@@ -251,7 +270,7 @@ void OpenNebulaServer::retrieveUserSpecificParams(const std::string& specificPar
  * \brief Function to replace some environment varia*bles in a string
  * \param scriptContent The string content to modify
  */
-void OpenNebulaServer::replaceEnvVariables(const char* scriptPath) {
+void OpenNebulaServer::replaceEnvVariables(const std::string& scriptPath) {
   std::string scriptContent = vishnu::get_file_content(scriptPath);
 
   //To replace VISHNU_BATCHJOB_ID
@@ -265,9 +284,23 @@ void OpenNebulaServer::replaceEnvVariables(const char* scriptPath) {
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
 
-  std::ofstream ofs(scriptPath);
+  std::ofstream ofs(scriptPath.c_str());
   ofs << scriptContent;
   ofs.close();
+}
+
+/**
+ * @brief Return a string as expected by OpenNebula API (username:password)
+ * @return string
+ */
+std::string
+OpenNebulaServer::getSessionString(void)
+{
+  if (mcloudUser.empty() && mcloudUserPassword.empty()) {
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM,
+                             "Either the username or the password to authenticate against OpenNebula is empty");
+  }
+  return boost::str(boost::format("%1%:%2%") % mcloudUser % mcloudUserPassword);
 }
 
 /**
@@ -302,35 +335,70 @@ OpenNebulaServer::getKvmTemplate(const TMS_Data::SubmitOptions& options)
 
   return boost::str(
         boost::format(
-          "NAME=\"centos-64\""
-          "CPU=\"1\""
-          "VCPU=\"2\""
-          "MEMORY=\"512\""
-          "DISK = [ IMAGE = \"centos-64\","
-          "DRIVER=\"qcow2\"]"
-          "OS=["
-          "ARCH=\"i686\","
-          "ROOT=\"sda1\","
-          "BOOT=\"hd,fd,cdrom,network\" ]"
-          "NIC = [ NETWORK = \"FIXED-NET\" ]"
-          "GRAPHICS = ["
-          "TYPE    = \"vnc\","
-          "LISTEN  = \"0.0.0.0\","
-          "KEYMAP = \"fr\"]"
-          "RAW=[ "
-          "  TYPE=\"kvm\","
-          "  DATA=\""
-          "    <serial type='pty'><target port='0'/></serial>"
-          "    <console type='pty'><target type='serial' port='0'/></console>\"]"
-          "CONTEXT=["
-          "  HOSTNAME=\"vm-$VMID\","
-          "  NETWORK=\"YES\","
-          "  ETH0_IP=\"$NIC[IP, NETWORK=\\\"FIXED-NET\\\"]\","
-          "  ETH0_GATEWAY=\"192.168.122.1\","
-          "  GATEWAY=\"192.168.122.1\","
-          "  FILES=\"/opt/software/opennebula-4.4.1/share/scripts/centos-5/context/init.sh\","
-          "  ETH0_DNS=\"8.8.8.8\","
-          "  NETMASK=\"255.255.255.0\","
-          "  TARGET=\"hdb\" "
-          "]"));
+          "NAME=\"vishnu-vm\"                                                     \n"
+          "CPU=%1%                                                               \n"
+          "VCPU=%1%                                                              \n"
+          "MEMORY=%2%                                                            \n"
+          "DISK = [ IMAGE = \"%3%\", DRIVER=\"qcow2\"]                           \n"
+          "OS=[                                                                  \n"
+          "  ARCH=\"i686\",                                                      \n"
+          "  ROOT=\"sda1\",                                                      \n"
+          "  BOOT=\"hd,fd,cdrom,network\" ]                                      \n"
+          "NIC = [NETWORK=\"%4%\"]                                               \n"
+          "GRAPHICS = [TYPE=\"vnc\", LISTEN=\"0.0.0.0\",KEYMAP=\"fr\"]           \n"
+          "RAW=[                                                                 \n"
+          "  TYPE=\"kvm\",                                                       \n"
+          "  DATA=\"                                                             \n"
+          "    <serial type='pty'><target port='0'/></serial>                    \n"
+          "    <console type='pty'><target type='serial' port='0'/></console>\"] \n"
+          "CONTEXT=[                                                             \n"
+          "  HOSTNAME=\"vm-$VMID\",                                              \n"
+          "  NETWORK=\"YES\",                                                    \n"
+          "  ETH0_IP=\"$NIC[IP, NETWORK=\\\"%4%\\\"]\",                          \n"
+          "  ETH0_NETMASK=\"%5%\",                                               \n"
+          "  ETH0_GATEWAY=\"%6%\",                                               \n"
+          "  ETH0_DNS=\"%7%\",                                                   \n"
+          "  FILES=\"%8%\",                                                      \n"
+          "  TARGET=\"hdb\"                                                      \n"
+          "]")
+        % returnInputOrDefaultIfNegativeNull(options.getNbCpu(), 1)
+        % returnInputOrDefaultIfNegativeNull(options.getMemory(), 512)
+        % mvmImageId
+        % mvirtualNetwork
+        % mvirtualNetworkMask
+        % mvirtualNetworkGateway
+        % mvirtualNetworkDns
+        % mcontextInitScript);
 }
+
+
+/**
+ * @brief Return the defaultValue if a given string is empty
+ * @param value The input string
+ * @param defaultValue The default value
+ * @return string
+ */
+std::string
+OpenNebulaServer::returnInputOrDefaultIfEmpty(const std::string& value, const std::string& defaultValue)
+{
+  if (value.empty()) {
+    return defaultValue;
+  }
+  return value;
+}
+
+/**
+ * @brief Return the defaultValue if a given string is empty
+ * @param value The input string
+ * @param defaultValue The default value
+ * @return int
+ */
+int
+OpenNebulaServer::returnInputOrDefaultIfNegativeNull(int value, int defaultValue)
+{
+  if (value <= 0) {
+    return defaultValue;
+  }
+  return value;
+}
+

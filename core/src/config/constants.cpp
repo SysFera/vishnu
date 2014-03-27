@@ -55,8 +55,15 @@ namespace vishnu {
                                                             (CLOUD_VM_IMAGE, "VISHNU_CLOUD_VM_IMAGE")
                                                             (CLOUD_VM_USER, "VISHNU_CLOUD_VM_USER")
                                                             (CLOUD_VM_USER_KEY, "VISHNU_CLOUD_VM_USER_KEY")
+                                                            (CLOUD_CONTEXT_INIT, "VISHNU_CLOUD_CONTEXT_INIT")
+                                                            (CLOUD_VIRTUAL_NET, "VISHNU_CLOUD_VIRTUAL_NET")
+                                                            (CLOUD_VIRTUAL_NET_MASK, "VISHNU_CLOUD_VIRTUAL_NET_MASK")
+                                                            (CLOUD_VIRTUAL_NET_GATEWAY, "VISHNU_CLOUD_VIRTUAL_NET_GATEWAY")
+                                                            (CLOUD_VIRTUAL_NET_DNS, "VISHNU_CLOUD_VIRTUAL_NET_DNS")
                                                             (CLOUD_DEFAULT_FLAVOR, "VISHNU_CLOUD_DEFAULT_FLAVOR")
                                                             (CLOUD_NFS_SERVER, "VISHNU_CLOUD_NFS_SERVER")
                                                             (CLOUD_NFS_MOUNT_POINT, "VISHNU_CLOUD_NFS_MOUNT_POINT");
+
+
   //}}RELAX<MISRA_0_1_3>
 }

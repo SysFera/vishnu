@@ -33,17 +33,17 @@ public:
    */
   int
   submit(const std::string& scriptPath,
-      const TMS_Data::SubmitOptions& options,
-      TMS_Data::ListJobs& jobSteps,
-      char** envp=NULL);
+         const TMS_Data::SubmitOptions& options,
+         TMS_Data::ListJobs& jobSteps,
+         char** envp=NULL);
 
   /**
-   * \brief Function to cancel job
-   * \param jobDescr the description of the job in the form of jobId@vmId
+   * \brief Function to cancel job:  just shutdown and destroy the related VM
+   * \param vmId the VM ID
    * \return raises an exception on error
    */
   int
-  cancel(const std::string& jobDescr) ;
+  cancel(const std::string& vmId) ;
 
   /**
    * \brief Function to get the status of the job
@@ -76,7 +76,7 @@ public:
    * \param ignoredIds the list of job ids to ignore
    */
   void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-      const std::vector<std::string>& ignoredIds=std::vector<std::string>());
+                      const std::vector<std::string>& ignoredIds=std::vector<std::string>());
 
 private:
   /**
@@ -105,6 +105,31 @@ private:
   std::string mvmFlavor;
 
   /**
+   * @brief The path to the contextualization init script
+   */
+  std::string mcontextInitScript;
+
+  /**
+   * @brief The name of the virtual network to used for VM
+   */
+  std::string mvirtualNetwork;
+
+  /**
+   * @brief The gateway to assign to VM network
+   */
+  std::string mvirtualNetworkGateway;
+
+  /**
+   * @brief The DNS to assign to VM network
+   */
+  std::string mvirtualNetworkDns;
+
+  /**
+   * @brief The netmask to assign to VM network
+   */
+  std::string mvirtualNetworkMask;
+
+  /**
    * \brief Holds the virtual machine user
    */
   std::string mvmUser;
@@ -126,10 +151,10 @@ private:
 
   /**
    * \brief Function for cleaning up virtual machine
-   * \param vmid The id of the virtual machine
+   * \param vmId The id of the virtual machine
    */
   void
-  releaseResources(const std::string & vmid);
+  releaseResources(const std::string & vmId);
 
   /**
    * \brief Function to decompose job information
@@ -151,7 +176,7 @@ private:
    * \brief Function to replace some environment varia*bles in a string
    * \param scriptContent The string content to modify
    */
-  void replaceEnvVariables(const char* scriptPath);
+  void replaceEnvVariables(const std::string& scriptPath);
 
   /**
    * @brief return a VM template for KVM virtual machine
@@ -166,7 +191,26 @@ private:
    * @return string
    */
   std::string
-  getSessionString(void) {return boost::str(boost::format("%1%:%2%") % mcloudUser % mcloudUserPassword);}
+  getSessionString(void);
+
+  /**
+   * @brief Return the defaultValue if a given string is empty
+   * @param value The input string
+   * @param defaultValue The default value
+   * @return string
+   */
+  std::string
+  returnInputOrDefaultIfEmpty(const std::string& value, const std::string& defaultValue);
+
+
+  /**
+   * @brief Return the defaultValue if a given int value is <= 0
+   * @param value The input
+   * @param defaultValue The default value
+   * @return int
+   */
+  int
+  returnInputOrDefaultIfNegativeNull(int value, int defaultValue);
 };
 
 #endif /* OpenNebulaServer_HPP_ */

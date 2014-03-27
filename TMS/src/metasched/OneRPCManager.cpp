@@ -6,24 +6,26 @@
 
 #include "OneRPCManager.hpp"
 
+#define MAX_MESSAGE_SIZE 51200
 #define XMLRPC_TRY try{
-#define XMLRPC_CATCH } catch (girerr::error const error) \
-{ std::clog<< error.what()<<"\n"; } catch (std::exception const ex) \
-{ std::clog<< ex.what()<<"\n";}
-
-
-const int MAX_MESSAGE_SIZE = 51200;
+#define XMLRPC_CATCH } catch (girerr::error const ex) {\
+  mrpcCallSucceeded = false; \
+  mstringResult = std::string(ex.what()); \
+  } catch (std::exception const ex) { \
+  mrpcCallSucceeded = false; \
+  mstringResult = std::string(ex.what()); \
+  }
 
 OneRPCManager::OneRPCManager(std::string url)
+  : xmlrpc_c::clientSimple(),
+    moneRpcUrl(url)
 {
-  init();
-  m_resultString.clear();
-  setOneRpcUrl(url);
+  initXmlRpcEnvironment();
 }
 
 OneRPCManager::~OneRPCManager()
 {
-  finalize();
+  finalizeXmlRpcEnvironment();
 }
 
 
@@ -31,12 +33,12 @@ OneRPCManager::~OneRPCManager()
  * @brief initialize the encapsulated xmlrpc_c RPC handler
  */
 void
-OneRPCManager::init()
+OneRPCManager::initXmlRpcEnvironment()
 {
   XMLRPC_TRY;
 
-  rpcEnv = new xmlrpc_env;
-  xmlrpc_env_init(rpcEnv);
+  mrpcEnv = new xmlrpc_env;
+  xmlrpc_env_init(mrpcEnv);
   xmlrpc_limit_set(XMLRPC_XML_SIZE_LIMIT_ID, 1024*MAX_MESSAGE_SIZE);
 
   XMLRPC_CATCH
@@ -46,19 +48,19 @@ OneRPCManager::init()
  * @brief clear the encapsulated xmlrpc_c RPC handler
  */
 void
-OneRPCManager::finalize()
+OneRPCManager::finalizeXmlRpcEnvironment()
 {
   XMLRPC_TRY;
 
-  xmlrpc_env_clean(rpcEnv);
-  delete rpcEnv;
+  xmlrpc_env_clean(mrpcEnv);
+  delete mrpcEnv;
 
   XMLRPC_CATCH
 }
 
 
 /**
- * @brief Add a parameter for the subsequent RPC call
+ * @brief Add a parameter value
  * @param param The parameter as xmlrpc_c::value
  */
 void
@@ -66,9 +68,39 @@ OneRPCManager::addParam(xmlrpc_c::value param)
 {
   XMLRPC_TRY;
 
-  this->requestParams.add(param);
+  this->mrequestParams.add(param);
 
   XMLRPC_CATCH
+}
+
+/**
+ * @brief Add a string parameter
+ * @param param The parameter as xmlrpc_c::value
+ */
+void
+OneRPCManager::addParam(const std::string& param)
+{
+  addParam(xmlrpc_c::value_string(param));
+}
+
+/**
+ * @brief Add a int parameter
+ * @param param The parameter as xmlrpc_c::value
+ */
+void
+OneRPCManager::addParam(int param)
+{
+  addParam(xmlrpc_c::value_int(param));
+}
+
+/**
+ * @brief Add a boolean parameter
+ * @param param The parameter as xmlrpc_c::value
+ */
+void
+OneRPCManager::addParam(bool param)
+{
+  addParam(xmlrpc_c::value_boolean(param));
 }
 
 /**
@@ -80,20 +112,20 @@ OneRPCManager::execute(void)
   XMLRPC_TRY;
 
   xmlrpc_c::value requestResult;
-  call(oneRpcUrl, method, requestParams, &requestResult);
+  call(moneRpcUrl, method, mrequestParams, &requestResult);
 
   xmlrpc_c::value_array value_objs = xmlrpc_c::value_array(requestResult);
   std::vector<xmlrpc_c::value> const values(value_objs.vectorValueValue());
   //xmlrpc_c::value_boolean returnStatus = static_cast<xmlrpc_c::value_boolean>(values[0]);
-  mrpcCallSucceeded = static_cast<bool>( static_cast<xmlrpc_c::value_boolean>(values[0]) );
+  mrpcCallSucceeded = static_cast<bool>(static_cast<xmlrpc_c::value_boolean>(values[0]));
 
   if( values.size() > 1 ) {
     if(values[1].type() == xmlrpc_c::value::TYPE_INT) {
       if (mrpcCallSucceeded) {
-        m_resultInt = static_cast<int>( static_cast<xmlrpc_c::value_int>(values[1]) );
+        mintResult = static_cast<int>( static_cast<xmlrpc_c::value_int>(values[1]) );
       }
     } else {
-      m_resultString = static_cast<std::string>( static_cast<xmlrpc_c::value_string>(values[1]));
+      mstringResult = static_cast<std::string>( static_cast<xmlrpc_c::value_string>(values[1]));
     }
   }
   XMLRPC_CATCH
@@ -218,27 +250,5 @@ OneRPCManager::sha1Digest(const std::string& oneUserPass)
   }
 
   return oss.str();
-}
-
-
-/**
- * @brief The URL to the XML-RPC endpoint
- * @param url The URL
- */
-void
-OneRPCManager::setOneRpcUrl(const std::string& url)
-{
-  std::string defaultUrl = "http://localhost:2633/RPC2";
-
-  if(! url.empty()) {
-    this->oneRpcUrl = url ;
-  } else {
-    char* envDefinedUrl = getenv("ONE_XMLRPC");
-    if (envDefinedUrl != NULL) {
-      this->oneRpcUrl = envDefinedUrl;
-    } else {
-      this->oneRpcUrl = defaultUrl;
-    }
-  }
 }
 

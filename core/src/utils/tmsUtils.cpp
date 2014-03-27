@@ -43,6 +43,8 @@ vishnu::convertToBatchType(const std::string& batchName) {
     batchType = SGE;
   } else if (batchName == "DELTACLOUD") {
     batchType = DELTACLOUD;
+  } else if (batchName == "OPENNEBULA") {
+    batchType = OPENNEBULA;
   } else if (batchName == "PBS") {
     batchType = PBSPRO;
   } else if (batchName == "POSIX") {
@@ -186,8 +188,8 @@ vishnu::convertStringToWallTime(const std::string& walltime) {
 
     for (unsigned int i = start; i <= nbFound; i++) {
       time += boost::lexical_cast<long>(
-        std::pow(60.,
-                 boost::lexical_cast<int>(nbFound - i))) * boost::lexical_cast<long>(groups[i]);
+                std::pow(60.,
+                         boost::lexical_cast<int>(nbFound - i))) * boost::lexical_cast<long>(groups[i]);
     }
   } else {
     throw UserException(ERRCODE_INVALID_PARAM,
@@ -400,8 +402,8 @@ vishnu::getCurrentBinaryDir() {
 
 void
 vishnu::replaceAllOccurences(std::string& scriptContent,
-                          const std::string& oldValue,
-                          const std::string& newValue) {
+                             const std::string& oldValue,
+                             const std::string& newValue) {
   boost::replace_all(scriptContent, oldValue, newValue);
 }
 
@@ -412,7 +414,7 @@ vishnu::replaceAllOccurences(std::string& scriptContent,
  */
 void
 vishnu::setParams(std::string& scriptContent,
-               const std::string & params) {
+                  const std::string & params) {
   std::string paramName;
   std::string paramValue;
   size_t pos;
@@ -469,8 +471,8 @@ vishnu::setParamsEnvVars(const std::string& params) {
  */
 std::string
 vishnu::getVar(const std::string& name,
-            const bool & optional,
-            const std::string defaultValue) {
+               const bool & optional,
+               const std::string defaultValue) {
 
   std::string value = defaultValue;
   char* cvalue = getenv(name.c_str());

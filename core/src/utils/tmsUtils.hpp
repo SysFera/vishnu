@@ -27,9 +27,10 @@ typedef enum {
   LSF = 3, /*!< For LSF batch type */
   SGE = 4, /*!< For SGE batch type */
   PBSPRO = 5, /*!< For PBS Pro batch type */
-  DELTACLOUD = 6, /*!< For DELTACLOUD batch type */
+  DELTACLOUD = 6, /*!< DeltaCloud backend */
   POSIX = 7, /*!< For POSIX batch type */
-  UNDEFINED = 8 /*!< IF batch type is not defined*/
+  OPENNEBULA = 8, /*!< OpenNebula backend */
+  UNDEFINED = 99 /*!< IF batch type is not defined*/
 } BatchType;
 
 /**
