@@ -23,8 +23,8 @@ OneHostPool::OneHostPool(const std::string& rpcUrl, const std::string &authChain
 }
 
 xercesc::DOMNodeList* OneHostPool::initializeXmlElts(const std::string& xmlFileName,
-                                                     xercesc::XercesDOMParser*& parser,
-                                                     const std::string& TAG)
+                                                          xercesc::XercesDOMParser*& parser,
+                                                          const std::string& TAG)
 {
   xercesc::XMLPlatformUtils::Initialize();
   parser = new xercesc::XercesDOMParser();
@@ -43,19 +43,18 @@ void OneHostPool::releaseXmlElts(xercesc::XercesDOMParser* parser)
 
 void OneHostPool::updatePool(void)
 {
-  boost::scoped_ptr<OneRPCManager> rpcManager(new OneRPCManager(mrpcUrl));
+  OneRPCManager rpcManager(mrpcUrl);
 
-  rpcManager->setMethod("one.hostpool.info");
-  rpcManager->addParam(static_cast<xmlrpc_c::value_string>(mauthChain));
-  rpcManager->execute();
+  rpcManager.setMethod("one.hostpool.info");
+  rpcManager.addParam(static_cast<xmlrpc_c::value_string>(mauthChain));
+  rpcManager.execute();
 
-  if (rpcManager->lastCallSucceeded()) {
-    parseResult(rpcManager->lastResultString());
+  if (rpcManager.lastCallSucceeded()) {
+    parseResult(rpcManager.getStringResult());
     rmdir(mhostPoolFilename.c_str());
   } else {
-    std::clog << rpcManager->lastResultString()<<"\n";
+    std::clog << rpcManager.getStringResult()<<"\n";
   }
-
 }
 
 void OneHostPool::parseResult(const std::string& output)

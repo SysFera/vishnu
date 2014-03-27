@@ -120,12 +120,9 @@ JobServer::submitJob(std::string& scriptContent,
                          mbatchVersion);
     }
   } catch (VishnuException& ex) {
-    std::string errorPath = boost::str(boost::format("/%1%/vishnu-%2%.err")
-                                       % std::getenv("HOME")
-                                       % JOB_ID);
-    vishnu::saveInFile(errorPath, ex.what());
-
-    jobInfo.setErrorPath(errorPath);
+    LOG(ex.what(), 4);
+    jobInfo.setSubmitError(ex.what());
+    jobInfo.setErrorPath("");
     jobInfo.setOutputPath("");
     jobInfo.setOutputDir("");
     jobInfo.setStatus(vishnu::STATE_FAILED);
@@ -210,7 +207,6 @@ JobServer::handleNativeBatchExec(int action,
   if (pid <= -1) {
     throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Fork failed");
   }
-
   if (pid == 0) { // child process
     int handlerExitCode = setuid(getSystemUid(muserSessionInfo.user_aclogin));
     if (handlerExitCode != 0) {
@@ -226,11 +222,16 @@ JobServer::handleNativeBatchExec(int action,
         updateAndSaveJobSteps(jobSteps, baseJobInfo);
       }
         break;
+
       case CancelBatchAction:
-        if (mbatchType == DELTACLOUD) {
-          handlerExitCode = batchServer->cancel(baseJobInfo.getJobId()+"@"+baseJobInfo.getVmId());
-        } else {
+        switch (mbatchType) {
+        case DELTACLOUD:
+        case OPENNEBULA:
+          handlerExitCode = batchServer->cancel(baseJobInfo.getVmId());
+          break;
+        default:
           handlerExitCode = batchServer->cancel(baseJobInfo.getBatchJobId());
+          break;
         }
         baseJobInfo.setStatus(vishnu::STATE_CANCELLED);
         updateJobRecordIntoDatabase(action, baseJobInfo);
@@ -239,17 +240,20 @@ JobServer::handleNativeBatchExec(int action,
         throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
         break;
       }
-    } catch(const VishnuException & ex) {
+    } catch(const TMSVishnuException & ex) {
       handlerExitCode = ex.getTypeI();
-      LOG((boost::format("[ERROR] %1%") % ex.what()).str(), 4);
+      LOG(boost::str(boost::format("[ERROR] %1%") % ex.what()), 4);
+    } catch (const VishnuException & ex) {
+      handlerExitCode = ex.getTypeI();
+      LOG(boost::str(boost::format("[ERROR] %1%") % ex.what()), 4);
     }
     exit(handlerExitCode);
   } else { // parent process
-    int retCode;
-    waitpid(pid, &retCode, 0);
-    if (! WIFEXITED(retCode) || WEXITSTATUS(retCode) != 0) {
-      throw TMSVishnuException(retCode, "Batch operation failed");
-    }
+    int exitCode;
+    waitpid(pid, &exitCode, 0);
+//    if (! WIFEXITED(exitCode) || WEXITSTATUS(exitCode) != 0) {
+//      throw TMSVishnuException(exitCode, "Batch operation failed");
+//    }
   }
 }
 
@@ -383,7 +387,7 @@ int JobServer::cancelJob(JsonObject* options)
                 % mdatabaseInstance->escapeData(jobId)
                 ).str();
 
-    LOG(boost::format("[WARN] received request to cancel the job %1%") % jobId, 2);
+    LOG(boost::format("[WARN] received request to cancel job: %1%") % jobId, 2);
   } else {
 
     // This block works as follow:
@@ -934,7 +938,7 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
 
     // logging
     if (mlastError.empty()) {
-      LOG(boost::format("[INFO] Job created: %1%. User: %2%. Owner: %3%")
+      LOG(boost::format("[INFO] Job entry created: %1%. User: %2%. Owner: %3%")
           % job.getJobId()
           % muserSessionInfo.userid
           % muserSessionInfo.user_aclogin, 1);

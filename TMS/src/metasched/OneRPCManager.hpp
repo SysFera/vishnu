@@ -26,20 +26,20 @@ class OneRPCManager : xmlrpc_c::clientSimple
 {
 public:
 
-  OneRPCManager(std::string url = "");
+  OneRPCManager(std::string url = "http://localhost:2633/RPC2");
   ~OneRPCManager();
 
   /**
    * @brief initialize the encapsulated xmlrpc_c RPC handler
    */
   void
-  init(void);
+  initXmlRpcEnvironment(void);
 
   /**
    * @brief clear the encapsulated xmlrpc_c RPC handler
    */
   void
-  finalize(void);
+  finalizeXmlRpcEnvironment(void);
 
   /**
    * @brief Add a parameter for the subsequent RPC call
@@ -47,6 +47,28 @@ public:
    */
   void
   addParam (xmlrpc_c::value param);
+
+  /**
+   * @brief Add a string parameter
+   * @param param The parameter as xmlrpc_c::value
+   */
+  void
+  addParam(const std::string& param);
+
+  /**
+   * @brief Add a int parameter
+   * @param param The parameter as xmlrpc_c::value
+   */
+  void
+  addParam(int param);
+
+
+  /**
+   * @brief Add a boolean parameter
+   * @param param The parameter as xmlrpc_c::value
+   */
+  void
+  addParam(bool param);
 
   /**
    * @brief Execute the encapsulated xmlrpc_c request
@@ -66,7 +88,7 @@ public:
    * @return a string
    */
   std::string
-  lastResultString(void) const { return m_resultString; }
+  getStringResult(void) const { return mstringResult; }
 
   /**
    * @brief Return the string used for authenticating again OpenNebula
@@ -94,25 +116,18 @@ public:
    * @return int
    */
   int
-  getReturnInt(void) const { return this->m_resultInt; }
+  getIntResult(void) const { return this->mintResult; }
 
 
 private:
-  std::string oneRpcUrl;
+  std::string moneRpcUrl;
   std::string msecretOneAuthChain;
   std::string method;
-  xmlrpc_c::paramList requestParams;
-  xmlrpc_env* rpcEnv;
-  int m_resultInt;
+  xmlrpc_c::paramList mrequestParams;
+  xmlrpc_env* mrpcEnv;
+  int mintResult;
   bool mrpcCallSucceeded;
-  std::string m_resultString;
-
-  /**
-   * @brief The URL to the XML-RPC endpoint
-   * @param url The URL
-   */
-  void
-  setOneRpcUrl(const std::string& url);
+  std::string mstringResult;
 
   /**
    * @brief Return the string used for authenticating again OpenNebula

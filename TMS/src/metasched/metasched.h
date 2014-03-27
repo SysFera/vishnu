@@ -14,6 +14,10 @@
 //Maximum tries we do before sending to data center
 #define SERVER_MAX_TRIES 3
 
+#include "JsonObject.hpp"
+#include <ctime>
+#include <cassert>
+#include <boost/lexical_cast.hpp>
 
 
 /**
@@ -38,6 +42,7 @@ typedef struct metasched_task_t {
  * load_memory:                 Global MEM load
  * vm_number:                   Number of Virtual Machines
  * host_number:                 Number of Physical hosts
+ * host_number:                 Number of Physical hosts ready to run virtual machines
  * cpu_number_host_le_50p:      Number of hosts that are loaded at less than or equal 50% (CPU)
  * mem_number_hosts_gt_50p:     Number of hosts that are loaded at less than or equal 50% (MEM)
  * highest_mean_resource_le_50_p:   Highest mean load for hosts that are < 50% (Highest between CPU or MEM)
@@ -48,6 +53,7 @@ typedef struct metasched_cloud_t {
     int load_memory;
     int vm_number;
     int host_number;
+    int host_ready;
     int cpu_number_hosts_le_50p;
     int mem_number_hosts_le_50p;
     int highest_mean_resource_le_50_p;

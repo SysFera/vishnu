@@ -78,6 +78,10 @@ BatchFactory::getBatchServerInstance(int batchType,
     libname += "deltacloud";
     realBatchVersion = "";
     break;
+  case OPENNEBULA:
+    libname += "opennebula";
+    realBatchVersion = "";
+    break;
   case POSIX: // POSIX IS THE DEFAULT CASE
   default : // Always compile tmp-posix
     libname += "posix";

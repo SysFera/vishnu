@@ -44,9 +44,22 @@ using namespace std;
  * \return Always 1
  */
 int
-usage(char* cmd) {
+usage(char* cmd)
+{
   std::cout << "\nUsage: " << cmd << " vishnu_config.cfg\n\n";
   return 1;
+}
+
+/**
+ * @brief Export cloud specific configuration parameters as environments variables
+ */
+void
+exportCloudSpecificParam(ExecConfiguration_Ptr config)
+{
+  std::string paramValue;
+  if (config->getConfigValue<std::string>(vishnu::CLOUDENDPOINT, paramValue)) {
+    setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT].c_str(), paramValue.c_str(),  1);
+  }
 }
 
 /**
@@ -78,10 +91,10 @@ int main(int argc, char* argv[], char* envp[]) {
     return vishnu::showVersion("tmssed");
   }
 
-
-  system("touch -f $HOME/.vishnurc"); // Create empty file it don't exist
-  vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc"); // Source the rc file
-
+  std::string vishnuRcFile = boost::str(boost::format("%1%/.vishnurc") % getenv("HOME"));
+  if (boost::filesystem::exists(vishnuRcFile)) {
+    vishnu::sourceFile(vishnuRcFile);
+  }
   // Read the configuration
   ExecConfiguration_Ptr config(new ExecConfiguration);
   DbConfiguration dbConfig(*config);
@@ -103,56 +116,54 @@ int main(int argc, char* argv[], char* envp[]) {
     config->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     batchType = vishnu::convertToBatchType(batchTypeStr);
     if (batchType == UNDEFINED) {
-      std::cerr << "\nError: Invalid batch. Batch type must be TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBSPRO, POSIX or DELTACLOUD)\n";
+      std::cerr << boost::format("Invalid batch backend: %1%\n")% batchTypeStr;
       exit(1);
     }
 
-    if (batchType != DELTACLOUD) {
+    if (batchType != DELTACLOUD && batchType != OPENNEBULA) {
       config->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);
     }
 
     std::string versError;
     switch (batchType) {
-    case TORQUE: {
+    case TORQUE:
       if (batchVersion != "2.3") {
         versError = "2.3";
       }
       break;
-    }
-    case PBSPRO: {
+    case PBSPRO:
       if (batchVersion != "10.4") {
         versError = "10.4";
       }
       break;
-    }
-    case LOADLEVELER: {
+    case LOADLEVELER:
       if (batchVersion != "3.x" && batchVersion != "2.x") {
         versError = "2.x and 3.x";
       }
       break;
-    }
-    case SLURM: {
+    case SLURM:
       if (batchVersion != "2.2" &&
           batchVersion != "2.3" &&
-          batchVersion != "2.4" && 
-		  batchVersion != "2.5" && 
-		  batchVersion != "2.6") {
-         versError = "2.x, 2 <= x << 6";
+          batchVersion != "2.4" &&
+          batchVersion != "2.5" &&
+          batchVersion != "2.6") {
+        versError = "2.x, 2 <= x << 6";
       }
       break;
-    }
-    case LSF: {
+    case LSF:
       if (batchVersion != "7.0") {
         versError = "7.0";
       }
       break;
-    }
-    case SGE: {
+    case SGE:
       if (batchVersion != "11") {
         versError = "11";
       }
       break;
-    }
+    case DELTACLOUD:
+    case OPENNEBULA:
+      exportCloudSpecificParam(config);
+      break;
     default:
       break;
     }
@@ -200,7 +211,7 @@ int main(int argc, char* argv[], char* envp[]) {
       if (!res) {
         initSeD(TMSTYPE, *config, uri, server);
       } else {
-        std::cerr << "[TMSSED] [ERROR] Initialization failed.\n";
+        std::cerr << "[ERROR] Sed initialization failed.\n";
         exit(1);
       }
     } catch (VishnuException& e) {

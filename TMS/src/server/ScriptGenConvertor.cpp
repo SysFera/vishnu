@@ -167,8 +167,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[commandSec]           = "";
     mconversionTable[torqueSec]            = "";
     mendScript="";
-  } else if (mbatchType==DELTACLOUD) {
-    //TODO
+  } else { // Other batch backend
     mconversionTable[workingDir]           = "#";
     mconversionTable[jobName]              = "#";
     mconversionTable[jobOutput]            = "#";
@@ -182,31 +181,11 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[mailNotifyUser]       = "#";
     mconversionTable[queue]                = "#";
 
-    mconversionTable[sgeSec]               = "#";
-    mconversionTable[commandSec]           = "";
-    mconversionTable[torqueSec]            = "#";
-    mendScript="";
-  } else {
-    std::cerr << "Unknown Batch type\n";
-    mconversionTable[workingDir]           = "#";
-    mconversionTable[jobName]              = "#";
-    mconversionTable[jobOutput]            = "#";
-    mconversionTable[jobError]             = "#";
-    mconversionTable[jobWallClockLimit]    = "#";
-    mconversionTable[cpuTime]              = "#";
-    mconversionTable[nbCpu]                = "#";
-    mconversionTable[nbNodesAndCpuPerNode] = "#";
-    mconversionTable[mem]                  = "#";
-    mconversionTable[mailNotification]     = "#"; //special case
-    mconversionTable[mailNotifyUser]       = "#";
-    mconversionTable[queue]                = "#";
-    
     mconversionTable[sgeSec]               = "#";
     mconversionTable[commandSec]           = "";
     mconversionTable[torqueSec]            = "#";
     mendScript="";
   }
-
 }
 
 /**
