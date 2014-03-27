@@ -80,6 +80,16 @@ public:
 
 private:
   /**
+   * @brief Holds the job id
+   */
+  std::string mjobId;
+
+  /**
+   * @brief Holds job output dir
+   */
+  std::string mjobOutputDir;
+
+  /**
    * \brief Holds the endpoint of the cloud infrastructure
    */
   std::string mcloudEndpoint;

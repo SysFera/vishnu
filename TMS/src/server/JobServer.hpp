@@ -266,6 +266,13 @@ private:
                                JsonObject* options,
                                const std::vector<std::string>& defaultBatchOption);
 
+  /**
+   * @brief Export environment variables used throughout the execution, notably in cloud mode
+   * @param defaultJobInfo The default job info
+   */
+  void
+  exportJobEnvironments(const TMS_Data::Job &defaultJobInfo);
+
 private:
 
   /**
