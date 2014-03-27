@@ -104,6 +104,8 @@ JobServer::submitJob(std::string& scriptContent,
     jobInfo.setJobPath(options->getStringProperty("scriptpath"));
     jobInfo.setOutputDir(options->getStringProperty("outputdir"));
 
+    exportJobEnvironments(jobInfo);
+
     if (mstandaloneSed != 0) {
       handleNativeBatchExec(SubmitBatchAction,
                             createJobScriptExecutaleFile(scriptContent, options, defaultBatchOption),
@@ -251,9 +253,9 @@ JobServer::handleNativeBatchExec(int action,
   } else { // parent process
     int exitCode;
     waitpid(pid, &exitCode, 0);
-//    if (! WIFEXITED(exitCode) || WEXITSTATUS(exitCode) != 0) {
-//      throw TMSVishnuException(exitCode, "Batch operation failed");
-//    }
+    //    if (! WIFEXITED(exitCode) || WEXITSTATUS(exitCode) != 0) {
+    //      throw TMSVishnuException(exitCode, "Batch operation failed");
+    //    }
   }
 }
 
@@ -1009,4 +1011,15 @@ JobServer::createJobScriptExecutaleFile(std::string& content,
   }
 
   return path;
+}
+
+/**
+ * @brief Export environment variables used throughout the execution, notably in cloud mode
+ * @param defaultJobInfo The default job info
+ */
+void
+JobServer::exportJobEnvironments(const TMS_Data::Job& defaultJobInfo)
+{
+  setenv("VISHNU_JOB_ID", defaultJobInfo.getJobId().c_str(), 1);
+  setenv("VISHNU_OUTPUT_DIR", defaultJobInfo.getOutputDir().c_str(), 1);
 }

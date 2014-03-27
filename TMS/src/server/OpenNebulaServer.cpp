@@ -56,6 +56,9 @@ OpenNebulaServer::submit(const std::string& scriptPath,
                          TMS_Data::ListJobs& jobSteps,
                          char** envp)
 {
+  mjobId = vishnu::getVar("VISHNU_JOB_ID", false);
+  mjobOutputDir = vishnu::getVar("VISHNU_OUTPUT_DIR", false);
+
   replaceEnvVariables(scriptPath);
   OneRPCManager rpcManager(mcloudEndpoint);
   rpcManager.setMethod("one.vm.allocate");
@@ -73,14 +76,14 @@ OpenNebulaServer::submit(const std::string& scriptPath,
   TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
   jobPtr->setVmId(vishnu::convertToString(rpcManager.getIntResult()));
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
-  jobPtr->setJobName("PID_"+jobPtr->getBatchJobId());
+  //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
+  jobPtr->setJobName(returnInputOrDefaultIfEmpty(options.getName(), "PID_"+jobPtr->getBatchJobId()));
   jobPtr->setOutputPath(jobPtr->getOutputDir()+"/stdout");
   jobPtr->setErrorPath(jobPtr->getOutputDir()+"/stderr");
   jobPtr->setNbNodes(1);
 
   jobSteps.getJobs().push_back(jobPtr);
 
-  //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
   return 0;
 }
 
@@ -168,7 +171,8 @@ TMS_Data::ListQueues*
 OpenNebulaServer::listQueues(const std::string& optQueueName) {
 
   //TODO The semantic is no yet defined
-  return new TMS_Data::ListQueues();
+  throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "listQueues is not supported");
+  return NULL;
 }
 
 

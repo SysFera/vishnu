@@ -28,7 +28,9 @@ DeltaCloudServer::DeltaCloudServer()
     mvmUser(""),
     mvmUserKey(""),
     mnfsServer(""),
-    mnfsMountPoint("") {}
+    mnfsMountPoint("")
+{
+}
 
 DeltaCloudServer::~DeltaCloudServer() {
   deltacloud_free(mcloudApi);
@@ -49,9 +51,12 @@ DeltaCloudServer::submit(const std::string& scriptPath,
                          char** envp) {
 
   initialize(); // Initialize Delatacloud API
+
+  mjobId = vishnu::getVar("VISHNU_JOB_ID", false);
+  mjobOutputDir = vishnu::getVar("VISHNU_OUTPUT_DIR", false);
+
   retrieveSpecificParams(options.getSpecificParams()); // First set specific parameters
   replaceEnvVariables(scriptPath.c_str());
-
 
   // Get configuration parameters
   //FIXME: possibly memory leak if vishnu::getVar through exception. We may need to catch that and free deltacloud API by calling finalize()
@@ -84,10 +89,8 @@ DeltaCloudServer::submit(const std::string& scriptPath,
   param.value = strdup(mvmUserKey.c_str());
   params.push_back(param);
 
-  TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
-  std::string vmName = "vishnu-job.vm."+jobPtr->getJobId(); //FIXME: jobPtr is newly created, so getJobId() is empty
   param.name = strdup("name");
-  param.value = strdup(vmName.c_str());
+  param.value = strdup(boost::str(boost::format("vishnu-job.vm.%1%") % mjobId).c_str());
   params.push_back(param);
 
   char *instid = NULL;
@@ -117,7 +120,9 @@ DeltaCloudServer::submit(const std::string& scriptPath,
     throw TMSVishnuException(ERRCODE_UNKNOWN_BATCH_SCHEDULER, msg);
   }
 
-  vishnu::saveInFile(jobPtr->getOutputDir()+"/NODEFILE", instanceAddr->address); // Create the NODEFILE
+  std::string nodeFile = boost::str(boost::format("%1%/NODEFILE") % mjobOutputDir);
+  vishnu::saveInFile(nodeFile, instanceAddr->address); // Create the NODEFILE
+
   std::cout << boost::format("[TMS][INFO] Virtual machine started\n"
                              " ID: %1%\n"
                              " NAME: %2%\n"
@@ -128,18 +133,20 @@ DeltaCloudServer::submit(const std::string& scriptPath,
   SSHJobExec sshEngine(mvmUser, instanceAddr->address);
   int jobPid = -1;
   try {
-    jobPid = sshEngine.execRemoteScript(scriptPath.c_str(), mnfsServer, mnfsMountPoint, jobPtr->getOutputDir());
+    jobPid = sshEngine.execRemoteScript(scriptPath.c_str(), mnfsServer, mnfsMountPoint, mjobOutputDir);
   } catch(...) {
     throw;
   }
+  TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
+
   jobPtr->setBatchJobId(vishnu::convertToString(jobPid));
-  jobPtr->setJobName("PID_"+jobPtr->getBatchJobId());
+  jobPtr->setJobName("PID_"+jobPid);
   jobPtr->setBatchJobId(vishnu::convertToString(jobPid));
   jobPtr->setVmId(instance.id);
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
   jobPtr->setVmIp(instanceAddr->address);
-  jobPtr->setOutputPath(jobPtr->getOutputDir()+"/stdout");
-  jobPtr->setErrorPath(jobPtr->getOutputDir()+"/stderr");
+  jobPtr->setOutputPath(boost::str(boost::format("%1%/stdout") % mjobOutputDir));
+  jobPtr->setErrorPath(boost::str(boost::format("%1%/stderr") % mjobOutputDir));
   jobPtr->setNbNodes(1);
 
   jobSteps.getJobs().push_back(jobPtr);

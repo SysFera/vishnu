@@ -94,6 +94,17 @@ private:
   std::string mcloudUser;
 
   /**
+   * @brief Holds the job id
+   */
+  std::string mjobId;
+
+  /**
+   * @brief Holds job output dir
+   */
+  std::string mjobOutputDir;
+
+
+  /**
    * \brief Holds the cloud user passsword
    */
   std::string mcloudUserPassword;
