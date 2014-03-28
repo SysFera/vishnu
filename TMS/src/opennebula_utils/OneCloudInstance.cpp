@@ -1,0 +1,257 @@
+/*                                                                             #
+# File        : OneHostPool.hpp                                                #
+# Creation    : 26/03/2014                                                     #
+# Author      : Rodrigue Chakode <rodrigue.chakode@sysfera.com>                #
+# Description : Class and header to request data from OpenNebula's XML-RPC API #
+*/
+
+
+#include "OneCloudInstance.hpp"
+#include "OneRPCManager.hpp"
+#include "tmsUtils.hpp"
+#include <boost/scoped_ptr.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/filesystem.hpp>
+
+
+OneCloudInstance::OneCloudInstance(const std::string& rpcUrl, const std::string &authChain)
+  : mrpcUrl(rpcUrl),
+    mauthChain(authChain),
+    mhostPoolFilename(boost::filesystem::unique_path("/tmp/one.hoostpool%%%%%%.xml").string())
+{
+}
+
+xercesc::DOMNodeList* OneCloudInstance::initializeXmlElts(const std::string& xmlFileName,
+                                                          xercesc::XercesDOMParser*& parser,
+                                                          const std::string& TAG)
+{
+  xercesc::XMLPlatformUtils::Initialize();
+  parser = new xercesc::XercesDOMParser();
+  parser->setDoNamespaces(true);
+  parser->parse(xmlFileName.c_str());
+
+  xercesc::DOMDocument* xmlDoc = parser->getDocument();
+  return xmlDoc->getElementsByTagName(xercesc::XMLString::transcode(TAG.c_str()));
+}
+
+void OneCloudInstance::releaseXmlElts(xercesc::XercesDOMParser* parser)
+{
+  delete parser;
+  xercesc::XMLPlatformUtils::Terminate();
+}
+
+void OneCloudInstance::updatePool(void)
+{
+  OneRPCManager rpcManager(mrpcUrl);
+  rpcManager.setMethod("one.hostpool.info");
+  rpcManager.addParam(mauthChain);
+
+  rpcManager.execute();
+
+  if (rpcManager.lastCallSucceeded()) {
+    parseRpcHostPoolResult(rpcManager.getStringResult());
+  } else {
+    std::clog << rpcManager.getStringResult()<<"\n";
+  }
+}
+
+
+int OneCloudInstance::loadVmInfo(int id, VmT& vm)
+{
+
+  int retCode = -1;
+  OneRPCManager rpcManager(mrpcUrl);
+  rpcManager.setMethod("one.vm.info");
+  rpcManager.addParam(mauthChain);
+  rpcManager.addParam(id);
+
+  rpcManager.execute();
+
+  if (rpcManager.lastCallSucceeded()) {
+    parseRpcVmInfoResult(rpcManager.getStringResult(), vm);
+    retCode = 0;
+  } else {
+    std::clog << rpcManager.getStringResult()<<"\n";
+  }
+  return retCode;
+}
+
+void OneCloudInstance::parseRpcHostPoolResult(const std::string& content)
+{
+  vishnu::saveInFile(mhostPoolFilename, content);
+
+  try {
+    xercesc::XercesDOMParser* hostPoolParser;
+    xercesc::DOMNodeList* xmlHosts;
+
+    xmlHosts = initializeXmlElts(mhostPoolFilename, hostPoolParser, "HOST");
+    HostT host;
+
+    size_t hostCount = 0;
+    if (xmlHosts) {
+      mhostPool.clear();
+      hostCount = xmlHosts->getLength();
+      for(size_t hostIndex = 0; hostIndex <  hostCount; ++hostIndex){
+        parseHostInfo(xmlHosts->item(hostIndex), host);
+        mhostPool.push_back(host);
+      }
+    }
+    releaseXmlElts(hostPoolParser);
+  } catch (const xercesc::XMLException& ex) {
+    char* message = xercesc::XMLString::transcode(ex.getMessage());
+    std::clog << message<< "\n";
+    xercesc::XMLString::release(&message);
+  } catch (const xercesc::DOMException& ex) {
+    char* message = xercesc::XMLString::transcode(ex.msg);
+    std::clog << message<< "\n";
+    xercesc::XMLString::release(&message);
+  } catch (...) {
+    std::clog << "Unable to access host pool file: "<< mhostPoolFilename<< "\n";
+  }
+
+  vishnu::deleteFile(mhostPoolFilename.c_str());
+}
+
+
+void OneCloudInstance::parseRpcVmInfoResult(const std::string& content, VmT& vm)
+{
+  vishnu::saveInFile(mhostPoolFilename, content);
+
+  try {
+    xercesc::XercesDOMParser* parser;
+    xercesc::DOMNodeList* vmInfo;
+
+    vmInfo = initializeXmlElts(mhostPoolFilename, parser, "VM");
+    if (vmInfo != NULL && vmInfo->getLength() == 1) {
+      parseVmInfo(vmInfo->item(0), vm);
+    }
+    releaseXmlElts(parser);
+  } catch (const xercesc::XMLException& ex) {
+    char* message = xercesc::XMLString::transcode(ex.getMessage());
+    std::clog << message<< "\n";
+    xercesc::XMLString::release(&message);
+  } catch (const xercesc::DOMException& ex) {
+    char* message = xercesc::XMLString::transcode(ex.msg);
+    std::clog << message<< "\n";
+    xercesc::XMLString::release(&message);
+  } catch (...) {
+    std::clog << "Unable to access host pool file: "<< mhostPoolFilename<< "\n";
+  }
+
+  vishnu::deleteFile(mhostPoolFilename.c_str());
+}
+
+void OneCloudInstance::parseHostInfo(xercesc::DOMNode* node, HostT& host)
+{
+  xercesc::DOMNodeList*  hostNodes = node->getChildNodes();
+  size_t hostEltCount =   hostNodes->getLength();
+  for (size_t hindex = 0; hindex < hostEltCount; ++hindex) {
+    xercesc::DOMNode* hostNode =  hostNodes->item(hindex);
+
+    if( hostNode->getNodeType()
+        && hostNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE ) {
+
+      xercesc::DOMElement* hostElt = dynamic_cast<xercesc::DOMElement*>(hostNode);
+      std::string name = xercesc::XMLString::transcode(hostElt->getNodeName());
+      std::string text =  xercesc::XMLString::transcode(hostElt->getTextContent());
+
+      if(name == "ID") {
+        host.id = atoi(text.c_str());
+      } else if(name == "NAME") {
+        host.name = text;
+      } else if (name == "STATE") {
+        host.state = static_cast<int>(atoi(text.c_str()));
+      } else if (name == "HOST_SHARE") {
+
+        xercesc::DOMNodeList* hostAttrList = hostNode->getChildNodes();
+        size_t hostAttrCount = hostAttrList->getLength();
+        for(size_t attr = 0; attr < hostAttrCount; ++attr) {
+          xercesc::DOMNode* hostAttrNode = hostAttrList->item(attr);
+
+          if(hostAttrNode->getNodeType()
+             && hostAttrNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE) {
+
+            xercesc::DOMElement* hostAttrElt = dynamic_cast<xercesc::DOMElement*>(hostAttrNode);
+            std::string name = xercesc::XMLString::transcode(hostAttrElt->getNodeName());
+            std::string text =  xercesc::XMLString::transcode(hostAttrElt->getTextContent());
+
+            if (name == "MEM_USAGE") {
+              host.reservedMemory = boost::lexical_cast<double>(text);
+            } else if (name == "MAX_MEM") {
+              host.maxMemory = boost::lexical_cast<double>(text);
+            } else if(name == "FREE_MEM") {
+              host.freeMemory = boost::lexical_cast<double>(text);
+            } else if(name == "USED_MEM") {
+              host.usedMemory = boost::lexical_cast<double>(text);
+            } else if (name == "CPU_USAGE") {
+              host.reservedCpu = boost::lexical_cast<double>(text);
+            } else if (name == "MAX_CPU") {
+              host.maxCpu = boost::lexical_cast<double>(text);
+            } else if(name == "FREE_CPU"){
+              host.freeCpu = boost::lexical_cast<double>(text);
+            } else if(name == "USED_CPU") {
+              host.usedCpu = boost::lexical_cast<double>(text);
+            } else if(name == "RUNNING_VMS") {
+              host.runningVms = atoi(text.c_str());
+            }
+          }
+        }
+      }  // HOST_SHARE
+    }
+  }
+}
+
+void OneCloudInstance::parseVmInfo(xercesc::DOMNode* node, VmT& vm)
+{
+  xercesc::DOMNodeList*  vmNodes = node->getChildNodes();
+  for (size_t eltIndex = 0, eltCount = vmNodes->getLength();
+       eltIndex < eltCount;
+       ++eltIndex)
+  {
+    xercesc::DOMNode* vmNode =  vmNodes->item(eltIndex);
+    xercesc::DOMElement* vmElt = dynamic_cast<xercesc::DOMElement*>(vmNode);
+    std::string vmEltName = xercesc::XMLString::transcode(vmElt->getNodeName());
+    std::string vmEltText =  xercesc::XMLString::transcode(vmElt->getTextContent());
+
+    if(vmEltName == "ID") {
+      vm.id = atoi(vmEltText.c_str());
+    } else if(vmEltName == "NAME") {
+      vm.name = vmEltText;
+    } else if (vmEltName == "STATE") {
+      vm.state = static_cast<int>(atoi(vmEltText.c_str()));
+    } else if (vmEltName == "TEMPLATE") {
+      xercesc::DOMNodeList* vmAttrList = vmNode->getChildNodes();
+      for (size_t vmAttr = 0, vmAttrCount = vmAttrList->getLength();
+           vmAttr < vmAttrCount;
+           ++vmAttr)
+      {
+        xercesc::DOMNode* vmAttrNode = vmAttrList->item(vmAttr);
+        xercesc::DOMElement* vmAttrElt = dynamic_cast<xercesc::DOMElement*>(vmAttrNode);
+        std::string vmAttrName = xercesc::XMLString::transcode(vmAttrElt->getNodeName());
+        std::string vmAttrText =  xercesc::XMLString::transcode(vmAttrElt->getTextContent());
+
+        if (vmAttrName == "NIC") {
+          xercesc::DOMNodeList* nicAttrList = vmAttrNode->getChildNodes();
+
+          for (size_t nicAttr = 0, nicAttrCount = nicAttrList->getLength();
+               nicAttr < nicAttrCount;
+               ++nicAttr)
+          {
+            xercesc::DOMNode* nicAttrNode = nicAttrList->item(nicAttr);
+            xercesc::DOMElement* nicAttrElt = dynamic_cast<xercesc::DOMElement*>(nicAttrNode);
+            std::string nicAttrName = xercesc::XMLString::transcode(nicAttrElt->getNodeName());
+            std::string nicAttrText =  xercesc::XMLString::transcode(nicAttrElt->getTextContent());
+
+            if (nicAttrName == "IP") {
+              vm.ipAddr = nicAttrText;
+            }
+          }
+        } else if (vmAttrName == "CPU") {
+          vm.cpu = boost::lexical_cast<double>(vmAttrText);
+        } else if(vmAttrName == "MEMORY") {
+          vm.memory = boost::lexical_cast<double>(vmAttrText);
+        }
+      }
+    }  // HOST_SHARE
+  }
+}

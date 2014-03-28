@@ -212,6 +212,21 @@ private:
    */
   int
   returnInputOrDefaultIfNegativeNull(int value, int defaultValue);
+
+
+  /**
+   * @brief monitorScriptState
+   * @param jobId
+   * @param pid
+   * @param vmIp
+   * @param uid
+   * @return
+   */
+  int
+  monitorScriptState(const std::string& jobId,
+                     const std::string& pid,
+                     const std::string& vmIp,
+                     const std::string& uid);
 };
 
 #endif /* OpenNebulaServer_HPP_ */
