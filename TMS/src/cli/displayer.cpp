@@ -60,7 +60,9 @@ displayJob(TMS_Data::Job& job){
 
   cout << " Job                    : " << job.getJobId()  << " (Batch ID : "<<job.getBatchJobId() <<")";
   cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "-");
-  cout << "\n Related Jobs         : " << job.getRelatedSteps();
+  if (! job.getRelatedSteps().empty()) {
+    cout << "\n Related Jobs         : " << job.getRelatedSteps();
+  }
   cout << "\n User                 : " << job.getUserId();
   cout << "\n Session              : " << job.getSessionId();
   cout << "\n Machine              : " << job.getSubmitMachineId() << " (Host: " << job.getSubmitMachineName() << ")";
@@ -78,6 +80,9 @@ displayJob(TMS_Data::Job& job){
   cout << "\n CPU per Node         : " << job.getNbCpus();
   cout << "\n Working dir (remote) : " << job.getJobWorkingDir();
   cout << "\n Status               : " << vishnu::convertJobStateToString(job.getStatus());
+  if (job.getStatus() == vishnu::STATE_FAILED) {
+    cout << "\n Submit error       : " << job.getSubmitError();
+  }
   if (job.getSubmitDate() > 0) {
     pt =  boost::posix_time::from_time_t(job.getSubmitDate());
     cout << "\n Submit date          : " << boost::posix_time::to_simple_string(pt);
