@@ -113,51 +113,61 @@ OpenNebulaServer::cancel(const std::string& vmId)
 
 /**
  * \brief Function to get the status of the job
- * \param jobDescr the job description in the form of pid@user@vmaddress@vmId
+ * \param jobJsonSerialized the job structure encoded in json
  * \return -1 if the job is unknown or server not unavailable
  */
 int
-OpenNebulaServer::getJobState(const std::string& jobDescr) {
+OpenNebulaServer::getJobState(const std::string& jobSerialized) {
 
   // Get job infos
-  ListStrings jobInfos = getJobInfos(jobDescr, 4);
-  std::string pid = jobInfos[0];
-  std::string vmUser = jobInfos[1];
-  std::string vmIp = jobInfos[2];
-  std::string vmId = jobInfos[3];
+  int jobStatus = vishnu::STATE_UNDEFINED;
+  JsonObject job(jobSerialized);
+  std::string jobId = job.getStringProperty("jobid");
+  std::string pid = job.getStringProperty("batchjobid");
+  std::string vmUser = job.getStringProperty("owner");
+  std::string vmId = job.getStringProperty("vmid");
+  std::string vmIp = job.getStringProperty("vmip");
 
-  SSHJobExec sshEngine(vmUser, vmIp);
-  std::string statusFile = boost::str(boost::format("/tmp/%1%") % jobDescr);
-  std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
-  sshEngine.execCmd(cmd, false);
+  if (! pid.empty() && ! vmIp.empty()) {
+    SSHJobExec sshEngine(vmUser, vmIp);
+    std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % pid % vmIp);
+    std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
+    sshEngine.execCmd(cmd, false);
 
-  // Check if the job is completed
-  // If yes stop the virtual machine and release the resources
-  int status = vishnu::STATE_RUNNING;
-  if (vishnu::getStatusValue(statusFile) == 0) {
-    releaseResources(vmId);
-    status = vishnu::STATE_COMPLETED;
+    // Check if the job is completed
+    // If yes stop the virtual machine and release the resources
+    if (vishnu::getStatusValue(statusFile) == 0) {
+      releaseResources(vmId);
+      jobStatus = vishnu::STATE_COMPLETED;
+    } else {
+      jobStatus = vishnu::STATE_RUNNING;
+    }
+    vishnu::deleteFile(statusFile.c_str());
+  } else {
+    LOG(boost::str(boost::format("[WARN] Unable to monitor job: %1%, VMID: %2%."
+                                 " Empty process or vm address") % jobId % vmId), 4);
+    jobStatus = vishnu::STATE_UNDEFINED;
   }
-
-  vishnu::deleteFile(statusFile.c_str());
-
-  return status;
+  return jobStatus;
 }
 
 /**
  * \brief Function to get the start time of the job
- * \param jobDescr the description of the job in the form of jobId@vmId
+ * \param jobJsonSerialized The job structure encoded in json
  * \return 0 if the job is unknown
  */
 time_t
-OpenNebulaServer::getJobStartTime(const std::string& jobDescr) {
+OpenNebulaServer::getJobStartTime(const std::string& jobJsonSerialized) {
 
+  //FIXME:
   long long startTime = 0;
-  ListStrings jobInfos = getJobInfos(jobDescr, 2); // Get the job information
   OneRPCManager rpcManager(mcloudEndpoint);
   rpcManager.setMethod("one.vm.info");
   rpcManager.addParam(getSessionString());
-  rpcManager.addParam(vishnu::convertToInt(jobInfos[1]));
+
+  JsonObject jobJson(jobJsonSerialized);
+  rpcManager.addParam( jobJson.getStringProperty("vmid") );
+
   rpcManager.execute();
   return startTime;
 }
@@ -215,23 +225,6 @@ void OpenNebulaServer::releaseResources(const std::string& vmId)
   //FIXME: check that the vm is shutdown and clear it
   LOG(boost::str(boost::format("[INFO] VM deleted: %1%") % vmId), 1);
 }
-
-/**
- * \brief Function to decompose job information
- * \param: jobDescr The description of the job in the form of param1@param2@...
- * \param: numParams The number of expected parameters
- */
-ListStrings OpenNebulaServer::getJobInfos(const std::string jobDescr, const int & numParams)
-{
-  ListStrings jobInfos;
-  boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
-  if(jobInfos.size() != numParams) {
-    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Bad job description "+std::string(jobDescr)+ "\n"
-                             "Expects "+vishnu::convertToString(numParams)+" parameters following the pattern param1@param2...");
-  }
-  return jobInfos;
-}
-
 
 /**
  * \brief To retrieve specific submission parameters
