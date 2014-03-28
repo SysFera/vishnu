@@ -60,31 +60,6 @@ BOOST_AUTO_TEST_CASE( test_convertToLong_b )
   BOOST_MESSAGE("Test convert to long OK");
 }
 
-BOOST_AUTO_TEST_CASE( test_convertToTimeType_n )
-{
-
-  std::string input_1 = "0000-00-00";
-  std::string input_2 = "";
-  long long res1 = 0;
-  long long res2 = 0;
-
-  BOOST_REQUIRE_EQUAL(vishnu::convertToTimeType(input_1), res1);
-  BOOST_REQUIRE_EQUAL(vishnu::convertToTimeType(input_2), res2);
-  BOOST_MESSAGE("Test convert to time type OK");
-}
-
-BOOST_AUTO_TEST_CASE( test_convertToTimeType_b )
-{
-
-  std::string input_3 = "0000-01-10";
-  std::string input_4 = "2000-00-10";
-  std::string input_5 = "2000-10-00";
-
-  BOOST_REQUIRE_THROW(vishnu::convertToTimeType(input_3), UserException);
-  BOOST_REQUIRE_THROW(vishnu::convertToTimeType(input_4), UserException);
-  BOOST_REQUIRE_THROW(vishnu::convertToTimeType(input_5), UserException);
-  BOOST_MESSAGE("Test convert to time type OK");
-}
 
 BOOST_AUTO_TEST_CASE( test_cryptPwd_n )
 {
