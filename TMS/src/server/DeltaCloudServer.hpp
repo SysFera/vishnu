@@ -46,11 +46,11 @@ public:
 
   /**
    * \brief Function to get the status of the job
-   * \param jobDescr the job description along with the descritpion of the associated virtual machine
+   * \param jobJsonSerialized the job structure encoded in json
    * \return -1 if the job is unknown or server not  unavailable
    */
   int
-  getJobState(const std::string& jobDescr);
+  getJobState(const std::string& jobSerialized);
 
   /**
    * \brief Function to get the start time of the job
@@ -158,15 +158,6 @@ private:
    */
   void
   releaseResources(const std::string & vmid);
-
-  /**
-   * \brief Function to decompose job information
-   * \param jobDescr The description of the job in the form of param1\@param2@...
-   * \param numParams The number of expected parameters
-   * \return ListStrings aka a vector of string parameters or throw exception on error
-   */
-  ListStrings
-  getJobInfos(const std::string jobDescr, const int & numParams);
 
   /**
    * \brief Function for cleaning up a deltacloud params list

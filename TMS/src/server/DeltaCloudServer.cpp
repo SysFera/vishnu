@@ -174,21 +174,21 @@ DeltaCloudServer::cancel(const std::string& vmId) {
 
 /**
  * \brief Function to get the status of the job
- * \param jobDescr the job description in the form of pid@user@vmaddress@vmId
+ * \param jobJsonSerialized the job structure encoded in json
  * \return -1 if the job is unknown or server not unavailable
  */
 int
-DeltaCloudServer::getJobState(const std::string& jobDescr) {
+DeltaCloudServer::getJobState(const std::string& jobSerialized) {
 
-  // Get job infos
-  ListStrings jobInfos = getJobInfos(jobDescr, 4);
-  std::string pid = jobInfos[0];
-  std::string vmUser = jobInfos[1];
-  std::string vmIp = jobInfos[2];
-  std::string vmId = jobInfos[3];
+  JsonObject job(jobSerialized);
+  std::string jobId = job.getStringProperty("jobid");
+  std::string pid = job.getStringProperty("batchjobid");
+  std::string vmUser = job.getStringProperty("owner");
+  std::string vmId = job.getStringProperty("vmid");
+  std::string vmIp = job.getStringProperty("vmip");
 
   SSHJobExec sshEngine(vmUser, vmIp);
-  std::string statusFile = "/tmp/"+jobDescr;
+  std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % pid % vmIp);
   std::string cmd = (boost::format("ps -o pid= -p %1% | wc -l > %2%")%pid %statusFile).str();
   sshEngine.execCmd(cmd, false);
 
@@ -207,22 +207,26 @@ DeltaCloudServer::getJobState(const std::string& jobDescr) {
 
 /**
  * \brief Function to get the start time of the job
- * \param jobDescr the description of the job in the form of jobId@vmId
+ * \param jobJsonSerialized The job structure encoded in json
  * \return 0 if the job is unknown
  */
 time_t
-DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
+DeltaCloudServer::getJobStartTime(const std::string& jobJsonSerialized) {
 
   initialize(); // Initialize the Cloud API
-  ListStrings jobInfos = getJobInfos(jobDescr, 2); // Get the job information
+
+  JsonObject jobJson(jobJsonSerialized);
+  std::string vmid = jobJson.getStringProperty("vmid");
+
   deltacloud_instance instance; // Get the instance
-  if (deltacloud_get_instance_by_id(mcloudApi, jobInfos[1].c_str(), &instance) < 0) {
+  if (deltacloud_get_instance_by_id(mcloudApi, vmid.c_str(), &instance) < 0) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
   }
+
   long long startTime = 0;
   try {
-    startTime = vishnu::convertToTimeType(instance.launch_time);
-  } catch (...) {} // leave 0
+    startTime = vishnu::convertStringToWallTime(instance.launch_time);
+  } catch (...) {} // leave empty
   deltacloud_free_instance(&instance);
   finalize();
   return startTime;
@@ -307,21 +311,6 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
   finalize();
 }
 
-/**
- * \brief Function to decompose job information
- * \param: jobDescr The description of the job in the form of param1@param2@...
- * \param: numParams The number of expected parameters
- */
-ListStrings DeltaCloudServer::getJobInfos(const std::string jobDescr, const int & numParams) {
-
-  ListStrings jobInfos;
-  boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
-  if(jobInfos.size() != numParams) {
-    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Bad job description "+std::string(jobDescr)+ "\n"
-                             "Expects "+vishnu::convertToString(numParams)+" parameters following the pattern param1@param2...");
-  }
-  return jobInfos;
-}
 
 /**
  * \brief Function for cleaning up the allocated dynamic data structure
