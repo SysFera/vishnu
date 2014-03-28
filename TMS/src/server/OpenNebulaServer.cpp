@@ -81,8 +81,8 @@ OpenNebulaServer::submit(const std::string& scriptPath,
     jobPtr->setVmIp(vmInfo.ipAddr);
   }
 
-  LOG(boost::str(boost::format("[INFO] Virtual machine created: %1%, IP: %2%"
-                               ) %  jobPtr->getVmId() % jobPtr->getVmIp()), 1);
+  LOG(boost::format("[INFO] Virtual machine created. ID: %1%, IP: %2%"
+                    ) %  jobPtr->getVmId() % jobPtr->getVmIp(), 1);
 
   //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
@@ -116,7 +116,7 @@ OpenNebulaServer::cancel(const std::string& vmId)
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, rpcManager.getStringResult());
   }
 
-  LOG(boost::str(boost::format("[INFO] VM deleted: %1%") % vmId), 1);
+  LOG(boost::format("[INFO] VM deleted: %1%") % vmId, 1);
   return 0;
 }
 
@@ -168,8 +168,8 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
       releaseResources(vmId);
     }
   } else {
-    LOG(boost::str(boost::format("[WARN] Unable to monitor job: %1%, VMID: %2%."
-                                 " Empty vm address") % jobId % vmId), 4);
+    LOG(boost::format("[WARN] Unable to monitor job: %1%, VMID: %2%."
+                                 " Empty vm address") % jobId % vmId, 4);
     jobStatus = vishnu::STATE_UNDEFINED;
   }
   return jobStatus;
@@ -247,7 +247,7 @@ void OpenNebulaServer::releaseResources(const std::string& vmId)
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, rpcManager.getStringResult());
   }
   //FIXME: check that the vm is shutdown and clear it
-  LOG(boost::str(boost::format("[INFO] VM deleted: %1%") % vmId), 1);
+  LOG(boost::format("[INFO] VM deleted: %1%") % vmId, 1);
 }
 
 /**
@@ -440,18 +440,24 @@ OpenNebulaServer::monitorScriptState(const std::string& jobId,
                                      const std::string& vmIp,
                                      const std::string& uid)
 {
-  int jobStatus;
-  SSHJobExec sshEngine(uid, vmIp);
-  std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % pid % vmIp);
-  std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
+  int jobStatus = vishnu::STATE_UNDEFINED;
+  if (! pid.empty()) {
+    SSHJobExec sshEngine(uid, vmIp);
+    std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % pid % vmIp);
+    std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
 
-  sshEngine.execCmd(cmd, false);
+    sshEngine.execCmd(cmd, false);
 
-  if (vishnu::getStatusValue(statusFile) == 0) {
-    jobStatus = vishnu::STATE_COMPLETED;
+    if (vishnu::getStatusValue(statusFile) == 0) {
+      jobStatus = vishnu::STATE_COMPLETED;
+    } else {
+      jobStatus = vishnu::STATE_RUNNING;
+    }
+    vishnu::deleteFile(statusFile.c_str());
   } else {
-    jobStatus = vishnu::STATE_RUNNING;
+    //FIXME: think mechanism to retrieve the PID of the process.
+    // Should be think with the contextualization
+    LOG(boost::format("[WARN] Empty PID, Job ID: %1%") %jobId, 1);
   }
-  vishnu::deleteFile(statusFile.c_str());
   return jobStatus;
 }
