@@ -356,6 +356,7 @@ OpenNebulaServer::getKvmTemplate(const TMS_Data::SubmitOptions& options)
           "  ETH0_GATEWAY=\"%6%\",                                               \n"
           "  ETH0_DNS=\"%7%\",                                                   \n"
           "  FILES=\"%8%\",                                                      \n"
+          "  SSH_PUBLIC_KEY=\"$USER[SSH_PUBLIC_KEY]\"                            \n"
           "  TARGET=\"hdb\"                                                      \n"
           "]")
         % returnInputOrDefaultIfNegativeNull(options.getNbCpu(), 1)
