@@ -356,7 +356,7 @@ OpenNebulaServer::getKvmTemplate(const TMS_Data::SubmitOptions& options)
           "  ETH0_GATEWAY=\"%6%\",                                               \n"
           "  ETH0_DNS=\"%7%\",                                                   \n"
           "  FILES=\"%8%\",                                                      \n"
-          "  SSH_PUBLIC_KEY=\"$USER[SSH_PUBLIC_KEY]\"                            \n"
+          "  SSH_PUBLIC_KEY=\"%9%\",                                            \n"
           "  TARGET=\"hdb\"                                                      \n"
           "]")
         % returnInputOrDefaultIfNegativeNull(options.getNbCpu(), 1)
@@ -366,7 +366,8 @@ OpenNebulaServer::getKvmTemplate(const TMS_Data::SubmitOptions& options)
         % mvirtualNetworkMask
         % mvirtualNetworkGateway
         % mvirtualNetworkDns
-        % mcontextInitScript);
+        % mcontextInitScript
+        % vishnu::get_file_content(vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false)));
 }
 
 
