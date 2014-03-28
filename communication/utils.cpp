@@ -320,8 +320,8 @@ JsonObject::serialize(const TMS_Data::Job& job, int flag) {
   jsonProfile.setProperty("nbnodes", job.getNbNodes());
   jsonProfile.setProperty("nbnodesandcpupernode", job.getNbNodesAndCpuPerNode());
   jsonProfile.setProperty("userid", job.getUserId());
-  jsonProfile.setProperty("vmIp", job.getVmIp());
-  jsonProfile.setProperty("vmId", job.getVmId());
+  jsonProfile.setProperty("vmip", job.getVmIp());
+  jsonProfile.setProperty("vmid", job.getVmId());
 
   return jsonProfile.encode(flag);
 }
@@ -387,8 +387,8 @@ TMS_Data::Job JsonObject::getJob() {
   job.setNbNodes(getIntProperty("nbnodes"));
   job.setUserId(getStringProperty("userid"));
   job.setNbNodesAndCpuPerNode(getStringProperty("nbnodesandcpupernode"));
-  job.setVmIp(getStringProperty("vmIp"));
-  job.setVmId(getStringProperty("vmId"));
+  job.setVmIp(getStringProperty("vmip"));
+  job.setVmId(getStringProperty("vmid"));
 
   return job;
 }
