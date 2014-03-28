@@ -86,7 +86,7 @@ public:
       }
     }
 
-    if(!options->getMultipleStatus().empty()) {
+    if(! options->getMultipleStatus().empty()) {
       std::string multStat = options->getMultipleStatus();
       std::string::iterator iter;
       std::string::iterator beg = multStat.begin();
@@ -182,8 +182,7 @@ public:
         " wallClockLimit, groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid "
         "FROM job, vsession, users "
         "WHERE vsession.numsessionid=job.vsession_numsessionid"
-        " AND vsession.users_numuserid=users.numuserid"
-        " AND job.status > 0 ";
+        " AND vsession.users_numuserid=users.numuserid";
 
     if (!options->getMachineId().empty()) {
       checkMachineId(options->getMachineId());
