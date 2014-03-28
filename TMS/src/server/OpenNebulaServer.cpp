@@ -17,6 +17,7 @@
 #include "TMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
 #include "OneRPCManager.hpp"
+#include "OneCloudInstance.hpp"
 
 
 OpenNebulaServer::OpenNebulaServer()
@@ -71,12 +72,20 @@ OpenNebulaServer::submit(const std::string& scriptPath,
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, rpcManager.getStringResult());
   }
 
-  LOG(boost::str(boost::format("[INFO] Virtual machine created: %1%") % rpcManager.getIntResult()), 1);
-
   TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
-  jobPtr->setVmId(vishnu::convertToString(rpcManager.getIntResult()));
-  jobPtr->setStatus(vishnu::STATE_SUBMITTED);
+
+  OneCloudInstance oneCloud(mcloudEndpoint, getSessionString());
+  VmT vmInfo;
+  jobPtr->setVmId(vishnu::convertToString( rpcManager.getIntResult() ));
+  if (oneCloud.loadVmInfo(vishnu::convertToInt(jobPtr->getVmId()), vmInfo) == 0) {
+    jobPtr->setVmIp(vmInfo.ipAddr);
+  }
+
+  LOG(boost::str(boost::format("[INFO] Virtual machine created: %1%, IP: %2%"
+                               ) %  jobPtr->getVmId() % jobPtr->getVmIp()), 1);
+
   //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
+  jobPtr->setStatus(vishnu::STATE_SUBMITTED);
   jobPtr->setJobName(returnInputOrDefaultIfEmpty(options.getName(), "PID_"+jobPtr->getBatchJobId()));
   jobPtr->setOutputPath(jobPtr->getOutputDir()+"/stdout");
   jobPtr->setErrorPath(jobPtr->getOutputDir()+"/stderr");
@@ -119,33 +128,48 @@ OpenNebulaServer::cancel(const std::string& vmId)
 int
 OpenNebulaServer::getJobState(const std::string& jobSerialized) {
 
-  // Get job infos
   int jobStatus = vishnu::STATE_UNDEFINED;
+
+  // Get input job infos
   JsonObject job(jobSerialized);
   std::string jobId = job.getStringProperty("jobid");
   std::string pid = job.getStringProperty("batchjobid");
-  std::string vmUser = job.getStringProperty("owner");
+  std::string owner = job.getStringProperty("owner");
   std::string vmId = job.getStringProperty("vmid");
   std::string vmIp = job.getStringProperty("vmip");
 
-  if (! pid.empty() && ! vmIp.empty()) {
-    SSHJobExec sshEngine(vmUser, vmIp);
-    std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % pid % vmIp);
-    std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
-    sshEngine.execCmd(cmd, false);
-
-    // Check if the job is completed
-    // If yes stop the virtual machine and release the resources
-    if (vishnu::getStatusValue(statusFile) == 0) {
-      releaseResources(vmId);
-      jobStatus = vishnu::STATE_COMPLETED;
-    } else {
-      jobStatus = vishnu::STATE_RUNNING;
+  if (! vmIp.empty()) {
+    // retrive vm info
+    VmT vmInfo;
+    OneCloudInstance cloudInstance(mcloudEndpoint, getSessionString());
+    if (cloudInstance.loadVmInfo(vishnu::convertToInt(vmId), vmInfo) == 0) {
+      switch (vmInfo.state) {
+      case VM_ACTIVE:
+        jobStatus = monitorScriptState(jobId, pid, vmIp, owner);
+        break;
+      case VM_POWEROFF:
+      case VM_FAILED:
+      case VM_STOPPED:
+      case VM_DONE:
+        jobStatus = vishnu::STATE_FAILED;
+        break;
+      case VM_INIT:
+      case VM_HOLD:
+      case VM_UNDEPLOYED:
+        jobStatus = vishnu::STATE_SUBMITTED;
+      default:
+        break;
+      }
     }
-    vishnu::deleteFile(statusFile.c_str());
+    if (jobStatus == vishnu::STATE_CANCELLED
+        || jobStatus == vishnu::STATE_COMPLETED
+        || jobStatus == vishnu::STATE_FAILED)
+    {
+      releaseResources(vmId);
+    }
   } else {
     LOG(boost::str(boost::format("[WARN] Unable to monitor job: %1%, VMID: %2%."
-                                 " Empty process or vm address") % jobId % vmId), 4);
+                                 " Empty vm address") % jobId % vmId), 4);
     jobStatus = vishnu::STATE_UNDEFINED;
   }
   return jobStatus;
@@ -401,3 +425,33 @@ OpenNebulaServer::returnInputOrDefaultIfNegativeNull(int value, int defaultValue
   return value;
 }
 
+
+/**
+ * @brief OpenNebulaServer::monitorScriptState
+ * @param jobId
+ * @param pid
+ * @param vmIp
+ * @param uid
+ * @return
+ */
+int
+OpenNebulaServer::monitorScriptState(const std::string& jobId,
+                                     const std::string& pid,
+                                     const std::string& vmIp,
+                                     const std::string& uid)
+{
+  int jobStatus;
+  SSHJobExec sshEngine(uid, vmIp);
+  std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % pid % vmIp);
+  std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
+
+  sshEngine.execCmd(cmd, false);
+
+  if (vishnu::getStatusValue(statusFile) == 0) {
+    jobStatus = vishnu::STATE_COMPLETED;
+  } else {
+    jobStatus = vishnu::STATE_RUNNING;
+  }
+  vishnu::deleteFile(statusFile.c_str());
+  return jobStatus;
+}
