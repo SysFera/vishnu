@@ -842,9 +842,7 @@ CREATE TABLE project_machine (
     id bigint NOT NULL,
     version bigint NOT NULL,
     machine_id bigint NOT NULL,
-    max_allowed_time bigint NOT NULL,
     project_id bigint NOT NULL,
-    spent_time bigint NOT NULL
 );
 
 
@@ -1167,13 +1165,11 @@ CREATE TABLE work (
     description text,
     done_ratio bigint NOT NULL,
     due_date timestamp without time zone,
-    estimated_hours double precision NOT NULL,
     identifier character varying(255) NOT NULL,
     last_updated timestamp without time zone NOT NULL,
     machine_id bigint,
     nbcpus integer NOT NULL,
     owner_id bigint NOT NULL,
-    priority integer NOT NULL,
     project_id bigint,
     start_date timestamp without time zone,
     status integer NOT NULL,

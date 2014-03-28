@@ -298,13 +298,13 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
   case WORK:
     //FIXME : no auto-increment field in work
     fields = " (application_id"
-             ",date_created,done_ratio, estimated_hours,identifier,"
-             "last_updated, nbcpus, owner_id, priority, "
+             ",date_created,done_ratio, identifier,"
+             "last_updated, nbcpus, owner_id, "
              "project_id, "
              "start_date, status, subject) ";
     val = " ((select min(id) from application_version),"
-          " CURRENT_TIMESTAMP, 1, 1.0, 't',"
-          " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
+          " CURRENT_TIMESTAMP, 1, 't',"
+          " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), "
           "(select min(id) from project), "
           "CURRENT_TIMESTAMP, 1,'toto') ";
     table = "work";

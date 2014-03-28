@@ -41,9 +41,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
 
   mwork->setApplicationId(mworkop->getApplicationId());
   mwork->setSubject(mworkop->getSubject());
-  mwork->setPriority(mworkop->getPriority());
   mwork->setOwner(mworkop->getOwner());
-  mwork->setEstimatedHour(mworkop->getEstimatedHour());
   mwork->setDescription(mworkop->getDescription());
   mwork->setProjectId(mworkop->getProjectId());
   mwork->setNbCPU(mworkop->getNbCPU());
@@ -77,12 +75,10 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
         sqlUpdate+="description='"+mdatabaseInstance->escapeData(mwork->getDescription())+"', ";
         sqlUpdate+="done_ratio="+vishnu::convertToString(mwork->getDoneRatio())+", ";
         sqlUpdate+="due_date="+timestamp+", ";
-        sqlUpdate+="estimated_hours="+vishnu::convertToString(mwork->getEstimatedHour())+", ";
         sqlUpdate+="last_updated="+timestamp+", ";
         sqlUpdate+="machine_id="+mdatabaseInstance->escapeData(machineId)+", ";
         sqlUpdate+="nbcpus="+vishnu::convertToString(mwork->getNbCPU())+", ";
         sqlUpdate+="owner_id='"+owner+"', ";
-        sqlUpdate+="priority="+vishnu::convertToString(mwork->getPriority())+", ";
         sqlUpdate+="status="+vishnu::convertToString(mwork->getStatus())+", ";
         sqlUpdate+="subject='"+mdatabaseInstance->escapeData(mwork->getSubject())+"' ";
         sqlUpdate+="WHERE identifier='"+mdatabaseInstance->escapeData(mwork->getWorkId())+"';";
