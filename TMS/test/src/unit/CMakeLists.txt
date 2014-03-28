@@ -76,6 +76,5 @@ target_link_libraries(tmssed-mock
   zmq_helper
   ${USED_BATCH_LIB})
 
-unit_test(JobServerUnitTests vishnu-tms-server-mock)
 unit_test(ListJobServerUnitTests vishnu-tms-server-mock tmssed-mock)
 endif(COMPILE_SERVERS)
