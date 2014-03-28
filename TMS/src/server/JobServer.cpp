@@ -87,6 +87,7 @@ JobServer::submitJob(std::string& scriptContent,
 
   const std::string JOB_ID = vishnu::getObjectId(vishnuId, "formatidjob", vishnu::JOB, mmachineId);
   TMS_Data::Job jobInfo;
+  jobInfo.setJobId(JOB_ID);
 
   try {
     int usePosix = options->getIntProperty("posix");
@@ -95,14 +96,22 @@ JobServer::submitJob(std::string& scriptContent,
     }
 
     setRealFilePaths(scriptContent, options, JOB_ID);
-
-    jobInfo.setJobId(JOB_ID);
-    jobInfo.setOwner(muserSessionInfo.user_aclogin);
     jobInfo.setSubmitMachineId(mmachineId);
     jobInfo.setStatus(vishnu::STATE_UNDEFINED);
     jobInfo.setWorkId(options->getIntProperty("workid", 0));
     jobInfo.setJobPath(options->getStringProperty("scriptpath"));
     jobInfo.setOutputDir(options->getStringProperty("outputdir"));
+
+    // the way of setting job owner varies from classical batch scheduler to cloud backend
+    switch (mbatchType) {
+    case OPENNEBULA:
+    case DELTACLOUD:
+      jobInfo.setOwner( vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true, "root") );
+      break;
+    default:
+      jobInfo.setOwner(muserSessionInfo.user_aclogin);
+      break;
+    }
 
     exportJobEnvironments(jobInfo);
 
@@ -188,7 +197,7 @@ JobServer::handleSshBatchExec(int action,
  * @param action action The type of action (cancel, submit...)
  * @param scriptPath The path of the script to executed
  * @param options: an object containing options
- * @param baseJobInfo The default information provided to the job
+ * @param jobInfo The default information provided to the job
  * @param batchType The batch type. Ignored for POSIX backend
  * @param batchVersion The batch version. Ignored for POSIX backend
 */
@@ -196,7 +205,7 @@ void
 JobServer::handleNativeBatchExec(int action,
                                  const std::string& scriptPath,
                                  JsonObject* options,
-                                 TMS_Data::Job& baseJobInfo,
+                                 TMS_Data::Job& jobInfo,
                                  int batchType,
                                  const std::string& batchVersion) {
   BatchFactory factory;
@@ -221,7 +230,7 @@ JobServer::handleNativeBatchExec(int action,
       case SubmitBatchAction: {
         TMS_Data::ListJobs jobSteps;
         handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), jobSteps, NULL);
-        updateAndSaveJobSteps(jobSteps, baseJobInfo);
+        updateAndSaveJobSteps(jobSteps, jobInfo);
       }
         break;
 
@@ -229,14 +238,14 @@ JobServer::handleNativeBatchExec(int action,
         switch (mbatchType) {
         case DELTACLOUD:
         case OPENNEBULA:
-          handlerExitCode = batchServer->cancel(baseJobInfo.getVmId());
+          handlerExitCode = batchServer->cancel(jobInfo.getVmId());
           break;
         default:
-          handlerExitCode = batchServer->cancel(baseJobInfo.getBatchJobId());
+          handlerExitCode = batchServer->cancel(jobInfo.getBatchJobId());
           break;
         }
-        baseJobInfo.setStatus(vishnu::STATE_CANCELLED);
-        updateJobRecordIntoDatabase(action, baseJobInfo);
+        jobInfo.setStatus(vishnu::STATE_CANCELLED);
+        updateJobRecordIntoDatabase(action, jobInfo);
         break;
       default:
         throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");

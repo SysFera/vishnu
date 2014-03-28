@@ -51,9 +51,9 @@ public:
  * \param options a json object describing options
    * \param vishnuId The VISHNU identifier
    * \param defaultBatchOption the default options on the batch scheduler
-   * \return The resulting job ID. Raises an exception on error
+   * \return raises an exception on error
    */
-  std::string
+  int
   submitJob(std::string& scriptContent,
             JsonObject* options,
             int vishnuId,
@@ -81,13 +81,10 @@ public:
   getJobInfo(const std::string& jobId);
 
   /**
-   * \brief get Information about a given-job steps
-   * \param jobId The id of the job
-   * \param jobSteps List of job steps
+   * \brief Function to get job data
    * \return The job data structure
    */
-  void
-  getJobStepInfo(const std::string& jobId, TMS_Data::ListJobs& jobSteps);
+  const TMS_Data::Job& getData() {return mjob;}
 
   /**
    * \brief To set the main configuration
@@ -109,13 +106,14 @@ public:
   void
   setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
 
-private:
+protected:
   /**
    * \brief Check the machineid is correct
    * \param machineId the machineId to check
    */
   void
   checkMachineId(std::string machineId);
+
   /**
    * \brief Function to scan VISHNU error message
    * \param errorInfo the error information to scan
@@ -154,6 +152,17 @@ private:
   void
   insertOptionLine(std::string& optionLineToInsert, std::string& content, std::string& key);
 
+  /**
+  * \brief Function to set the path of output directory
+  * \param parentDir The directory in which to create the output dir
+  * \param dirSuffix the suffix of the output dir
+  * \param content the script content to be update which the generated path
+  */
+  void
+  setJobOutputDir(const std::string& parentDir,
+                  const std::string & dirSuffix,
+                  std::string & content);
+
   /*
    * \brief Return the directive associated to the batch scheduler
    * \param seperator Hold the seperator used to define parameter
@@ -185,19 +194,16 @@ private:
    * @param job The concerned job
    */
   void
-  updateJobRecordIntoDatabase(int action, TMS_Data::Job& job);
+  finalizeExecution(int action, TMS_Data::Job& job);
 
   /**
    * \brief Function to set the Working Directory
-   * \param scriptContent The script content
    * \param options a json object describing options
-   * \param jobId The job id
+   * \param suffix the suffix of the working directory
+   * \return the script path
    */
   void
-  setRealFilePaths(std::string& scriptContent,
-                   JsonObject* options,
-                   const std::string& jobId);
-
+  setRealPaths(JsonObject* options, const std::string& suffix);
   /**
    * \brief Function to process the script with options
    * \param scriptContent the script content
@@ -234,7 +240,7 @@ private:
    * @param action action The type of action (cancel, submit...)
    * @param scriptPath The path of the script to executed
    * @param options: an object containing options
-   * @param jobInfo The default information provided to the job
+   * @param baseJobInfo The default information provided to the job
    * @param batchType The batch type
    * @param batchVersion The batch version. Ignored for POSIX backend
   */
@@ -242,7 +248,7 @@ private:
   handleNativeBatchExec(int action,
                         const std::string& scriptPath,
                         JsonObject* options,
-                        TMS_Data::Job& jobInfo,
+                        TMS_Data::Job& baseJobInfo,
                         int batchType,
                         const std::string& batchVersion);
 
@@ -253,25 +259,6 @@ private:
    */
   uid_t
   getSystemUid(const std::string& name);
-
-  /**
-   * @brief create the executable for submit job script
-   * @param content The script content
-   * @param options The submit options
-   * @param defaultBatchOption The default batch options
-   * @return The script path
-   */
-  std::string
-  createJobScriptExecutaleFile(std::string& content,
-                               JsonObject* options,
-                               const std::vector<std::string>& defaultBatchOption);
-
-  /**
-   * @brief Export environment variables used throughout the execution, notably in cloud mode
-   * @param defaultJobInfo The default job info
-   */
-  void
-  exportJobEnvironments(const TMS_Data::Job &defaultJobInfo);
 
 private:
 
@@ -284,6 +271,11 @@ private:
    * @brief Information about the user and the session
    */
   UserSessionInfo muserSessionInfo;
+
+  /**
+   * \brief job data structure
+   */
+  TMS_Data::Job mjob;
 
   /**
    * \brief The machine identifier
