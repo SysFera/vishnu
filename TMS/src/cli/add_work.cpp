@@ -156,7 +156,7 @@ struct AddWorkFunc {
   {};
 
   int operator()(std::string sessionKey) {
-    int res = addWork(sessionKey,mnewWork);
+    int res = addWork(sessionKey,mnewWork, mnewWorkop);
     cout << "The work identifier is " << mnewWork.getWorkId() << endl;
     return res;
   }
@@ -187,7 +187,6 @@ int main (int ac, char* av[]){
   boost::function1<void,int> fcpu( boost::bind(&TMS_Data::AddWorkOptions::setNbCPU,boost::ref(newWorkop),_1));
 
   boost::shared_ptr<Options> opt= makeWorkOptions(av[0], configFile, fapp, fsub, fpri, fown, fest, fdesc, fpro, fmac, fcpu,0);
-
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);

@@ -73,6 +73,10 @@ struct UserSessionInfo {
    * @brief The target machine name
    */
   std::string machine_name;
+  /**
+   * @brief The num machine identifier
+   */
+  std::string num_machine;
 };
 
 namespace vishnu {

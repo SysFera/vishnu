@@ -525,6 +525,8 @@ solveAddWork(diet_profile_t* pb) {
 
     //FIXME: WorkServer workServer = WorkServer(work, sessionServer);
     //FIXME: workServer.add(ServerTMS::getInstance()->getVishnuId(), workop);
+    WorkServer workServer = WorkServer(authKey, workop->getMachineId(), work);
+    workServer.add(ServerTMS::getInstance()->getVishnuId(), workop);
 
     //To serialize the user object
     ::ecorecpp::serializer::serializer _ser;

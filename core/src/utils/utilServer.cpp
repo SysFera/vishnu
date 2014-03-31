@@ -299,14 +299,14 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
     //FIXME : no auto-increment field in work
     fields = " (application_id"
              ",date_created,done_ratio, identifier,"
-             "last_updated, nbcpus, owner_id, "
+             "nbcpus, owner_id, "
              "project_id, "
-             "start_date, status, subject) ";
+             "status, subject) ";
     val = " ((select min(id) from application_version),"
           " CURRENT_TIMESTAMP, 1, 't',"
-          " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), "
+          " 1, (select min(numuserid) from users), "
           "(select min(id) from project), "
-          "CURRENT_TIMESTAMP, 1,'toto') ";
+          "1,'toto') ";
     table = "work";
     primary="id";
     break;
@@ -624,7 +624,7 @@ vishnu::validateAuthKey(const std::string& authKey,
                         Database* database,
                         UserSessionInfo& info)
 {
-  std::string sqlQuery = (boost::format("SELECT vsession.numsessionid, machine.name,"
+  std::string sqlQuery = (boost::format("SELECT vsession.numsessionid, machine.name, machine.nummachineid,"
                                         "  users.numuserid, users.userid, users.privilege, "
                                         "  account.aclogin, account.home"
                                         " FROM vsession, users, account, machine"
@@ -653,6 +653,7 @@ vishnu::validateAuthKey(const std::string& authKey,
 
   info.num_session = vishnu::convertToInt(*rowResultIter++);
   info.machine_name = *rowResultIter++;
+  info.num_machine = *rowResultIter++;
   info.num_user = vishnu::convertToInt(*rowResultIter++);
   info.userid = *rowResultIter++;
   info.user_privilege = vishnu::convertToInt(*rowResultIter++);

@@ -64,22 +64,12 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
     raiseCommunicationMsgException(msg);
   }
 
-  if (!diet_call(addProfile)) {
-    if (diet_string_get(addProfile,0, workInString)){
-      msg += "by receiving Work serialized  message";
-      raiseCommunicationMsgException(msg);
-    }
-    if (diet_string_get(addProfile,1, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(addProfile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
+  raiseExceptionOnErrorResult(addProfile);
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  if (diet_string_get(addProfile,1, workInString));
 
   TMS_Data::Work_ptr work_ptr;
 

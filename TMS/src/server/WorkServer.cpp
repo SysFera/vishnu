@@ -25,7 +25,7 @@ WorkServer::WorkServer(const std::string& sessionKey,
   DbFactory factory;
   mdatabaseInstance = factory.getDatabaseInstance();
 
-  vishnu::validateAuthKey(msessionKey, mmachineId, mdatabaseInstance, muserSessionInfo);
+  vishnu::validateAuthKey(msessionKey, machineId, mdatabaseInstance, muserSessionInfo);
 }
 
 /**
@@ -48,7 +48,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
 
   std::string timestamp = "CURRENT_TIMESTAMP";
   std::string owner = "1";
-  std::string machineId = "1";
+  std::string nummachine =   muserSessionInfo.num_machine;
 
   //if the user is an admin
   if (muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN) {
@@ -71,12 +71,8 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
         //FIXME : set ApplicationId of mwork currently null
         //sqlUpdate+="application_id="+convertToString(mwork->getApplicationId())+", ";
         sqlUpdate+="date_created="+timestamp+", ";
-        sqlUpdate+="date_started="+timestamp+", ";
-        sqlUpdate+="description='"+mdatabaseInstance->escapeData(mwork->getDescription())+"', ";
         sqlUpdate+="done_ratio="+vishnu::convertToString(mwork->getDoneRatio())+", ";
-        sqlUpdate+="due_date="+timestamp+", ";
-        sqlUpdate+="last_updated="+timestamp+", ";
-        sqlUpdate+="machine_id="+mdatabaseInstance->escapeData(machineId)+", ";
+        sqlUpdate+="machine_id="+nummachine+", ";
         sqlUpdate+="nbcpus="+vishnu::convertToString(mwork->getNbCPU())+", ";
         sqlUpdate+="owner_id='"+owner+"', ";
         sqlUpdate+="status="+vishnu::convertToString(mwork->getStatus())+", ";
