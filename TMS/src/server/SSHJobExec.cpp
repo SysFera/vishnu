@@ -236,23 +236,15 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
                              const std::string nfsMountPoint,
                              const std::string & workDir) {
 
-  const std::string machineStatusFile = "/tmp/"+mhostname+".status";
   const std::string logfile = workDir+"/"+mhostname+".vishnu.log";
-  std::ostringstream cmd;
-  cmd << "exit; echo $? >" << machineStatusFile;
 
   int attempt = 1;
   LOG("[TMS][INFO] Checking ssh connection...", mdebugLevel);
-  while(attempt <= SSH_CONNECT_MAX_RETRY) {
-    execCmd(cmd.str());
-    int ret =  vishnu::getStatusValue(machineStatusFile);
-    if(ret == 0) {
-      break;
-    }
+  while(attempt <= SSH_CONNECT_MAX_RETRY
+        && ! isReadyConnection()) {
     sleep(SSH_CONNECT_RETRY_INTERVAL);
     attempt++;
   }
-  vishnu::deleteFile(machineStatusFile.c_str());
 
   // If not succeed throw exception
   if(attempt > SSH_CONNECT_MAX_RETRY) {
@@ -427,4 +419,26 @@ SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "mountNfsDir:: failed to mount the directory "+point);
   }
+}
+
+
+/**
+ * @brief Check if the ssh connexion is ready
+ * @return true on success, false otherwise
+ */
+bool
+SSHJobExec::isReadyConnection(void)
+{
+  bool isReady =  false;
+  const std::string statusFile = boost::str(boost::format("/tmp/%1%.sshstatus") % mhostname);
+  const std::string remoteCmd = boost::str(boost::format("exit; echo $? > %1% ") % statusFile);
+
+  execCmd(remoteCmd);
+  int ret =  vishnu::getStatusValue(statusFile);
+  if(ret == 0) {
+    isReady = true;
+  }
+  vishnu::deleteFile(statusFile.c_str());
+
+  return isReady;
 }

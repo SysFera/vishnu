@@ -144,7 +144,15 @@ public:
     * \brief Set the debug level
     * \param debugLevel The debug level
     */
-  void setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
+  void
+  setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
+
+  /**
+   * @brief Check if the ssh connexion is ready
+   * @return true on success, false otherwise
+   */
+  bool
+  isReadyConnection(void);
 
 private:
 

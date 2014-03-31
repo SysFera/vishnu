@@ -169,7 +169,7 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
     }
   } else {
     LOG(boost::format("[WARN] Unable to monitor job: %1%, VMID: %2%."
-                                 " Empty vm address") % jobId % vmId, 4);
+                      " Empty vm address") % jobId % vmId, 4);
     jobStatus = vishnu::STATE_UNDEFINED;
   }
   return jobStatus;
@@ -441,23 +441,25 @@ OpenNebulaServer::monitorScriptState(const std::string& jobId,
                                      const std::string& uid)
 {
   int jobStatus = vishnu::STATE_UNDEFINED;
-  if (! pid.empty()) {
-    SSHJobExec sshEngine(uid, vmIp);
-    std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % pid % vmIp);
-    std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
+  SSHJobExec sshEngine(uid, vmIp);
+  if (sshEngine.isReadyConnection()) {
+    if (! pid.empty()) {
+      std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % pid % vmIp);
+      std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
 
-    sshEngine.execCmd(cmd, false);
+      sshEngine.execCmd(cmd, false);
 
-    if (vishnu::getStatusValue(statusFile) == 0) {
-      jobStatus = vishnu::STATE_COMPLETED;
+      if (vishnu::getStatusValue(statusFile) == 0) {
+        jobStatus = vishnu::STATE_COMPLETED;
+      } else {
+        jobStatus = vishnu::STATE_RUNNING;
+      }
+      vishnu::deleteFile(statusFile.c_str());
     } else {
-      jobStatus = vishnu::STATE_RUNNING;
+      //FIXME: think mechanism to retrieve the PID of the process.
+      // Should be think with the contextualization
+      LOG(boost::format("[WARN] Empty PID, Job ID: %1%") %jobId, 1);
     }
-    vishnu::deleteFile(statusFile.c_str());
-  } else {
-    //FIXME: think mechanism to retrieve the PID of the process.
-    // Should be think with the contextualization
-    LOG(boost::format("[WARN] Empty PID, Job ID: %1%") %jobId, 1);
   }
   return jobStatus;
 }
