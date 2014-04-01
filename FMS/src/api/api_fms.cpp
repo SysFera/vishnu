@@ -222,50 +222,6 @@ throw (UMSVishnuException, FMSVishnuException,
     e.appendMsgComp(" "+src+": "+ex.what());
   }
 
-  // If source is localhost
-  if ((src.find(std::string("localhost"))!=std::string::npos)){
-    // Get all the IP for the machine
-
-    std::vector<std::string> list = getIPList();
-    // Try the transfert for each IP
-    for (unsigned int i = 0; i < list.size(); i++) {
-      std::string tmp = src;
-      setIP(tmp, list.at(i));
-      try{
-        FileTransferProxy fileTransferProxy(sessionKey, tmp, dest);
-        result = fileTransferProxy.addCpThread(options);
-      } catch (VishnuException& ex){
-        e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-        continue;
-      }
-      // The function returns '0' in case of success
-      if (result==0){
-        return result;
-      }
-    }// Else use the given IP
-    // Else if destination is localhost
-  } else if ((dest.find(std::string("localhost"))!=std::string::npos)) {
-    // Get all the IP for the machine
-    std::vector<std::string> list = getIPList();
-    // Try the transfert for each IP
-    for (unsigned int i =0; i < list.size(); i++){
-      std::string tmp = dest;
-      setIP(tmp, list.at(i));
-      try{
-        FileTransferProxy fileTransferProxy(sessionKey, src, tmp);
-        result = fileTransferProxy.addCpThread(options);
-      } catch (VishnuException& ex){
-        e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-        continue;
-      }
-
-      // The function returns '0' in case of success
-      if (result==0){
-        return result;
-      }
-    }// Else use the given IP
-  }
-
   throw e;
   return result;
 }
@@ -438,64 +394,8 @@ throw (UMSVishnuException, FMSVishnuException,
     return result;
   } catch (FMSVishnuException& ex){
     e.appendMsgComp(" "+src+": "+ex.what());
+    throw e;
   }
-
-
-  // If source is localhost
-  if ((src.find(std::string("localhost"))!=std::string::npos)){
-    // Get all the IP for the machine
-    std::vector<std::string> list = getIPList();
-    // Try the transfert for each IP
-    for (unsigned int i = 0; i < list.size(); i++){
-      std::string tmp = src;
-      setIP(tmp, list.at(i));
-      try{
-        FileTransferProxy fileTransferProxy(sessionKey, tmp, dest);
-        result = fileTransferProxy.addMvThread(options);
-      } catch (VishnuException& ex){
-        e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-        continue;
-      }
-      // The function returns '0' in case of success
-      if (result==0){
-        return result;
-      }
-    }// Else use the given IP
-    // Else if destination is localhost
-  } else if ((dest.find(std::string("localhost"))!=std::string::npos)) {
-    // Get all the IP for the machine
-    std::vector<std::string> list = getIPList();
-    // Try the transfert for each IP
-    for (unsigned int i = 0; i < list.size(); i++){
-      std::string tmp = dest;
-      setIP(tmp, list.at(i));
-      try{
-        FileTransferProxy fileTransferProxy(sessionKey, src, tmp);
-        result = fileTransferProxy.addMvThread(options);
-      } catch (VishnuException& ex){
-        e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-        continue;
-      }
-
-      // The function returns '0' in case of success
-      if (result==0){
-        return result;
-      }
-    }// Else use the given IP
-
-  }
-
-  // Unreachable code, but it is logical.
-  // Due to conception, all API function return an int, for
-  // compilator, we need to return something
-  // This function tries to copy from various IP of the client
-  // They are all tested, in the end, if the copy could not
-  // be done, we return an exception. The success case is above
-  // with the lines if (result == 0) return result;
-  // We could test if result != 0 here before throwing, but it
-  // would be useless because to reach this case result must be
-  // different from zero
-  throw e;
   return result;
 }
 /**

@@ -32,13 +32,12 @@ RemoteFileProxy::RemoteFileProxy() : upToDate(false) {}
  * Take the file path and user name as parameters.
  */
 RemoteFileProxy::RemoteFileProxy(const SessionProxy& sessionProxy,
-                                 const string& path,
-                                 const string& localUser)
-  : FileProxy(sessionProxy, path), upToDate(false), localUser(localUser) {}
+                                 const string& path)
+  : FileProxy(sessionProxy, path), upToDate(false) {}
 
 /* Copy constructor. */
 RemoteFileProxy::RemoteFileProxy(const RemoteFileProxy& file)
-  : FileProxy(file), upToDate(false), localUser(file.localUser) {}
+  : FileProxy(file), upToDate(false) {}
 
 /* Standard destructor. */
 RemoteFileProxy::~RemoteFileProxy() {
@@ -58,7 +57,7 @@ RemoteFileProxy::getInfos() const {
   std::string serviceName(SERVICES_FMS[FILEGETINFOS]);
   std::string sessionKey=this->getSession().getSessionKey();
 
-  diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
+  diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
@@ -72,12 +71,7 @@ RemoteFileProxy::getInfos() const {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(profile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(profile, 3, getHost())) {
+  if(diet_string_set(profile, 2, getHost())) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -105,7 +99,6 @@ RemoteFileProxy::getInfos() const {
 RemoteFileProxy&
 RemoteFileProxy::operator=(const RemoteFileProxy& file) {
   FileProxy::operator=(file);
-  localUser = file.localUser;
   upToDate = file.isUpToDate();
   return *this;
 }
@@ -122,7 +115,7 @@ RemoteFileProxy::chgrp(const string& group) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  diet_profile_t* chgrpProfile = diet_profile_alloc(serviceName, 5);
+  diet_profile_t* chgrpProfile = diet_profile_alloc(serviceName, 4);
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
   if (diet_string_set(chgrpProfile, 0, sessionKey)){
@@ -135,17 +128,12 @@ RemoteFileProxy::chgrp(const string& group) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(chgrpProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if (diet_string_set(chgrpProfile, 3, getHost())){
+  if (diet_string_set(chgrpProfile, 2, getHost())){
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(chgrpProfile, 4, group)){
+  if (diet_string_set(chgrpProfile, 3, group)){
     msgErrorDiet += "with group parameter "+group;
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -170,7 +158,7 @@ RemoteFileProxy::chmod(const mode_t mode) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  chmodProfile = diet_profile_alloc(serviceName, 5);
+  chmodProfile = diet_profile_alloc(serviceName, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //Set parameters
@@ -184,12 +172,7 @@ RemoteFileProxy::chmod(const mode_t mode) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(chmodProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(chmodProfile, 3, getHost())) {
+  if(diet_string_set(chmodProfile, 2, getHost())) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -198,7 +181,7 @@ RemoteFileProxy::chmod(const mode_t mode) {
   os << mode;
   string modeInString (os.str());
 
-  if (diet_string_set(chmodProfile, 4, modeInString)){
+  if (diet_string_set(chmodProfile, 3, modeInString)){
     msgErrorDiet += " by receiving mode parameter "+modeInString;
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -224,7 +207,7 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  diet_profile_t* headProfile = diet_profile_alloc(serviceName, 5);
+  diet_profile_t* headProfile = diet_profile_alloc(serviceName, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
@@ -238,12 +221,7 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(headProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(headProfile, 3, getHost())) {
+  if(diet_string_set(headProfile, 2, getHost())) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -253,7 +231,7 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
   string optionsToString =  _ser.serialize_str(const_cast<FMS_Data::HeadOfFileOptions_ptr>(&options));
 
 
-  if(diet_string_set(headProfile, 4, optionsToString)){
+  if(diet_string_set(headProfile, 3, optionsToString)){
     msgErrorDiet += " by receiving head of file options values ";
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -284,7 +262,7 @@ RemoteFileProxy::getContent() {
   std::string serviceName(SERVICES_FMS[FILECONTENT]);
   std::string sessionKey=this->getSession().getSessionKey();
 
-  diet_profile_t* getContentProfile = diet_profile_alloc(serviceName,  4);
+  diet_profile_t* getContentProfile = diet_profile_alloc(serviceName,  3);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
@@ -298,12 +276,7 @@ RemoteFileProxy::getContent() {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(getContentProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(getContentProfile, 3, getHost())) {
+  if(diet_string_set(getContentProfile, 2, getHost())) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -335,7 +308,7 @@ RemoteFileProxy::mkfile(const mode_t mode) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  diet_profile_t* mkfileProfile = diet_profile_alloc(serviceName, 4);
+  diet_profile_t* mkfileProfile = diet_profile_alloc(serviceName, 3);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
@@ -349,12 +322,7 @@ RemoteFileProxy::mkfile(const mode_t mode) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(mkfileProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(mkfileProfile, 3, getHost())) {
+  if(diet_string_set(mkfileProfile, 2, getHost())) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -380,7 +348,7 @@ RemoteFileProxy::mkdir(const CreateDirOptions& options) {
 
   std::string sessionKey=this->getSession().getSessionKey();
 
-  diet_profile_t* mkdirProfile = diet_profile_alloc(serviceName, 5);
+  diet_profile_t* mkdirProfile = diet_profile_alloc(serviceName, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
@@ -394,12 +362,7 @@ RemoteFileProxy::mkdir(const CreateDirOptions& options) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(mkdirProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(mkdirProfile, 3, getHost())) {
+  if(diet_string_set(mkdirProfile, 2, getHost())) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -407,7 +370,7 @@ RemoteFileProxy::mkdir(const CreateDirOptions& options) {
   ::ecorecpp::serializer::serializer _ser;
   string optionsToString =  _ser.serialize_str(const_cast<CreateDirOptions*>(&options));
 
-  diet_string_set(mkdirProfile, 4, optionsToString);
+  diet_string_set(mkdirProfile, 3, optionsToString);
 
   if (diet_call(mkdirProfile)){
     raiseCommunicationMsgException("RPC call failed");
@@ -433,7 +396,7 @@ RemoteFileProxy::rm(const RmFileOptions& options) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  diet_profile_t* rmProfile = diet_profile_alloc(serviceName, 5);
+  diet_profile_t* rmProfile = diet_profile_alloc(serviceName, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
@@ -447,19 +410,14 @@ RemoteFileProxy::rm(const RmFileOptions& options) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(rmProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(rmProfile, 3, getHost())) {
+  if(diet_string_set(rmProfile, 2, getHost())) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
   string optionsToString =  _ser.serialize_str(const_cast<RmFileOptions*>(&options));
-  diet_string_set(rmProfile, 4, optionsToString);
+  diet_string_set(rmProfile, 3, optionsToString);
 
   if (diet_call(rmProfile)){
     raiseCommunicationMsgException("RPC call failed");
@@ -483,7 +441,7 @@ RemoteFileProxy::rmdir() {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  diet_profile_t* rmdirProfile = diet_profile_alloc(serviceName, 4);
+  diet_profile_t* rmdirProfile = diet_profile_alloc(serviceName, 3);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
@@ -497,12 +455,7 @@ RemoteFileProxy::rmdir() {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(rmdirProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(rmdirProfile, 3, getHost())) {
+  if(diet_string_set(rmdirProfile, 2, getHost())) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -533,7 +486,7 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
   std::string sessionKey=this->getSession().getSessionKey();
 
 
-  diet_profile_t* tailProfile = diet_profile_alloc(serviceName, 5);
+  diet_profile_t* tailProfile = diet_profile_alloc(serviceName, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
@@ -547,12 +500,7 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if(diet_string_set(tailProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(tailProfile, 3, getHost())) {
+  if(diet_string_set(tailProfile, 2, getHost())) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -561,7 +509,7 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
   //To serialize the options object in to optionsInString
   string optionsToString =  _ser.serialize_str(const_cast<FMS_Data::TailOfFileOptions_ptr>(&options));
 
-  if(diet_string_set(tailProfile, 4, optionsToString)){
+  if(diet_string_set(tailProfile, 3, optionsToString)){
     msgErrorDiet += " by receiving tail of file options values ";
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -594,12 +542,11 @@ RemoteFileProxy::ls(const LsDirOptions& options) const {
   string optionsSerialized =  _ser.serialize_str(const_cast<FMS_Data::LsDirOptions_ptr>(&options));
 
   // initialize profile
-  diet_profile_t* profile = diet_profile_alloc(SERVICES_FMS[DIRLIST], 5);
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_FMS[DIRLIST], 4);
   diet_string_set(profile, 0, this->getSession().getSessionKey());
   diet_string_set(profile, 1, getPath());
-  diet_string_set(profile, 2, localUser);
-  diet_string_set(profile, 3, getHost());
-  diet_string_set(profile, 4, optionsSerialized);
+  diet_string_set(profile, 2, getHost());
+  diet_string_set(profile, 3, optionsSerialized);
 
   if (diet_call(profile)) {
     raiseCommunicationMsgException("RPC call failed");
@@ -622,23 +569,13 @@ RemoteFileProxy::transferFile(const std::string& dest,
                               const std::string& serviceName,
                               FileTransfer& fileTransfer){
   string destHost = FileProxy::extHost(dest);
-  string localUser = "";
   bfs::path destPath(FileProxy::extName(dest));
 
-  if (destHost.compare("localhost") == 0 || !vishnu::isNotIP(destHost)) {
+  if (destHost.compare("localhost") == 0) {
     // The destination is local:  get its full qualified host name
-    if (vishnu::isNotIP(destHost)){
-      destHost =vishnu::getLocalMachineName("22");
-    }
-
-    uid_t uid = getuid();
-    struct passwd*  pw = getpwuid(uid);
-    localUser = pw->pw_name;
-
     if(dest.compare(".")==0){
       destPath=bfs::current_path();
     }
-
     // build a complete local path
     bfs::system_complete(destPath);
 
@@ -654,29 +591,46 @@ RemoteFileProxy::transferFile(const std::string& dest,
 
   bool isAsyncTransfer = (serviceName == SERVICES_FMS[REMOTEFILECOPYASYNC] || serviceName == SERVICES_FMS[REMOTEFILEMOVEASYNC]);
 
-  diet_profile_t* transferFileProfile = diet_profile_alloc(serviceName, 7);
+  diet_profile_t* transferFileProfile = diet_profile_alloc(serviceName, 6);
   diet_string_set(transferFileProfile, 0, sessionKey);
-  diet_string_set(transferFileProfile, 1, localUser);
-  diet_string_set(transferFileProfile, 2, srcHost);
-  diet_string_set(transferFileProfile, 3, srcPath);
-  diet_string_set(transferFileProfile, 4, destHost);
-  diet_string_set(transferFileProfile, 5, destPath.string());
+  diet_string_set(transferFileProfile, 1, srcHost);
+  diet_string_set(transferFileProfile, 2, srcPath);
+  diet_string_set(transferFileProfile, 3, destHost);
+  diet_string_set(transferFileProfile, 4, destPath.string());
 
   ::ecorecpp::serializer::serializer _ser;
   string optionsToString =  _ser.serialize_str(const_cast<TypeOfOption*>(&options));
-  diet_string_set(transferFileProfile,6 , optionsToString);
+  diet_string_set(transferFileProfile,5 , optionsToString);
 
   if (diet_call(transferFileProfile)) {
     raiseCommunicationMsgException("RPC call failed");
   }
   raiseExceptionOnErrorResult(transferFileProfile);
 
-  if(isAsyncTransfer) {
-    diet_string_get(transferFileProfile, 1, fileTransferInString);
-    FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
-    parseEmfObject(fileTransferInString, fileTransfer_ptr);
-    fileTransfer = *fileTransfer_ptr;
+  diet_string_get(transferFileProfile, 1, fileTransferInString);
+  FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
+  parseEmfObject(fileTransferInString, fileTransfer_ptr);
+  fileTransfer = *fileTransfer_ptr;
+
+  std::cout << "------------ transfer infomation for file " << fileTransfer.getTransferId() << std::endl;
+  std::cout << right << "transferId: " << fileTransfer.getTransferId()   << std::endl;
+  std::cout << right << "errorMsg: " << fileTransfer.getErrorMsg()  << std::endl;
+  std::cout << right << "userId: " << fileTransfer.getUserId()   << std::endl;
+  std::cout << right << "clientMachineId: " << fileTransfer.getClientMachineId()   << std::endl;
+  std::cout << right << "sourceMachineId: " << fileTransfer.getSourceMachineId()   << std::endl;
+  std::cout << right << "destinationMachineId: " << fileTransfer.getDestinationMachineId()   << std::endl;
+  std::cout << right << "sourceFilePath: " << fileTransfer.getSourceFilePath()   << std::endl;
+  std::cout << right << "destinationFilePath: " << fileTransfer.getDestinationFilePath()   << std::endl;
+  std::cout << right << "size: " << fileTransfer.getSize()   << std::endl;
+
+
+  // If need to make transfer because client is involved
+  if (srcHost=="localhost" || destHost=="localhost"){
+    // TODO CALL LOCAL DAEMON
   }
+
+
+
 
   return 0;
 }

@@ -68,13 +68,14 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, srcPath);
-  diet_string_get(profile, 2, srcUser);
-  diet_string_get(profile, 3, srcHost);
-  diet_string_get(profile, 4, dest);
-  diet_string_get(profile, 5, optionsSerialized);
-
+  diet_string_get(profile, 2, srcHost);
+  diet_string_get(profile, 3, dest);
+  diet_string_get(profile, 4, optionsSerialized);
+// srcuser
   // reset profile to handle result
   diet_profile_reset(profile, 2);
+
+  std::cout << "ICIIIIIIIIIIIIIII" << std::endl;
 
 
   std:: string destPath=File::extName(dest);
@@ -120,7 +121,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     MachineServer machineServer(machine);
 
     // check the machine
-    if (vishnu::isNotIP(destHost)){
+    if (destHost != "localhost"){
       machineServer.checkMachine();
     }
 
@@ -129,10 +130,17 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     delete machine;
 
     // get the acLogin
-    if (vishnu::isNotIP(destHost)){
+    if (destHost != "localhost"){
       destUser = UserServer(sessionServer).getUserAccountLogin(destHost);
     } else {
       destUser = destHost;
+    }
+
+    // get the acLogin
+    if (srcHost != "localhost"){
+      srcUser = UserServer(sessionServer).getUserAccountLogin(srcHost);
+    } else {
+      srcUser = srcHost;
     }
 
 
@@ -169,21 +177,19 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
         fileTransferServer->addMvAsyncThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
       }
 
-      FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
-
-      FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
-
-      *fileTransfer= fileTransferServer->getFileTransfer();
-
-
-      ::ecorecpp::serializer::serializer _ser;
-
-      fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
-
-
-      delete fileTransfer;
 
     }
+    FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+
+    FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
+
+    *fileTransfer= fileTransferServer->getFileTransfer();
+    delete fileTransfer;
+
+
+    ::ecorecpp::serializer::serializer _ser;
+
+    fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
 
@@ -201,10 +207,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
 
   if (errMsg.empty()){
     diet_string_set(profile, 0, "success");
-    if (transferMode==File::sync) {
-    } else {
-      diet_string_set(profile, 1, fileTransferSerialized.c_str());
-    }
+    diet_string_set(profile, 1, fileTransferSerialized.c_str());
   } else {
     diet_string_set(profile, 0, "error");
     diet_string_set(profile, 1, errMsg);
@@ -238,23 +241,45 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
   std::string cmd = "";
 
   diet_string_get(profile, 0, sessionKey);
-  diet_string_get(profile, 1, destUser);
-  diet_string_get(profile, 2, srcHost);
-  diet_string_get(profile, 3, srcPath);
-  diet_string_get(profile, 4, destHost);
-  diet_string_get(profile, 5, destPath);
-  diet_string_get(profile, 6, optionsSerialized);
-
+  diet_string_get(profile, 1, srcHost);
+  diet_string_get(profile, 2, srcPath);
+  diet_string_get(profile, 3, destHost);
+  diet_string_get(profile, 4, destPath);
+  diet_string_get(profile, 5, optionsSerialized);
+//destuser
   // reset profile to handle result
   diet_profile_reset(profile, 2);
+  std::cout << "ET NON LAAAAAAAAAAAAAAAAAAA" << std::endl;
+  std::cout << "src :" << srcHost << std::endl;
+  std::cout << "dest :" << destHost << std::endl;
 
   SessionServer sessionServer (sessionKey);
 
   try {
+
     int mapperkey;
     std::string destUserLogin(destUser);
     std::string destMachineName(destHost);
     SessionServer sessionServer (sessionKey);
+
+    // check the source machine
+    if (destHost != "localhost"){
+      // get the source Vishnu machine
+      UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+      machine->setMachineId(destHost);
+      MachineServer destMachineServer(machine);
+      destMachineServer.checkMachine();
+      destMachineName = destMachineServer.getMachineName();
+      delete machine;
+    } else {
+      destMachineName = destHost;
+    }
+    // get the source machine user login
+    if (destHost != "localhost"){
+      destUserLogin = UserServer(sessionServer).getUserAccountLogin(destHost);
+    } else {
+      destUserLogin = destUser;
+    }
 
     //MAPPER CREATION
     std::string destCpltPath = destPath;
@@ -302,12 +327,8 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     MachineServer srcMachineServer(machine);
 
     // check the source machine
-    if (vishnu::isNotIP(srcHost)){
+    if (srcHost != "localhost"){
       srcMachineServer.checkMachine();
-    }
-
-    // get the source machineName
-    if (vishnu::isNotIP(srcHost)){
       srcMachineName = srcMachineServer.getMachineName();
     } else {
       srcMachineName = srcHost;
@@ -316,7 +337,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     delete machine;
 
     // get the source machine user login
-    if (vishnu::isNotIP(srcHost)){
+    if (srcHost != "localhost"){
       srcUserLogin = UserServer(sessionServer).getUserAccountLogin(srcHost);
     } else {
       srcUserLogin = destUser;
@@ -327,19 +348,19 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
       // get the destination Vishnu machine
       machine = new UMS_Data::Machine();
       machine->setMachineId(destHost);
-      MachineServer destMachineServer(machine);
 
       // check the destination machine
-      if (vishnu::isNotIP(destHost)){
+      if (destHost != "localhost"){
+        MachineServer destMachineServer(machine);
         destMachineServer.checkMachine();
+        // get the destination machineName
+        destMachineName = destMachineServer.getMachineName();
+        delete machine;
       }
 
-      // get the destination machineName
-      destMachineName = destMachineServer.getMachineName();
-      delete machine;
 
       // get the destination  machine user login
-      if (vishnu::isNotIP(destHost)){
+      if (destHost != "localhost"){
         destUserLogin = UserServer(sessionServer).getUserAccountLogin(destHost);
       } else {
         destUserLogin = destUser;
@@ -357,7 +378,6 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
     // Perfor the transfer now
-
     if (transferMode==File::sync){
 
       if(transferType==File::copy){
@@ -379,7 +399,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
         fileTransferServer->addMvAsyncThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
       }
-
+    }
       FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
 
       FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
@@ -393,7 +413,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
 
       delete fileTransfer;
-    }
+
 
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
@@ -412,11 +432,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
   if (errMsg.empty()){
     diet_string_set(profile, 0, "success");
-    if (transferMode==File::sync) {
-      diet_string_set(profile, 1, "");
-    } else {
-      diet_string_set(profile, 1, fileTransferSerialized.c_str());
-    }
+    diet_string_set(profile, 1, fileTransferSerialized.c_str());
   } else {
     diet_string_set(profile, 0, "error");
     diet_string_set(profile, 1, errMsg);

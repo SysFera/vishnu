@@ -31,10 +31,6 @@ class RemoteFileProxy : public FileProxy {
      * \brief A flag to store the file information state
      */
     mutable bool upToDate;
-    /**
-     * \brief The local user
-     */
-    std::string localUser;
 
     /**
      * \brief A generic class to handle a local to remote file transfer
@@ -62,8 +58,7 @@ class RemoteFileProxy : public FileProxy {
      * \param path the path of the file
      * \param localUser the local user of the file
      */
-    RemoteFileProxy(const SessionProxy& sessionProxy,const std::string& path,
-        const std::string& localUser);
+    RemoteFileProxy(const SessionProxy& sessionProxy,const std::string& path);
     /**
      * \brief Another constructor by reference
      * \param file the other file
