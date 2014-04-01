@@ -17,7 +17,6 @@ public class LoadLibrary {
 	private static void initUMS() {
 		int res = 0;
 		String VISHNU_CONFIG_FILE = System.getenv("VISHNU_CONFIG_FILE");
-	//	String VISHNU_CONFIG_FILE = "/home/phi/Soft/vishnu/conf/diet/client.cfg";
 		try {
 			res = VISHNU.vishnuInitialize(VISHNU_CONFIG_FILE);
 		} catch (InternalUMSException e) {
