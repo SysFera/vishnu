@@ -301,12 +301,12 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
              ",date_created,done_ratio, identifier,"
              "nbcpus, owner_id, "
              "project_id, "
-             "status, subject) ";
+             "status, subject, consolidated) ";
     val = " ((select min(id) from application_version),"
           " CURRENT_TIMESTAMP, 1, 't',"
           " 1, (select min(numuserid) from users), "
           "(select min(id) from project), "
-          "1,'toto') ";
+          "1,'toto', false) ";
     table = "work";
     primary="id";
     break;
