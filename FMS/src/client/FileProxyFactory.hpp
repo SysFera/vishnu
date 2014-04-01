@@ -24,17 +24,15 @@
 class FileProxyFactory {
 
   public:
-    
+
     /**
      * \brief The factory function
      * \param sessionProxy the session proxy object
      * \param path the path of the file to build
-     * \param user the owner of the file
      * \return  a new file proxy object
      */
-  static FileProxy* getFileProxy(const SessionProxy& sessionProxy,const std::string& path,
-                             const std::string& user="");
-  
+  static FileProxy* getFileProxy(const SessionProxy& sessionProxy,const std::string& path);
+
 };
 
 #endif

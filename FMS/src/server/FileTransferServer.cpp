@@ -258,17 +258,20 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
   }
 
   // create a TransferExec instance
-
   TransferExec transferExec (msessionServer,srcUser,srcMachineName,mfileTransfer.getSourceFilePath(), srcUserKey, destUser,destMachineName, mfileTransfer.getDestinationFilePath(),mfileTransfer.getTransferId());
+
+  std::cout << "transferring from " << srcMachineName << " to " << destMachineName << endl;
 
 
   logIntoDatabase(-1);
+  if (srcMachineName != "localhost" && destMachineName != "localhost"){
 
-  // create the thread to perform the copy
-  if (mtransferType == File::copy) {
-    mthread = boost::thread(&FileTransferServer::copy,this, transferExec,trCmd);
-  } else if (mtransferType == File::move) {
-    mthread = boost::thread(&FileTransferServer::move,this, transferExec,trCmd);
+    // create the thread to perform the copy
+    if (mtransferType == File::copy) {
+      mthread = boost::thread(&FileTransferServer::copy,this, transferExec,trCmd);
+    } else if (mtransferType == File::move) {
+      mthread = boost::thread(&FileTransferServer::move,this, transferExec,trCmd);
+    }
   }
 
   return 0;

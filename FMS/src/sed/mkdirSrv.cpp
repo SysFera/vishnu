@@ -23,9 +23,8 @@ using namespace std;
  client parameters. Returns an error message if something gone wrong. */
 /* The directory to create is passed as client parameter. */
 int solveCreateDir(diet_profile_t* profile) {
-  std::string localPath, localUser, userKey, acLogin, machineName;
+  std::string localPath, userKey, acLogin, machineName;
   std::string path = "";
-  std::string user = "";
   std::string host = "";
   std::string sessionKey = "";
   std::string optionsSerialized = "";
@@ -33,14 +32,12 @@ int solveCreateDir(diet_profile_t* profile) {
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
-  diet_string_get(profile, 2, user);
-  diet_string_get(profile, 3, host);
-  diet_string_get(profile, 4, optionsSerialized);
+  diet_string_get(profile, 2, host);
+  diet_string_get(profile, 3, optionsSerialized);
 
   // reset the profile to handle result
   diet_profile_reset(profile, 2);
 
-  localUser = user;
   localPath = path;
   SessionServer sessionServer (sessionKey);
 
