@@ -246,12 +246,9 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
   diet_string_get(profile, 3, destHost);
   diet_string_get(profile, 4, destPath);
   diet_string_get(profile, 5, optionsSerialized);
-//destuser
+
   // reset profile to handle result
   diet_profile_reset(profile, 2);
-  std::cout << "ET NON LAAAAAAAAAAAAAAAAAAA" << std::endl;
-  std::cout << "src :" << srcHost << std::endl;
-  std::cout << "dest :" << destHost << std::endl;
 
   SessionServer sessionServer (sessionKey);
 

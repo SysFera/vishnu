@@ -16,6 +16,8 @@
 #include "boost/filesystem.hpp"
 #include<boost/algorithm/string.hpp>
 #include "FMSServices.hpp"
+#include "fmsUtils.hpp"
+#include "FMSVishnuException.hpp"
 
 using namespace std;
 using namespace FMS_Data;
@@ -53,28 +55,15 @@ RemoteFileProxy::isUpToDate() const {
 void
 RemoteFileProxy::getInfos() const {
 
-  std::string errMsg = "";
   std::string serviceName(SERVICES_FMS[FILEGETINFOS]);
   std::string sessionKey=this->getSession().getSessionKey();
 
   diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
 
-  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if(diet_string_set(profile, 0, sessionKey)){
-    msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(profile, 1, getPath())){
-    msgErrorDiet += "with file path parameter "+getPath();
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(profile, 2, getHost())) {
-    msgErrorDiet += "with host parameter "+getHost();
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
+  diet_string_set(profile, 0, sessionKey);
+  diet_string_set(profile, 1, getPath());
+  diet_string_set(profile, 2, getHost());
 
   if (diet_call(profile)) {
     raiseCommunicationMsgException("RPC call failed");
@@ -561,34 +550,26 @@ RemoteFileProxy::ls(const LsDirOptions& options) const {
 }
 
 
-template <class TypeOfOption>
 int
 RemoteFileProxy::transferFile(const std::string& dest,
-                              const TypeOfOption& options,
+                              const FMS_Data::CpFileOptions& options,
                               const std::string& serviceName,
-                              FileTransfer& fileTransfer){
+                              FileTransfer& fileTransfer) {
+
   string destHost = FileProxy::extHost(dest);
   bfs::path destPath(FileProxy::extName(dest));
 
-  if (destHost.compare("localhost") == 0) {
-    // The destination is local:  get its full qualified host name
-    if(dest.compare(".")==0){
+  if (destHost == "localhost") {
+    if(dest.compare(".")==0){ // The destination is local:  get its full qualified host name
       destPath=bfs::current_path();
     }
-    // build a complete local path
     bfs::system_complete(destPath);
-
   }
 
   std::string srcHost = getHost();
   std::string srcPath = getPath();
 
-  std::string fileTransferInString = "";
-  std::string errMsg = "";
-
   std::string sessionKey=this->getSession().getSessionKey();
-
-  bool isAsyncTransfer = (serviceName == SERVICES_FMS[REMOTEFILECOPYASYNC] || serviceName == SERVICES_FMS[REMOTEFILEMOVEASYNC]);
 
   diet_profile_t* transferFileProfile = diet_profile_alloc(serviceName, 6);
   diet_string_set(transferFileProfile, 0, sessionKey);
@@ -598,7 +579,7 @@ RemoteFileProxy::transferFile(const std::string& dest,
   diet_string_set(transferFileProfile, 4, destPath.string());
 
   ::ecorecpp::serializer::serializer _ser;
-  string optionsToString =  _ser.serialize_str(const_cast<TypeOfOption*>(&options));
+  string optionsToString =  _ser.serialize_str(const_cast<FMS_Data::CpFileOptions_ptr>(&options));
   diet_string_set(transferFileProfile,5 , optionsToString);
 
   if (diet_call(transferFileProfile)) {
@@ -606,31 +587,67 @@ RemoteFileProxy::transferFile(const std::string& dest,
   }
   raiseExceptionOnErrorResult(transferFileProfile);
 
-  diet_string_get(transferFileProfile, 1, fileTransferInString);
+  std::string resultSerialized;
+  diet_string_get(transferFileProfile, 1, resultSerialized);
   FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
-  parseEmfObject(fileTransferInString, fileTransfer_ptr);
+  parseEmfObject(resultSerialized, fileTransfer_ptr);
   fileTransfer = *fileTransfer_ptr;
+  delete fileTransfer_ptr;
 
-  std::cout << "------------ transfer infomation for file " << fileTransfer.getTransferId() << std::endl;
-  std::cout << right << "transferId: " << fileTransfer.getTransferId()   << std::endl;
-  std::cout << right << "errorMsg: " << fileTransfer.getErrorMsg()  << std::endl;
-  std::cout << right << "userId: " << fileTransfer.getUserId()   << std::endl;
-  std::cout << right << "clientMachineId: " << fileTransfer.getClientMachineId()   << std::endl;
-  std::cout << right << "sourceMachineId: " << fileTransfer.getSourceMachineId()   << std::endl;
-  std::cout << right << "destinationMachineId: " << fileTransfer.getDestinationMachineId()   << std::endl;
-  std::cout << right << "sourceFilePath: " << fileTransfer.getSourceFilePath()   << std::endl;
-  std::cout << right << "destinationFilePath: " << fileTransfer.getDestinationFilePath()   << std::endl;
-  std::cout << right << "size: " << fileTransfer.getSize()   << std::endl;
+  if (vishnu::ifLocalTransferInvolved(fileTransfer.getSourceMachineId(),
+                                      fileTransfer.getDestinationMachineId()))
+  {
+    std::string baseCommand = vishnu::buildTransferBaseCommand(options.getTrCommand(),
+                                                               options.isIsRecursive(),
+                                                               false,
+                                                               0);
+    std::string transferCommand = boost::str(boost::format("%1% %2% %3%")
+                                             % baseCommand
+                                             % fileTransfer.getSourceFilePath()
+                                             % fileTransfer.getDestinationFilePath());
 
+    bool isAsyncTransfer = (serviceName == SERVICES_FMS[REMOTEFILECOPYASYNC]
+                            || serviceName == SERVICES_FMS[REMOTEFILEMOVEASYNC]);
 
-  // If need to make transfer because client is involved
-  if (srcHost=="localhost" || destHost=="localhost"){
-    // TODO CALL LOCAL DAEMON
+    std::string errorMsg;
+    std::clog << boost::format("preparing transfer... %1%\n") %transferCommand;
+    std::cout << "------------ transfer infomation for file " << fileTransfer.getTransferId() << std::endl;
+    std::cout << right << "transferId: " << fileTransfer.getTransferId()   << std::endl;
+    std::cout << right << "errorMsg: " << fileTransfer.getErrorMsg()  << std::endl;
+    std::cout << right << "userId: " << fileTransfer.getUserId()   << std::endl;
+    std::cout << right << "clientMachineId: " << fileTransfer.getClientMachineId()   << std::endl;
+    std::cout << right << "sourceMachineId: " << fileTransfer.getSourceMachineId()   << std::endl;
+    std::cout << right << "destinationMachineId: " << fileTransfer.getDestinationMachineId()   << std::endl;
+    std::cout << right << "sourceFilePath: " << fileTransfer.getSourceFilePath()   << std::endl;
+    std::cout << right << "destinationFilePath: " << fileTransfer.getDestinationFilePath()   << std::endl;
+    std::cout << right << "size: " << fileTransfer.getSize()   << std::endl;
+
+    if (! isAsyncTransfer) {
+
+      vishnu::execSystemCommand(transferCommand, errorMsg);
+      std::clog << boost::format("transfer completed.\n");
+
+    } else { // asynchronous
+      pid_t pid = fork();
+      std::cout << pid <<"\n";
+      if (pid < 0) {
+        throw FMSVishnuException(ERRCODE_CLI_ERROR_RUNTIME,
+                                 "cannot fork process for asynchronous transfer");
+      } else if (pid ==0) {
+
+        setsid();  // to avoid death when parent exits
+
+        vishnu::execSystemCommand(transferCommand, errorMsg);
+        std::clog << boost::format("transfer completed.\n") ;
+
+      } else {
+        /** parent: just completed execution */
+      }
+    }
+    if (! errorMsg.empty()) {
+      std::clog << errorMsg <<"\n";
+    }
   }
-
-
-
-
   return 0;
 }
 

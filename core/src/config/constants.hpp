@@ -119,8 +119,16 @@ namespace vishnu {
 
   enum transfert_type_t {
     SCP_TRANSFER = 0,
-    RSYNC_TRANSFER = 1
+    RSYNC_TRANSFER = 1,
+    UNDEFINED_TRANSFER_MANAGER = 1
   };
+
+
+  enum TransfertStatusT {
+    TRANSFER_INPROGRESS = 0,
+    TRANSFER_FAILED = 3
+  };
+
   /**
              * \brief A convenient data type to store a parameter
              */

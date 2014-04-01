@@ -56,8 +56,8 @@ public:
    * \brief Get the source user
    * \return the source user
    */
-    const std::string&
-    getSrcUser() const;
+  const std::string&
+  getSrcUser() const;
   /**
    * \brief Get the source machine name
    * \return the source machine name
@@ -68,8 +68,8 @@ public:
    * \brief Get the source file path
    * \return the source file path
    */
-    const std::string&
-    getSrcPath() const;
+  const std::string&
+  getSrcPath() const;
   /**
    * \brief Get the source user private key path
    * \return the source user private key path
@@ -450,6 +450,7 @@ private:
   updateStatus(const FMS_Data::Status& status,
                const std::string& transferId,
                const std::string& errorMsg);
+
   /**
    * \brief The vishnu instance identifier
    */

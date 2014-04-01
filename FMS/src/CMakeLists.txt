@@ -72,9 +72,7 @@ if(COMPILE_SERVER_FMS)
     server/SSHFile.cpp
     server/FileFactory.cpp
     server/FileTransferCommand.cpp
-    server/FileTransferServer.cpp
-    server/ScpCommand.cpp
-    server/RsyncCommand.cpp)
+    server/FileTransferServer.cpp)
 
   add_executable(fmssed ${sed_SRCS} ${server_SRCS})
   install(TARGETS fmssed DESTINATION ${SBIN_INSTALL_DIR})

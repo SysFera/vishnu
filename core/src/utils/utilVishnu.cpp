@@ -642,3 +642,32 @@ vishnu::validatePath(const std::string& path)
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid path, the following characters are not allowed: <space><tab>()&,|;$#");
   }
 }
+
+
+/**
+ * @brief Execute a system command and return whether it succeeded or not
+ * @param command The command
+ * @param msg The standard output/error message
+ * @return A string
+ */
+bool
+vishnu::execSystemCommand(const std::string& command, std::string msg)
+{
+  bool result = true;
+  FILE* pipe = popen(command.c_str(), "r");
+  if (! pipe) {
+    result = false;
+    msg = boost::str(boost::format("ERROR running command: ")% command);
+  }
+
+  char buffer[255];
+
+  while(! feof(pipe)) {
+    if(fgets(buffer, 128, pipe) != NULL) {
+      msg += buffer;
+    }
+  }
+  pclose(pipe);
+
+  return result;
+}
