@@ -28,16 +28,6 @@ FileTransferCommand::FileTransferCommand(const std::string& name,
   mcommand(command),
   mtimeout(timeout) {}
 
-std::string
-FileTransferCommand::getName() const {
-  return mname;
-}
-
-std::string
-FileTransferCommand::getLocation() const {
-  return mlocation;
-}
-
 bool
 FileTransferCommand::isRecursive() const {
   return mrecursive;
@@ -46,45 +36,4 @@ FileTransferCommand::isRecursive() const {
 bool
 FileTransferCommand::useCompression() const {
   return mcompression;
-}
-
-std::string
-FileTransferCommand::getCommand() const {
-  return mcommand;
-}
-
-void
-FileTransferCommand::setLocation(const std::string& location) {
-  mlocation = location;
-}
-
-void
-FileTransferCommand::setName(const std::string& name) {
-  mname = name;
-}
-
-void
-FileTransferCommand::setCommand(const std::string& command) {
-  mcommand = command;
-}
-
-int
-FileTransferCommand::getTimeout() const {
-  return mtimeout;
-}
-
-void
-FileTransferCommand::addOptions (const std::string& options) {
-  mcommand.append(options);
-}
-
-FileTransferCommand*
-FileTransferCommand::getCopyCommand(const SessionServer& sessionServer,
-                                    const FMS_Data::CpFileOptions& options,
-                                    int timeout) {
-  if (options.getTrCommand() == 1) {  // Rsync
-    return new RsyncCommand(options.isIsRecursive(), timeout);
-  } else {
-    return new ScpCommand(options.isIsRecursive(), timeout);
-  }
 }

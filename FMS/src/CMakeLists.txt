@@ -14,6 +14,8 @@ include_directories(client api
   ${LIBJANSSON_INCLUDE_DIR}
 )
 
+set(utils_SRCS ${UTILVISHNU_SOURCE_DIR}/fmsUtils.cpp)
+
 set(client_SRCS client/FileProxy
   client/LocalFileProxy
   client/RemoteFileProxy
@@ -27,7 +29,7 @@ set(api_HEADERS api/api_fms.hpp)
 ## client CLI
 if(COMPILE_CLIENT_FMS)
   add_subdirectory(cli)
-  add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
+  add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS} ${utils_SRCS})
   SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-fms-client
     ${Boost_LIBRARIES}
@@ -63,7 +65,7 @@ if(COMPILE_SERVER_FMS)
     sed/transferSrv.cpp
     sed/MonitorFMS.cpp
     ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
-)
+    ${utils_SRCS})
 
   set(server_SRCS
     server/File.cpp

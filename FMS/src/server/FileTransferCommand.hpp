@@ -36,24 +36,6 @@ public:
                       int timeout=0);
 
   /**
-   * \brief Get the command
-   * \return the command
-   */
-  std::string
-  getCommand() const;
-  /**
-   * \brief Get the command name
-   * \return the command name
-   */
-  std::string
-  getName() const;
-  /**
-   * \brief Get the command location
-   * \return the command location
-   */
-  std::string
-  getLocation() const;
-  /**
    * \brief Check if the command is recursive
    * \return true if the command is recursive false otherwise
    */
@@ -65,52 +47,7 @@ public:
    */
   bool
   useCompression() const;
-  /**
-   * \brief A factory to build a copy command
-   * \param sessionServer the session object server
-   * \param options the copy options
-   * \return a new file transfer command
-   */
-  static FileTransferCommand*
-  getCopyCommand(const SessionServer& sessionServer,
-                 const FMS_Data::CpFileOptions& options,
-                 int timeout=0);
 
-protected:
-  /**
-   * \brief To update the command location
-   * \param location the new command location
-   */
-  void
-  setLocation (const std::string& location);
-  /**
-   * \brief To update the command name
-   * \param name the new command name
-   */
-  void
-  setName(const std::string& name);
-  /**
-   * \brief To update the command
-   * \param command the new command
-   */
-  void
-  setCommand(const std::string& command);
-  /**
-   * \brief Get timeout (seconds)
-   */
-  int
-  getTimeout() const;
-  /**
-   * \brief To add options to the command
-   * \param options the new options to add
-   */
-  void
-  addOptions (const std::string& options);
-  /**
-   * \brief To build the command using options
-   */
-  virtual void
-  build()=0;
 
 private:
   /**
