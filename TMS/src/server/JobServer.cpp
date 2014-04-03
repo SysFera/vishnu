@@ -216,7 +216,7 @@ JobServer::handleNativeBatchExec(int action,
   int ipcPipe[2];
   char ipcMsgBuffer[255];
 
-  if (pipe(ipcPipe) != 0)	 {	/* Création du tube */
+  if (pipe(ipcPipe) != 0)	 {	/* Create communication pipe*/
     throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Pipe creation failed");
   }
 
@@ -975,7 +975,7 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
           % muserSessionInfo.userid
           % muserSessionInfo.user_aclogin, 1);
     } else {
-      LOG((boost::str(boost::format("[ERROR] Submission failed: %1% [%2%]")
+      LOG((boost::str(boost::format("[WARN] Submission error: %1% [%2%]")
                       % job.getJobId()
                       % job.getSubmitError())), 4);
     }
