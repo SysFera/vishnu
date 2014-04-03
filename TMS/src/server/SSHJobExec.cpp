@@ -129,8 +129,10 @@ SSHJobExec::sshexec(const std::string& actionName,
   }
 
   // For traditional batch scheduler we need to submit the job through ssh
+  // Not the case for cloud where we make RPC call
   std::string cmd;
-  if (mbatchType != DELTACLOUD) {
+  if (mbatchType != DELTACLOUD
+      && mbatchType != OPENNEBULA) {
     cmd = boost::str(boost::format("ssh -l %1% %2% "
                                    "-o NoHostAuthenticationForLocalhost=yes "
                                    "-o PasswordAuthentication=no "
