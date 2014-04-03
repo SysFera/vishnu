@@ -157,13 +157,6 @@ public:
 private:
 
   /**
-     * \brief Function to convert the batch type to string
-     * \param batchType the batch type to convert
-     * \return the converted batch type
-     */
-  std::string convertBatchTypeToString(BatchType batchType);
-
-  /**
      * \brief Function to check the parameters before launching ssh
      * \return raises an exception on error
      */

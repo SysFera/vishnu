@@ -88,7 +88,8 @@ main(int argc, char* argv[]) {
   }
 
   if(batchType == UNDEFINED) {
-    std::string msg = "Slave: Invalid batch. Batch type must be TORQUE, LOADLEVLER, SLURM, LSF, SGE, PBSPRO, DELTACLOUD or POSIX\n";
+    std::string msg = "Slave: Invalid batch. Valid batch are: TORQUE, LOADLEVLER, SLURM, "
+                      "LSF, SGE, PBSPRO, DELTACLOUD, OPENNEBULA, POSIX\n";
     std::cerr << msg;
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, msg);
   }

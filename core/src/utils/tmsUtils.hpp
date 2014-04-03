@@ -56,6 +56,13 @@ namespace vishnu
   BatchType
   convertToBatchType(const std::string& batchName);
 
+  /**
+     * \brief Function to convert the batch type to string
+     * \param batchType the batch type to convert
+     * \return the converted batch type
+     */
+  std::string convertBatchTypeToString(BatchType batchType);
+
 
   /**
  * \brief  function to convert job status into string
