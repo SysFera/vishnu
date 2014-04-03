@@ -104,13 +104,13 @@ JobServer::submitJob(std::string& scriptContent,
 
     // the way of setting job owner varies from classical batch scheduler to cloud backend
     switch (mbatchType) {
-    case OPENNEBULA:
-    case DELTACLOUD:
-      jobInfo.setOwner( vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true, "root") );
-      break;
-    default:
-      jobInfo.setOwner(muserSessionInfo.user_aclogin);
-      break;
+      case OPENNEBULA:
+      case DELTACLOUD:
+        jobInfo.setOwner( vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true, "root") );
+        break;
+      default:
+        jobInfo.setOwner(muserSessionInfo.user_aclogin);
+        break;
     }
 
     exportJobEnvironments(jobInfo);
@@ -131,7 +131,6 @@ JobServer::submitJob(std::string& scriptContent,
                          mbatchVersion);
     }
   } catch (VishnuException& ex) {
-    LOG(ex.what(), 4);
     jobInfo.setSubmitError(ex.what());
     jobInfo.setErrorPath("");
     jobInfo.setOutputPath("");
@@ -171,23 +170,23 @@ JobServer::handleSshBatchExec(int action,
   TMS_Data::ListJobs jobSteps;
 
   switch(action) {
-  case SubmitBatchAction:
-    sshJobExec.sshexec("SUBMIT", scriptPath, jobSteps);
-    // Submission with deltacloud doesn't make copy of the script
-    // So the script needs to be kept until the end of the execution
-    // Clean the temporary script if not deltacloud
-    if (mbatchType != DELTACLOUD && mdebugLevel) {
-      vishnu::deleteFile(scriptPath.c_str());
-    }
-    updateAndSaveJobSteps(jobSteps, baseJobInfo);
-    break;
-  case CancelBatchAction:
-    sshJobExec.sshexec("CANCEL", "", jobSteps);
-    updateJobRecordIntoDatabase(action, *(jobSteps.getJobs().get(0)));
-    break;
-  default:
-    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");
-    break;
+    case SubmitBatchAction:
+      sshJobExec.sshexec("SUBMIT", scriptPath, jobSteps);
+      // Submission with deltacloud doesn't make copy of the script
+      // So the script needs to be kept until the end of the execution
+      // Clean the temporary script if not deltacloud
+      if (mbatchType != DELTACLOUD && mdebugLevel) {
+        vishnu::deleteFile(scriptPath.c_str());
+      }
+      updateAndSaveJobSteps(jobSteps, baseJobInfo);
+      break;
+    case CancelBatchAction:
+      sshJobExec.sshexec("CANCEL", "", jobSteps);
+      updateJobRecordIntoDatabase(action, *(jobSteps.getJobs().get(0)));
+      break;
+    default:
+      throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");
+      break;
   }
 
 }
@@ -214,57 +213,80 @@ JobServer::handleNativeBatchExec(int action,
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "getBatchServerInstance return NULL");
   }
 
+  int ipcPipe[2];
+  char message[255];
+
+  if (pipe(ipcPipe) != 0)	 {	/* Création du tube */
+    throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Pipe creation failed");
+  }
+
   pid_t pid = fork();
-  if (pid <= -1) {
+
+  if (pid < 0) {
     throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Fork failed");
   }
-  if (pid == 0) { // child process
-    int handlerExitCode = setuid(getSystemUid(muserSessionInfo.user_aclogin));
-    if (handlerExitCode != 0) {
-      LOG("[ERROR] " + std::string(strerror(errno)), 2);
-      exit(handlerExitCode);
+
+  int handlerExitCode = 0;
+  std::string errorMsg = "";
+  if (pid == 0)  /** Child process */
+  {
+    handlerExitCode = 0;
+    // if not cloud-mode submission, switch user before running the request
+    if (mbatchType != OPENNEBULA && mbatchType != DELTACLOUD) {
+      handlerExitCode = setuid(getSystemUid(muserSessionInfo.user_aclogin));
+      if (handlerExitCode != 0) {
+        // write error message to pipe for the parent
+        errorMsg = std::string(strerror(errno));
+        write(ipcPipe[1], strerror(errno), errorMsg.size());
+        exit(handlerExitCode);
+      }
     }
     try {
       handlerExitCode = 0;
       switch(action) {
-      case SubmitBatchAction: {
-        TMS_Data::ListJobs jobSteps;
-        handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), jobSteps, NULL);
-        updateAndSaveJobSteps(jobSteps, jobInfo);
-      }
-        break;
-
-      case CancelBatchAction:
-        switch (mbatchType) {
-        case DELTACLOUD:
-        case OPENNEBULA:
-          handlerExitCode = batchServer->cancel(jobInfo.getVmId());
+        case SubmitBatchAction: {
+          TMS_Data::ListJobs jobSteps;
+          handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), jobSteps, NULL);
+          updateAndSaveJobSteps(jobSteps, jobInfo);
+        }
+          break;
+        case CancelBatchAction:
+          if (mbatchType == DELTACLOUD || mbatchType == OPENNEBULA) {
+            handlerExitCode = batchServer->cancel(jobInfo.getVmId());
+          } else {
+            handlerExitCode = batchServer->cancel(jobInfo.getBatchJobId());
+          }
+          jobInfo.setStatus(vishnu::STATE_CANCELLED);
+          updateJobRecordIntoDatabase(action, jobInfo);
           break;
         default:
-          handlerExitCode = batchServer->cancel(jobInfo.getBatchJobId());
+          throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
           break;
-        }
-        jobInfo.setStatus(vishnu::STATE_CANCELLED);
-        updateJobRecordIntoDatabase(action, jobInfo);
-        break;
-      default:
-        throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
-        break;
       }
     } catch(const TMSVishnuException & ex) {
       handlerExitCode = ex.getTypeI();
-      LOG(boost::str(boost::format("[ERROR] %1%") % ex.what()), 4);
+      errorMsg = std::string(ex.what());
+      LOG("[ERROR] "+ errorMsg, 4);
     } catch (const VishnuException & ex) {
       handlerExitCode = ex.getTypeI();
-      LOG(boost::str(boost::format("[ERROR] %1%") % ex.what()), 4);
+      errorMsg = std::string(ex.what());
+      LOG("[ERROR] "+ errorMsg, 4);
     }
+
+    // write error message to pipe for the parent
+    write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
     exit(handlerExitCode);
-  } else { // parent process
+  } else { /** Parent process*/
+    // wait that child exists
     int exitCode;
     waitpid(pid, &exitCode, 0);
-    //    if (! WIFEXITED(exitCode) || WEXITSTATUS(exitCode) != 0) {
-    //      throw TMSVishnuException(exitCode, "Batch operation failed");
-    //    }
+
+    // get possible error message send by the child
+    size_t nbRead = read(ipcPipe[0], message, 255);
+
+    if (! WIFEXITED(exitCode) || WEXITSTATUS(exitCode) != 0) {
+      throw TMSVishnuException(exitCode, std::string(message, nbRead));
+    }
   }
 }
 
@@ -478,14 +500,14 @@ int JobServer::cancelJob(JsonObject* options)
       int batchType = vishnu::convertToInt(*resultIterator);
 
       switch (currentJob.getStatus()) {
-      case vishnu::STATE_COMPLETED:
-        throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED, currentJob.getJobId());
-        break;
-      case vishnu::STATE_CANCELLED:
-        throw TMSVishnuException(ERRCODE_ALREADY_CANCELED, currentJob.getJobId());
-        break;
-      default:
-        break;
+        case vishnu::STATE_COMPLETED:
+          throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED, currentJob.getJobId());
+          break;
+        case vishnu::STATE_CANCELLED:
+          throw TMSVishnuException(ERRCODE_ALREADY_CANCELED, currentJob.getJobId());
+          break;
+        default:
+          break;
       }
 
       if (currentJob.getOwner() != muserSessionInfo.user_aclogin
@@ -656,31 +678,31 @@ std::string JobServer::getBatchDirective(std::string& seperator) const {
   seperator =  " ";
   std::string directive = "";
   switch(mbatchType) {
-  case TORQUE :
-    directive = "#PBS";
-    break;
-  case LOADLEVELER :
-    directive = "# @";
-    seperator = " = ";
-    break;
-  case SLURM :
-    directive = "#SBATCH";
-    break;
-  case LSF :
-    directive = "#BSUB";
-    break;
-  case SGE :
-    directive = "#$";
-    break;
-  case PBSPRO :
-    directive = "#PBS";
-    break;
-  case POSIX :
-    directive = "#%";
-    break;
-  case DELTACLOUD : // return default ""
-  default :
-    break;
+    case TORQUE :
+      directive = "#PBS";
+      break;
+    case LOADLEVELER :
+      directive = "# @";
+      seperator = " = ";
+      break;
+    case SLURM :
+      directive = "#SBATCH";
+      break;
+    case LSF :
+      directive = "#BSUB";
+      break;
+    case SGE :
+      directive = "#$";
+      break;
+    case PBSPRO :
+      directive = "#PBS";
+      break;
+    case POSIX :
+      directive = "#%";
+      break;
+    case DELTACLOUD : // return default ""
+    default :
+      break;
   }
   return directive;
 }
@@ -902,8 +924,7 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
     mdatabaseInstance->process(query);
     LOG(boost::format("[INFO] Job cancelled: %1%")% job.getJobId(), mdebugLevel);
 
-  } else if (action == SubmitBatchAction){
-
+  } else if (action == SubmitBatchAction) {
     // Append the machine name to the error and output path if necessary
     size_t pos = job.getOutputPath().find(":");
     std::string prefixOutputPath = (pos == std::string::npos)? muserSessionInfo.machine_name+":" : "";
@@ -948,17 +969,17 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
     mdatabaseInstance->process(query);
 
     // logging
-    if (mlastError.empty()) {
-      LOG(boost::format("[INFO] Job entry created: %1%. User: %2%. Owner: %3%")
+    if (job.getSubmitError().empty()) {
+      LOG(boost::format("[INFO] Job submitted successfully: %1%. User: %2%. Owner: %3%")
           % job.getJobId()
           % muserSessionInfo.userid
           % muserSessionInfo.user_aclogin, 1);
     } else {
-      LOG((boost::format("[ERROR] Submission failed: %1% [%2%]") % job.getJobId() % mlastError).str(), 4);
+      LOG((boost::str(boost::format("[ERROR] Submission failed: %1% [%2%]")
+                      % job.getJobId()
+                      % job.getSubmitError())), 4);
     }
-
   } else {
-
     throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");
   }
 }
