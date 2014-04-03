@@ -131,10 +131,10 @@ SSHJobExec::sshexec(const std::string& actionName,
   // For traditional batch scheduler we need to submit the job through ssh
   std::string cmd;
   if (mbatchType != DELTACLOUD) {
-    cmd = (boost::format("ssh -l %1% %2% -o NoHostAuthenticationForLocalhost=yes -o PasswordAuthentication=no ")
-           % muser
-           % mhostname
-           ).str();
+    cmd = boost::str(boost::format("ssh -l %1% %2% "
+                                   "-o NoHostAuthenticationForLocalhost=yes "
+                                   "-o PasswordAuthentication=no "
+                                   )   % muser % mhostname);
   }
 
   std::string errorPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/errorPath%%%%%%").string();
@@ -145,7 +145,7 @@ SSHJobExec::sshexec(const std::string& actionName,
 
   cmd += (boost::format("tmsSlave %1% %2% %3% %4% %5% %6% 2> %7%")
           % actionName
-          % convertBatchTypeToString(mbatchType)
+          % vishnu::convertBatchTypeToString(mbatchType)
           % mbatchVersion
           % jobPath
           % errorPath
@@ -271,46 +271,6 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
   }
   LOG("[INFO] Submission completed. PID:"+pid, mdebugLevel);
   return pid;
-}
-
-
-/**
-     * \brief Function to convert the batch type to string
-     * \param BatchType the batch type to convert
-     * \return the converted batch type
-     */
-std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
-  std::string value;
-  switch(batchType) {
-  case TORQUE:
-    value = "TORQUE";
-    break;
-  case LOADLEVELER:
-    value = "LOADLEVELER";
-    break;
-  case SLURM:
-    value = "SLURM";
-    break;
-  case LSF:
-    value = "LSF";
-    break;
-  case SGE:
-    value = "SGE";
-    break;
-  case PBSPRO:
-    value = "PBS";
-    break;
-  case DELTACLOUD:
-    value = "DELTACLOUD";
-    break;
-  case POSIX:
-    value = "POSIX";
-    break;
-  default:
-    value = "UNKNOWN_BATCH_TYPE";
-    break;
-  }
-  return value;
 }
 
 /**

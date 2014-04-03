@@ -54,6 +54,49 @@ vishnu::convertToBatchType(const std::string& batchName) {
   return batchType;
 }
 
+
+/**
+     * \brief Function to convert the batch type to string
+     * \param BatchType the batch type to convert
+     * \return the converted batch type
+     */
+std::string vishnu::convertBatchTypeToString(BatchType batchType) {
+  std::string value;
+  switch(batchType) {
+  case TORQUE:
+    value = "TORQUE";
+    break;
+  case LOADLEVELER:
+    value = "LOADLEVELER";
+    break;
+  case SLURM:
+    value = "SLURM";
+    break;
+  case LSF:
+    value = "LSF";
+    break;
+  case SGE:
+    value = "SGE";
+    break;
+  case PBSPRO:
+    value = "PBS";
+    break;
+  case OPENNEBULA:
+    value = "OPENNEBULA";
+    break;
+  case DELTACLOUD:
+    value = "DELTACLOUD";
+    break;
+  case POSIX:
+    value = "POSIX";
+    break;
+  default:
+    value = "UNKNOWN_BATCH_TYPE";
+    break;
+  }
+  return value;
+}
+
 /**
  * \brief  function to convert job status into string
  * \param state: The state of job
