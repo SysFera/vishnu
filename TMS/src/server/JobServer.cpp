@@ -214,7 +214,7 @@ JobServer::handleNativeBatchExec(int action,
   }
 
   int ipcPipe[2];
-  char message[255];
+  char ipcMsgBuffer[255];
 
   if (pipe(ipcPipe) != 0)	 {	/* Création du tube */
     throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Pipe creation failed");
@@ -282,10 +282,10 @@ JobServer::handleNativeBatchExec(int action,
     waitpid(pid, &exitCode, 0);
 
     // get possible error message send by the child
-    size_t nbRead = read(ipcPipe[0], message, 255);
+    size_t nbRead = read(ipcPipe[0], ipcMsgBuffer, 255);
 
     if (! WIFEXITED(exitCode) || WEXITSTATUS(exitCode) != 0) {
-      throw TMSVishnuException(exitCode, std::string(message, nbRead));
+      throw TMSVishnuException(exitCode, std::string(ipcMsgBuffer, nbRead));
     }
   }
 }
