@@ -113,13 +113,6 @@ public:
   getJobSerialized();
 
   /**
-     * \brief Function to return the error message of a service
-     * \return error message information
-     */
-  std::string
-  getErrorInfo();
-
-  /**
     * \brief Set the value of the cloud endpoint
     */
   void

@@ -75,15 +75,6 @@ SSHJobExec::~SSHJobExec() {
 }
 
 /**
- * \brief Function to return the error message of a service
- * \return error message information
- */
-std::string
-SSHJobExec::getErrorInfo() {
-  return merrorInfo;
-}
-
-/**
  * \brief Function to check the parameters before launching ssh
  * \return raises an exception on error
  */
@@ -192,8 +183,10 @@ SSHJobExec::sshexec(const std::string& actionName,
     }
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     jobSteps = *(ecoreFactory->createListJobs());
+    merrorInfo.append("stderr: ").append(vishnu::get_file_content(stderrFilePath, false));
     for (unsigned int j = 0; j < jobStepsPtr->getJobs().size(); j++) {
       TMS_Data::Job_ptr job = ecoreFactory->createJob();
+      job->setSubmitError(merrorInfo);
       //copy the content and not the pointer
       *job = *jobStepsPtr->getJobs().get(j);
       jobSteps.getJobs().push_back(job);
@@ -202,7 +195,6 @@ SSHJobExec::sshexec(const std::string& actionName,
     jobSteps.setNbRunningJobs(jobStepsPtr->getNbRunningJobs());
     jobSteps.setNbWaitingJobs(jobStepsPtr->getNbWaitingJobs());
 
-    merrorInfo.append("stderr: ").append(vishnu::get_file_content(stderrFilePath, false));
   } else {
     TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
     JsonObject jobJson(mjobSerialized);

@@ -319,11 +319,6 @@ private:
    * \brief Holds the level of debug
    */
   int mdebugLevel;
-
-  /**
-   * @brief lastError
-   */
-  std::string mlastError;
 };
 
 #endif
