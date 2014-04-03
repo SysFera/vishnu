@@ -19,7 +19,7 @@ if(NOT CMAKE_BUILD_TYPE)
     FORCE)
 endif()
 
-set(VISHNU_VERSION "3.2.2.RC1")
+set(VISHNU_VERSION "3.2.2")
 set(VISHNU_VERSION_COMMENTS "" CACHE STRING " comments about the current version ")
 
 
