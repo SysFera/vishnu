@@ -37,6 +37,14 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
       std::cerr << "Error: cannot open the script file for sending email on";
       exit(1);
     }
+
+    bool res1 =cfg.config.getConfigValue<bool>(vishnu::HAS_UMS, cfg.hasUMS);
+    bool res2 = cfg.config.getConfigValue<bool>(vishnu::HAS_TMS, cfg.hasTMS);
+    if (!res1 || !res2) {
+      std::cerr << "Error: XMS is not configured to run any services\n";
+      exit(1);
+    }
+
     cfg.config.getRequiredConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, cfg.defaultBatchConfig);
     std::string batchTypeStr;
     cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);

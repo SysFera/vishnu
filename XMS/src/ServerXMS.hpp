@@ -15,7 +15,7 @@ class Authenticator;
 class Database;
 
 struct SedConfig {
-  SedConfig() : dbConfig(config), authenticatorConfig(config), vishnuId(0), sub(false) {}
+  SedConfig() : dbConfig(config), authenticatorConfig(config), vishnuId(0), sub(false), hasUMS(false), hasTMS(false) {}
 
   ExecConfiguration config;
   DbConfiguration dbConfig;
@@ -28,6 +28,8 @@ struct SedConfig {
   std::string sendmailScriptPath;
   int vishnuId;
   bool sub;
+  bool hasUMS;
+  bool hasTMS;
 };
 
 class ServerXMS : public SeD {
@@ -94,6 +96,8 @@ private:
   ExecConfiguration_Ptr msedConfig;
   std::vector<std::string> mdefaultBatchOption;
   int mdebugLevel;
+  bool hasUMS;
+  bool hasTMS;
 };
 
 #endif

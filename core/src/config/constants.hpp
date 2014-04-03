@@ -55,7 +55,9 @@ namespace vishnu {
     SERVER_SSL_CERTICATE,
     SSL_CA,
     SUBSCRIBE,
-    STANDALONE
+    STANDALONE,
+    HAS_UMS,
+    HAS_TMS
   };
 
   /**
@@ -136,8 +138,8 @@ namespace vishnu {
   };
 
   /**
-             * \brief A convenient data type to store a parameter
-             */
+ * \brief A convenient data type to store a parameter
+ */
   struct param_t {
     /**
    * \brief key to retrieve the parameter
