@@ -4,6 +4,7 @@
 # Description : Class and header to request data from OpenNebula's XML-RPC API #
 */
 
+#include "utilServer.hpp"
 #include "OneRPCManager.hpp"
 
 #define MAX_MESSAGE_SIZE 51200
@@ -149,7 +150,7 @@ OneRPCManager::setSecretOneAuthChain(void)
       std::string sha1Pass = sha1Digest( clearOneUserPass );
       this->msecretOneAuthChain = oneUser + ":" + sha1Pass;
     } else {
-      std::clog << "Wrong format for auth token, must be <username>:<passwd>";
+      LOG("[ERROR] Wrong format for auth token, must be <username>:<passwd>", 4);
     }
   }
 }
@@ -199,7 +200,7 @@ OneRPCManager::getOneAuthChain(std::string & oneAuthChain)
       std::string oneAuthFile = pwEnt->pw_dir;
       oneAuthEnv = oneAuthFile.append("/.one/one_auth").c_str();
     } else {
-      std::clog << "Could not get one_auth file location\n";
+      LOG("[ERROR] Could not get one_auth file location", 4);
     }
   }
 
@@ -209,12 +210,12 @@ OneRPCManager::getOneAuthChain(std::string & oneAuthChain)
   if (file.good()) {
     getline(file, oneAuthChain);
     if (file.fail()) {
-      std::clog << "Error reading file: " + std::string(oneAuthEnv)<<"\n";
+      LOG("[ERROR] Error reading file: " + std::string(oneAuthEnv), 4);
     } else {
       rc = 0;
     }
   } else {
-    std::clog <<  "Could not open file: "+ std::string(oneAuthEnv)<<"\n";
+    LOG("[ERROR] Could not open file: "+ std::string(oneAuthEnv), 4);
   }
 
   file.close();

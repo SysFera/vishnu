@@ -145,15 +145,14 @@ SSHJobExec::sshexec(const std::string& actionName,
 
   vishnu::saveInFile(jobPath, mjobSerialized);
 
-  cmd += (boost::format("tmsSlave %1% %2% %3% %4% %5% %6% 2> %7%")
+  cmd += boost::str(boost::format("tmsSlave %1% %2% %3% %4% %5% %6% 2> %7%")
           % actionName
           % vishnu::convertBatchTypeToString(mbatchType)
           % mbatchVersion
           % jobPath
           % errorPath
           % detailsForSubmit
-          % stderrFilePath
-          ).str();
+          % stderrFilePath);
 
   // Execute the command and treat the possibly errors
   int ret = system(cmd.c_str());
@@ -174,10 +173,8 @@ SSHJobExec::sshexec(const std::string& actionName,
       merrorInfo.append(" SLURM ERROR");
     }
     if (merrorInfo.empty()) {
-      merrorInfo = (boost::format("Unknown error while executing the command: %1%"
-                                  "\nError code: %2%")
-                    % cmd % ret
-                    ).str();
+      merrorInfo = boost::str(boost::format("Unknown error while executing the command: %1%"
+                                  "\nError code: %2%") % cmd % ret);
     }
     CLEANUP_SUBMITTING_DATA(mdebugLevel);
     LOG(merrorInfo, mdebugLevel);

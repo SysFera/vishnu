@@ -8,10 +8,12 @@
 
 #include "OneCloudInstance.hpp"
 #include "OneRPCManager.hpp"
+#include "utilServer.hpp"
 #include "tmsUtils.hpp"
 #include <boost/scoped_ptr.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/format.hpp>
 
 
 OneCloudInstance::OneCloudInstance(const std::string& rpcUrl, const std::string &authChain)
@@ -51,7 +53,7 @@ void OneCloudInstance::updatePool(void)
   if (rpcManager.lastCallSucceeded()) {
     parseRpcHostPoolResult(rpcManager.getStringResult());
   } else {
-    std::clog << rpcManager.getStringResult()<<"\n";
+    LOG(boost::str(boost::format("[ERROR] %1%") % rpcManager.getStringResult()), 4);
   }
 }
 
@@ -71,7 +73,7 @@ int OneCloudInstance::loadVmInfo(int id, VmT& vm)
     parseRpcVmInfoResult(rpcManager.getStringResult(), vm);
     retCode = 0;
   } else {
-    std::clog << rpcManager.getStringResult()<<"\n";
+    LOG(boost::str(boost::format("[ERROR] %1%") %rpcManager.getStringResult()), 4);
   }
   return retCode;
 }
@@ -99,14 +101,14 @@ void OneCloudInstance::parseRpcHostPoolResult(const std::string& content)
     releaseXmlElts(hostPoolParser);
   } catch (const xercesc::XMLException& ex) {
     char* message = xercesc::XMLString::transcode(ex.getMessage());
-    std::clog << message<< "\n";
+    LOG(boost::str(boost::format("[ERROR] %1%") %message), 4);
     xercesc::XMLString::release(&message);
   } catch (const xercesc::DOMException& ex) {
     char* message = xercesc::XMLString::transcode(ex.msg);
-    std::clog << message<< "\n";
+    LOG(boost::str(boost::format("[ERROR] %1%") %message), 4);
     xercesc::XMLString::release(&message);
   } catch (...) {
-    std::clog << "Unable to access host pool file: "<< mhostPoolFilename<< "\n";
+    LOG(boost::str(boost::format("[ERROR] Unable to access host pool file: %1%") %mhostPoolFilename), 4);
   }
 
   vishnu::deleteFile(mhostPoolFilename.c_str());
@@ -128,14 +130,14 @@ void OneCloudInstance::parseRpcVmInfoResult(const std::string& content, VmT& vm)
     releaseXmlElts(parser);
   } catch (const xercesc::XMLException& ex) {
     char* message = xercesc::XMLString::transcode(ex.getMessage());
-    std::clog << message<< "\n";
+    LOG(boost::str(boost::format("[ERROR] %1%") %message), 4);
     xercesc::XMLString::release(&message);
   } catch (const xercesc::DOMException& ex) {
     char* message = xercesc::XMLString::transcode(ex.msg);
-    std::clog << message<< "\n";
+    LOG(boost::str(boost::format("[ERROR] %1%") %message), 4);
     xercesc::XMLString::release(&message);
   } catch (...) {
-    std::clog << "Unable to access host pool file: "<< mhostPoolFilename<< "\n";
+    LOG(boost::str(boost::format("[ERROR] Unable to access host pool file: %1%") %mhostPoolFilename), 4);
   }
 
   vishnu::deleteFile(mhostPoolFilename.c_str());
