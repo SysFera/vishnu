@@ -39,14 +39,14 @@ int solveChangeMode(diet_profile_t* profile);
  * \param profile the service profile
  * \return 0 if the service succeds or an error code otherwise
  */
-int contentFile(diet_profile_t* profile);
+int solveGetFileContent(diet_profile_t* profile);
 
 /**
  * \brief the get infos solve function
  * \param profile the service profile
  * \return 0 if the service succeds or an error code otherwise
  */
-int get_infos(diet_profile_t* profile);
+int solveGetInfos(diet_profile_t* profile);
 
 /**
  * \brief the head of file solve function
@@ -336,8 +336,8 @@ solveTransferRemoteFile(diet_profile_t* profile){
     SessionServer sessionServer (sessionKey);
 
     // check the source machine
+    // and get the source machine if applied
     if (destHost != "localhost"){
-      // get the source Vishnu machine
       UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
       machine->setMachineId(destHost);
       MachineServer destMachineServer(machine);
@@ -356,32 +356,23 @@ solveTransferRemoteFile(diet_profile_t* profile){
 
     //MAPPER CREATION
     std::string destCpltPath = destPath;
-    if(destUser.size()==0){
+    if (destUser.empty()) {
       destCpltPath = destHost + ":" + destPath;
     }
 
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
-
-
-    if (transferMode==File::sync){
-
-      if(transferType==File::copy){
+    if (transferMode == File::sync) {
+      if(transferType == File::copy) {
         mapperkey = mapper->code("vishnu_cp");
       }
-
-      if(transferType==File::move){
+      if(transferType == File::move) {
         mapperkey = mapper->code("vishnu_mv");
       }
-
-    }
-
-    else{
-
-      if(transferType==File::copy){
+    } else{
+      if (transferType == File::copy) {
         mapperkey = mapper->code("vishnu_acp");
       }
-
-      if(transferType==File::move){
+      if (transferType == File::move) {
         mapperkey = mapper->code("vishnu_amv");
       }
 
@@ -416,8 +407,7 @@ solveTransferRemoteFile(diet_profile_t* profile){
       srcUserLogin = destUser;
     }
 
-
-    if (destUser.compare("") == 0) {
+    if (destUser.empty()) {
       // get the destination Vishnu machine
       machine = new UMS_Data::Machine();
       machine->setMachineId(destHost);
@@ -431,7 +421,6 @@ solveTransferRemoteFile(diet_profile_t* profile){
         delete machine;
       }
 
-
       // get the destination  machine user login
       if (destHost != "localhost"){
         destUserLogin = UserServer(sessionServer).getUserAccountLogin(destHost);
@@ -440,34 +429,53 @@ solveTransferRemoteFile(diet_profile_t* profile){
       }
     }
 
-
     FMS_Data::CpFileOptions_ptr options_ptr= NULL;
-    if (!vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
+    if (! vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    int vishnuId=ServerFMS::getInstance()->getVishnuId();
-
-    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
-
+    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer,
+                                                                                    srcHost,
+                                                                                    destHost,
+                                                                                    srcPath,
+                                                                                    destPath,
+                                                                                    ServerFMS::getInstance()->getVishnuId()));
     // Perfor the transfer now
     if (transferMode==File::sync) {
 
-      if(transferType == File::copy){
-        fileTransferServer->addCpThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
+      if (transferType == File::copy) {
+        fileTransferServer->addCpThread(srcUserLogin,
+                                        srcMachineName,
+                                        srcUserKey,
+                                        destUserLogin,
+                                        destMachineName,
+                                        *options_ptr);
       }
-      if (transferType == File::move){
-        fileTransferServer->addMvThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
+      if (transferType == File::move) {
+        fileTransferServer->addMvThread(srcUserLogin,
+                                        srcMachineName,
+                                        srcUserKey,
+                                        destUserLogin,
+                                        destMachineName,
+                                        *options_ptr);
       }
 
     } else {
-      if (transferType == File::copy){
-        fileTransferServer->addCpAsyncThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
+      if (transferType == File::copy) {
+        fileTransferServer->addCpAsyncThread(srcUserLogin,
+                                             srcMachineName,
+                                             srcUserKey,
+                                             destUserLogin,
+                                             destMachineName,
+                                             *options_ptr);
       }
-
-      if (transferType == File::move){
-
-        fileTransferServer->addMvAsyncThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
+      if (transferType == File::move) {
+        fileTransferServer->addMvAsyncThread(srcUserLogin,
+                                             srcMachineName,
+                                             srcUserKey,
+                                             destUserLogin,
+                                             destMachineName,
+                                             *options_ptr);
       }
     }
     FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
@@ -478,7 +486,7 @@ solveTransferRemoteFile(diet_profile_t* profile){
 
     ::ecorecpp::serializer::serializer _ser;
 
-    fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer.get()));
+    fileTransferSerialized = _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer.get()));
 
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
@@ -502,7 +510,6 @@ solveTransferRemoteFile(diet_profile_t* profile){
     diet_string_set(profile, 0, "error");
     diet_string_set(profile, 1, errMsg);
   }
-
   return 0;
 }
 
