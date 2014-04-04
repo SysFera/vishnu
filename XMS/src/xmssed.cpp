@@ -136,7 +136,6 @@ controlSignal (int signum) {
 int
 main(int argc, char* argv[], char* envp[]) {
   // initialisation
-  int res(0);
   struct sigaction action;
   std::string XMSTYPE = "xmssed";
 
@@ -164,7 +163,7 @@ main(int argc, char* argv[], char* envp[]) {
   if (pid > 0) {
     //Initialize the UMS Server (Opens a connection to the database)
     boost::shared_ptr<ServerXMS> serverXMS(ServerXMS::getInstance());
-    res = serverXMS->init(cfg);
+    int res = serverXMS->init(cfg);
 
     if (cfg.sub) {
       boost::thread thr(boost::bind(&keepRegistered, XMSTYPE,
