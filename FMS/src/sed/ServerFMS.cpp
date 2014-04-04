@@ -5,6 +5,7 @@
  * \date 16/05/2011
  */
 
+#include "internalApi.hpp"
 #include "ServerFMS.hpp"
 #include "utilVishnu.hpp"
 #include "DbFactory.hpp"
@@ -13,8 +14,6 @@
 #include "internalApiFMS.hpp"
 #include "FMSServices.hpp"
 
-using namespace vishnu;
-using namespace FMS_Data;
 
 // {{RELAX<MISRA_0_1_3> Three static variables
 Database *ServerFMS::mdatabaseVishnu = NULL;
@@ -67,12 +66,13 @@ ServerFMS::init(int vishnuId, std::string mid, DbConfiguration dbConfig) {
 
     mvishnuId = vishnuId;
 
-    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
+    std::string sqlCommand("SELECT * FROM vishnu "
+                           " WHERE vishnuid="+vishnu::convertToString(mvishnuId));
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
 
-    mmapper = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
+    mmapper = new FMSMapper(MapperRegistry::getInstance(), vishnu::FMSMAPPERNAME);
     mmapper->registerMapper();
 
     /* Checking of vishnuid on the database */
@@ -83,8 +83,8 @@ ServerFMS::init(int vishnuId, std::string mid, DbConfiguration dbConfig) {
     }
 
   } catch (VishnuException& e) {
-      std::cout << e.what() << std::endl;
-      exit(0);
+    std::cout << e.what() << std::endl;
+    exit(0);
   }
   initMap(mid);
 

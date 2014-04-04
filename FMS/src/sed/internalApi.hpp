@@ -1,30 +1,104 @@
-
 /**
- * \file transferSrv.hpp
- * This file contains the declaration of the vishnu transfer file server
- */
-#ifndef TRANSFERSRV_HPP
-#define TRANSFERSRV_HPP
-#include <string>
-#include <stdexcept>
-#include <iostream>
-#include <cstring>
-#include <sstream>
-#include <sys/types.h>
+  File: internalApi.hpp
+  Creation Date: 04/04/2014
+  Author: Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
+  */
 
-#include "FileFactory.hpp"
+#ifndef INTERNALAPI_HPP
+#define INTERNALAPI_HPP
 
 #include "DIET_client.h"
-#include "UserServer.hpp"
+#include "File.hpp"
+#include "Mapper.hpp"
+#include "MapperRegistry.hpp"
 #include "MachineServer.hpp"
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include "FileFactory.hpp"
+#include "FileStat.hpp"
 #include "ServerFMS.hpp"
-#include "FMSMapper.hpp"
-#include "ListFileTransfers.hpp"
-
 #include "FileTransferServer.hpp"
 
+/**
+ * \brief the change group solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+
+int solveChangeGroup(diet_profile_t* profile);
+
+
+/**
+ * \brief the change mode solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int solveChangeMode(diet_profile_t* profile);
+
+
+/**
+ * \brief the get file content solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int contentFile(diet_profile_t* profile);
+
+/**
+ * \brief the get infos solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int get_infos(diet_profile_t* profile);
+
+/**
+ * \brief the head of file solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int headFile(diet_profile_t* profile);
+
+
+/**
+ * \brief the list directory solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int solveListDir(diet_profile_t* profile);
+
+
+/**
+ * \brief the mkdir solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int solveCreateDir(diet_profile_t* profile);
+
+/**
+ * \brief the mkfile solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int solveCreateFile(diet_profile_t* profile);
+
+
+/**
+ * \brief the remove directory solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int solveRemoveDir(diet_profile_t* profile);
+
+/**
+ * \brief the remove file solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int solveRemoveFile(diet_profile_t* profile);
+
+/**
+ * \brief the tail of file solve function
+ * \param profile the service profile
+ * \return 0 if the service succeds or an error code otherwise
+ */
+int tailFile(diet_profile_t* profile);
 
 
 /**
@@ -49,7 +123,9 @@ solveFileTransferStop(diet_profile_t* pb);
  * \param profile the service profile
  * \return 0 if the service succeeds or an error code otherwise
  */
-template < File::TransferType transferType, File::TransferMode transferMode> int solveTransferFile(diet_profile_t* profile){
+template < File::TransferType transferType, File::TransferMode transferMode>
+int
+solveTransferFile(diet_profile_t* profile){
 
   std::string srcUserKey = "";
   std::string destUser = "";
@@ -71,12 +147,10 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
   diet_string_get(profile, 2, srcHost);
   diet_string_get(profile, 3, dest);
   diet_string_get(profile, 4, optionsSerialized);
-// srcuser
+
+
   // reset profile to handle result
   diet_profile_reset(profile, 2);
-
-  std::cout << "ICIIIIIIIIIIIIIII" << std::endl;
-
 
   std:: string destPath=File::extName(dest);
   std:: string destHost=File::extHost(dest);
@@ -150,7 +224,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    int vishnuId=ServerFMS::getInstance()->getVishnuId();
+    int vishnuId = ServerFMS::getInstance()->getVishnuId();
 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
@@ -214,8 +288,8 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
   }
 
   return 0;
-
 }
+
 
 /**
  * \brief Implementation of file transfer (from remote to local or remote ) solve function
@@ -223,7 +297,9 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
  * \return 0 if the service succeeds or an error code otherwise
  */
 
-template <File::TransferType transferType, File::TransferMode transferMode> int solveTransferRemoteFile(diet_profile_t* profile){
+template <File::TransferType transferType, File::TransferMode transferMode>
+int
+solveTransferRemoteFile(diet_profile_t* profile){
 
   std::string srcPath = "";
   std::string destUser = "";
@@ -375,42 +451,34 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
     // Perfor the transfer now
-    if (transferMode==File::sync){
+    if (transferMode==File::sync) {
 
-      if(transferType==File::copy){
+      if(transferType == File::copy){
         fileTransferServer->addCpThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
       }
-
-      if (transferType==File::move){
-
+      if (transferType == File::move){
         fileTransferServer->addMvThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
       }
 
-    }else{
-
-      if(transferType==File::copy){
+    } else {
+      if (transferType == File::copy){
         fileTransferServer->addCpAsyncThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
       }
 
-      if (transferType==File::move){
+      if (transferType == File::move){
 
         fileTransferServer->addMvAsyncThread(srcUserLogin,srcMachineName,srcUserKey,destUserLogin,destMachineName,*options_ptr);
       }
     }
-      FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+    FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
 
-      FMS_Data::FileTransfer_ptr fileTransfer=ecoreFactory->createFileTransfer();
+    boost::scoped_ptr<FMS_Data::FileTransfer> fileTransfer(ecoreFactory->createFileTransfer());
 
-      *fileTransfer= fileTransferServer->getFileTransfer();
+    *(fileTransfer.get()) = fileTransferServer->getFileTransfer();
 
+    ::ecorecpp::serializer::serializer _ser;
 
-      ::ecorecpp::serializer::serializer _ser;
-
-      fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer));
-
-
-      delete fileTransfer;
-
+    fileTransferSerialized =  _ser.serialize_str(const_cast<FMS_Data::FileTransfer_ptr>(fileTransfer.get()));
 
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
@@ -434,89 +502,8 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     diet_string_set(profile, 0, "error");
     diet_string_set(profile, 1, errMsg);
   }
-  return 0;
 
-
-}
-
-
-
-
-/**
- * \brief Function to solve the generic query service
- * \param pb is a structure which corresponds to the descriptor of a profile
- * \return 0 if the service succeeds or an error code otherwise
- */
-template <class QueryParameters, class List, class QueryType>
-int
-solveGenerique(diet_profile_t* pb) {
-
-  std::string sessionKey = "";
-  std::string optionValueSerialized = "";
-  std::string listSerialized = "";
-  std::string errorInfo;
-  std::string cmd;
-  std::string finishError ="";
-
-  //IN Parameters
-  diet_string_get(pb,0, sessionKey);
-  diet_string_get(pb,1, optionValueSerialized);
-
-  // reset profile to handle result
-  diet_profile_reset(pb, 2);
-
-  SessionServer sessionServer  = SessionServer(sessionKey);
-
-  QueryParameters* options = NULL;
-  List* list = NULL;
-
-  try {
-    int mapperkey;
-    //To parse the object serialized
-    if (!vishnu::parseEmfObject(optionValueSerialized, options)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
-    }
-
-
-    QueryType query(sessionKey);
-
-    //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
-    mapperkey = mapper->code(query.getCommandName());
-    mapper->code(optionValueSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
-
-    //  perform the query
-
-    list = query.list(options);
-
-    ::ecorecpp::serializer::serializer _ser;
-
-    listSerialized =  _ser.serialize_str(const_cast<List*>(list));
-
-    //OUT Parameter
-    diet_string_set(pb, 0, "success");
-    diet_string_set(pb, 1, listSerialized.c_str());
-    sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
-  } catch (VishnuException& e) {
-    try {
-      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
-    } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
-    }
-    e.appendMsgComp(finishError);
-    errorInfo =  e.buildExceptionString();
-    //OUT Parameter
-    // set error result
-    diet_string_set(pb, 0, "error");
-    diet_string_set(pb, 1, errorInfo);
-  }
-  delete options;
-  delete list;
   return 0;
 }
 
-
-
-#endif
+#endif // INTERNALAPI_HPP

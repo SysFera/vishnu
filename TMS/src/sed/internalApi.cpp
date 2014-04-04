@@ -13,21 +13,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iomanip>
-
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/format.hpp>
 #include <boost/filesystem/path.hpp>
-
-
-//EMF
-#include <ecore.hpp> // Ecore metamodel
-#include <ecorecpp.hpp> // EMF4CPP utils
+#include <ecore.hpp>
+#include <ecorecpp.hpp>
 #include "TMS_Data.hpp"
 #include "DIET_client.h"
-
 #include "utilServer.hpp"
 #include "BatchServer.hpp"
 #include "ServerTMS.hpp"

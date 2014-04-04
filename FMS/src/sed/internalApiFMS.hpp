@@ -24,6 +24,5 @@
 #include "rmdirSrv.hpp"
 #include "tailSrv.hpp"
 #include "lsSrv.hpp"
-#include "transferSrv.hpp"
 
 #endif

@@ -49,20 +49,10 @@ if(COMPILE_SERVER_FMS)
     ${UMS_SERVER_SOURCE_DIR}
     ${FMS_SERVER_SOURCE_DIR})
 
-  set(sed_SRCS sed/fmssed.cpp
+  set(sed_SRCS
+    sed/internalApi.cpp
+    sed/fmssed.cpp
     sed/ServerFMS.cpp
-    sed/getInfosSrv.cpp
-    sed/getContentSrv.cpp
-    sed/headSrv.cpp
-    sed/tailSrv.cpp
-    sed/mkdirSrv.cpp
-    sed/mkfileSrv.cpp
-    sed/rmdirSrv.cpp
-    sed/rmfileSrv.cpp
-    sed/chgrpSrv.cpp
-    sed/chmodSrv.cpp
-    sed/lsSrv.cpp
-    sed/transferSrv.cpp
     sed/MonitorFMS.cpp
     ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
     ${utils_SRCS})
