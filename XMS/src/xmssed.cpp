@@ -22,6 +22,16 @@ usage(const char* cmd) {
   return 1;
 }
 
+/* @brief Export cloud specific configuration parameters as environments variables
+ */
+void
+exportCloudSpecificParam(ExecConfiguration_Ptr config) {
+  std::string paramValue;
+  if (config->getConfigValue<std::string>(vishnu::CLOUDENDPOINT, paramValue)) {
+  setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT].c_str(),
+         paramValue.c_str(), 1);
+  }
+}
 
 void
 readConfiguration(const std::string& initFile, SedConfig& cfg) {
@@ -50,12 +60,13 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
     cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     cfg.batchType = vishnu::convertToBatchType(batchTypeStr);
     if (cfg.batchType == UNDEFINED) {
-      std::cerr << "\nError: Invalid batch. Batch type must be TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBSPRO, POSIX or DELTACLOUD)\n";
+        std::cerr << boost::format("Invalid batch backend: %1%\n") 
+            % batchTypeStr;
       exit(1);
     }
 
     cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, cfg.batchVersion);
-    if (cfg.batchType != DELTACLOUD) {
+    if (cfg.batchType != DELTACLOUD && cfg.batchType != OPENNEBULA) {
       cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, cfg.batchVersion);
     }
 
@@ -99,6 +110,10 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
       }
       break;
     }
+    case DELTACLOUD:
+    case OPENNEBULA:
+      exportCloudSpecificParam(&cfg.config);
+      break;
     default:
       break;
     }
