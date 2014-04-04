@@ -1909,6 +1909,14 @@ class Job(EObject):
         """setRelatedSteps(self, EString _relatedSteps)"""
         return _VISHNU.Job_setRelatedSteps(self, *args, **kwargs)
 
+    def getSubmitError(self, *args, **kwargs):
+        """getSubmitError(self) -> EString"""
+        return _VISHNU.Job_getSubmitError(self, *args, **kwargs)
+
+    def setSubmitError(self, *args, **kwargs):
+        """setSubmitError(self, EString _submitError)"""
+        return _VISHNU.Job_setSubmitError(self, *args, **kwargs)
+
     def eGet(self, *args, **kwargs):
         """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
         return _VISHNU.Job_eGet(self, *args, **kwargs)
