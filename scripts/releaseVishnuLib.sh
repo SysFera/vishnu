@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ $# -ne 3 ]; then
-    echo "Usage: " $0 " <vishnuDir> <destDir> <version>"
+if [ $# -ne 2 ]; then
+    echo "Usage: " $0 " <vishnuDir> <destDir>"
     exit 1
 fi
 
@@ -9,8 +9,6 @@ fi
 vishnuDir=$1
 # Dest
 destDir=$2
-# Version
-version=$3
 
 cd $destDir
 mkdir -p Java
@@ -24,7 +22,7 @@ cd Java/impl/VishnuLib
 mvn clean
 mvn install
 
-cp target/VishnuLib-$version.jar $destDir/
+cp target/VishnuLib-*.jar $destDir/
 
 cd $destDir
 rm -rf Java
