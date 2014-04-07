@@ -74,13 +74,23 @@ vishnu::buildTransferBaseCommand(int type,
  * @brief Check if one of machine is local
  * @param srcMachine The source machine
  * @param destMachine The destination machine
+ * @param direction Tell the direction of the copy
  * @return
  */
 bool
-vishnu::ifLocalTransferInvolved(const std::string& srcMachine, const std::string& destMachine) {
-  return srcMachine == "localhost"
-      || destMachine == "localhost"
-      || srcMachine == "127.0.0.1"
-      || destMachine == "127.0.0.1";
+vishnu::ifLocalTransferInvolved(const std::string& srcMachine,
+                                const std::string& destMachine,
+                                int& direction)
+{
+  bool result = false;
+  if (srcMachine == "localhost"  || srcMachine == "127.0.0.1") {
+    result = true;
+    direction = CopyLocalRemote;
+  } else if (destMachine == "localhost"  || destMachine == "127.0.0.1") {
+    result = true;
+    direction = CopyRemoteLocal;
+  }
+
+  return result;
 }
 

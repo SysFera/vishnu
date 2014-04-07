@@ -8,8 +8,6 @@
 #define FFMSCONSTANTS_HPP
 
 
-
-
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -22,7 +20,5 @@ static const mode_t defaultFileAccessMode=420;
  * \brief default access permissions used for new directory
  */
 static const mode_t defaultDirectoryAccessMode=493;
-
-
 
 #endif

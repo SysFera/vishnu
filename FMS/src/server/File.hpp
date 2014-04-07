@@ -13,6 +13,7 @@
 #include "FileTypes.hpp"
 #include "SessionServer.hpp"
 #include "StringToDirEntry.hh"
+#include "FMSConstants.hpp"
 
 /**
  * \brief Main File class. Encapsulates all the files attributes.

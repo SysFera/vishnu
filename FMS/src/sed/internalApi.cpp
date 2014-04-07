@@ -16,12 +16,12 @@
 
 /**
  * \brief Function to solve the generic query service
- * \param pb is a structure which corresponds to the descriptor of a profile
+ * \param profile is a structure which corresponds to the descriptor of a profile
  * \return 0 if the service succeeds or an error code otherwise
  */
 template <class QueryParameters, class List, class QueryType>
 int
-solveGenerique(diet_profile_t* pb) {
+solveGenerique(diet_profile_t* profile) {
 
   std::string sessionKey = "";
   std::string optionValueSerialized = "";
@@ -31,11 +31,11 @@ solveGenerique(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(pb,0, sessionKey);
-  diet_string_get(pb,1, optionValueSerialized);
+  diet_string_get(profile,0, sessionKey);
+  diet_string_get(profile,1, optionValueSerialized);
 
   // reset profile to handle result
-  diet_profile_reset(pb, 2);
+  diet_profile_reset(profile, 2);
 
   SessionServer sessionServer  = SessionServer(sessionKey);
 
@@ -67,8 +67,8 @@ solveGenerique(diet_profile_t* pb) {
     listSerialized =  _ser.serialize_str(const_cast<List*>(list));
 
     //OUT Parameter
-    diet_string_set(pb, 0, "success");
-    diet_string_set(pb, 1, listSerialized.c_str());
+    diet_string_set(profile, 0, "success");
+    diet_string_set(profile, 1, listSerialized.c_str());
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
@@ -81,8 +81,8 @@ solveGenerique(diet_profile_t* pb) {
     errorInfo =  e.buildExceptionString();
     //OUT Parameter
     // set error result
-    diet_string_set(pb, 0, "error");
-    diet_string_set(pb, 1, errorInfo);
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, errorInfo);
   }
   delete options;
   delete list;
@@ -247,7 +247,7 @@ int solveChangeMode (diet_profile_t* profile) {
 /* get Content  Vishnu callback function.
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n first line of the file to the client application. */
-int contentFile(diet_profile_t* profile) {
+int solveGetFileContent(diet_profile_t* profile) {
   std::string localPath, userKey, acLogin, machineName;
   std::string path = "";
   std::string host = "";
@@ -321,7 +321,8 @@ int contentFile(diet_profile_t* profile) {
  *  - The creation, modification and acces time.
  *  - The file type.
  */
-int get_infos(diet_profile_t* profile) {
+int
+solveGetInfos(diet_profile_t* profile) {
 
   std::string path = "";
   std::string host = "";
@@ -403,7 +404,7 @@ int get_infos(diet_profile_t* profile) {
 /* head Vishnu callback function. Proceed to the group change using the
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n first line of the file to the client application. */
-int headFile(diet_profile_t* profile) {
+int solveHeadFile(diet_profile_t* profile) {
   std::string localPath, userKey, acLogin, machineName;
   std::string path = "";
   std::string host = "";
@@ -874,7 +875,7 @@ int solveRemoveFile(diet_profile_t* profile) {
 /* tail Vishnu callback function. Proceed to the group change using the
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n last lines of a file to the client application. */
-int tailFile(diet_profile_t* profile) {
+int solveTailFile(diet_profile_t* profile) {
   std::string localPath;
   std::string userKey;
   std::string acLogin;
@@ -897,26 +898,22 @@ int tailFile(diet_profile_t* profile) {
   SessionServer sessionServer (sessionKey);
 
   try {
-    int mapperkey;
+    sessionServer.check();
+
     //MAPPER CREATION
+    int mapperkey;
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_tail_of_file");
     mapper->code(host + ":" + path, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
-    // check the sessionKey
-
-    sessionServer.check();
-    //
+    // Check machine
     UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
     machine->setMachineId(host);
     MachineServer machineServer(machine);
 
-    // check the machine
     machineServer.checkMachine();
-
-    // get the machineName
     machineName = machineServer.getMachineName();
     delete machine;
 
@@ -937,9 +934,10 @@ int tailFile(diet_profile_t* profile) {
     diet_string_set(profile, 1, file->tail(*options_ptr));
     diet_string_set(profile, 0, "success");
 
+    delete options_ptr;
+
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
-
   } catch (VishnuException& err) {
     try {
       sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
@@ -956,18 +954,18 @@ int tailFile(diet_profile_t* profile) {
 
 /**
  * \brief Function to solve the getListOfJobs service
- * \param pb is a structure which corresponds to the descriptor of a profile
+ * \param profile is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveGetListOfFileTransfers(diet_profile_t* pb) {
-  return solveGenerique<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList, ListFileTransfers >(pb);
+solveGetListOfFileTransfers(diet_profile_t* profile) {
+  return solveGenerique<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList, ListFileTransfers >(profile);
 }
 
 
 /**
  * \brief Function to solve the File transfer stop service
- * \param pb is a structure which corresponds to the descriptor of a profile
+ * \param profile is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
@@ -984,7 +982,6 @@ solveFileTransferStop(diet_profile_t* profile) {
   diet_profile_reset(profile, 2);
 
   SessionServer sessionServer = SessionServer(sessionKey);
-  FMS_Data::StopTransferOptions_ptr options_ptr = NULL;
 
   try {
     //MAPPER CREATION
@@ -994,13 +991,13 @@ solveFileTransferStop(diet_profile_t* profile) {
     mapper->code(optionsSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
-    if(!vishnu::parseEmfObject(optionsSerialized, options_ptr)) {
-      SystemException(ERRCODE_INVDATA, "solve_fileTransferStop: options object is not well built");
+    FMS_Data::StopTransferOptions_ptr options_ptr = NULL;
+    if(! vishnu::parseEmfObject(optionsSerialized, options_ptr)) {
+      SystemException(ERRCODE_INVDATA, "solveFileTransferStop: options object is not well built");
     }
-
-    int vishnuId = ServerFMS::getInstance()->getVishnuId();
-    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer,vishnuId));
-    fileTransferServer->stopThread(*options_ptr);
+    FileTransferServer fileTransferServer(sessionServer, ServerFMS::getInstance()->getVishnuId());
+    fileTransferServer.stopThread(*options_ptr);
+    delete options_ptr;
 
     // set success result
     diet_string_set(profile, 0, "success");
@@ -1019,5 +1016,45 @@ solveFileTransferStop(diet_profile_t* profile) {
   return 0;
 }
 
+
+/**
+ * @brief Update transfer information when the transfer were initiated from the client side
+ * @param profile The profile information
+ * @return 0 on success, non-zero on erro
+ */
+int
+solveUpdateClientSideTransfer(diet_profile_t* profile)
+{
+  std::string sessionKey = "";
+  std::string transferSerialized = "";
+
+  diet_string_get(profile,0, sessionKey);
+  diet_string_get(profile,1, transferSerialized);
+
+  try {
+    FMS_Data::FileTransfer_ptr transfer;
+    if (! vishnu::parseEmfObject(transferSerialized, transfer)) {
+      SystemException(ERRCODE_INVDATA, "solveUpdateClientSideTransfer: invalid transfer object");
+    }
+
+    FileTransferServer transferServer(SessionServer(sessionKey),
+                                      ServerFMS::getInstance()->getVishnuId());
+    transferServer.setFileTransfer(*transfer);
+    transferServer.updateDatabaseRecord();
+    delete transfer;
+
+    // reset the profile to handle result
+    diet_profile_reset(profile, 2);
+
+    // set success result
+    diet_string_set(profile, 0, "success");
+    diet_string_set(profile, 1, "");
+  } catch (VishnuException& err) {
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
+  }
+
+  return 0;
+}
 
 

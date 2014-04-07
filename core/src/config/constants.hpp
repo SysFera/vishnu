@@ -126,7 +126,14 @@ namespace vishnu {
 
   enum TransfertStatusT {
     TRANSFER_INPROGRESS = 0,
+    TRANSFER_COMPLETED = 1,
+    TRANSFER_CANCELLED = 2,
     TRANSFER_FAILED = 3
+  };
+
+  enum FileCopyDirectionT {
+    CopyLocalRemote = 0,
+    CopyRemoteLocal = 1
   };
 
   /**

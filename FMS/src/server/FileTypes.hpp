@@ -3,17 +3,11 @@
 
 #include <string>
 #include <list>
-
 #include <sys/types.h>
 #include <sys/stat.h>
-
 #include <boost/cstdint.hpp>
 #include "FMS_Data_forward.hpp"
 #include "FMS_Data.hpp"
-
-
-static const mode_t defaultFileAccessMode=420;
-static const mode_t defaultDirectoryAccessMode=493;
 
 /**
  * \brief File type enumeration

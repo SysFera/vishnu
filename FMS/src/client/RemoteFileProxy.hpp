@@ -179,6 +179,15 @@ private:
                    const FMS_Data::CpFileOptions& options,
                    const std::string& serviceName,
                    FMS_Data::FileTransfer& fileTransfer);
+
+  /**
+   * @brief Request the server to update the state of transfer performed locally
+   * @param transfer The transfer information
+   * @param direction The direction of the transfer (local->remote, remote->local)
+   * @return throw execption on error
+   */
+  void
+  finalizeTransfer(FMS_Data::FileTransfer& transfer, int direction);
 };
 
 #endif

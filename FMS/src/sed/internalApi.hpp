@@ -53,7 +53,7 @@ int solveGetInfos(diet_profile_t* profile);
  * \param profile the service profile
  * \return 0 if the service succeds or an error code otherwise
  */
-int headFile(diet_profile_t* profile);
+int solveHeadFile(diet_profile_t* profile);
 
 
 /**
@@ -98,25 +98,32 @@ int solveRemoveFile(diet_profile_t* profile);
  * \param profile the service profile
  * \return 0 if the service succeds or an error code otherwise
  */
-int tailFile(diet_profile_t* profile);
+int solveTailFile(diet_profile_t* profile);
 
 
 /**
  * \brief List file transfer solve function
- * \param pb is a structure which corresponds to the descriptor of a profile
+ * \param profile is a structure which corresponds to the descriptor of a profile
  * \return 0 if the service succeeds
  */
 int
-solveGetListOfFileTransfers(diet_profile_t* pb);
+solveGetListOfFileTransfers(diet_profile_t* profile);
 
 /**
  * \brief File transfer stop solve function
- * \param pb is a structure which corresponds to the descriptor of a profile
+ * \param profile is a structure which corresponds to the descriptor of a profile
  * \return 0 if the service succeeds or an error code otherwise
  */
 int
-solveFileTransferStop(diet_profile_t* pb);
+solveFileTransferStop(diet_profile_t* profile);
 
+/**
+ * @brief Update transfer information when the transfer were initiated from the client side
+ * @param profile The profile information
+ * @return 0 on success, non-zero on erro
+ */
+int
+solveUpdateClientSideTransfer(diet_profile_t* profile);
 
 /**
  * \brief Implementation of file transfer (local to remote) solve function
@@ -226,29 +233,52 @@ solveTransferFile(diet_profile_t* profile){
 
     int vishnuId = ServerFMS::getInstance()->getVishnuId();
 
-    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
+    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer,
+                                                                                    srcHost,
+                                                                                    destHost,
+                                                                                    srcPath,
+                                                                                    destPath,
+                                                                                    vishnuId));
 
     // Perfor the transfer now
-    if (transferMode==File::sync){
-
-      if(transferType==File::copy){
-        fileTransferServer->addCpThread(srcUser, srcHost, srcUserKey, destUser, destMachineName,*options_ptr);
+    if (transferMode == File::sync) {
+      if (transferType == File::copy) {
+        fileTransferServer->addCpThread(srcUser,
+                                        srcHost,
+                                        srcUserKey,
+                                        destUser,
+                                        destMachineName,
+                                        *options_ptr);
       }
 
-      if (transferType==File::move){
-
-        fileTransferServer->addMvThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
+      if (transferType == File::move) {
+        fileTransferServer->addMvThread(srcUser,
+                                        srcHost,
+                                        srcUserKey,
+                                        destUser,
+                                        destMachineName,
+                                        *options_ptr);
       }
     }
     else{
 
       if(transferType==File::copy){
-        fileTransferServer->addCpAsyncThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
+        fileTransferServer->addCpAsyncThread(srcUser,
+                                             srcHost,
+                                             srcUserKey,
+                                             destUser,
+                                             destMachineName,
+                                             *options_ptr);
       }
 
       if (transferType==File::move){
 
-        fileTransferServer->addMvAsyncThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
+        fileTransferServer->addMvAsyncThread(srcUser,
+                                             srcHost,
+                                             srcUserKey,
+                                             destUser,
+                                             destMachineName,
+                                             *options_ptr);
       }
 
 
