@@ -266,21 +266,34 @@ if (COMPILE_SERVER_TMS)
     ${FMS_SERVER_SOURCE_DIR}
     ${USED_BATCH_INCLUDE_DIR}
     ${XMS_SED_SOURCE_DIR}
-    ${TESTVISHNU_SOURCE_DIR}/../third-party)
+    ${TESTVISHNU_SOURCE_DIR}/../third-party
+    ${PROJECT_BINARY_DIR})
   
 
  if(NOT COMPILE_ONLY_LIBBATCH)
    # define tmsSlave related source files
-  set(slave_SRCS slave/slave.cpp ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
+  set(slave_SRCS slave/slave.cpp ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
+    server/BatchFactory.cpp
+    utils/SharedLibrary.cc
+    ../../core/src/utils/utilPosix.cpp
+    ../../communication/utils.cpp
+    ${logger_SRCS})
+
+ if(WIN32)
+   set(slave_SRCS ${slave_SRCS} utils/SharedLibraryImpl_win32.cc)
+ else()
+   set(slave_SRCS ${slave_SRCS} utils/SharedLibraryImpl_posix.cc)
+ endif()
+
 
   # define tmsSlave binary
   add_executable(tmsSlave ${slave_SRCS})
   target_link_libraries(tmsSlave
     ${Boost_LIBRARIES}
+    ${CMAKE_DL_LIBS}
     vishnu-core
-    vishnu-core-server
-    vishnu-tms-server
     emf4cpp-vishnu
+    jansson
     ${USED_BATCH_LIB})
 
   add_definitions(-DMODULE_PREFIX="${CMAKE_SHARED_MODULE_PREFIX}")
@@ -300,12 +313,12 @@ if (COMPILE_SERVER_TMS)
     ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
     ${logger_SRCS})
 
- if(WIN32)
-   set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_win32.cc)
- else()
-   set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_posix.cc)
- endif()
- 
+  if(WIN32)
+    set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_win32.cc)
+  else()
+    set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_posix.cc)
+  endif()
+
   # generate vishnu-tms-server library
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})

@@ -351,7 +351,7 @@ if(COMPILE_SERVER_UMS OR COMPILE_SERVER_FMS OR COMPILE_SERVER_TMS )
      database/DatabaseResult.cpp
      database/RequestFactory.cpp)
 
-  set(utils_server_SRCS utils/utilServer.cpp)
+  set(utils_server_SRCS utils/utilServer.cpp utils/utilPosix.cpp)
 
   if(MYSQL_FOUND AND ENABLE_MYSQL)
     set(database_SRCS ${database_SRCS}
