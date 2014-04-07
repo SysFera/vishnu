@@ -33,102 +33,113 @@ exportCloudSpecificParam(ExecConfiguration_Ptr config) {
   }
 }
 
+
+void
+getBatchConfiguration(SedConfig& cfg) {
+  cfg.config.getRequiredConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, cfg.defaultBatchConfig);
+  std::string batchTypeStr;
+  cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
+  cfg.batchType = vishnu::convertToBatchType(batchTypeStr);
+  if (cfg.batchType == UNDEFINED) {
+    std::cerr << boost::format("Invalid batch backend: %1%\n") 
+        % batchTypeStr;
+    exit(1);
+  }
+
+  cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, cfg.batchVersion);
+  if (cfg.batchType != DELTACLOUD && cfg.batchType != OPENNEBULA) {
+    cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, cfg.batchVersion);
+  }
+
+  std::string versError;
+  switch (cfg.batchType) {
+  case TORQUE: {
+    if (cfg.batchVersion != "2.3") {
+      versError = "2.3";
+    }
+    break;
+  }
+  case PBSPRO: {
+    if (cfg.batchVersion != "10.4") {
+      versError = "10.4";
+    }
+    break;
+  }
+  case LOADLEVELER: {
+    if (cfg.batchVersion != "3.x" && cfg.batchVersion != "2.x") {
+      versError = "2.x and 3.x";
+    }
+    break;
+  }
+  case SLURM: {
+    if (cfg.batchVersion != "2.2" &&
+      cfg.batchVersion != "2.3" &&
+      cfg.batchVersion != "2.4") {
+        versError = "2.2, 2.3 and 2.4";
+    }
+    break;
+    }
+  case LSF: {
+    if (cfg.batchVersion != "7.0") {
+      versError = "7.0";
+    }
+    break;
+  }
+  case SGE: {
+    if (cfg.batchVersion != "11") {
+      versError = "11";
+    }
+    break;
+  }
+  case DELTACLOUD:
+  case OPENNEBULA:
+    exportCloudSpecificParam(&cfg.config);
+    break;
+  default:
+    break;
+  }
+
+  if (!versError.empty()) {
+    std::cerr << "\nError: specified batch version is not supported.\n"
+              << "Supported versions for " << batchTypeStr
+              << " are: " << versError << "\n";
+    exit(1);
+  }
+}
+
 void
 readConfiguration(const std::string& initFile, SedConfig& cfg) {
   try {
     cfg.config.initFromFile(initFile);
     cfg.config.getRequiredConfigValue<int>(vishnu::VISHNUID, cfg.vishnuId);
     cfg.dbConfig.check();
-    cfg.config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, cfg.sendmailScriptPath);
     cfg.config.getRequiredConfigValue<std::string>(vishnu::SED_URIADDR, cfg.uri);
     cfg.config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, cfg.sub);
     cfg.config.getConfigValue<std::string>(vishnu::MACHINEID, cfg.mid);
-    if(!boost::filesystem::is_regular_file(cfg.sendmailScriptPath)) {
-      std::cerr << "Error: cannot open the script file for sending email on";
-      exit(1);
-    }
 
-    bool res1 =cfg.config.getConfigValue<bool>(vishnu::HAS_UMS, cfg.hasUMS);
-    bool res2 = cfg.config.getConfigValue<bool>(vishnu::HAS_TMS, cfg.hasTMS);
-    if (!res1 || !res2) {
+    bool hasUMS = cfg.config.getConfigValue<bool>(vishnu::HAS_UMS, cfg.hasUMS);
+    bool hasTMS = cfg.config.getConfigValue<bool>(vishnu::HAS_TMS, cfg.hasTMS);
+    if (!hasUMS || !hasTMS) {
       std::cerr << "Error: XMS is not configured to run any services\n";
       exit(1);
     }
 
-    cfg.config.getRequiredConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, cfg.defaultBatchConfig);
-    std::string batchTypeStr;
-    cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
-    cfg.batchType = vishnu::convertToBatchType(batchTypeStr);
-    if (cfg.batchType == UNDEFINED) {
-        std::cerr << boost::format("Invalid batch backend: %1%\n") 
-            % batchTypeStr;
-      exit(1);
+    if (hasTMS) {
+      getBatchConfiguration(cfg);
     }
+    if (hasUMS) {
+      cfg.config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT,
+                                                     cfg.sendmailScriptPath);
+      if (!boost::filesystem::is_regular_file(cfg.sendmailScriptPath)) {
+        std::cerr << "Error: cannot open the script file for sending email on";
+        exit(1);
+      }
 
-    cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, cfg.batchVersion);
-    if (cfg.batchType != DELTACLOUD && cfg.batchType != OPENNEBULA) {
-      cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, cfg.batchVersion);
+      cfg.authenticatorConfig.check();
     }
-
-    std::string versError;
-    switch (cfg.batchType) {
-    case TORQUE: {
-      if (cfg.batchVersion != "2.3") {
-        versError = "2.3";
-      }
-      break;
-    }
-    case PBSPRO: {
-      if (cfg.batchVersion != "10.4") {
-        versError = "10.4";
-      }
-      break;
-    }
-    case LOADLEVELER: {
-      if (cfg.batchVersion != "3.x" && cfg.batchVersion != "2.x") {
-        versError = "2.x and 3.x";
-      }
-      break;
-    }
-    case SLURM: {
-      if (cfg.batchVersion != "2.2" &&
-          cfg.batchVersion != "2.3" &&
-          cfg.batchVersion != "2.4") {
-        versError = "2.2, 2.3 and 2.4";
-      }
-      break;
-    }
-    case LSF: {
-      if (cfg.batchVersion != "7.0") {
-        versError = "7.0";
-      }
-      break;
-    }
-    case SGE: {
-      if (cfg.batchVersion != "11") {
-        versError = "11";
-      }
-      break;
-    }
-    case DELTACLOUD:
-    case OPENNEBULA:
-      exportCloudSpecificParam(&cfg.config);
-      break;
-    default:
-      break;
-    }
-
-    if (!versError.empty()) {
-      std::cerr << "\nError: specified batch version is not supported.\n"
-                << "Supported versions for " << batchTypeStr
-                << " are: " << versError << "\n";
-      exit(1);
-    }
-
-    cfg.authenticatorConfig.check();
 
   } catch (const std::exception& e) {
-      std::cerr << e.what() << "\n";
+    std::cerr << e.what() << "\n";
   }
 }
 
