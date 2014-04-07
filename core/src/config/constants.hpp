@@ -128,7 +128,8 @@ namespace vishnu {
     TRANSFER_INPROGRESS = 0,
     TRANSFER_COMPLETED = 1,
     TRANSFER_CANCELLED = 2,
-    TRANSFER_FAILED = 3
+    TRANSFER_FAILED = 3,
+    TRANSFER_WAITING_CLIENT_RESPONSE = 4,
   };
 
   enum FileCopyDirectionT {

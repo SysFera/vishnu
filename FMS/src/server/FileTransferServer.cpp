@@ -184,6 +184,7 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
   updateData(); // update datas and get the vishnu transfer id
   int direction;
   if (vishnu::ifLocalTransferInvolved(srcMachineName, destMachineName, direction)) {
+    mfileTransfer.setStatus(vishnu::TRANSFER_WAITING_CLIENT_RESPONSE);
     updateDatabaseRecord();
     LOG("[INFO] request transfer from client size", 1);
     return 0;
