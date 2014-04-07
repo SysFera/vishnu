@@ -92,40 +92,42 @@ ServerXMS::init(SedConfig& cfg) {
   //initialization of the batchType
   mbatchType = cfg.batchType;
 
-  //initialization of the batchVersion
-  if (mbatchType != DELTACLOUD) {
-    msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, mbatchVersion);
-  }
+  if (hasTMS) {
+    //initialization of the batchVersion
+    if (mbatchType != DELTACLOUD && mbatchType != OPENNEBULA) {
+      msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, mbatchVersion);
+    }
 
-  std::string batchDefaultConfigFile;
-  if (msedConfig->getConfigValue(vishnu::DEFAULTBATCHCONFIGFILE, batchDefaultConfigFile)) {
-    switch(mbatchType) {
-    case TORQUE:
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
-      break;
-    case LOADLEVELER:
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "# @");
-      break;
-    case SLURM:
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#SBATCH");
-      break;
-    case LSF:
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#BSUB");
-      break;
-    case SGE:
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#$");
-      break;
-    case PBSPRO:
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
-      break;
-    case DELTACLOUD:
-      //No yet supported
-      break;
-    case POSIX:
-      //No yet supported
-      break;
-    default:
-      break;
+    std::string batchDefaultConfigFile;
+    if (msedConfig->getConfigValue(vishnu::DEFAULTBATCHCONFIGFILE, batchDefaultConfigFile)) {
+      switch(mbatchType) {
+      case TORQUE:
+        getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
+        break;
+      case LOADLEVELER:
+        getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "# @");
+        break;
+      case SLURM:
+        getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#SBATCH");
+        break;
+      case LSF:
+        getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#BSUB");
+        break;
+      case SGE:
+        getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#$");
+        break;
+      case PBSPRO:
+        getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
+        break;
+      case DELTACLOUD:
+        //No yet supported
+        break;
+      case POSIX:
+        //No yet supported
+        break;
+      default:
+        break;
+      }
     }
   }
 
@@ -155,7 +157,7 @@ ServerXMS::init(SedConfig& cfg) {
 
   } catch (VishnuException& e) {
     std::cout << e.what() << "\n";
-errorCode = 1;
+    errorCode = 1;
   }
 
 // initialization of the service table

@@ -117,17 +117,17 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
     cfg.config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, cfg.sub);
     cfg.config.getConfigValue<std::string>(vishnu::MACHINEID, cfg.mid);
 
-    bool hasUMS = cfg.config.getConfigValue<bool>(vishnu::HAS_UMS, cfg.hasUMS);
-    bool hasTMS = cfg.config.getConfigValue<bool>(vishnu::HAS_TMS, cfg.hasTMS);
-    if (!hasUMS || !hasTMS) {
+    bool res1 = cfg.config.getConfigValue<bool>(vishnu::HAS_UMS, cfg.hasUMS);
+    bool res2 = cfg.config.getConfigValue<bool>(vishnu::HAS_TMS, cfg.hasTMS);
+    if (!cfg.hasUMS && !cfg.hasTMS) {
       std::cerr << "Error: XMS is not configured to run any services\n";
       exit(1);
     }
 
-    if (hasTMS) {
+    if (cfg.hasTMS) {
       getBatchConfiguration(cfg);
     }
-    if (hasUMS) {
+    if (cfg.hasUMS) {
       cfg.config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT,
                                                      cfg.sendmailScriptPath);
       if (!boost::filesystem::is_regular_file(cfg.sendmailScriptPath)) {
