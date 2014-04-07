@@ -325,6 +325,21 @@ set(MAN_INSTALL_DIR "share/man"
 set(CMAKE_MOD_INSTALL_DIR "share/cmake/Modules"
   CACHE INTERNAL "Directory where cmake modules will be installed")
 
+## KEEP AFTER VARIABLE DECLARATION
+# set dependencies
+if (ENABLE_PYTHON3)
+  set(ENABLE_PYTHON ON CACHE BOOL "Force Python compilation" FORCE)
+endif()
+if (ENABLE_PYTHON OR ENABLE_JAVA)
+  if (NOT ENABLE_SWIG)
+    set (COMPILE_CLIENT_UMS ON CACHE BOOL "UMS client actived" FORCE)
+    set (COMPILE_CLIENT_FMS ON CACHE BOOL "We need to build FMS" FORCE)
+    set (COMPILE_CLIENT_TMS ON CACHE BOOL "TMS client actived" FORCE)
+  endif()
+  add_subdirectory(swigAPI)
+endif(ENABLE_PYTHON OR ENABLE_JAVA)
+
+
 if(BUILD_TESTING)
   include(UnitTest)
   unit_test_setup()
@@ -373,20 +388,6 @@ if(COMPILE_CLIENT_TMS OR COMPILE_SERVER_TMS)
   endif (BUILD_TESTING)
 endif (COMPILE_CLIENT_TMS OR COMPILE_SERVER_TMS)
 
-
-## KEEP AFTER VARIABLE DECLARATION
-# set dependencies
-if (ENABLE_PYTHON3)
-  set(ENABLE_PYTHON ON CACHE BOOL "Force Python compilation" FORCE)
-endif()
-if (ENABLE_PYTHON OR ENABLE_JAVA)
-  if (NOT ENABLE_SWIG)
-    set (COMPILE_CLIENT_UMS ON CACHE BOOL "UMS client actived" FORCE)
-    set (COMPILE_CLIENT_FMS ON CACHE BOOL "We need to build FMS" FORCE)
-    set (COMPILE_CLIENT_TMS ON CACHE BOOL "TMS client actived" FORCE)
-  endif()
-  add_subdirectory(swigAPI)
-endif(ENABLE_PYTHON OR ENABLE_JAVA)
 
 
 # module that adds an uninstall target
