@@ -889,7 +889,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
 
       // create an entry to the database for the step
       mdatabaseInstance->process(boost::str(boost::format("INSERT INTO job (jobid, vsession_numsessionid)"
-                                                          " VALUES (%1%, %2%)"
+                                                          " VALUES ('%1%', %2%)"
                                                           ) % currentJobPtr->getJobId() % muserSessionInfo.num_session));
     }
 
