@@ -540,15 +540,23 @@ vishnu::parseVersion(const std::string& version) {
   std::string major;
   std::string minor;
   std::string patch;
+  std::string rest ;
+  std::string rest2;
 
   size_t found = version.find_first_of(".");
   if (found != std::string::npos) {
     major = version.substr(0, found) ;
-    std::string rest = version.substr(found+1, version.size()) ;
+    rest = version.substr(found+1, version.size()) ;
     found = rest.find_first_of(".");
     if (found != std::string::npos) {
       minor = rest.substr(0, found);
-      patch = rest.substr(found+1, rest.size());
+      rest2 = rest.substr(found+1, rest.size()) ;
+      found = rest2.find_first_of("-");
+      if (found != std::string::npos) {
+        patch = rest2.substr(0,found);
+      } else {
+        patch = rest2.substr(found+1, rest.size());
+      }
     }
     //if the string major, minor, patch are not empty
     if ((major.size() != 0) && (minor.size() != 0)
