@@ -36,7 +36,7 @@ exportCloudSpecificParam(ExecConfiguration_Ptr config) {
 
 void
 getBatchConfiguration(SedConfig& cfg) {
-  cfg.config.getRequiredConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, cfg.defaultBatchConfig);
+  cfg.config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, cfg.defaultBatchConfig);
   std::string batchTypeStr;
   cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
   cfg.batchType = vishnu::convertToBatchType(batchTypeStr);
