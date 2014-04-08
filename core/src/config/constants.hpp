@@ -44,6 +44,7 @@ namespace vishnu {
     DISP_URIADDR,
     DISP_URISUBS,
     DISP_NBTHREAD,
+    HOST_URIADDR,
     SED_URIADDR,
     CLOUDENDPOINT,
     DEBUG_LEVEL,
