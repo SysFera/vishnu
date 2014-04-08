@@ -209,7 +209,10 @@ JobServer::handleNativeBatchExec(int action,
   BatchFactory factory;
   BatchServer* batchServer = factory.getBatchServerInstance(batchType, batchVersion);
   if (! batchServer) {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "getBatchServerInstance return NULL");
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+                             boost::str(boost::format("getBatchServerInstance return NULL (batch: %1%, version: %2%)")
+                                        % vishnu::convertBatchTypeToString(static_cast<BatchType>(batchType))
+                                        % batchVersion));
   }
 
   int ipcPipe[2];
@@ -309,7 +312,7 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
     int found =0;
     while (position != std::string::npos && ! found) {
       position = content.find(key.c_str(), position);
-      if(position!=std::string::npos) {
+      if (position != std::string::npos) {
         size_t pos1 = content.find("\n", position);
         std::string line = content.substr(position, pos1-position);
         position++;
@@ -807,7 +810,6 @@ JobServer::setRealFilePaths(std::string& scriptContent,
     jobInfo.setOutputDir(outputDir);
   }
 
-  std::cout << workingDir<<"\n";
   jobInfo.setJobWorkingDir(workingDir);
   options->setProperty("scriptpath", scriptPath);
 }
