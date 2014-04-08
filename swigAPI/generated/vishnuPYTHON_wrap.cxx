@@ -17830,6 +17830,68 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Job_getSubmitError(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Job_getSubmitError",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Job, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Job_getSubmitError" "', argument " "1"" of type '" "TMS_Data::Job const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Job * >(argp1);
+  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getSubmitError();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Job_setSubmitError(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ::ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_submitError", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Job_setSubmitError",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Job, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Job_setSubmitError" "', argument " "1"" of type '" "TMS_Data::Job *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Job * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Job_setSubmitError" "', argument " "2"" of type '" "::ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Job_setSubmitError" "', argument " "2"" of type '" "::ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setSubmitError((::ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Job_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
@@ -39773,6 +39835,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Job_setVmIp", (PyCFunction) _wrap_Job_setVmIp, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setVmIp(Job self, EString _vmIp)"},
 	 { (char *)"Job_getRelatedSteps", _wrap_Job_getRelatedSteps, METH_VARARGS, (char *)"Job_getRelatedSteps(Job self) -> EString"},
 	 { (char *)"Job_setRelatedSteps", (PyCFunction) _wrap_Job_setRelatedSteps, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setRelatedSteps(Job self, EString _relatedSteps)"},
+	 { (char *)"Job_getSubmitError", _wrap_Job_getSubmitError, METH_VARARGS, (char *)"Job_getSubmitError(Job self) -> EString"},
+	 { (char *)"Job_setSubmitError", (PyCFunction) _wrap_Job_setSubmitError, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setSubmitError(Job self, EString _submitError)"},
 	 { (char *)"Job_eGet", (PyCFunction) _wrap_Job_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"Job_eGet(Job self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
 	 { (char *)"Job_eSet", (PyCFunction) _wrap_Job_eSet, METH_VARARGS | METH_KEYWORDS, (char *)"Job_eSet(Job self, EInt _featureID, EJavaObject _newValue)"},
 	 { (char *)"Job_eIsSet", (PyCFunction) _wrap_Job_eIsSet, METH_VARARGS | METH_KEYWORDS, (char *)"Job_eIsSet(Job self, EInt _featureID) -> EBoolean"},

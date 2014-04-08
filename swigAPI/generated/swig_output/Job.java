@@ -275,6 +275,14 @@ public class Job extends EObject {
     VISHNUJNI.Job_setRelatedSteps(swigCPtr, this, _relatedSteps);
   }
 
+  public String getSubmitError() {
+    return VISHNUJNI.Job_getSubmitError(swigCPtr, this);
+  }
+
+  public void setSubmitError(String _submitError) {
+    VISHNUJNI.Job_setSubmitError(swigCPtr, this, _submitError);
+  }
+
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {
     return new SWIGTYPE_p_ecorecpp__mapping__any(VISHNUJNI.Job_eGet(swigCPtr, this, _featureID, _resolve), true);
   }

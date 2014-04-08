@@ -400,6 +400,8 @@ public class VISHNUJNI {
   public final static native void Job_setVmIp(long jarg1, Job jarg1_, String jarg2);
   public final static native String Job_getRelatedSteps(long jarg1, Job jarg1_);
   public final static native void Job_setRelatedSteps(long jarg1, Job jarg1_, String jarg2);
+  public final static native String Job_getSubmitError(long jarg1, Job jarg1_);
+  public final static native void Job_setSubmitError(long jarg1, Job jarg1_, String jarg2);
   public final static native long Job_eGet(long jarg1, Job jarg1_, int jarg2, boolean jarg3);
   public final static native void Job_eSet(long jarg1, Job jarg1_, int jarg2, long jarg3);
   public final static native boolean Job_eIsSet(long jarg1, Job jarg1_, int jarg2);
