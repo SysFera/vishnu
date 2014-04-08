@@ -807,6 +807,7 @@ JobServer::setRealFilePaths(std::string& scriptContent,
     jobInfo.setOutputDir(outputDir);
   }
 
+  std::cout << workingDir<<"\n";
   jobInfo.setJobWorkingDir(workingDir);
   options->setProperty("scriptpath", scriptPath);
 }
@@ -879,6 +880,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
     currentJobPtr->setJobPath(baseJobInfo.getJobPath());
     currentJobPtr->setOwner(baseJobInfo.getOwner());
     currentJobPtr->setJobId(baseJobInfo.getJobId());
+    currentJobPtr->setOutputDir(baseJobInfo.getOutputDir());
     updateJobRecordIntoDatabase(SubmitBatchAction, *currentJobPtr);
   } else {
     int nbSteps = jobSteps.getJobs().size();
@@ -891,6 +893,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
       currentJobPtr->setWorkId(baseJobInfo.getWorkId());
       currentJobPtr->setJobPath(baseJobInfo.getJobPath());
       currentJobPtr->setOwner(baseJobInfo.getOwner());
+      currentJobPtr->setOutputDir(baseJobInfo.getOutputDir());
 
       // create an entry to the database for the step
       mdatabaseInstance->process(boost::str(boost::format("INSERT INTO job (jobid, vsession_numsessionid)"

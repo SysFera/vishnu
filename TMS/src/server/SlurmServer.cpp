@@ -479,7 +479,7 @@ SlurmServer::getJobState(const std::string& jobId) {
 
   if (! job_buffer_ptr) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                             boost::str(boost::format("error calling slurm_load_job with job %1%")% jobId));
+                             boost::str(boost::format("slurm_load_job with job %1% return NULL")% jobId));
   }
 
   int state = vishnu::STATE_UNDEFINED;
