@@ -95,12 +95,11 @@ JobServer::submitJob(std::string& scriptContent,
       mbatchType = POSIX;
     }
 
-    setRealFilePaths(scriptContent, options, JOB_ID);
+    jobInfo.setWorkId(options->getIntProperty("scriptpath", 0));
+    jobInfo.setWorkId(options->getIntProperty("workid", 0));
+    setRealFilePaths(scriptContent, options, jobInfo);
     jobInfo.setSubmitMachineId(mmachineId);
     jobInfo.setStatus(vishnu::STATE_UNDEFINED);
-    jobInfo.setWorkId(options->getIntProperty("workid", 0));
-    jobInfo.setJobPath(options->getStringProperty("scriptpath"));
-    jobInfo.setOutputDir(options->getStringProperty("outputdir"));
 
     // the way of setting job owner varies from classical batch scheduler to cloud backend
     switch (mbatchType) {
@@ -227,7 +226,7 @@ JobServer::handleNativeBatchExec(int action,
   }
 
   int handlerExitCode = 0;
-  std::string errorMsg = "";
+  std::string errorMsg = "SUCCESS";
   if (pid == 0)  /** Child process */
   {
     handlerExitCode = 0;
@@ -283,8 +282,9 @@ JobServer::handleNativeBatchExec(int action,
 
     // get possible error message send by the child
     size_t nbRead = read(ipcPipe[0], ipcMsgBuffer, 255);
-
-    if (! WIFEXITED(exitCode) || WEXITSTATUS(exitCode) != 0) {
+    if (! WIFEXITED(exitCode)
+        || WEXITSTATUS(exitCode) != 0
+        || errorMsg != "SUCCESS") {
       throw TMSVishnuException(exitCode, std::string(ipcMsgBuffer, nbRead));
     }
   }
@@ -742,30 +742,32 @@ void JobServer::handleSpecificParams(const std::string& specificParams,
   * \brief Function to set the Working Directory
   * \param scriptContent The script content
   * \param options a json object describing options
-  * \param jobId The job id
+  * \param jobInfo The job information, could be altered with output path
 */
 void
 JobServer::setRealFilePaths(std::string& scriptContent,
                             JsonObject* options,
-                            const std::string& jobId)
+                            TMS_Data::Job& jobInfo)
 {
-
   std::string workingDir = muserSessionInfo.user_achome;
   std::string scriptPath = "";
   std::string inputDir = "";
 
-  if(mbatchType == DELTACLOUD) {
+  if (mbatchType == DELTACLOUD && mbatchType == OPENNEBULA) {
     std::string mountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
     if (mountPoint.empty()) {
-      workingDir = boost::str(boost::format("/tmp/%1%") % vishnu::generatedUniquePatternFromCurTime(jobId));
+      workingDir = boost::str(boost::format("/tmp/%1%")
+                              % vishnu::generatedUniquePatternFromCurTime(jobInfo.getJobId()));
     } else {
-      workingDir = boost::str(boost::format("%1%/%2%") % mountPoint % vishnu::generatedUniquePatternFromCurTime(jobId));
+      workingDir = boost::str(boost::format("%1%/%2%")
+                              % mountPoint
+                              % vishnu::generatedUniquePatternFromCurTime(jobInfo.getJobId()));
     }
 
     inputDir =  boost::str(boost::format("%1%/INPUT") % workingDir);
     scriptPath = boost::str(boost::format("%1%/vishnu-job-script-%2%%3%")
                             % inputDir
-                            % jobId
+                            % jobInfo.getJobId()
                             % bfs::unique_path("%%%%%%").string());
 
     vishnu::createDir(workingDir, true);
@@ -788,21 +790,25 @@ JobServer::setRealFilePaths(std::string& scriptContent,
     if (! path.empty()) {
       workingDir = path;
     }
-    scriptPath = (boost::format("%1%/vishnuJobScript%2%-%3%")
-                  % workingDir
-                  % bfs::unique_path("%%%%%%").string()
-                  % jobId
-                  ).str();
+    scriptPath = boost::str(boost::format("%1%/vishnuJobScript%2%-%3%")
+                            % workingDir
+                            % bfs::unique_path("%%%%%%").string()
+                            % jobInfo.getJobId());
   }
 
-  if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos || mbatchType == DELTACLOUD ) {
-    std::string outputDir = boost::str(boost::format("%1%/%2%") % workingDir % vishnu::generatedUniquePatternFromCurTime("OUTPUT_DIR"));
+  if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos
+      || mbatchType == DELTACLOUD
+      || mbatchType == OPENNEBULA) {
+    std::string outputDir = boost::str(boost::format("%1%/%2%")
+                                       % workingDir
+                                       % vishnu::generatedUniquePatternFromCurTime("OUTPUT_DIR"));
     vishnu::replaceAllOccurences(scriptContent, "$VISHNU_OUTPUT_DIR", outputDir);
     vishnu::replaceAllOccurences(scriptContent, "${VISHNU_OUTPUT_DIR}", outputDir);
-    options->setProperty("outputdir", outputDir);
+    jobInfo.setOutputDir(outputDir);
   }
 
-  options->setProperty("workingdir", workingDir);
+  std::cout << workingDir<<"\n";
+  jobInfo.setJobWorkingDir(workingDir);
   options->setProperty("scriptpath", scriptPath);
 }
 
@@ -874,6 +880,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
     currentJobPtr->setJobPath(baseJobInfo.getJobPath());
     currentJobPtr->setOwner(baseJobInfo.getOwner());
     currentJobPtr->setJobId(baseJobInfo.getJobId());
+    currentJobPtr->setOutputDir(baseJobInfo.getOutputDir());
     updateJobRecordIntoDatabase(SubmitBatchAction, *currentJobPtr);
   } else {
     int nbSteps = jobSteps.getJobs().size();
@@ -886,10 +893,11 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
       currentJobPtr->setWorkId(baseJobInfo.getWorkId());
       currentJobPtr->setJobPath(baseJobInfo.getJobPath());
       currentJobPtr->setOwner(baseJobInfo.getOwner());
+      currentJobPtr->setOutputDir(baseJobInfo.getOutputDir());
 
       // create an entry to the database for the step
       mdatabaseInstance->process(boost::str(boost::format("INSERT INTO job (jobid, vsession_numsessionid)"
-                                                          " VALUES (%1%, %2%)"
+                                                          " VALUES ('%1%', %2%)"
                                                           ) % currentJobPtr->getJobId() % muserSessionInfo.num_session));
     }
 
@@ -1030,7 +1038,11 @@ JobServer::createJobScriptExecutaleFile(std::string& content,
   std::string path = options->getStringProperty("scriptpath");
 
   // Create the file on the file system
-  vishnu::saveInFile(path, processScript(content, options, defaultBatchOption, muserSessionInfo.machine_name) );
+  vishnu::saveInFile(path,
+                     processScript(content,
+                                   options,
+                                   defaultBatchOption,
+                                   muserSessionInfo.machine_name));
 
   // Make the file executable
   if(0 != chmod(path.c_str(),

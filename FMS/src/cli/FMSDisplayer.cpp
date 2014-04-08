@@ -1,6 +1,6 @@
 /**
  * \file FMSDisplayer.cpp
- * This file defines the VISHNU  FMS FMSDisplayer functions 
+ * This file defines the VISHNU  FMS FMSDisplayer functions
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -12,10 +12,6 @@
 #include <iomanip>
 #include <iostream>
 
-using namespace std;
-using namespace vishnu;
-using namespace FMS_Data;
-
 /**
  * \brief Display a '-' caracter
  * \param size: The number of '-' to diplay
@@ -23,7 +19,7 @@ using namespace FMS_Data;
  */
 
 void
-setFill(int size, ostream& os) {
+setFill(int size, std::ostream& os) {
 
   for(int i=0; i < size; i++) {
     os << "-";
@@ -40,9 +36,9 @@ setFill(int size, ostream& os) {
  * \param mode The mode value to convert
  * \return converted mode value
  */
-string ConvertModeToString(const mode_t& mode) {
+std::string ConvertModeToString(const mode_t& mode) {
 
-  string modeStr;
+  std::string modeStr;
   const mode_t usrR = 1 << 8;
   const mode_t usrW = 1 << 7;
   const mode_t usrX = 1 << 6;
@@ -53,7 +49,7 @@ string ConvertModeToString(const mode_t& mode) {
   const mode_t othW = 1 << 1;
   const mode_t othX = 1;
 
-  //For owner permission 
+  //For owner permission
   modeStr+=(mode & usrR ? "r":"-");
   modeStr+=(mode & usrW ? "w":"-");
   modeStr+=(mode & usrX ? "x":"-");
@@ -76,9 +72,9 @@ string ConvertModeToString(const mode_t& mode) {
  * \param mode The status value to convert
  * \return converted status value
  */
-string ConvertFileTransferStatusToString(const int& status){
+std::string ConvertFileTransferStatusToString(const int& status){
 
-  string result("");
+  std::string result("");
 
   switch(status) {
     case 0:
@@ -97,7 +93,7 @@ string ConvertFileTransferStatusToString(const int& status){
       result= "UNDEFINED";
       break;
   }
-return result;
+  return result;
 }
 
 
@@ -106,9 +102,9 @@ return result;
  * \param mode The type value to convert
  * \return converted type value
  */
-string ConvertFileTypeToString(const int& type){
+std::string ConvertFileTypeToString(const int& type){
 
-  string result("");
+  std::string result("");
   
   switch(type) {
     case 0:
@@ -136,17 +132,17 @@ string ConvertFileTypeToString(const int& type){
       result= "UNDEFINED";
       break;
   }
- 
-return result;
+
+  return result;
 }
 /**
  * \brief function to convert file transfer command to string
  * \param trCmd The status value to convert
  * \return converted command value
  */
-string ConvertFileTransferCommandToString(const int& trCmd){
+std::string ConvertFileTransferCommandToString(const int& trCmd){
 
-  string result("");
+  std::string result("");
   
   switch(trCmd) {
     case 0:
@@ -160,14 +156,14 @@ string ConvertFileTransferCommandToString(const int& trCmd){
       break;
   }
 
-return result;
+  return result;
 }
 /**
  * \brief function to convert differnce time (seconds) to simple string (hour)
- * \param diff The a given difference time 
- * \return The converted value in to string (hour) 
+ * \param diff The a given difference time
+ * \return The converted value in to string (hour)
  */
-string convertDiffTimeToString(const long& diff) {
+std::string convertDiffTimeToString(const long& diff) {
 
   int h = diff/3600;
   int m = (diff-3600*h)/60;
@@ -185,78 +181,83 @@ string convertDiffTimeToString(const long& diff) {
     diffStr << m;
   }
 
- return diffStr.str();
+  return diffStr.str();
 }
 
 /**
  * \brief Helper function to display the information of a file
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param fstat: The inode information
  * \return The output stream in which the list of users has been printed
  */
 
 std::ostream&
-operator<<(std::ostream& os, FileStat& fileStat) {
- 
-  size_t maxSize = std::string("group").size()+2; 
-  os << setw(maxSize) << "------------------------------" << std::endl;
-  os << setw(maxSize) << "the file properties: " << std::endl;
-  os << setw(maxSize) << right  << "path: " << fileStat.getPath() << std::endl;
-  os << setw(maxSize) << right  << "owner: " << fileStat.getOwner() << std::endl;
-  os << setw(maxSize) << right  << "group: " <<  fileStat.getGroup() << std::endl;
-  os << setw(maxSize) << right  << "uid: " <<  fileStat.getUid() << std::endl;
-  os << setw(maxSize) << right  << "gid: " <<  fileStat.getGid() << std::endl;
-  os << setw(maxSize) << right  << "size: " <<  fileStat.getSize() << std::endl;
-  mode_t perms = fileStat.getPerms();
-  os << setw(maxSize) << right  << "perms: " << oct << perms << dec ;
-  os << " (" << ConvertModeToString(perms) << ")" << std::endl;
-  os << setw(maxSize) << right  << "type: " << ConvertFileTypeToString(fileStat.getType()) << std::endl;
-  boost::posix_time::ptime pt;
-  pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(fileStat.getAtime()));
-  os << setw(maxSize) << right  << "atime: " << boost::posix_time::to_simple_string(pt);
-  os << " +" << convertDiffTimeToString(diffLocaltimeUTCtime()) << std::endl;
-  pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(fileStat.getMtime()));
-  os << setw(maxSize) << right  << "mtime: " << boost::posix_time::to_simple_string(pt);
-  os << " +" << convertDiffTimeToString(diffLocaltimeUTCtime()) << std::endl;
-  time_t time = vishnu::convertUTCtimeINLocaltime(fileStat.getCtime());
-  pt =  boost::posix_time::from_time_t(time);
-  os << setw(maxSize) << right  << "ctime: " << boost::posix_time::to_simple_string(pt);
-  os << " +" << convertDiffTimeToString(diffLocaltimeUTCtime()) << std::endl;
+operator<<(std::ostream& os, FMS_Data::FileStat& fileStat) {
 
-return os;
+  size_t maxSize = std::string("group").size()+2;
+  os << std::setw(maxSize) << "------------------------------" << std::endl;
+  os << std::setw(maxSize) << "the file properties: " << std::endl;
+  os << std::setw(maxSize) << std::left  << "path: " << fileStat.getPath() << std::endl;
+  os << std::setw(maxSize) << std::left  << "owner: " << fileStat.getOwner() << std::endl;
+  os << std::setw(maxSize) << std::left  << "group: " <<  fileStat.getGroup() << std::endl;
+  os << std::setw(maxSize) << std::left  << "uid: " <<  fileStat.getUid() << std::endl;
+  os << std::setw(maxSize) << std::left  << "gid: " <<  fileStat.getGid() << std::endl;
+  os << std::setw(maxSize) << std::left  << "size: " <<  fileStat.getSize() << std::endl;
+  mode_t perms = fileStat.getPerms();
+  os << std::setw(maxSize) << std::left  << "perms: " << std::oct << perms << std::dec ;
+  os << " (" << ConvertModeToString(perms) << ")" << std::endl;
+  os << std::setw(maxSize) << std::left  << "type: " << ConvertFileTypeToString(fileStat.getType()) << std::endl;
+  boost::posix_time::ptime pt;
+  pt =  boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(fileStat.getAtime()));
+  os << std::setw(maxSize) << std::left  << "atime: " << boost::posix_time::to_simple_string(pt);
+  os << " +"
+     << boost::posix_time::to_simple_string(boost::posix_time::from_time_t(vishnu::diffLocaltimeUTCtime())) << std::endl;
+  pt =  boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(fileStat.getMtime()));
+  os << std::setw(maxSize) << std::left  << "mtime: " << boost::posix_time::to_simple_string(pt);
+  os << " +"
+     << boost::posix_time::to_simple_string(boost::posix_time::from_time_t(vishnu::diffLocaltimeUTCtime())) << std::endl;
+  os << std::setw(maxSize)
+     << std::left
+     << "ctime: "
+     << boost::posix_time::to_simple_string(boost::posix_time::from_time_t(fileStat.getCtime()));
+  os << " +"
+     << boost::posix_time::to_simple_string(boost::posix_time::from_time_t(vishnu::diffLocaltimeUTCtime()))
+     << std::endl;
+
+  return os;
 }
 
 
 
 std::ostream&
-operator<<(std::ostream& os, DirEntry& dirEntry) {
- 
-  size_t maxSize = std::string("group").size()+2; 
-  os << setw(maxSize) << "------------------------------" << std::endl;
-  os << setw(maxSize) << "the file properties: " << std::endl;
-  os << setw(maxSize) << right  << "path: " << dirEntry.getPath() << std::endl;
-  os << setw(maxSize) << right  << "owner: " << dirEntry.getOwner() << std::endl;
-  os << setw(maxSize) << right  << "group: " <<  dirEntry.getGroup() << std::endl;
-  os << setw(maxSize) << right  << "size: " <<  dirEntry.getSize() << std::endl;
-  mode_t perms = dirEntry.getPerms();
-  os << setw(maxSize) << right  << "perms: " << oct << perms << dec ;
-  os << " (" << ConvertModeToString(perms) << ")" << std::endl;
-  os << setw(maxSize) << right  << "type: " << ConvertFileTypeToString(dirEntry.getType()) << std::endl;
-  os << setw(maxSize) << right  << "creation time: " << dirEntry.getCtime() << std::endl;
+operator<<(std::ostream& os, FMS_Data::DirEntry& dirEntry) {
 
-return os;
+  size_t maxSize = std::string("group").size()+2;
+  os << std::setw(maxSize) << "------------------------------" << std::endl;
+  os << std::setw(maxSize) << "the file properties: " << std::endl;
+  os << std::setw(maxSize) << std::left  << "path: " << dirEntry.getPath() << std::endl;
+  os << std::setw(maxSize) << std::left  << "owner: " << dirEntry.getOwner() << std::endl;
+  os << std::setw(maxSize) << std::left  << "group: " <<  dirEntry.getGroup() << std::endl;
+  os << std::setw(maxSize) << std::left  << "size: " <<  dirEntry.getSize() << std::endl;
+  mode_t perms = dirEntry.getPerms();
+  os << std::setw(maxSize) << std::left  << "perms: " << std::oct << perms << std::dec ;
+  os << " (" << ConvertModeToString(perms) << ")" << std::endl;
+  os << std::setw(maxSize) << std::left  << "type: " << ConvertFileTypeToString(dirEntry.getType()) << std::endl;
+  os << std::setw(maxSize) << std::left  << "creation time: " << dirEntry.getCtime() << std::endl;
+
+  return os;
 }
 
 
 
 /**
  * \brief Helper function to display the information of a file
- *\param os: The output stream in which the list will be printed 
+ *\param os: The output stream in which the list will be printed
  *\param dirEntryList: The file info list
  *\return The output stream in which the list of file information has
  *been printed
  */
- ostream& operator<<(ostream& os,  DirEntryList& dirEntryList) {
+std::ostream& operator<<(std::ostream& os,  FMS_Data::DirEntryList& dirEntryList) {
 
   size_t maxPermsSize = std::string("Permissions").size();
   size_t maxPathSize = std::string("Path").size();
@@ -276,32 +277,47 @@ return os;
 
   for(unsigned int i = 0; i < dirEntryList.getDirEntries().size(); i++) {
 
-     perms = (dirEntryList.getDirEntries().get(i))->getPerms();
-     maxPermsSize = max(maxPermsSize, ConvertModeToString(perms).size());
-     
-     path = (dirEntryList.getDirEntries().get(i))->getPath();
-     maxPathSize = max(maxPathSize, path.size());
+    perms = (dirEntryList.getDirEntries().get(i))->getPerms();
+    maxPermsSize = std::max(maxPermsSize, ConvertModeToString(perms).size());
 
-     owner = (dirEntryList.getDirEntries().get(i))->getOwner();
-     maxOwnerSize = max(maxOwnerSize, owner.size());
+    path = (dirEntryList.getDirEntries().get(i))->getPath();
+    maxPathSize = std::max(maxPathSize, path.size());
 
-     group = (dirEntryList.getDirEntries().get(i))->getGroup();
-     maxGroupSize = max(maxGroupSize, group.size());
+    owner = (dirEntryList.getDirEntries().get(i))->getOwner();
+    maxOwnerSize = std::max(maxOwnerSize, owner.size());
 
-     FileSize = (dirEntryList.getDirEntries().get(i))->getSize();
-     maxFileSize = max(maxFileSize, vishnu::convertToString(FileSize).size());
-     
-     type = ConvertFileTypeToString((dirEntryList.getDirEntries().get(i))->getType());
-     maxTypeSize = max(maxTypeSize, type.size());
-     
-     creationTime = (dirEntryList.getDirEntries().get(i))->getCtime();
-     maxCreationTimeSize = max(maxCreationTimeSize, creationTime.size());
-     
+    group = (dirEntryList.getDirEntries().get(i))->getGroup();
+    maxGroupSize = std::max(maxGroupSize, group.size());
+
+    FileSize = (dirEntryList.getDirEntries().get(i))->getSize();
+    maxFileSize = std::max(maxFileSize, vishnu::convertToString(FileSize).size());
+
+    type = ConvertFileTypeToString((dirEntryList.getDirEntries().get(i))->getType());
+    maxTypeSize = std::max(maxTypeSize, type.size());
+
+    creationTime = (dirEntryList.getDirEntries().get(i))->getCtime();
+    maxCreationTimeSize = std::max(maxCreationTimeSize, creationTime.size());
+
   }
 
-  os << setw(maxPermsSize+2) << left << "permissions"<< setw(maxPathSize+2) << left << "path" << setw(maxOwnerSize+2) << left << "owner" << setw(maxGroupSize+2) << left << "group";
-  os <<setw(maxFileSize+2) << left << "size"<<setw(maxTypeSize+2) << left << "type"<<setw(maxCreationTimeSize+2) << left << "creation time";    
-  os << endl;
+  os << std::setw(maxPermsSize+2)
+     << std::left
+     << "permissions"
+     << std::setw(maxPathSize+2)
+     << std::left << "path"
+     << std::setw(maxOwnerSize+2)
+     << std::left << "owner"
+     << std::setw(maxGroupSize+2)
+     << std::left << "group";
+  os << std::setw(maxFileSize+2)
+     << std::left
+     << "size"
+     << std::setw(maxTypeSize+2)
+     << std::left
+     << "type"
+     << std::setw(maxCreationTimeSize+2)
+     << std::left << "creation time";
+  os << std::endl;
 
   setFill(maxPermsSize, os);
   setFill(maxPathSize, os);
@@ -310,81 +326,79 @@ return os;
   setFill(maxFileSize, os);
   setFill(maxTypeSize, os);
   setFill(maxCreationTimeSize, os);
-  os << endl;
+  os << std::endl;
 
 
   for(unsigned int i = 0; i < dirEntryList.getDirEntries().size(); i++) {
     
-     perms = (dirEntryList.getDirEntries().get(i))->getPerms();
-     path = (dirEntryList.getDirEntries().get(i))->getPath();
-     owner = (dirEntryList.getDirEntries().get(i))->getOwner();
-     group = (dirEntryList.getDirEntries().get(i))->getGroup();
-     FileSize = (dirEntryList.getDirEntries().get(i))->getSize();
-     type = ConvertFileTypeToString((dirEntryList.getDirEntries().get(i))->getType());
-     creationTime = (dirEntryList.getDirEntries().get(i))->getCtime();
+    perms = (dirEntryList.getDirEntries().get(i))->getPerms();
+    path = (dirEntryList.getDirEntries().get(i))->getPath();
+    owner = (dirEntryList.getDirEntries().get(i))->getOwner();
+    group = (dirEntryList.getDirEntries().get(i))->getGroup();
+    FileSize = (dirEntryList.getDirEntries().get(i))->getSize();
+    type = ConvertFileTypeToString((dirEntryList.getDirEntries().get(i))->getType());
+    creationTime = (dirEntryList.getDirEntries().get(i))->getCtime();
     
     
-    os << setw(maxPermsSize+2) << left << ConvertModeToString(perms);
-    os << setw(maxPathSize+2) << left <<  path;
-    os << setw(maxOwnerSize+2) << left << owner;
-    os << setw(maxOwnerSize+2) << left << group;
-    os << setw(maxFileSize+2) << left << FileSize;
-    os << setw(maxTypeSize+2) << left << type;
-    os << setw(maxCreationTimeSize+2) << left << creationTime;
-    os << endl;
+    os << std::setw(maxPermsSize+2) << std::left << ConvertModeToString(perms);
+    os << std::setw(maxPathSize+2) << std::left <<  path;
+    os << std::setw(maxOwnerSize+2) << std::left << owner;
+    os << std::setw(maxOwnerSize+2) << std::left << group;
+    os << std::setw(maxFileSize+2) << std::left << FileSize;
+    os << std::setw(maxTypeSize+2) << std::left << type;
+    os << std::setw(maxCreationTimeSize+2) << std::left << creationTime;
+    os << std::endl;
   }
 
- return os;
+  return os;
 }
 
 /**
  * \brief Helper function to display the information of a file
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param fileTransfer: The content of file transfer
  * \return The output stream in which the list of users has been printed
  */
 std::ostream&
-operator<<(std::ostream& os, FileTransfer& fileTransfer) {
+operator<<(std::ostream& os, FMS_Data::FileTransfer& fileTransfer) {
 
   size_t maxSize = std::string("destinationMachineId").size()+2;
 
-  os << setw(maxSize) << "------------ transfer infomation for file " << fileTransfer.getTransferId() << std::endl;
-  os << setw(maxSize) << right << "transferId: " << fileTransfer.getTransferId()   << std::endl;
-  os << setw(maxSize) << right << "status: " << ConvertFileTransferStatusToString(fileTransfer.getStatus())   << std::endl;
-  os << setw(maxSize) << right << "errorMsg: " << fileTransfer.getErrorMsg()  << std::endl;
-  os << setw(maxSize) << right << "userId: " << fileTransfer.getUserId()   << std::endl;
-  os << setw(maxSize) << right << "clientMachineId: " << fileTransfer.getClientMachineId()   << std::endl;
-  os << setw(maxSize) << right << "sourceMachineId: " << fileTransfer.getSourceMachineId()   << std::endl;
-  os << setw(maxSize) << right << "destinationMachineId: " << fileTransfer.getDestinationMachineId()   << std::endl;
-  os << setw(maxSize) << right << "sourceFilePath: " << fileTransfer.getSourceFilePath()   << std::endl;
-  os << setw(maxSize) << right << "destinationFilePath: " << fileTransfer.getDestinationFilePath()   << std::endl;
-  os << setw(maxSize) << right << "size: " << fileTransfer.getSize()   << std::endl;
-  long start_time = fileTransfer.getStartTime();
-  if(start_time > 0) {
-    boost::posix_time::ptime pt;
-    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(start_time));
-    os << setw(maxSize) << right << "start_time: " <<  boost::posix_time::to_simple_string(pt)  << std::endl;
+  os << std::setw(maxSize) << "------------ transfer information for file " << fileTransfer.getTransferId() << std::endl;
+  os << std::setw(maxSize) << std::left << "transferId: " << fileTransfer.getTransferId()   << std::endl;
+  os << std::setw(maxSize) << std::left << "status: " << ConvertFileTransferStatusToString(fileTransfer.getStatus())   << std::endl;
+  os << std::setw(maxSize) << std::left << "errorMsg: " << fileTransfer.getErrorMsg()  << std::endl;
+  os << std::setw(maxSize) << std::left << "userId: " << fileTransfer.getUserId()   << std::endl;
+  os << std::setw(maxSize) << std::left << "clientMachineId: " << fileTransfer.getClientMachineId()   << std::endl;
+  os << std::setw(maxSize) << std::left << "sourceMachineId: " << fileTransfer.getSourceMachineId()   << std::endl;
+  os << std::setw(maxSize) << std::left << "destinationMachineId: " << fileTransfer.getDestinationMachineId()   << std::endl;
+  os << std::setw(maxSize) << std::left << "sourceFilePath: " << fileTransfer.getSourceFilePath()   << std::endl;
+  os << std::setw(maxSize) << std::left << "destinationFilePath: " << fileTransfer.getDestinationFilePath()   << std::endl;
+  os << std::setw(maxSize) << std::left << "size: " << fileTransfer.getSize()   << std::endl;
+  if(fileTransfer.getStartTime() > 0) {
+    boost::posix_time::ptime pt =  boost::posix_time::from_time_t(fileTransfer.getStartTime());
+    os << std::setw(maxSize) << std::left << "start_time: " <<  boost::posix_time::to_simple_string(pt)  << std::endl;
   } else {
-    os << setw(maxSize) << right << "start_time: " << "-----" << std::endl;
+    os << std::setw(maxSize) << std::left << "start_time: " << "-----" << std::endl;
   }
-  os << setw(maxSize) << right << "trCommand: " << ConvertFileTransferCommandToString(fileTransfer.getTrCommand())   << std::endl;
+  os << std::setw(maxSize) << std::left << "trCommand: " << ConvertFileTransferCommandToString(fileTransfer.getTrCommand())   << std::endl;
 
-return os;
+  return os;
 }
 
 /**
  * \brief Helper function to display the information of a file
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param FileTransferList: The file transfer list
  * \return The output stream in which the list of users has been printed
  */
 std::ostream&
-operator<<(std::ostream& os, FileTransferList& fileTransferlist) {
+operator<<(std::ostream& os, FMS_Data::FileTransferList& fileTransferlist) {
 
- for (size_t i = 0 ; i < fileTransferlist.getFileTransfers().size() ; i++){
-     os << *(fileTransferlist.getFileTransfers().get(i));
+  for (size_t i = 0 ; i < fileTransferlist.getFileTransfers().size() ; i++){
+    os << *(fileTransferlist.getFileTransfers().get(i));
   }
 
- return os;
+  return os;
 }
 
