@@ -191,12 +191,12 @@ private:
    * \brief Function to set the Working Directory
    * \param scriptContent The script content
    * \param options a json object describing options
-   * \param jobId The job id
+   * \param jobInfo The job information, could be altered with output path
    */
   void
   setRealFilePaths(std::string& scriptContent,
                    JsonObject* options,
-                   const std::string& jobId);
+                   TMS_Data::Job& jobInfo);
 
   /**
    * \brief Function to process the script with options
