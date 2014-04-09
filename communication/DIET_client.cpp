@@ -221,7 +221,6 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout) {
   zmq::context_t ctx(5);
   LazyPirateClient lpc(ctx, uri, timeout);
   std::string s1 = my_serialize(prof);
-
   if (!lpc.send(s1)) {
     std::cerr << "E: request failed, exiting ...\n";
     return -1;

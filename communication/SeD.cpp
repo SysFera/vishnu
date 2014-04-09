@@ -45,7 +45,7 @@ int
 SeD::call(diet_profile_t* profile) {
   CallbackMap::iterator it  = mcb.find(profile->name);
   if (it == mcb.end()) {
-    std::cerr << boost::format("E: service not found: %1%\n") % profile->name;
+    std::cerr << boost::format("[ERROR] service not found: %1%\n") % profile->name;
 // To show it is an invalid profile
     profile->param_count = -1;
     return UNKNOWN_SERVICE;

@@ -159,6 +159,7 @@ SessionProxy::_connect(const UserProxy& user, bool connect,
     profile = diet_profile_alloc(SERVICES_UMS[SESSIONRECONNECT], 6);
   }
 
+
   //IN Parameters
   diet_string_set(profile,0, user.getData().getUserId());
   diet_string_set(profile,1, user.getData().getPassword());
