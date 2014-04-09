@@ -236,7 +236,15 @@ std::string JsonObject::getStringProperty(const std::string& key) {
   json_t* jsonValue = json_object_get(m_jsonObject, key.c_str());
   std::string res;
   if (jsonValue) {
-      res.assign(json_string_value(jsonValue));
+    if (! jsonValue) {
+      const char* paramValue = json_string_value(jsonValue);
+      if (paramValue) {
+        res.assign(paramValue);
+      } else {
+        throw SystemException(ERRCODE_INVDATA,
+                              boost::str(boost::format("null or invalid property %1%") % key));
+      }
+    }
   }
   return res;
 }
@@ -251,10 +259,21 @@ void JsonObject::getArrayProperty(const std::string& key, std::vector<std::strin
 
   m_lastArray = getRequiredProperty(key);
   json_t* jsonValue;
-  for(size_t index = 0; index < json_array_size(m_lastArray) &&
-      (jsonValue = json_array_get(m_lastArray, index));
-      ++index) {
-    values.push_back(json_string_value(jsonValue));
+  for(size_t index = 0; index < json_array_size(m_lastArray); ++index) {
+    if (jsonValue = json_array_get(m_lastArray, index)) {
+      const char* paramValue = json_string_value(jsonValue);
+      if (paramValue) {
+        values.push_back(paramValue);
+      } else {
+        throw SystemException(ERRCODE_INVDATA,
+                              boost::str(boost::format("Array contains null or "
+                                                       "invalid string data at index %1%") % index));
+      }
+    } else {
+      throw SystemException(ERRCODE_INVDATA,
+                            boost::str(boost::format("Array contains null or "
+                                                     "invalid string data at index %1%") % index));
+    }
   }
 }
 
@@ -346,7 +365,6 @@ JsonObject::deserialize(const std::string& encodedJson) {
   profile->name = jsonObject.getStringProperty("name");
   profile->param_count = jsonObject.getIntProperty("param_count", 0);
   jsonObject.getArrayProperty("params", profile->params);
-
   if (profile->params.size() != profile->param_count) {
     throw SystemException(ERRCODE_INVDATA,
                           "Incoherent profile, wrong number of parameters");

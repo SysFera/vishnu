@@ -129,11 +129,20 @@ BOOST_AUTO_TEST_CASE( my_test_deser_n )
   BOOST_REQUIRE_EQUAL(prof->params[0], "param1");
 }
 
+
+
 BOOST_AUTO_TEST_CASE( my_test_deser_n_bad_param_count )
 {
   std::string profSer = "{\"name\":\"alloc\", \"param_count\": \"1\", \"params\": [\"param1\"]}";
   BOOST_REQUIRE_THROW(my_deserialize(profSer), SystemException);
 }
+
+BOOST_AUTO_TEST_CASE( my_test_deser_n_throw_exception_on_null_param)
+{
+  std::string profSer = "{\"name\":\"alloc\", \"param_count\": \"2\", \"params\": [null, \"param2\"]}";
+  BOOST_REQUIRE_THROW(my_deserialize(profSer), SystemException);
+}
+
 
 BOOST_AUTO_TEST_CASE( my_test_deser_b_emp )
 {
