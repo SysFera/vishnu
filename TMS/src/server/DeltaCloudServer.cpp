@@ -386,7 +386,5 @@ void DeltaCloudServer::replaceEnvVariables(const char* scriptPath) {
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
 
-  std::ofstream ofs(scriptPath);
-  ofs << scriptContent;
-  ofs.close();
+  vishnu::saveInFile(scriptPath, scriptContent);
 }

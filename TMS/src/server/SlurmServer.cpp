@@ -909,9 +909,7 @@ void SlurmServer::replaceEnvVariables(const std::string& scriptPath){
     vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
     scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
   }
-  ofstream ofs(scriptPath.c_str());
-  ofs << scriptContent;
-  ofs.close();
+  vishnu::saveInFile(scriptPath, scriptContent);
 }
 
 /**

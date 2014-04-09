@@ -1016,9 +1016,7 @@ void LLServer::replaceEnvVariables(const char* scriptPath){
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
 
-  ofstream ofs(scriptPath);
-  ofs << scriptContent;
-  ofs.close();
+  vishnu::saveInFile(scriptPath, scriptContent);
 }
 
 

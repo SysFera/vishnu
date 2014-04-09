@@ -1339,9 +1339,8 @@ void PbsProServer::replaceEnvVariables(const char* scriptPath){
   //To replace VISHNU_BATCHJOB_NUM_NODES
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
-  ofstream ofs(scriptPath);
-  ofs << scriptContent;
-  ofs.close();
+
+  vishnu::saveInFile(scriptPath, scriptContent);
 }
 
 /**

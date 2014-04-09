@@ -792,9 +792,8 @@ void LSFServer::replaceEnvVariables(const char* scriptPath){
     vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat "+fileName+" | sort | uniq | wc -l)");
     scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
   }
-  ofstream ofs(scriptPath);
-  ofs << scriptContent;
-  ofs.close();
+
+  vishnu::saveInFile(scriptPath, scriptContent);
 }
 /**
  * \brief Destructor

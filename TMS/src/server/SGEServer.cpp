@@ -390,28 +390,28 @@ SGEServer::getJobState(const std::string& jobId) {
   drmaa_job_ps(jobId.c_str(), &state, diagnosis, sizeof(diagnosis)-1);
 
   switch (state) {
-  case DRMAA_PS_UNDETERMINED:
-    ret = vishnu::STATE_UNDEFINED;
-    break;
-  case DRMAA_PS_QUEUED_ACTIVE:
-  case DRMAA_PS_SYSTEM_ON_HOLD:
-  case DRMAA_PS_USER_ON_HOLD:
-  case DRMAA_PS_USER_SYSTEM_ON_HOLD:
-  case DRMAA_PS_SYSTEM_SUSPENDED:
-  case DRMAA_PS_USER_SUSPENDED:
-  case DRMAA_PS_USER_SYSTEM_SUSPENDED:
-    ret = vishnu::STATE_WAITING;
-    break;
-  case DRMAA_PS_RUNNING:
-    ret = vishnu::STATE_RUNNING;
-    break;
-  case DRMAA_PS_DONE:
-  case DRMAA_PS_FAILED:
-    ret = vishnu::STATE_COMPLETED;
-    break;
-  default:
-    ret = vishnu::STATE_COMPLETED;
-    break;
+    case DRMAA_PS_UNDETERMINED:
+      ret = vishnu::STATE_UNDEFINED;
+      break;
+    case DRMAA_PS_QUEUED_ACTIVE:
+    case DRMAA_PS_SYSTEM_ON_HOLD:
+    case DRMAA_PS_USER_ON_HOLD:
+    case DRMAA_PS_USER_SYSTEM_ON_HOLD:
+    case DRMAA_PS_SYSTEM_SUSPENDED:
+    case DRMAA_PS_USER_SUSPENDED:
+    case DRMAA_PS_USER_SYSTEM_SUSPENDED:
+      ret = vishnu::STATE_WAITING;
+      break;
+    case DRMAA_PS_RUNNING:
+      ret = vishnu::STATE_RUNNING;
+      break;
+    case DRMAA_PS_DONE:
+    case DRMAA_PS_FAILED:
+      ret = vishnu::STATE_COMPLETED;
+      break;
+    default:
+      ret = vishnu::STATE_COMPLETED;
+      break;
 
   } /* switch */
 
@@ -857,9 +857,7 @@ void SGEServer::replaceEnvVariables(const char* scriptPath){
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NHOSTS");
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");
 
-  ofstream ofs(scriptPath);
-  ofs << scriptContent;
-  ofs.close();
+  vishnu::saveInFile(scriptPath, scriptContent);
 }
 
 int

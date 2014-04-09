@@ -93,7 +93,8 @@ public:
    * \param listOfJobs the ListJobs structure to fill
    * \param ignoredIds the list of job ids to ignore
    */
-  virtual void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
+  virtual void
+  fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
                               const std::vector<std::string>& ignoredIds=std::vector<std::string>())=0;
 
   /**
