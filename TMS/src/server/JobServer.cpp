@@ -1047,7 +1047,7 @@ JobServer::createJobScriptExecutaleFile(std::string& content,
 
   // Make the file executable
   if(0 != chmod(path.c_str(),
-                S_IRUSR|S_IXUSR|
+                S_IWUSR|S_IRUSR|S_IXUSR|
                 S_IRGRP|S_IXGRP|
                 S_IROTH|S_IXOTH)) {
     throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + path) ;
