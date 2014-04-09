@@ -53,7 +53,7 @@ public:
       }
 
       // Deserialize and call Method
-      if (!data.empty()) {
+      if (! data.empty()) {
         try {
           std::string resultSerialized = doCall(data);
           socket.send(resultSerialized);
