@@ -236,15 +236,16 @@ std::string JsonObject::getStringProperty(const std::string& key) {
   json_t* jsonValue = json_object_get(m_jsonObject, key.c_str());
   std::string res;
   if (jsonValue) {
-    if (! jsonValue) {
-      const char* paramValue = json_string_value(jsonValue);
-      if (paramValue) {
-        res.assign(paramValue);
-      } else {
-        throw SystemException(ERRCODE_INVDATA,
-                              boost::str(boost::format("null or invalid property %1%") % key));
-      }
+    const char* paramValue = json_string_value(jsonValue);
+    if (paramValue) {
+      res.assign(paramValue);
+    } else {
+      throw SystemException(ERRCODE_INVDATA,
+                            boost::str(boost::format("null or invalid property %1%") % key));
     }
+  } else {
+    throw SystemException(ERRCODE_INVDATA,
+                          boost::str(boost::format("null or invalid property %1%") % key));
   }
   return res;
 }
