@@ -5,6 +5,7 @@
 #include "utilVishnu.hpp"
 #include "DIET_client.h"
 #include "VishnuException.hpp"
+#include "Logger.hpp"
 #include <signal.h>
 
 
@@ -19,12 +20,12 @@ Dispatcher::Dispatcher(const std::string &confFile)
 
 void
 Dispatcher::printConfiguration() const{
-  std::cerr << "====== Initial configuration =====\n"
-            << "disp_uriAddr=" << uriAddr << "\n"
-            << "disp_uriSubs=" << uriSubs << "\n"
-            << "disp_timeout=" << timeout << "\n"
-            << "disp_nbthread=" << nthread << "\n"
-            << "==================================\n";
+  LOG(boost::str(boost::format("[INFO] Dispatcher started..."
+                               "disp_uriAddr=%1%"
+                               "disp_uriSubs=%2%"
+                               "disp_timeout=%3%"
+                               "disp_nbthread=%4%"
+                               ) % uriAddr % uriSubs % timeout % nthread), LogInfo);
 }
 
 
@@ -85,7 +86,9 @@ Dispatcher::bayWatch(boost::shared_ptr<Annuary> ann, int timeout, std::string& c
       if (abstract_call_gen(profile, iter->get()->getURI())){
         // If failed : remove the server
         ann->remove(iter->get()->getName(), iter->get()->getURI());
-        std::cerr << "[INFO]: removed " << iter->get()->getName() << "@" << iter->get()->getURI() << " from the annuary\n";
+        LOG(boost::str(boost::format("[INFO]: removed %1%@%2% from the annuary")
+                       % iter->get()->getName()
+                       % iter->get()->getURI()), LogInfo);
       }
       diet_profile_free(profile);
     }
@@ -122,7 +125,7 @@ Dispatcher::configureHandlers() {
 
     pid_t pid = fork();
     if (pid < 0) {
-      std::cerr << "[ERROR] Problem initializing the service\n";
+      LOG("[ERROR] Problem initializing the service", LogErr);
       vishnu::exitProcessOnError(-1);
     } else if (pid > 0) {
       clientHandler.reset(new Handler4Clients(FRONTEND_IPC_URI, ann, nthread, useSsl, sslCa));
@@ -139,7 +142,7 @@ Dispatcher::configureHandlers() {
     } else if (pid == 0) {
       pid_t pidTlsHandler = fork();
       if (pidTlsHandler < 0) {
-        std::cerr << "[ERROR] Problem initializing the service\n";
+        LOG("[ERROR] Problem initializing the service", LogErr);
         vishnu::exitProcessOnError(-1);
       } else if (pidTlsHandler > 0) { // Parent process
 
@@ -152,10 +155,10 @@ Dispatcher::configureHandlers() {
         try {
           tlsFrontHandler.run();
         } catch(VishnuException& ex) {
-          std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+          LOG(boost::str(boost::format("[ERROR] %1%\n") % ex.what()), LogErr);
           retCode = -1;
         } catch(...) {
-          std::cerr << boost::format("[ERROR] %1%\n")%tlsFrontHandler.getErrorMsg();
+          LOG(boost::str(boost::format("[ERROR] %1%\n")%tlsFrontHandler.getErrorMsg()), LogErr);
           retCode = -1;
         }
 
@@ -175,10 +178,10 @@ Dispatcher::configureHandlers() {
         try {
           tlsBackHandler.run();
         } catch(VishnuException& ex) {
-          std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+          LOG(boost::str(boost::format("[ERROR] %1%") % ex.what()), LogErr);
           retCode = -1;
         } catch(...) {
-          std::cerr << boost::format("[ERROR] %1%\n")%tlsBackHandler.getErrorMsg();
+          LOG(boost::str(boost::format("[ERROR] %1%") % tlsBackHandler.getErrorMsg()), LogErr);
           retCode = -1;
         }
 
@@ -198,7 +201,7 @@ Dispatcher::run() {
     configureAnnuary();
     configureHandlers();
   } catch (const VishnuException& ex) {
-    std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+    LOG(boost::str(boost::format("[ERROR] %1%\n") % ex.what()), LogErr);
     exit(1);
   }
 }
