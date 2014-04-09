@@ -85,6 +85,9 @@ main(int argc, char* argv[]) {
     slaveJobFile = argv[6];
     optionsPath = argv[7];
     jobScriptPath = argv[8];
+    boost::filesystem::path src(jobScriptPath);
+    boost::filesystem::path dest(boost::str(boost::format("%1%/")%getenv("HOME")));
+    boost::filesystem::copy_file(src,dest);
   }
 
   if(batchType == UNDEFINED) {

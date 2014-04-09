@@ -3039,6 +3039,73 @@ class AddWorkOptions(EObject):
 AddWorkOptions_swigregister = _VISHNU.AddWorkOptions_swigregister
 AddWorkOptions_swigregister(AddWorkOptions)
 
+class CancelOptions(EObject):
+    """Proxy of C++ TMS_Data::CancelOptions class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, CancelOptions, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, CancelOptions, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> CancelOptions"""
+        this = _VISHNU.new_CancelOptions(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_CancelOptions
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.CancelOptions__initialize(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.CancelOptions_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.CancelOptions_setMachineId(self, *args, **kwargs)
+
+    def getUser(self, *args, **kwargs):
+        """getUser(self) -> EString"""
+        return _VISHNU.CancelOptions_getUser(self, *args, **kwargs)
+
+    def setUser(self, *args, **kwargs):
+        """setUser(self, EString _user)"""
+        return _VISHNU.CancelOptions_setUser(self, *args, **kwargs)
+
+    def getJobId(self, *args, **kwargs):
+        """getJobId(self) -> EString"""
+        return _VISHNU.CancelOptions_getJobId(self, *args, **kwargs)
+
+    def setJobId(self, *args, **kwargs):
+        """setJobId(self, EString _jobId)"""
+        return _VISHNU.CancelOptions_setJobId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.CancelOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.CancelOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.CancelOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.CancelOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.CancelOptions__eClass(self, *args, **kwargs)
+
+CancelOptions_swigregister = _VISHNU.CancelOptions_swigregister
+CancelOptions_swigregister(CancelOptions)
+
 class CpFileOptions(EObject):
     """Proxy of C++ FMS_Data::CpFileOptions class"""
     __swig_setmethods__ = {}

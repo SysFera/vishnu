@@ -75,6 +75,7 @@
 %include "TMS_Data/LoadCriterion.hpp"
 %include "TMS_Data/Work.hpp"
 %include "TMS_Data/AddWorkOptions.hpp"
+%include "TMS_Data/CancelOptions.hpp"
 
 // All EMF includes (same as in FMS_Data.hpp)
 %include "FMS_Data_forward.hpp"

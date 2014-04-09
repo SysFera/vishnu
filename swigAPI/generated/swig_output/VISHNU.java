@@ -193,8 +193,8 @@ public class VISHNU {
     return VISHNUJNI.addWork(sessionKey, Work.getCPtr(newWork), newWork, AddWorkOptions.getCPtr(options), options);
   }
 
-  public static int cancelJob(String sessionKey, SWIGTYPE_p_TMS_Data__CancelOptions options) throws InternalTMSException {
-    return VISHNUJNI.cancelJob(sessionKey, SWIGTYPE_p_TMS_Data__CancelOptions.getCPtr(options));
+  public static int cancelJob(String sessionKey, CancelOptions options) throws InternalTMSException {
+    return VISHNUJNI.cancelJob(sessionKey, CancelOptions.getCPtr(options), options);
   }
 
   public static int getJobInfo(String sessionKey, String jobId, Job jobInfos) throws InternalTMSException {

@@ -657,6 +657,20 @@ public class VISHNUJNI {
   public final static native boolean AddWorkOptions_eIsSet(long jarg1, AddWorkOptions jarg1_, int jarg2);
   public final static native void AddWorkOptions_eUnset(long jarg1, AddWorkOptions jarg1_, int jarg2);
   public final static native long AddWorkOptions__eClass(long jarg1, AddWorkOptions jarg1_);
+  public final static native long new_CancelOptions();
+  public final static native void delete_CancelOptions(long jarg1);
+  public final static native void CancelOptions__initialize(long jarg1, CancelOptions jarg1_);
+  public final static native String CancelOptions_getMachineId(long jarg1, CancelOptions jarg1_);
+  public final static native void CancelOptions_setMachineId(long jarg1, CancelOptions jarg1_, String jarg2);
+  public final static native String CancelOptions_getUser(long jarg1, CancelOptions jarg1_);
+  public final static native void CancelOptions_setUser(long jarg1, CancelOptions jarg1_, String jarg2);
+  public final static native String CancelOptions_getJobId(long jarg1, CancelOptions jarg1_);
+  public final static native void CancelOptions_setJobId(long jarg1, CancelOptions jarg1_, String jarg2);
+  public final static native long CancelOptions_eGet(long jarg1, CancelOptions jarg1_, int jarg2, boolean jarg3);
+  public final static native void CancelOptions_eSet(long jarg1, CancelOptions jarg1_, int jarg2, long jarg3);
+  public final static native boolean CancelOptions_eIsSet(long jarg1, CancelOptions jarg1_, int jarg2);
+  public final static native void CancelOptions_eUnset(long jarg1, CancelOptions jarg1_, int jarg2);
+  public final static native long CancelOptions__eClass(long jarg1, CancelOptions jarg1_);
   public final static native long new_CpFileOptions();
   public final static native void delete_CpFileOptions(long jarg1);
   public final static native void CpFileOptions__initialize(long jarg1, CpFileOptions jarg1_);
@@ -1140,7 +1154,7 @@ public class VISHNUJNI {
   public final static native int listServers(long jarg1, String jarg2) throws InternalUMSException;
   public final static native int submitJob(String jarg1, String jarg2, long jarg3, Job jarg3_, long jarg4, SubmitOptions jarg4_) throws InternalTMSException;
   public final static native int addWork(String jarg1, long jarg2, Work jarg2_, long jarg3, AddWorkOptions jarg3_) throws InternalTMSException;
-  public final static native int cancelJob(String jarg1, long jarg2) throws InternalTMSException;
+  public final static native int cancelJob(String jarg1, long jarg2, CancelOptions jarg2_) throws InternalTMSException;
   public final static native int getJobInfo(String jarg1, String jarg2, long jarg3, Job jarg3_) throws InternalTMSException;
   public final static native int listJobs(String jarg1, long jarg2, ListJobs jarg2_, long jarg3, ListJobsOptions jarg3_) throws InternalTMSException;
   public final static native int getJobProgress(String jarg1, long jarg2, ListProgression jarg2_, long jarg3, ProgressOptions jarg3_) throws InternalTMSException;
@@ -1191,6 +1205,7 @@ public class VISHNUJNI {
   public final static native long LoadCriterion_SWIGUpcast(long jarg1);
   public final static native long Work_SWIGUpcast(long jarg1);
   public final static native long AddWorkOptions_SWIGUpcast(long jarg1);
+  public final static native long CancelOptions_SWIGUpcast(long jarg1);
   public final static native long CpFileOptions_SWIGUpcast(long jarg1);
   public final static native long FileStat_SWIGUpcast(long jarg1);
   public final static native long FileTransfer_SWIGUpcast(long jarg1);

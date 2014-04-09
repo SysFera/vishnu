@@ -793,8 +793,7 @@ JobServer::setRealFilePaths(std::string& scriptContent,
     if (! path.empty()) {
       workingDir = path;
     }
-    scriptPath = boost::str(boost::format("%1%/vishnuJobScript%2%-%3%")
-                            % workingDir
+    scriptPath = boost::str(boost::format("/tmp/vishnuJobScript%1%-%2%")
                             % bfs::unique_path("%%%%%%").string()
                             % jobInfo.getJobId());
   }
