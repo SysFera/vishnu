@@ -13,6 +13,7 @@
 #include "utils.hpp"
 #include "sslhelpers.hpp"
 #include "VishnuException.hpp"
+#include "Logger.hpp"
 
 /**
  * \class Worker
@@ -48,7 +49,7 @@ public:
       try {
         data = socket.get();
       } catch (zmq::error_t &error) {
-        std::cerr << boost::format("E: %1%\n") % error.what();
+        LOG(boost::str(boost::format("[ERROR] %1%\n") % error.what()), LogErr);
         continue;
       }
 
@@ -59,7 +60,7 @@ public:
           socket.send(resultSerialized);
         } catch (const VishnuException& ex) {
           socket.send(ex.what());
-          std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+          LOG(boost::str(boost::format("[ERROR] %1%\n")%ex.what()), LogErr);
         }
       }
     }
@@ -117,16 +118,18 @@ serverWorkerSockets(const std::string& serverUri,
   // bind the sockets
   try {
     socket_server.bind(serverUri.c_str());
-    std::cerr << boost::format("[INFO] ZMQ socket bound (%1%)\n") % serverUri;
+    LOG(boost::str(boost::format("[INFO] ZMQ socket bound (%1%)") % serverUri), LogInfo);
   } catch (const zmq::error_t& e) {
-    std::cerr << boost::format("[ERROR] zmq socket_server (%1%) binding failed (%2%)\n") % serverUri % e.what();
+    LOG(boost::str(boost::format("[ERROR] zmq socket_server (%1%) binding failed (%2%)")
+                   % serverUri % e.what()), LogErr);
     return 1;
   }
 
   try {
     socket_workers.bind(workerUri.c_str());
   } catch (const zmq::error_t& e) {
-    std::cerr << boost::format("[ERROR] zmq socket_worker (%1%) binding failed (%2%)\n") % workerUri % e.what();
+    LOG(boost::str(boost::format("[ERROR] zmq socket_worker (%1%) binding failed (%2%)")
+                   % workerUri % e.what()), LogErr);
     return 1;
   }
 
@@ -149,7 +152,8 @@ serverWorkerSockets(const std::string& serverUri,
       if (EINTR == e.num()) {
         continue;
       } else {
-        std::cerr << boost::format("E: zmq device creation failed (%1%)\n") % e.what();
+        LOG(boost::str(boost::format("[ERROR] zmq device creation failed (%1%)\n")
+                       % e.what()), LogErr);
         return 1;
       }
     }

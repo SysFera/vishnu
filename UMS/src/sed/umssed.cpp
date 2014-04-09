@@ -11,6 +11,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/thread.hpp>
 #include "AuthenticatorConfiguration.hpp"
+#include "Logger.hpp"
 
 //For ZMQ
 #include "zmq.hpp"
@@ -42,14 +43,14 @@ void
 controlSignal (int signum) {
   int res;
   switch (signum) {
-  case SIGCHLD:
-    res = waitpid (-1, NULL, WNOHANG);
-    while (res > 0) {
+    case SIGCHLD:
       res = waitpid (-1, NULL, WNOHANG);
-    }
-    break;
-  default:
-    break;
+      while (res > 0) {
+        res = waitpid (-1, NULL, WNOHANG);
+      }
+      break;
+    default:
+      break;
   }
 }
 
@@ -93,7 +94,7 @@ main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, sub);
     config.getConfigValue<std::string>(vishnu::MACHINEID, mid);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
-      std::cerr << "Error: cannot open the script file for sending email\n";
+      LOG("[FATAL] cannot open the script file for sending email", LogEmerg);
       exit(1);
     }
     authenticatorConfig.check();
@@ -124,7 +125,7 @@ main(int argc, char* argv[], char* envp[]) {
       if (!res) {
         initSeD(UMSTYPE, config, uri, server);
       } else {
-        std::cerr << "There was a problem during services initialization\n";
+        LOG("[FATAL] Services initializationb failed", LogEmerg);
         exit(1);
       }
     } else if (pid == 0) {
@@ -138,14 +139,14 @@ main(int argc, char* argv[], char* envp[]) {
         monitor.run();
       }
     } else {
-      std::cerr << "There was a problem to initialize the server\n";
+      LOG("[FATAL] There was a problem to initialize the server", LogEmerg);
       exit(1);
     }
   } catch (UserException& e) {
-    std::cerr << argv[0] << " : "<< e.what() << "\n";
+    LOG(boost::str(boost::format("[FATAL] %1% %2%")%argv[0] % e.what()), LogEmerg);
     exit(1);
   } catch (std::exception& e) {
-    std::cerr << argv[0] << " : "<< e.what() << "\n";
+    LOG(boost::str(boost::format("[FATAL] %1% %2%")%argv[0] % e.what()), LogEmerg);
     exit(1);
   }
   return res;

@@ -11,6 +11,7 @@
 #include "AuthenticatorFactory.hpp"
 #include "UMSServices.hpp"
 #include "SeD.hpp"
+#include "Logger.hpp"
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used in this class
 Database *ServerUMS::mdatabaseVishnu = NULL;
@@ -105,11 +106,11 @@ ServerUMS::init(int vishnuId,
     }
 
   } catch (VishnuException& e) {
-      std::cout << e.what() << "\n";
-      exit(0);
+    LOG(e.what(), LogEmerg);
+    exit(0);
   }
 
-// initialization of the service table
+  // initialization of the service table
   initMap(mid);
 
   return 0;

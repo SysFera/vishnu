@@ -69,12 +69,13 @@ if(COMPILE_SERVER_UMS)
     ${REGISTRY_SOURCE_DIR}
     ${AUTHENTICATOR_INCLUDE_DIR})
 
-  set(sed_SRCS sed/umssed.cpp
+  set(sed_SRCS
+    sed/umssed.cpp
     sed/ServerUMS.cpp
     sed/internalApi.cpp
     sed/MonitorUMS.cpp
     ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
-    )
+    ${logger_SRCS})
 
   set(server_SRCS server/SessionServer.cpp
     server/UserServer.cpp
@@ -91,8 +92,7 @@ if(COMPILE_SERVER_UMS)
     server/export/shell/ShellExporter.cpp
     server/export/shell/UMSShellMapper.cpp
     server/export/shell/TMSShellMapper.cpp
-    server/export/shell/FMSShellMapper.cpp
-    )
+    server/export/shell/FMSShellMapper.cpp)
 
   add_library(vishnu-ums-server ${server_SRCS})
   set_target_properties(vishnu-ums-server PROPERTIES VERSION ${VISHNU_VERSION})

@@ -4,13 +4,15 @@
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date April 2011
  */
+
+#include <boost/format.hpp>
 #include "JobOutputServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "LocalAccountServer.hpp"
 #include "SSHJobExec.hpp"
 #include "utilServer.hpp"
 #include "DbFactory.hpp"
-#include <boost/format.hpp>
+#include "Logger.hpp"
 
 /**
  * \brief Constructor
@@ -93,7 +95,9 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
   mjobResult.setOutputDir(outputDir) ;
   mjobResult.setOutputPath(outputPath) ;
   mjobResult.setErrorPath(errorPath) ;
-  LOG(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")% jobId % owner, 1);
+  LOG(boost::str(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")
+                 % mjobResult.getJobId()
+                 % owner), LogInfo);
 
   return mjobResult;
 }
@@ -187,7 +191,9 @@ JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
                                        ) % vishnu::convertToString(vishnu::STATE_DOWNLOADED)
                          % mdatabaseInstance->escapeData(jobId)).str();
     mdatabaseInstance->process(query);
-    LOG(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")% jobId % muserSessionInfo.user_aclogin, 1);
+    LOG(boost::str(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")
+                   % jobId
+                   % muserSessionInfo.user_aclogin), LogInfo);
   }
   mlistJobsResult->setNbJobs(mlistJobsResult->getResults().size());
 

@@ -287,8 +287,7 @@ if (COMPILE_SERVER_TMS)
     sed/ServerTMS.cpp
     sed/internalApi.cpp
     sed/MonitorTMS.cpp
-    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
-    )
+    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp)
   
   add_definitions(-DMODULE_PREFIX="${CMAKE_SHARED_MODULE_PREFIX}")
   add_definitions(-DMODULE_SUFFIX="${CMAKE_SHARED_MODULE_SUFFIX}")
@@ -304,7 +303,8 @@ if (COMPILE_SERVER_TMS)
     server/ScriptGenConvertor.cpp
     server/WorkServer.cpp
     utils/SharedLibrary.cc
-    ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
+    ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
+    ${logger_SRCS})
 
  if(WIN32)
    set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_win32.cc)
@@ -319,7 +319,7 @@ if (COMPILE_SERVER_TMS)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
 
   # generate tmssed binary
-  add_executable(tmssed ${sed_SRCS})
+  add_executable(tmssed ${sed_SRCS} ${logger_SRCS})
   target_link_libraries(tmssed
     ${Boost_LIBRARIES}
     ${DATABASE_LIBS}

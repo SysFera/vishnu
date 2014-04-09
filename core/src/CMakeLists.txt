@@ -7,12 +7,11 @@ include_directories(${Boost_INCLUDE_DIRS}
   ${AUTHENTICATOR_INCLUDE_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
   ${COMMUNICATION_INCLUDE_DIR}
-  ${LIBJANSSON_INCLUDE_DIR}
-  )
-
+  ${LIBJANSSON_INCLUDE_DIR})
 
 #################### config ###################################################
-set(config_SRCS config/CommonParser.cpp
+set(config_SRCS
+  config/CommonParser.cpp
   config/FileParser.cpp
   config/constants.cpp
   config/ExecConfiguration.cpp)
@@ -31,8 +30,7 @@ set(exception_HEADERS exception/VishnuException.hpp
   exception/SystemException.hpp
   exception/UMSVishnuException.hpp
   exception/TMSVishnuException.hpp
-  exception/FMSVishnuException.hpp
-  )
+  exception/FMSVishnuException.hpp)
 
 #################### utils ####################################################
 set(utils_SRCS
@@ -44,7 +42,8 @@ set(utils_SRCS
   utils/cliUtil.cpp)
 
 #################### register #################################################
-set(registry_SRCS registry/MapperRegistry.cpp
+set(registry_SRCS
+  registry/MapperRegistry.cpp
   registry/Mapper.cpp
   registry/UMSMapper.cpp
   registry/FMSMapper.cpp
@@ -239,8 +238,7 @@ set(FMS_Data_SRCS
   emfdata/FMS_Data/DirEntry.cpp
   emfdata/FMS_Data/DirEntryImpl.cpp
   emfdata/FMS_Data/DirEntryList.cpp
-  emfdata/FMS_Data/DirEntryListImpl.cpp
-    )
+  emfdata/FMS_Data/DirEntryListImpl.cpp)
 
 set(FMS_Data_HEADERS
   emfdata/FMS_Data.hpp
@@ -260,8 +258,7 @@ set(FMS_Data_HEADERS
   emfdata/FMS_Data/RmFileOptions.hpp
   emfdata/FMS_Data/CreateDirOptions.hpp
   emfdata/FMS_Data/DirEntry.hpp
-  emfdata/FMS_Data/DirEntryList.hpp
-  )
+  emfdata/FMS_Data/DirEntryList.hpp)
 
 if(NOT COMPILE_ONLY_LIBBATCH)
   add_library(vishnu-core ${config_SRCS}
@@ -301,16 +298,14 @@ set(EMF-ECORE-HEADERS
   ${EMF4CPP_INCLUDE_DIR}/ecore/EStringToStringMapEntry.hpp
   ${EMF4CPP_INCLUDE_DIR}/ecore/EStructuralFeature.hpp
   ${EMF4CPP_INCLUDE_DIR}/ecore/ETypedElement.hpp
-  ${EMF4CPP_INCLUDE_DIR}/ecore/ETypeParameter.hpp
-)
+  ${EMF4CPP_INCLUDE_DIR}/ecore/ETypeParameter.hpp)
 
 set(EMF-ECORECPP-HEADERS
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping_forward.hpp
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping.hpp
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/MetaModelRepository.hpp
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify_forward.hpp
-   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify.hpp
-)
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify.hpp)
 
 set(EMF-ECORECPP-MAPPING-HEADERS
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/any.hpp
@@ -321,14 +316,12 @@ set(EMF-ECORECPP-MAPPING-HEADERS
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/out_ptr.hpp
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/set_traits.hpp
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/string_traits.hpp
-   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/type_traits.hpp
-)
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/mapping/type_traits.hpp)
 
 set(EMF-ECORECPP-NOTIFY-HEADERS
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify/Adapter.hpp
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify/Notification.hpp
-   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify/Notifier.hpp
-)
+   ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify/Notifier.hpp)
 
 install(FILES ${exception_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES emfdata/UMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
