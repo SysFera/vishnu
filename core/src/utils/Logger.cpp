@@ -24,36 +24,46 @@
 #include "Logger.hpp"
 #include <string.h>
 #include <ostream>
+#include <iostream>
 #include <libio.h>
 
-Logger::Logger(std::string ident, int facility) {
-    facility_ = facility;
-    priority_ = LOG_DEBUG;
-    strncpy(ident_, ident.c_str(), sizeof(ident_));
-    ident_[sizeof(ident_)-1] = '\0';
-
-    openlog(ident_, LOG_PID, facility_);
+Logger::Logger(const std::string& programName, int facility)
+  : mlogSeverity(LOG_DEBUG),
+    mprogramName(programName){
+  openlog(mprogramName.c_str(), LOG_PID, facility);
 }
 
 int Logger::sync() {
-    if (buffer_.length()) {
-        syslog(priority_, buffer_.c_str());
-        buffer_.erase();
-        priority_ = LOG_DEBUG; // default to debug for each message
-    }
-    return 0;
+  if (mbuffer.length()) {
+    syslog(mlogSeverity, mbuffer.c_str());
+    mbuffer.erase();
+    mlogSeverity = LOG_DEBUG; // default to debug for each message
+  }
+  return 0;
 }
 
 int Logger::overflow(int c) {
-    if (c != EOF) {
-        buffer_ += static_cast<char>(c);
-    } else {
-        sync();
-    }
-    return c;
+  if (c != EOF) {
+    mbuffer += static_cast<char>(c);
+  } else {
+    sync();
+  }
+  return c;
 }
 
-std::ostream& operator<< (std::ostream& os, const LogPriority& log_priority) {
-    static_cast<Logger *>(os.rdbuf())->priority_ = (int)log_priority;
-    return os;
+std::ostream& operator<< (std::ostream& logStream, const LogPriority& logPriority) {
+  static_cast<Logger*>(logStream.rdbuf())->mlogSeverity = (int)logPriority;
+  return logStream;
+}
+
+
+/**
+ * @brief Add entry to log
+ * @param msg The message to log
+ * @param level The severity
+ */
+void
+vishnu::log(const std::string& msg, int level)
+{
+  std::clog << static_cast<LogPriority>(level) << msg << std::endl;
 }

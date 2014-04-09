@@ -50,7 +50,6 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <net/if.h>
-#include <sys/wait.h>
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 namespace bs=boost::system;
@@ -643,85 +642,3 @@ vishnu::validatePath(const std::string& path)
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid path, the following characters are not allowed: <space><tab>()&,|;$#");
   }
 }
-
-/**
- * @brief Get port number from a given uri
- * @param uri : the uri address
- * @return the port number, throw exception on error
- */
-int
-vishnu::getPortFromUri(const std::string& uri) {
-
-  size_t pos = uri.rfind(":");
-  int port = -1;
-  if (pos == std::string::npos ||
-      (port = vishnu::convertToInt(uri.substr(pos+1, std::string::npos))) <= 0) {
-    throw UserException(ERRCODE_INVALID_PARAM, "The format of the uri is invalid or the uri contains unallowed characters");
-  }
-
-  return port;
-}
-
-/**
- * @brief getHostFromUrl
- * @param uri
- * @return
- */
-std::string
-vishnu::getHostFromUri(const std::string& uri) {
-
-  std::string host;
-  size_t pos1 = uri.find("://");
-  size_t pos2 = uri.rfind(":");
-  // Extract the host in the uri
-  if (pos1 != std::string::npos && pos2 != std::string::npos) {
-    size_t pos = pos1+3;
-    size_t len = pos2 - pos;
-    host = uri.substr(pos, len);
-  }
-  // Check that the address is valid
-  if (host.empty() || host.find_first_of("*") != std::string::npos) {
-    throw UserException(ERRCODE_INVALID_PARAM, "The format of the uri is invalid or the uri contains unallowed characters");
-  }
-
-  return host;
-}
-
-/**
- * \brief Function to validate an URI
- * \throws a VishnuException if contains the '*'
- * \param uri the uri to check, throw exception on error
- */
-void
-vishnu::validateUri(const std::string & uri) {
-  std::cerr << boost::format("[INFO] Parsing the uri (%1%)...\n")%uri;
-  vishnu::getPortFromUri(uri);
-  vishnu::getHostFromUri(uri);
-}
-
-/**
- * @brief Exit a process if a given is different to zero
- * @param code The code
- */
-void
-vishnu::exitProcessOnError(int code) {
-  if (code != 0) {
-    exit(code);
-  }
-}
-
-/**
- * @brief Exit a process if its child failed
- * @param child The pid of the child process
- */
-void
-vishnu::exitProcessOnChildError(pid_t child) {
-  int retCode;
-  waitpid(child, &retCode, 0);
-  if (! WIFEXITED(retCode) || WEXITSTATUS(retCode) != 0) {
-    kill(-1, SIGKILL);
-    exit(retCode);
-  }
-}
-
-

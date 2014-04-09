@@ -15,6 +15,7 @@
 #include "SeDWorker.hpp"
 #include "VishnuException.hpp"
 #include "vishnu_version.hpp"
+#include "Logger.hpp"
 
 
 int
@@ -45,8 +46,9 @@ int
 SeD::call(diet_profile_t* profile) {
   CallbackMap::iterator it  = mcb.find(profile->name);
   if (it == mcb.end()) {
-    std::cerr << boost::format("[ERROR] service not found: %1%\n") % profile->name;
-// To show it is an invalid profile
+    LOG(boost::str(boost::format("[ERROR] service not found: %1%\n")
+                   % profile->name), LogErr);
+    // To show it is an invalid profile
     profile->param_count = -1;
     return UNKNOWN_SERVICE;
   }
@@ -60,7 +62,8 @@ SeD::call(diet_profile_t* profile) {
     rv = fn(profile);
   } catch (const std::exception &e) {
     rv = INTERNAL_ERROR;
-    std::cerr << boost::format("[ERROR] %1%\n") % e.what();
+    LOG(boost::str(boost::format("[ERROR] %1%\n")
+                   % e.what()), LogErr);
     throw SystemException(ERRCODE_INVDATA, e.what());
   }
   return rv;
@@ -99,7 +102,8 @@ public:
       try {
         data = socket.get();
       } catch (zmq::error_t &error) {
-        std::cerr << boost::format("E: %1%\n") % error.what();
+        LOG(boost::str(boost::format("[ERROR] %1%\n")
+                       % error.what()), LogErr);
         continue;
       }
 
@@ -111,7 +115,8 @@ public:
           socket.send(my_serialize(profile.get()));
         } catch (const VishnuException& ex) {
           socket.send(ex.what());
-          std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+          LOG(boost::str(boost::format("[ERROR] %1%\n")
+                         % ex.what()), LogErr);
         }
       }
     }

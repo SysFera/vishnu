@@ -26,6 +26,7 @@
 #include "BatchFactory.hpp"
 #include <pwd.h>
 #include <cstdlib>
+#include "Logger.hpp"
 
 
 /**
@@ -268,11 +269,11 @@ JobServer::handleNativeBatchExec(int action,
     } catch(const TMSVishnuException & ex) {
       handlerExitCode = ex.getTypeI();
       errorMsg = std::string(ex.what());
-      LOG("[ERROR] "+ errorMsg, 4);
+      LOG("[ERROR] "+ errorMsg, LogErr);
     } catch (const VishnuException & ex) {
       handlerExitCode = ex.getTypeI();
       errorMsg = std::string(ex.what());
-      LOG("[ERROR] "+ errorMsg, 4);
+      LOG("[ERROR] "+ errorMsg, LogErr);
     }
 
     // write error message to pipe for the parent
@@ -417,13 +418,12 @@ int JobServer::cancelJob(JsonObject* options)
 
     sqlQuery = (boost::format("%1%"
                               " AND vsession.numsessionid=job.vsession_numsessionid"
-                              " AND jobId='%2%';"
-                              )
+                              " AND jobId='%2%';")
                 % baseSqlQuery
                 % mdatabaseInstance->escapeData(jobId)
                 ).str();
 
-    LOG(boost::format("[WARN] received request to cancel job: %1%") % jobId, 2);
+    LOG(boost::str(boost::format("[WARN] received request to cancel job: %1%") % jobId), LogWarning);
   } else {
 
     // This block works as follow:
@@ -465,7 +465,8 @@ int JobServer::cancelJob(JsonObject* options)
                     % mdatabaseInstance->escapeData(mmachineId)
                     ).str();
       }
-      LOG(boost::format("[WARN] received request to cancel all jobs submitted by %1%")%userId, 2);
+      LOG(boost::str(boost::format("[WARN] received request to cancel all jobs submitted by %1%")
+                     % userId), LogWarning);
     } else {
       sqlQuery = (boost::format("%1%"
                                 " AND vsession.numsessionid=job.vsession_numsessionid"
@@ -473,7 +474,8 @@ int JobServer::cancelJob(JsonObject* options)
                   % baseSqlQuery
                   % mdatabaseInstance->escapeData(mmachineId)
                   ).str();
-      LOG(boost::format("[WARN] received request to cancel all user jobs from %1%") % muserSessionInfo.user_aclogin, 2);
+      LOG(boost::str(boost::format("[WARN] received request to cancel all user jobs from %1%")
+                     % muserSessionInfo.user_aclogin), LogWarning);
     }
   }
   // Process the query and treat the resulting jobs
@@ -481,10 +483,11 @@ int JobServer::cancelJob(JsonObject* options)
 
   if (sqlQueryResult->getNbTuples() == 0) {
     if (! cancelAllJobs) {
-      LOG(boost::format("[INFO] invalid cancel request with job id %1%") % jobId, 1);
+      LOG(boost::str(boost::format("[INFO] invalid cancel request with job id %1%")
+                     % jobId), LogInfo);
       throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID, "Perhaps the job is not longer running");
     } else {
-      LOG(boost::format("[INFO] no job matching the call"), 1);
+      LOG("[INFO] no job matching the call", LogInfo);
     }
   } else {
     int resultCount = sqlQueryResult->getNbTuples();
@@ -931,7 +934,8 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
                          % job.getJobId()
                          ).str();
     mdatabaseInstance->process(query);
-    LOG(boost::format("[INFO] Job cancelled: %1%")% job.getJobId(), mdebugLevel);
+    LOG(boost::str(boost::format("[INFO] Job cancelled: %1%")
+                   % job.getJobId()), LogInfo);
 
   } else if (action == SubmitBatchAction) {
     // Append the machine name to the error and output path if necessary
@@ -979,14 +983,14 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
 
     // logging
     if (job.getSubmitError().empty()) {
-      LOG(boost::format("[INFO] Job submitted successfully: %1%. User: %2%. Owner: %3%")
+      LOG(boost::str(boost::format("[INFO] Job submitted successfully: %1%. User: %2%. Owner: %3%")
           % job.getJobId()
           % muserSessionInfo.userid
-          % muserSessionInfo.user_aclogin, 1);
+          % muserSessionInfo.user_aclogin), LogInfo);
     } else {
       LOG((boost::str(boost::format("[WARN] Submission error: %1% [%2%]")
                       % job.getJobId()
-                      % job.getSubmitError())), 4);
+                      % job.getSubmitError())), LogWarning);
     }
   } else {
     throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");

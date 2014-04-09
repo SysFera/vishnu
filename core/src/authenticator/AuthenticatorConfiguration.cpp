@@ -8,8 +8,7 @@
 #include "AuthenticatorConfiguration.hpp"
 #include <algorithm>
 #include <iostream>
-
-using namespace std;
+#include "Logger.hpp"
 
 /**
  * \brief Constructor
@@ -25,9 +24,9 @@ mexecConfig(execConfig), mauthType(UMS)
  */
 void AuthenticatorConfiguration::check() throw (UserException)
 {
-  string authenTypeStr;
+  std::string authenTypeStr;
   if (!mexecConfig.getConfigValue(vishnu::AUTHENTYPE, authenTypeStr)) {
-    std::cerr << "[INFO] The default authentication mode has been selected\n";
+    LOG("[INFO] The default authentication mode has been selected", LogInfo);
     authenTypeStr = "UMS";
   }
 

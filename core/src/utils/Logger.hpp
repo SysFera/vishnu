@@ -28,19 +28,21 @@
 #include <string>
 #include <streambuf>
 
+#define LOG(msg, logLevel) vishnu::log(msg, logLevel)
+
 /**
  * \enum LogPriority
  * \brief The priority of the messages
  */
 enum LogPriority {
-    kLogEmerg   = LOG_EMERG,   // system is unusable
-    kLogAlert   = LOG_ALERT,   // action must be taken immediately
-    kLogCrit    = LOG_CRIT,    // critical conditions
-    kLogErr     = LOG_ERR,     // error conditions
-    kLogWarning = LOG_WARNING, // warning conditions
-    kLogNotice  = LOG_NOTICE,  // normal, but significant, condition
-    kLogInfo    = LOG_INFO,    // informational message
-    kLogDebug   = LOG_DEBUG    // debug-level message
+    LogEmerg   = LOG_EMERG,   // system is unusable
+    LogAlert   = LOG_ALERT,   // action must be taken immediately
+    LogCrit    = LOG_CRIT,    // critical conditions
+    LogErr     = LOG_ERR,     // error conditions
+    LogWarning = LOG_WARNING, // warning conditions
+    LogNotice  = LOG_NOTICE,  // normal, but significant, condition
+    LogInfo    = LOG_INFO,    // informational message
+    LogDebug   = LOG_DEBUG    // debug-level message
 };
 
 std::ostream& operator<< (std::ostream& os, const LogPriority& log_priority);
@@ -51,18 +53,39 @@ std::ostream& operator<< (std::ostream& os, const LogPriority& log_priority);
  */
 class Logger : public std::basic_streambuf<char, std::char_traits<char> > {
 public:
-    explicit Logger(std::string ident, int facility);
+    explicit Logger(const std::string& programName, int facility);
 
 protected:
     int sync();
     int overflow(int c);
 
 private:
-    friend std::ostream& operator<< (std::ostream& os, const LogPriority& log_priority);
-    std::string buffer_;
-    int facility_;
-    int priority_;
-    char ident_[50];
+    friend std::ostream& operator<< (std::ostream& os, const LogPriority& logPriority);
+
+    /**
+     * @brief Buffer to log
+     */
+    std::string mbuffer;
+
+    /**
+     * @brief Severity, aka syslog priority
+     */
+    int mlogSeverity;
+
+    /**
+     * @brief Sets the component that logs the info
+     */
+    std::string mprogramName;
 };
+
+namespace vishnu {
+  /**
+   * @brief Add entry to log
+   * @param msg The message to log
+   * @param level The severity
+   */
+  void
+  log(const std::string& msg, int level);
+}
 
 #endif // LOGGER_H

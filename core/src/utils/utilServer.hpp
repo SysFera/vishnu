@@ -14,9 +14,6 @@
 #include "ExecConfiguration.hpp"
 #include "Database.hpp"
 
-
-#define LOG(msg, logLevel) if (logLevel) std::clog << msg <<"\n"
-
 /**
 * \class Format_t
 * \brief The class used to get the variables of the string to parse
@@ -400,5 +397,6 @@ namespace vishnu {
   validateAuthKey(const std::string& authKey,
                   Database* databasePtr,
                   UserSessionInfo& info);
+
 }
 #endif //_UTILSERVER_H_
