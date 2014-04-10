@@ -85,9 +85,6 @@ main(int argc, char* argv[]) {
     slaveJobFile = argv[6];
     optionsPath = argv[7];
     jobScriptPath = argv[8];
-    boost::filesystem::path src(jobScriptPath);
-    boost::filesystem::path dest(boost::str(boost::format("%1%/")%getenv("HOME")));
-    boost::filesystem::copy_file(src,dest);
   }
 
   if(batchType == UNDEFINED) {
@@ -118,7 +115,11 @@ main(int argc, char* argv[]) {
 
       //Submits the job
       TMS_Data::ListJobs jobSteps;
-      if (batchServer->submit(jobScriptPath, jsonOptions.getSubmitOptions(), jobSteps) != 0) {
+      bfs::path from(jobScriptPath);
+      bfs::path to(std::string(std::getenv("HOME")));
+      to /= bfs::basename(from);
+      bfs::copy_file(from, to, bfs::copy_option::overwrite_if_exists);
+      if (batchServer->submit(to.c_str(), jsonOptions.getSubmitOptions(), jobSteps) != 0) {
         throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: the submission failed");
       }
 
