@@ -280,7 +280,6 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
 string
 RemoteFileProxy::getContent() {
   std::string fileContent ="";
-  std::string errMsg = "";
   std::string serviceName(SERVICES_FMS[FILECONTENT]);
   std::string sessionKey=this->getSession().getSessionKey();
 
