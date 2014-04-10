@@ -31,10 +31,11 @@ public:
   /**
    * \brief Function to get the job results
    * \param options Object containing options
+   * \param jobId The job identifier
    * \return The job results data structure
    */
   TMS_Data::JobResult
-  getJobOutput(JsonObject* options, std::string jobid);
+  getJobOutput(JsonObject* options, const std::string& jobId);
 
   /**
    * \brief Function to get the all completed jobs results

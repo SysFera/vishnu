@@ -31,24 +31,14 @@ JobOutputServer::JobOutputServer(const std::string& authKey,
 /**
  * \brief Function to get the job results
  * \param options Object containing options
+ * \param jobId The job identifier
  * \return The job results data structure
  */
 TMS_Data::JobResult
-JobOutputServer::getJobOutput(JsonObject* options, std::string jobid) {
+JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
 
-
-  std::string jobId = jobid;
-
-  std::string outputPath;
-  std::string errorPath;
-  std::string owner;
-  std::string subDateStr;
-  std::string outputDir;
-  int status;
-  std::vector<std::string> results;
-  std::vector<std::string>::iterator  iter;
   //To get the output and error path of the job
-  std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, submitDate, outputDir "
+  std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, outputDir "
                            "FROM vsession, job "
                            "WHERE vsession.numsessionid=job.vsession_numsessionid"
                            "  AND job.jobId='"+mdatabaseInstance->escapeData(jobId)+"' ";
@@ -62,16 +52,13 @@ JobOutputServer::getJobOutput(JsonObject* options, std::string jobid) {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
 
-  results.clear();
-  results = sqlResult->get(0);
-
-  iter = results.begin();
-  outputPath = *iter++;
-  errorPath = *iter++;
-  owner = *iter++;
-  status = vishnu::convertToInt( *iter++ );
-  subDateStr = *iter++;
-  outputDir = *iter++;
+  std::vector<std::string> results = sqlResult->get(0);
+  std::vector<std::string>::iterator iter = results.begin();
+  std::string outputPath = *iter++;
+  std::string errorPath = *iter++;
+  std::string owner = *iter++;
+  int status = vishnu::convertToInt( *iter++ );
+  std::string outputDir = *iter++;
 
   if (owner != muserSessionInfo.user_aclogin) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't get the output of "
@@ -106,7 +93,7 @@ JobOutputServer::getJobOutput(JsonObject* options, std::string jobid) {
   mjobResult.setOutputDir(outputDir) ;
   mjobResult.setOutputPath(outputPath) ;
   mjobResult.setErrorPath(errorPath) ;
-  LOG(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")% mjobResult.getJobId() % owner, 1);
+  LOG(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")% jobId % owner, 1);
 
   return mjobResult;
 }
