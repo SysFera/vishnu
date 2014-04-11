@@ -59,6 +59,7 @@ namespace vishnu {
     STANDALONE,
     HAS_UMS,
     HAS_TMS
+    HAS_FMS
   };
 
   /**

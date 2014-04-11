@@ -4,6 +4,7 @@ include_directories(
   ${EMF_DATA_DIR}
   ${UMS_EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
+  ${FMS_EMF_DATA_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
@@ -14,13 +15,12 @@ include_directories(
   ${VISHNU_SOURCE_DIR}/UMS/src/sed
   ${LIBJANSSON_INCLUDE_DIR}
   ${REGISTRY_SOURCE_DIR}
-  ${UMS_SED_SOURCE_DIR}
-  ${TMS_SED_SOURCE_DIR}
   ${UMS_API_SOURCE_DIR}
   ${TMS_API_SOURCE_DIR}
   ${DATA_BASE_INCLUDE_DIR}
   ${UMS_SERVER_SOURCE_DIR}
   ${TMS_SERVER_SOURCE_DIR}
+  ${FMS_SERVER_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
   ${AUTHENTICATOR_INCLUDE_DIR}
@@ -31,11 +31,14 @@ set(sed_SRCS xmssed.cpp
   ServerXMS.cpp
   internalApiUMS.cpp
   internalApiTMS.cpp
+  internalApiFMS.cpp
   ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp)
 
 add_executable(xmssed ${sed_SRCS})
 target_link_libraries(xmssed vishnu-core vishnu-core-server
   vishnu-ums-server
-  vishnu-tms-server)
+  vishnu-tms-server
+  vishnu-fms-server
+  )
 
 install(TARGETS xmssed DESTINATION ${SBIN_INSTALL_DIR})

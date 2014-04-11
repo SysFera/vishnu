@@ -50,13 +50,6 @@ if(COMPILE_SERVER_FMS)
     ${UMS_SERVER_SOURCE_DIR}
     ${FMS_SERVER_SOURCE_DIR})
 
-  set(sed_SRCS
-    sed/internalApi.cpp
-    sed/fmssed.cpp
-    sed/ServerFMS.cpp
-    sed/MonitorFMS.cpp
-    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
-    ${utils_SRCS})
 
   set(server_SRCS
     server/File.cpp
@@ -65,17 +58,10 @@ if(COMPILE_SERVER_FMS)
     server/FileTransferCommand.cpp
     server/FileTransferServer.cpp)
 
-  add_executable(fmssed ${sed_SRCS} ${server_SRCS})
-  install(TARGETS fmssed DESTINATION ${SBIN_INSTALL_DIR})
-  target_link_libraries(fmssed 
-    ${DATABASE_LIBS}
-    ${Boost_LIBRARIES}
-    vishnu-core
-    vishnu-core-server
-    vishnu-ums-server
-    ${LDAP_LIBRARIES}
-    emf4cpp-vishnu
-    ${LIBCRYPT_LIB}
-    ${ZMQ_LIBRARIES}
-    zmq_helper)
+  add_library(vishnu-fms-server ${server_SRCS})
+  set_target_properties(vishnu-fms-server PROPERTIES VERSION ${VISHNU_VERSION})
+  install(TARGETS vishnu-fms-server DESTINATION ${LIB_INSTALL_DIR})
+
+  target_link_libraries(vishnu-fms-server vishnu-core vishnu-core-server ${CMAKE_DL_LIBS})
+
 endif(COMPILE_SERVER_FMS)

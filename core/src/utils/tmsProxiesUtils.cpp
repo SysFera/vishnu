@@ -252,7 +252,7 @@ vishnu::findMachine(const std::string& sessionKey,
     UMS_Data::Machine_ptr machine = machines.getMachines().get(i);
     try {
       if (getMachineLoadPerformance(sessionKey, machine, criterion) < load
-          && vishnu::ping(pingResult, "tmssed", machine->getMachineId()) == 0) {
+          && vishnu::ping(pingResult, "xmssed", machine->getMachineId()) == 0) {
 
         selectedMachine = machine->getMachineId();
         break;
@@ -311,5 +311,6 @@ vishnu::getMachineLoadPerformance(const string& sessionKey,
     std::cerr << "E: error while calculating the load performance of the machine "
               << machine->getMachineId() << " (" << machine->getName() <<")"<< std::endl;
   }
+
   return load ;
 }

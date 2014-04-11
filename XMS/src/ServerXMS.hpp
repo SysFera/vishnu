@@ -30,6 +30,7 @@ struct SedConfig {
   bool sub;
   bool hasUMS;
   bool hasTMS;
+  bool hasFMS;
 };
 
 class ServerXMS : public SeD {
@@ -96,8 +97,9 @@ private:
   ExecConfiguration_Ptr msedConfig;
   std::vector<std::string> mdefaultBatchOption;
   int mdebugLevel;
-  bool hasUMS;
-  bool hasTMS;
+  bool mhasUMS;
+  bool mhasTMS;
+  bool mhasFMS;
 };
 
 #endif

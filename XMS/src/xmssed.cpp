@@ -41,7 +41,7 @@ getBatchConfiguration(SedConfig& cfg) {
   cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
   cfg.batchType = vishnu::convertToBatchType(batchTypeStr);
   if (cfg.batchType == UNDEFINED) {
-    std::cerr << boost::format("Invalid batch backend: %1%\n") 
+    std::cerr << boost::format("Invalid batch backend: %1%\n")
         % batchTypeStr;
     exit(1);
   }
@@ -117,9 +117,11 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
     cfg.config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, cfg.sub);
     cfg.config.getConfigValue<std::string>(vishnu::MACHINEID, cfg.mid);
 
-    bool res1 = cfg.config.getConfigValue<bool>(vishnu::HAS_UMS, cfg.hasUMS);
-    bool res2 = cfg.config.getConfigValue<bool>(vishnu::HAS_TMS, cfg.hasTMS);
-    if (!cfg.hasUMS && !cfg.hasTMS) {
+    cfg.config.getConfigValue<bool>(vishnu::HAS_UMS, cfg.hasUMS);
+    cfg.config.getConfigValue<bool>(vishnu::HAS_TMS, cfg.hasTMS);
+    cfg.config.getConfigValue<bool>(vishnu::HAS_FMS, cfg.hasFMS);
+
+    if (!cfg.hasUMS && !cfg.hasTMS && !cfg.hasFMS) {
       std::cerr << "Error: XMS is not configured to run any services\n";
       exit(1);
     }
@@ -175,8 +177,10 @@ main(int argc, char* argv[], char* envp[]) {
     return vishnu::showVersion();
   }
 
-  system("touch -f $HOME/.vishnurc"); // Create empty file it don't exist
-  vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc"); // Source the rc file
+  std::string vishnuRcFile = boost::str(boost::format("%1%/.vishnurc") % getenv("HOME"));
+  if (boost::filesystem::exists(vishnuRcFile)) {
+    vishnu::sourceFile(vishnuRcFile);
+  }
 
   SedConfig cfg;
   readConfiguration(argv[1], cfg);
@@ -185,7 +189,7 @@ main(int argc, char* argv[], char* envp[]) {
   pid_t pid;
   pid_t ppid;
   pid = fork();
-  
+
   if (pid > 0) {
     //Initialize the UMS Server (Opens a connection to the database)
     boost::shared_ptr<ServerXMS> serverXMS(ServerXMS::getInstance());
@@ -213,8 +217,7 @@ main(int argc, char* argv[], char* envp[]) {
   } else if (pid == 0) {
     MonitorXMS monitor;
     cfg.dbConfig.setDbPoolSize(1);
-    monitor.init(cfg.vishnuId, cfg.dbConfig, cfg.authenticatorConfig,
-                 cfg.mid, cfg.batchType, cfg.batchVersion);
+    monitor.init(cfg);
     ppid = getppid();
     while (kill(ppid, 0) == 0) {
       monitor.run();

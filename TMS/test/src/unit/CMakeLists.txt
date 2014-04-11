@@ -18,7 +18,9 @@ include_directories(
   ${VISHNU_SOURCE_DIR}/core/test/mock/database/
   ${VISHNU_SOURCE_DIR}/TMS/src/utils/
   ${VISHNU_SOURCE_DIR}/UMS/src/server/
+  ${VISHNU_SOURCE_DIR}/FMS/src/server/
   ${VISHNU_SOURCE_DIR}/TMS/src/sed/
+  ${XMS_SED_SOURCE_DIR}
   ${XMS_SED_SOURCE_DIR}
   ${PROJECT_BINARY_DIR}
   ${VISHNU_SOURCE_DIR}/core/src/version
@@ -79,5 +81,5 @@ target_link_libraries(tmssed-mock
   zmq_helper
   ${USED_BATCH_LIB})
 
-unit_test(ListJobServerUnitTests vishnu-tms-server-mock tmssed-mock vishnu-ums-server)
+unit_test(ListJobServerUnitTests vishnu-tms-server-mock tmssed-mock vishnu-ums-server vishnu-fms-server)
 endif(COMPILE_SERVERS)

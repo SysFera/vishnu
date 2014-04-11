@@ -7,6 +7,8 @@
 #include "utilVishnu.hpp"
 #include "UMSServices.hpp"
 #include "TMSServices.hpp"
+#include "FMSServices.hpp"
+#include "internalApiFMS.hpp"
 
 
 Database *ServerXMS::mdatabaseVishnu = NULL;
@@ -80,8 +82,9 @@ ServerXMS::init(SedConfig& cfg) {
   // initialize the SeD configuration object
   msedConfig = &cfg.config;
 
-  hasUMS = cfg.hasUMS;
-  hasTMS = cfg.hasTMS;
+  mhasUMS = cfg.hasUMS;
+  mhasTMS = cfg.hasTMS;
+  mhasFMS = cfg.hasFMS;
 
   // set the debug level
   bool isSetDebugLevel = msedConfig->getConfigValue(vishnu::DEBUG_LEVEL, mdebugLevel);
@@ -92,7 +95,7 @@ ServerXMS::init(SedConfig& cfg) {
   //initialization of the batchType
   mbatchType = cfg.batchType;
 
-  if (hasTMS) {
+  if (mhasTMS) {
     //initialization of the batchVersion
     if (mbatchType != DELTACLOUD && mbatchType != OPENNEBULA) {
       msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, mbatchVersion);
@@ -179,7 +182,7 @@ void
 ServerXMS::initMap(const std::string& mid) {
   int (*functionPtr)(diet_profile_t*);
 
-  if (hasUMS) {
+  if (mhasUMS) {
       functionPtr = solveSessionConnect;
       mcb[SERVICES_UMS[SESSIONCONNECT]] = functionPtr;
       functionPtr = solveSessionReconnect;
@@ -252,7 +255,7 @@ ServerXMS::initMap(const std::string& mid) {
       mcb[SERVICES_UMS[EXPORT]] = solveExport;
   }
   // TMS services
-  if (hasTMS) {
+  if (mhasTMS) {
       functionPtr = solveSubmitJob;
       mcb[std::string(SERVICES_TMS[JOBSUBMIT])+"@"+mid] = functionPtr;
       functionPtr = solveCancelJob;
@@ -274,6 +277,53 @@ ServerXMS::initMap(const std::string& mid) {
       functionPtr = solveAddWork;
       mcb[SERVICES_TMS[ADDWORK]] = functionPtr;
   }
+
+  if (mhasFMS){
+    functionPtr = solveTransferFile<File::copy,File::async>;
+    mcb[SERVICES_FMS[FILECOPYASYNC]] = functionPtr;
+    functionPtr = solveTransferFile<File::move,File::async>;
+    mcb[SERVICES_FMS[FILEMOVEASYNC]] = functionPtr;
+    functionPtr = solveTransferFile<File::move,File::sync>;
+    mcb[SERVICES_FMS[FILEMOVE]] = functionPtr;
+    functionPtr = solveTransferFile<File::copy,File::sync>;
+    mcb[SERVICES_FMS[FILECOPY]] = functionPtr;
+    functionPtr = get_infos;
+    mcb[SERVICES_FMS[FILEGETINFOS]] = functionPtr;
+    functionPtr = solveChangeGroup;
+    mcb[SERVICES_FMS[FILECHANGEGROUP]] = functionPtr;
+    functionPtr = solveChangeMode;
+    mcb[SERVICES_FMS[FILECHANGEMODE]] = functionPtr;
+    functionPtr = headFile;
+    mcb[SERVICES_FMS[FILEHEAD]] = functionPtr;
+    functionPtr = contentFile;
+    mcb[SERVICES_FMS[FILECONTENT]] = functionPtr;
+    functionPtr = solveCreateFile;
+    mcb[SERVICES_FMS[FILECREATE]] = functionPtr;
+    functionPtr = solveCreateDir;
+    mcb[SERVICES_FMS[DIRCREATE]] = functionPtr;
+    functionPtr = solveRemoveFile;
+    mcb[SERVICES_FMS[FILEREMOVE]] = functionPtr;
+    functionPtr = solveRemoveDir;
+    mcb[SERVICES_FMS[DIRREMOVE]] = functionPtr;
+    functionPtr = tailFile;
+    mcb[SERVICES_FMS[FILETAIL]] = functionPtr;
+    functionPtr = solveListDir;
+    mcb[SERVICES_FMS[DIRLIST]] = functionPtr;
+    functionPtr = solveTransferRemoteFile<File::copy,File::async>;
+    mcb[SERVICES_FMS[REMOTEFILECOPYASYNC]] = functionPtr;
+    functionPtr = solveTransferRemoteFile<File::move,File::async>;
+    mcb[SERVICES_FMS[REMOTEFILEMOVEASYNC]] = functionPtr;
+    functionPtr = solveTransferRemoteFile<File::copy,File::sync>;
+    mcb[SERVICES_FMS[REMOTEFILECOPY]] = functionPtr;
+    functionPtr = solveTransferRemoteFile<File::move,File::sync>;
+    mcb[SERVICES_FMS[REMOTEFILEMOVE]] = functionPtr;
+    functionPtr = solveGetListOfFileTransfers;
+    mcb[SERVICES_FMS[FILETRANSFERSLIST]] = functionPtr;
+    functionPtr = solveFileTransferStop;
+    mcb[SERVICES_FMS[FILETRANSFERSTOP]] = functionPtr;
+    mcb[std::string(SERVICES_FMS[HEARTBEATFMS])+"@"+mid] = boost::ref(heartbeat);
+  }
+
 }
 
 void

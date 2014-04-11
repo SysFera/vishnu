@@ -2,7 +2,7 @@
 #include "internalApiTMS.hpp"
 #include "tmsUtils.hpp"
 #include "AuthenticatorConfiguration.hpp"
-
+#include "ServerXMS.hpp"
 
 class Authenticator;
 
@@ -21,12 +21,10 @@ public:
    * @param machineId machine identifier
    * @param batchType batch scheduler used
    * @param batchVersion batch scheduler version
-   * @throw 
+   * @throw
    */
   void
-  init(int vishnuId, DbConfiguration dbConfig,
-       AuthenticatorConfiguration authenticatorConfig, const std::string& machineId,
-       const BatchType& batchType, const std::string& batchVersion);
+  init(const SedConfig& cfg);
 
   /**
    * @brief destructor
@@ -35,19 +33,28 @@ public:
 
   /**
    * @brief Launch generic sed monitor
-   * @throw 
+   * @throw
    */
   int
   run();
 
-   
+
 
 
 private:
+  void
+  checkSession();
+  void
+  checkJobs(int batchtype);
+  void
+  checkFile();
   int minterval;
   std::string mmachineId;
   BatchType mbatchType;
   std::string mbatchVersion;
   Database *mdatabaseVishnu;
-  Authenticator *mauthenticator;  
+  Authenticator *mauthenticator;
+  bool mhasUMS;
+  bool mhasTMS;
+  bool mhasFMS;
 };
