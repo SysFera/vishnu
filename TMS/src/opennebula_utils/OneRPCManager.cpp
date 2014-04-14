@@ -6,6 +6,7 @@
 
 #include "utilServer.hpp"
 #include "OneRPCManager.hpp"
+#include "Logger.hpp"
 
 #define MAX_MESSAGE_SIZE 51200
 #define XMLRPC_TRY try{
