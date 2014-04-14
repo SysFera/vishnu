@@ -248,7 +248,7 @@ JobServer::handleNativeBatchExec(int action,
       switch(action) {
         case SubmitBatchAction: {
           TMS_Data::ListJobs jobSteps;
-          handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), jobSteps, NULL);
+          handlerExitCode = batchServer->submit(vishnu::copyFileToUserHome(scriptPath), options->getSubmitOptions(), jobSteps, NULL);
           updateAndSaveJobSteps(jobSteps, jobInfo);
         }
           break;
@@ -288,7 +288,7 @@ JobServer::handleNativeBatchExec(int action,
     if (! WIFEXITED(exitCode)
         || WEXITSTATUS(exitCode) != 0
         || errorMsg != "SUCCESS") {
-      throw TMSVishnuException(exitCode, std::string(ipcMsgBuffer, nbRead));
+      throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, std::string(ipcMsgBuffer, nbRead));
     }
   }
 }
