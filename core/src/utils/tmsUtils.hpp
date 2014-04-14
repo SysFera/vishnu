@@ -313,6 +313,15 @@ findMachine(const std::string& sessionKey,
   getVar(const std::string& name,
          const bool & optional = true,
          const std::string defaultValue = "");
+
+
+  /**
+   * @brief copy a given file to the current user home
+   * @param path The file path
+   * @return The resulting file path
+   */
+  std::string
+  copyFileToUserHome(const std::string& path);
 } //END NAMESPACE
 
 #endif // TMSUTILS_HPP

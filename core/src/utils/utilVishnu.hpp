@@ -340,5 +340,6 @@ exitProcessOnError(int code);
  */
 void
 exitProcessOnChildError(pid_t child);
+
 } //END NAMESPACE
 #endif // _UTILVISHNU_H_
