@@ -248,7 +248,7 @@ JobServer::handleNativeBatchExec(int action,
       switch(action) {
         case SubmitBatchAction: {
           TMS_Data::ListJobs jobSteps;
-          handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), jobSteps, NULL);
+          handlerExitCode = batchServer->submit(vishnu::copyFileToUserHome(scriptPath), options->getSubmitOptions(), jobSteps, NULL);
           updateAndSaveJobSteps(jobSteps, jobInfo);
         }
           break;

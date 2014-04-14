@@ -2,22 +2,14 @@
 #include <stdexcept>
 #include <iostream>
 #include <cstring>
-
+#include <boost/scoped_ptr.hpp>
 #include <sys/types.h>
-
 #include "FileFactory.hpp"
-
 #include "DIET_client.h"
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
-#include <boost/scoped_ptr.hpp>
-
 #include "FMSMapper.hpp"
 #include "MapperRegistry.hpp"
-
-using namespace std;
-
-
 
 /* get Content  Vishnu callback function.
  client parameters. Returns an error message if something gone wrong. */
