@@ -13,6 +13,7 @@
 #include "Server.hpp"
 #include "zhelpers.hpp"
 #include "SeD.hpp"
+#include "Logger.hpp"
 
 /**
  * \brief Function to unregister a server (from the annuary and database)
@@ -107,12 +108,12 @@ keepRegistered(const std::string& sedType,
         response = tlsClient.recv();
         if (response == "OK\n") { // \n at the end because it's in response see sslhelpers.cpp, \n is added at end of message
           if (!connected) {
-            std::cerr << "[INFO] Registered in dispatcher\n";
+            LOG("[INFO] Registered in dispatcher", LogInfo);
           }
           connected = true;
         } else {
           connected = false;
-          std::cerr << "[WARN] Not registered in dispatcher\n";
+          LOG("[WARN] Not registered in dispatcher", LogInfo);
         }
       }
     } else {
@@ -122,12 +123,12 @@ keepRegistered(const std::string& sedType,
       response = lpc.recv();
       if (response == "OK") {
         if (!connected) {
-          std::cerr << "[INFO] Registered in dispatcher\n";
+          LOG("[INFO] Registered in dispatcher", LogInfo);
         }
         connected = true;
       } else {
         connected = false;
-        std::cerr << "[WARN] Not registered in dispatcher\n";
+        LOG("[WARN] Not registered in dispatcher", LogInfo);
       }
     }
     sleep(timeout);
@@ -140,6 +141,9 @@ initSeD(const std::string& sedType,
         const ExecConfiguration& config,
         const std::string& sedUri,
         boost::shared_ptr<SeD> server) {
+
+  // Init logging
+  std::clog.rdbuf(new Logger("vishnu", LOG_LOCAL0));
 
   const std::string IPC_URI = (boost::format("ipc:///tmp/vishnu-%1%.sock")%sedType).str();
 
@@ -154,7 +158,8 @@ initSeD(const std::string& sedType,
     std::vector<std::string> services = server.get()->getServices();
     registerSeD(sedUri, dispUri, sedType, config, services);
   } catch (VishnuException& e) {
-    std::cerr << boost::format("[WARNING] Failed registering the service (%1%) ***\n")%e.what();
+    LOG(boost::str(boost::format("[WARNING] Failed registering the service (%1%)")
+                   %e.what()), LogWarning);
   }
 
   bool useSsl = false;
@@ -165,7 +170,7 @@ initSeD(const std::string& sedType,
     pid_t pid = fork();
 
     if (pid < 0) {  // Fork failed
-      std::cerr << "[ERROR]Problem initializing the service\n";
+      LOG("[ERROR]Problem initializing the service", LogErr);
       exit(-1);
 
     } else if (pid > 0) {  // Parent process
@@ -187,10 +192,11 @@ initSeD(const std::string& sedType,
       try {
         tlsHandler.run();
       } catch(VishnuException& ex) {
-        std::cerr << boost::format("[ERROR] *** %1% ***\n")%ex.what();
+        LOG(boost::str(boost::format("[ERROR] %1%\n")%ex.what()), LogErr);
         retCode = -1;
       } catch(...) {
-        std::cerr << boost::format("[ERROR] *** %1% ***\n")%tlsHandler.getErrorMsg();
+        LOG(boost::str(boost::format("[ERROR] %1%\n")
+                       % tlsHandler.getErrorMsg()), LogErr);
         retCode = -1;
       }
       vishnu::exitProcessOnError(retCode);

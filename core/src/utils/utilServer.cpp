@@ -22,10 +22,6 @@
 #include "vishnu_version.hpp"
 #include "TMSVishnuException.hpp"
 
-using namespace std;
-using namespace boost::posix_time;
-
-
 bool
 vishnu::isNew(std::string urlsup, std::string mid, std::string type) {
 
@@ -113,7 +109,7 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
   memset (buf, 0, 500);
 
   //the current time
-  ptime now = microsec_clock::local_time();
+  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
   boost::gregorian::date::ymd_type ymd = now.date().year_month_day();
 
   std::ostringstream osY, osM, osD;
@@ -323,7 +319,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
   int tid = databaseVishnu->startTransaction();
   try {
     ret = databaseVishnu->generateId(table, fields, val, tid, primary);
-  } catch (const exception& e) {
+  } catch (const std::exception& e) {
     databaseVishnu->cancelTransaction(tid);
     throw;
   }
@@ -398,8 +394,9 @@ vishnu::reserveObjectId(int key, std::string &objectId, IdType type) {
 
   try {
     factory.getDatabaseInstance()->process(sqlReserve);
-  } catch (exception const & e) {
-    throw SystemException(ERRCODE_SYSTEM,string("Cannot reserve Object id : ")+e.what());
+  } catch (std::exception const & e) {
+    throw SystemException(ERRCODE_SYSTEM,
+                          boost::str(boost::format("Cannot reserve Object id: ")% e.what()));
   }
 
 }
@@ -705,5 +702,6 @@ vishnu::validateAuthKey(const std::string& authKey,
   info.user_aclogin = *rowResultIter++;
   info.user_achome = *rowResultIter++;
 }
+
 
 

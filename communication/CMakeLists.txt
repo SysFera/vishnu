@@ -31,7 +31,7 @@ if(NOT COMPILE_ONLY_LIBBATCH)
     utils.cpp
     sslhelpers.cpp
     ${utils_server_SRCS}
-  )
+    ${logger_SRCS})
 
   target_link_libraries (zmq_helper
     ${ZMQ_LIBRARIES}
@@ -39,8 +39,7 @@ if(NOT COMPILE_ONLY_LIBBATCH)
     vishnu-core
     ${LIBCRYPTO_LIB}
     ${OPENSSL_LIBRARIES}
-    ${LIBJANSSON_LIB}
-  )
+    ${LIBJANSSON_LIB})
   set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
 endif(NOT COMPILE_ONLY_LIBBATCH)
@@ -49,17 +48,19 @@ endif(NOT COMPILE_ONLY_LIBBATCH)
 #add_subdirectory(ZMQHelper)
 # --------------------------------------------------------------------------
 
+
 if(COMPILE_DISPATCHER)
-  add_executable(dispatcher dispatcher/main.cpp
-    dispatcher/Dispatcher.cpp)
+  add_executable(dispatcher
+    dispatcher/main.cpp
+    dispatcher/Dispatcher.cpp
+    ${logger_SRCS})
   
   target_link_libraries(dispatcher
     ${ZMQ_LIBRARIES} 
     ${Boost_LIBRARIES}
     zmq_helper
     vishnu-core
-    ${OPENSSL_LIBRARIES}
-    )
+    ${OPENSSL_LIBRARIES})
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
 endif(COMPILE_DISPATCHER)
 

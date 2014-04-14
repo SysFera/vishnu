@@ -63,36 +63,36 @@ vishnu::convertToBatchType(const std::string& batchName) {
 std::string vishnu::convertBatchTypeToString(BatchType batchType) {
   std::string value;
   switch(batchType) {
-  case TORQUE:
-    value = "TORQUE";
-    break;
-  case LOADLEVELER:
-    value = "LOADLEVELER";
-    break;
-  case SLURM:
-    value = "SLURM";
-    break;
-  case LSF:
-    value = "LSF";
-    break;
-  case SGE:
-    value = "SGE";
-    break;
-  case PBSPRO:
-    value = "PBS";
-    break;
-  case OPENNEBULA:
-    value = "OPENNEBULA";
-    break;
-  case DELTACLOUD:
-    value = "DELTACLOUD";
-    break;
-  case POSIX:
-    value = "POSIX";
-    break;
-  default:
-    value = "UNKNOWN_BATCH_TYPE";
-    break;
+    case TORQUE:
+      value = "TORQUE";
+      break;
+    case LOADLEVELER:
+      value = "LOADLEVELER";
+      break;
+    case SLURM:
+      value = "SLURM";
+      break;
+    case LSF:
+      value = "LSF";
+      break;
+    case SGE:
+      value = "SGE";
+      break;
+    case PBSPRO:
+      value = "PBS";
+      break;
+    case OPENNEBULA:
+      value = "OPENNEBULA";
+      break;
+    case DELTACLOUD:
+      value = "DELTACLOUD";
+      break;
+    case POSIX:
+      value = "POSIX";
+      break;
+    default:
+      value = "UNKNOWN_BATCH_TYPE";
+      break;
   }
   return value;
 }
@@ -107,34 +107,34 @@ vishnu::convertJobStateToString(const int& state) {
 
   std::string stateStr;
   switch(state) {
-  case vishnu::STATE_SUBMITTED:
-    stateStr = "SUBMITTED";
-    break;
-  case vishnu::STATE_QUEUED:
-    stateStr = "QUEUED";
-    break;
-  case vishnu::STATE_WAITING:
-    stateStr = "WAITING";
-    break;
-  case vishnu::STATE_RUNNING:
-    stateStr = "RUNNING";
-    break;
-  case vishnu::STATE_COMPLETED:
-    stateStr = "COMPLETED";
-    break;
-  case vishnu::STATE_CANCELLED:
-    stateStr = "CANCELLED";
-    break;
-  case vishnu::STATE_DOWNLOADED:
-    stateStr = "DOWNLOADED";
-    break;
-  case vishnu::STATE_FAILED:
-    stateStr = "FAILED";
-    break;
-  case vishnu::STATE_UNDEFINED:
-  default:
-    stateStr = "UNDEFINED";
-    break;
+    case vishnu::STATE_SUBMITTED:
+      stateStr = "SUBMITTED";
+      break;
+    case vishnu::STATE_QUEUED:
+      stateStr = "QUEUED";
+      break;
+    case vishnu::STATE_WAITING:
+      stateStr = "WAITING";
+      break;
+    case vishnu::STATE_RUNNING:
+      stateStr = "RUNNING";
+      break;
+    case vishnu::STATE_COMPLETED:
+      stateStr = "COMPLETED";
+      break;
+    case vishnu::STATE_CANCELLED:
+      stateStr = "CANCELLED";
+      break;
+    case vishnu::STATE_DOWNLOADED:
+      stateStr = "DOWNLOADED";
+      break;
+    case vishnu::STATE_FAILED:
+      stateStr = "FAILED";
+      break;
+    case vishnu::STATE_UNDEFINED:
+    default:
+      stateStr = "UNDEFINED";
+      break;
   }
   return stateStr;
 }
@@ -527,4 +527,27 @@ vishnu::getVar(const std::string& name,
   }
 
   return value;
+}
+
+
+/**
+ * @brief copy a given file to the current user home
+ * @param path The file path
+ * @return The resulting file path
+ */
+std::string
+vishnu::copyFileToUserHome(const std::string& path)
+{
+  std::string result;
+  try {
+    bfs::path from(path);
+    bfs::path to(std::string(std::getenv("HOME")));
+    to /= bfs::basename(from);
+    bfs::copy_file(from, to, bfs::copy_option::overwrite_if_exists);
+    result = to.native();
+  } catch (const boost::filesystem::filesystem_error ex) {
+    throw TMSVishnuException(ERRCODE_SYSTEM, ex.what());
+  }
+
+  return result;
 }

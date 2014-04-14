@@ -14,8 +14,9 @@
 #include <stdlib.h>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem.hpp>
-#include <ecore.hpp> // Ecore metamodel
-#include <ecorecpp.hpp> // EMF4CPP utils
+#include <boost/format.hpp>
+#include <ecore.hpp>
+#include <ecorecpp.hpp>
 #include "TMS_Data.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
@@ -23,8 +24,7 @@
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "SSHJobExec.hpp"
-
-#include <boost/format.hpp>
+#include "Logger.hpp"
 
 #define CLEANUP_SUBMITTING_DATA(debugLevel) if (!debugLevel) { \
   vishnu::deleteFile(submitOptionsSerializedPath.c_str()); \
@@ -168,7 +168,7 @@ SSHJobExec::sshexec(const std::string& actionName,
                                   "\nError code: %2%") % cmd % ret);
     }
     CLEANUP_SUBMITTING_DATA(mdebugLevel);
-    LOG(merrorInfo, mdebugLevel);
+    LOG(merrorInfo, LogErr);
     throw SystemException(ERRCODE_SSH, merrorInfo);
   }
 
@@ -178,7 +178,7 @@ SSHJobExec::sshexec(const std::string& actionName,
     TMS_Data::ListJobs_ptr jobStepsPtr;
     if (! vishnu::parseEmfObject(vishnu::get_file_content(jobUpdateSerializedPath, false),
                                  jobStepsPtr)) {
-      LOG("sshexec: cannot parse result", mdebugLevel);
+      LOG("sshexec: cannot parse result", LogErr);
       merrorInfo.clear();
     }
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
@@ -207,7 +207,7 @@ SSHJobExec::sshexec(const std::string& actionName,
   }
 
   if (! merrorInfo.empty()) {
-    LOG(merrorInfo, mdebugLevel);
+    LOG(merrorInfo, LogErr);
     merrorInfo.clear();
   }
   CLEANUP_SUBMITTING_DATA(mdebugLevel);
@@ -230,7 +230,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
   const std::string logfile = workDir+"/"+mhostname+".vishnu.log";
 
   int attempt = 1;
-  LOG("[TMS][INFO] Checking ssh connection...", mdebugLevel);
+  LOG("[INFO] Checking ssh connection...", LogInfo);
   while(attempt <= SSH_CONNECT_MAX_RETRY
         && ! isReadyConnection()) {
     sleep(SSH_CONNECT_RETRY_INTERVAL);
@@ -245,14 +245,14 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
   }
 
   // Mount the NFS repository
-  LOG("[INFO] Mounting the nfs directory...", mdebugLevel);
+  LOG("[INFO] Mounting the nfs directory...", LogInfo);
   if (! nfsServer.empty() && ! nfsMountPoint.empty()) {
     mountNfsDir(nfsServer, nfsMountPoint);
   }
 
   // If succeed execute the script to the virtual machine
   // This assumes that the script is located on a shared DFS
-  LOG("[INFO] Executing the script...", mdebugLevel);
+  LOG("[INFO] Executing the script...", LogInfo);
   execCmd("'mkdir -p "+workDir+" & >>"+logfile+"'"); // First create the output directory if it not exist
   int pid = -1;
   if ( execCmd(scriptPath + " & >>"+logfile, true, workDir, &pid) ) {
@@ -260,7 +260,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
                              "execRemoteScript:: failed when executing the script "
                              + scriptPath + " in the virtual machine "+mhostname);
   }
-  LOG("[INFO] Submission completed. PID:"+pid, mdebugLevel);
+  LOG("[INFO] Submission completed. PID:"+pid, LogInfo);
   return pid;
 }
 

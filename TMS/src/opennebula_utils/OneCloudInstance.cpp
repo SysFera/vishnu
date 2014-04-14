@@ -14,7 +14,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
-
+#include "Logger.hpp"
 
 OneCloudInstance::OneCloudInstance(const std::string& rpcUrl, const std::string &authChain)
   : mrpcUrl(rpcUrl),

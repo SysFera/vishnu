@@ -301,44 +301,5 @@ statusToString(const int& status);
 void
 validatePath(const std::string& path);
 
-
-/**
- * @brief Get port number from a given uri
- * @param uri : the uri address
- * @return the port number
- */
-int
-getPortFromUri(const std::string& uri);
-
-/**
- * @brief getHostFromUrl
- * @param uri
- * @return
- */
-std::string
-getHostFromUri(const std::string& uri);
-
-/**
- * \brief Function to validate an URI
- * \throws a VishnuException if contains the '*'
- * \param uri the uri to check, throw exception on error
- */
-void
-validateUri(const std::string & uri);
-
-
-/**
- * @brief Exit a process if a given is different to zero
- * @param code The code
- */
-void
-exitProcessOnError(int code);
-
-/**
- * @brief Exit a process if its child failed
- * @param child The pid of the child process
- */
-void
-exitProcessOnChildError(pid_t child);
 } //END NAMESPACE
 #endif // _UTILVISHNU_H_

@@ -115,11 +115,11 @@ main(int argc, char* argv[]) {
 
       //Submits the job
       TMS_Data::ListJobs jobSteps;
-      bfs::path from(jobScriptPath);
-      bfs::path to(std::string(std::getenv("HOME")));
-      to /= bfs::basename(from);
-      bfs::copy_file(from, to, bfs::copy_option::overwrite_if_exists);
-      if (batchServer->submit(to.c_str(), jsonOptions.getSubmitOptions(), jobSteps) != 0) {
+//      bfs::path from(jobScriptPath);
+//      bfs::path to(std::string(std::getenv("HOME")));
+//      to /= bfs::basename(from);
+//      bfs::copy_file(from, to, bfs::copy_option::overwrite_if_exists);
+      if (batchServer->submit(vishnu::copyFileToUserHome(jobScriptPath), jsonOptions.getSubmitOptions(), jobSteps) != 0) {
         throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: the submission failed");
       }
 
