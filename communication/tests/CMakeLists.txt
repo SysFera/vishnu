@@ -23,7 +23,7 @@ add_library(test_zmq_helper
   ../SeD.cpp
   ../utils.cpp
   ../sslhelpers.cpp
-  )
+  ${logger_SRCS})
 
 add_library(fake_zmq
   zmq.hpp
