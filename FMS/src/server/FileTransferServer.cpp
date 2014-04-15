@@ -1,4 +1,3 @@
-
 #include "FileFactory.hpp"
 #include "FileTransferServer.hpp"
 #include <vector>
@@ -21,6 +20,7 @@
 #include "OptionValueServer.hpp"
 #include "fmsUtils.hpp"
 #include "utilServer.hpp"
+#include "Logger.hpp"
 
 namespace ba = boost::algorithm;
 
