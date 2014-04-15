@@ -181,7 +181,7 @@ ServerXMS::~ServerXMS() {
 void
 ServerXMS::initMap(const std::string& mid) {
   int (*functionPtr)(diet_profile_t*);
-
+  mcb["heartbeatxmssed@"+mmachineId] = boost::ref(heartbeat);
   if (mhasUMS) {
       functionPtr = solveSessionConnect;
       mcb[SERVICES_UMS[SESSIONCONNECT]] = functionPtr;
@@ -251,7 +251,6 @@ ServerXMS::initMap(const std::string& mid) {
       mcb[SERVICES_UMS[INT_DEFINEMACHINEIDENTIFIER]] = solveSetMID;
       mcb[SERVICES_UMS[INT_DEFINEAUTHIDENTIFIER]] = solveSetAID;
       mcb[SERVICES_UMS[INT_DEFINEWORKIDENTIFIER]] = solveSetWID;
-      mcb[std::string(SERVICES_UMS[HEARTBEATUMS])+"@"+mid] = boost::ref(heartbeat);
       mcb[SERVICES_UMS[EXPORT]] = solveExport;
   }
   // TMS services
@@ -270,7 +269,6 @@ ServerXMS::initMap(const std::string& mid) {
       mcb[std::string(SERVICES_TMS[JOBOUTPUTGETRESULT])+"@"+mid] = functionPtr;
       functionPtr = solveJobOutPutGetCompletedJobs;
       mcb[std::string(SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS])+"@"+mid] = functionPtr;
-      mcb[std::string(SERVICES_TMS[HEARTBEATTMS])+"@"+mid] = boost::ref(heartbeat);
       // Remove ?
       functionPtr = solveGetListOfJobs;
       mcb[SERVICES_TMS[GETLISTOFJOBS_ALL]] = functionPtr;
@@ -321,7 +319,6 @@ ServerXMS::initMap(const std::string& mid) {
     mcb[SERVICES_FMS[FILETRANSFERSLIST]] = functionPtr;
     functionPtr = solveFileTransferStop;
     mcb[SERVICES_FMS[FILETRANSFERSTOP]] = functionPtr;
-    mcb[std::string(SERVICES_FMS[HEARTBEATFMS])+"@"+mid] = boost::ref(heartbeat);
   }
 
 }

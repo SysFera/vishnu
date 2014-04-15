@@ -75,12 +75,10 @@ MonitorXMS::checkJobs(int batchtype){
   boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchtype, mbatchVersion));
 
   try {
-    std::cout << "request : " << sqlRequest << " results \n";
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
     std::vector<std::string> buffer;
     std::vector<std::string>::iterator item;
-    std::cout << "found : " << result->getNbTuples() << " results \n";
     for (size_t i = 0; i < result->getNbTuples(); ++i) {
       buffer.clear();
       buffer = result->get(i);
@@ -100,9 +98,7 @@ MonitorXMS::checkJobs(int batchtype){
           state = batchServer->getJobState( JsonObject::serialize(job) );
           break;
         default:
-          std::cout << "LF states : " << " results \n";
           state = batchServer->getJobState(job.getBatchJobId());
-          std::cout << "found state : " << state << " results \n";
           break;
         }
         std::string query = boost::str(boost::format("UPDATE job SET status=%1%"
@@ -205,14 +201,11 @@ MonitorXMS::checkFile(){
 
 int
 MonitorXMS::run() {
-  std::cout << "running monitor \n";
   if (mhasUMS)
     checkSession();
   if (mhasTMS) {
-    std::cout << "running monitor TMS" << mbatchType << "\n";
     checkJobs(mbatchType);
     if (mbatchType != POSIX){
-      std::cout << "running monitor TMS" << POSIX << "\n";
       checkJobs(POSIX);
     }
   }

@@ -49,20 +49,17 @@ fill_sMap() {
   for (nb = 0; nb < NB_SRV_UMS; nb++) {
     (*sMap)[SERVICES_UMS[nb]] = "UMS";
   }
-  (*sMap)["heartbeatumssed"] = "UMS";
 
 
   /* TMS services */
   for (nb = 0; nb < NB_SRV_TMS; nb++) {
     (*sMap)[SERVICES_TMS[nb]] = "TMS";
   }
-  (*sMap)["heartbeattmssed"] = "TMS";
 
   /* FMS services */
   for (nb = 0; nb < NB_SRV_FMS; nb++) {
     (*sMap)[SERVICES_FMS[nb]] = "FMS";
   }
-  (*sMap)["heartbeatfmssed"] = "FMS";
 }
 
 
@@ -165,54 +162,40 @@ diet_call(diet_profile_t* prof) {
   std::vector<std::string> tokens;
   boost::algorithm::split(tokens, service, boost::algorithm::is_any_of("@"));
 
-  if (!uriv.empty()) {
-    uri = boost::lexical_cast<std::string>(uriv[0]);
-  }
-  try {
-    std::string mid = tokens.at(1);
-    tokens.clear();
-    bool validMid(false);
-
-    BOOST_FOREACH(const std::string& v, uriv) {
-      boost::algorithm::split(tokens, v, boost::algorithm::is_space());
-      if (tokens.size() > 1 && mid == tokens[1]) {
-        uri = tokens[0];
-        validMid = true;
-        break;
-      }
-    }
-
-    if (!validMid) {
-      uri.clear();
-    }
-  } catch (const std::out_of_range& err) {
-    if (param == vishnu::SED_URIADDR){
-      BOOST_FOREACH(const std::string& v, uriv) {
-        boost::algorithm::split(tokens, v, boost::algorithm::is_space());
-        if (tokens.size() > 1) {
-          uri = tokens[0];
-          break;
-        }
-      }
-    }
-  }
+  std::vector<boost::shared_ptr<Server> > allServers;
+  extractMachineServersFromLine(uriv, allServers, "xmssed");
 
   config.getConfigValues(vishnu::DISP_URIADDR, dispv);
   if (!dispv.empty()) {
     disp = dispv[0];
   }
 
-  if (uri.empty() && disp.empty()) {
+  if (allServers.size() == 0 && disp.empty()) {
     std::cerr << boost::format("No corresponding %1% server found") % service;
     return 1;
   }
 
-  // If no direct data but dispatcher found
-  if (uri == "") {
-    uri = disp;
+  std::vector<boost::shared_ptr<Server> >::iterator it;
+  for (it = allServers.begin() ; it != allServers.end() ; ++it){
+    try{
+      int tmp = abstract_call_gen(prof, it->get()->getURI());
+      if (tmp == 0)
+        return 0;
+    } catch (...){
+    }
+  }
+  int tmp = 1;
+  try{
+    if ( !disp.empty() )
+      tmp = abstract_call_gen(prof, disp);
+  } catch (...){
   }
 
-  return abstract_call_gen(prof, uri);
+  if (tmp != 0)
+    std::cerr << boost::format("No corresponding %1% server found") % service;
+
+
+  return tmp;//abstract_call_gen(prof, uri);
 }
 
 int
@@ -395,11 +378,15 @@ extractMachineServersFromLine(const std::vector<std::string>& uriv, std::vector<
     boost::algorithm::split(tokens, v, boost::algorithm::is_any_of(";")); // In client config files, URI are separated by ;
     BOOST_FOREACH(const std::string& w, tokens) {
       boost::algorithm::split(tokens2, w, boost::algorithm::is_space());
-      uri = tokens2[0];
-      if ( tokens2.size()>1 ){
-        tmp.push_back("heartbeattmssed@"+tokens2[1]);
+      int pos = 0;
+      if (tokens2[0].empty() && tokens2.size()>1)
+        pos = 1;
+      uri = tokens2[pos];
+      if ( tokens2.size()>pos+1 && !tokens2[pos+1].empty() ){
+        tmp.push_back("heartbeatxmssed@"+tokens2[pos+1]);
       }
       allServers.push_back(boost::make_shared<Server>(module, tmp, uri));
+      tokens2.clear();
     }
     tokens.clear();
   }
@@ -409,21 +396,16 @@ extractMachineServersFromLine(const std::vector<std::string>& uriv, std::vector<
 void
 getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers){
   vishnu::param_type_t param;
+  vishnu::param_type_t tms;
   std::vector<std::string> uriv;
+  bool hastms;
   param = vishnu::SED_URIADDR;
+  tms = vishnu::HAS_TMS;
   config.getConfigValues(param, uriv);
+  config.getConfigValue<bool>(tms, hastms);
   if (uriv.size()>0)
-    extractServersFromLine(uriv, allServers, "umssed");
-  uriv.clear();
-  param = vishnu::SED_URIADDR;
-  config.getConfigValues(param, uriv);
-  if (uriv.size()>0)
-    extractServersFromLine(uriv, allServers, "fmssed");
-  uriv.clear();
-  param = vishnu::SED_URIADDR;
-  config.getConfigValues(param, uriv);
-  if (uriv.size()>0)
-    extractMachineServersFromLine(uriv, allServers, "tmssed");
+      extractMachineServersFromLine(uriv, allServers, "xmssed");
+
   uriv.clear();
 }
 

@@ -50,7 +50,6 @@ typedef enum {
   INT_DEFINEMACHINEIDENTIFIER,
   INT_DEFINEAUTHIDENTIFIER,
   INT_DEFINEWORKIDENTIFIER,
-  HEARTBEATUMS,
   EXPORT,
   NB_SRV_UMS  // MUST always be the last
 } ums_service_t;
@@ -93,7 +92,6 @@ static const char* SERVICES_UMS[NB_SRV_UMS] = {
   "int_defineMachineIdentifier", // 36
   "int_defineAuthIdentifier", // 37
   "int_defineWorkIdentifier", // 38
-  "heartbeatumssed", //39 -2
   "exportCommands" // 40
 };
 
@@ -135,7 +133,6 @@ static const bool MACHINE_SPECIC_SERVICES_UMS[NB_SRV_UMS] = {
   false,  // 36
   false,  // 37
   false,   // 38
-  true, // 39 -2
   false // 40
 };
 
