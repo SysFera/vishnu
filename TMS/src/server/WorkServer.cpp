@@ -47,7 +47,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
   mwork->setNbCPU(mworkop->getNbCPU());
 
   std::string timestamp = "CURRENT_TIMESTAMP";
-  std::string owner = muserSessionInfo.num_user;
+  std::string owner = vishnu::convertToString(muserSessionInfo.num_user);
   std::string nummachine =   muserSessionInfo.num_machine;
 
   //if the user is an admin
