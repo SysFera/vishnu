@@ -45,72 +45,72 @@ public:
    * \return the last execution return value
    */
   const int&
-  getLastExecStatus() const;
+  getLastExecStatus() const {return mlastExecStatus;}
   /**
    * \brief Get the session server object
    * \return the session server object
    */
   const SessionServer&
-  getSessionServer() const;
+  getSessionServer() const {return msessionServer;}
   /**
    * \brief Get the source user
    * \return the source user
    */
-    const std::string&
-    getSrcUser() const;
+  const std::string&
+  getSrcUser() const {return msrcUser;}
   /**
    * \brief Get the source machine name
    * \return the source machine name
    */
   const std::string&
-  getSrcMachineName() const;
+  getSrcMachineName() const  {return msrcMachineName;}
   /**
    * \brief Get the source file path
    * \return the source file path
    */
-    const std::string&
-    getSrcPath() const;
+  const std::string&
+  getSrcPath() const {return  msrcPath;}
   /**
    * \brief Get the source user private key path
    * \return the source user private key path
    */
   const std::string&
-  getSrcUserKey() const;
+  getSrcUserKey() const {return msrcUserKey;}
   /**
    * \brief Get the destination user
    * \return the destination user
    */
   const std::string&
-  getDestUser() const;
+  getDestUser() const {return mdestUser;}
   /**
    * \brief Get the destination machine name
    * \return the destination machine name
    */
   const std::string&
-  getDestMachineName() const;
+  getDestMachineName() const {return  mdestMachineName;}
   /**
    * \brief Get the destination file path
    * \return the destination file path
    */
   const std::string&
-  getDestPath() const;
+  getDestPath() const {return mdestPath;}
   /**
    * \brief Get the transfer identifier
    * \return the file transfer identifier
    */
   const std::string&
-  getTransferId() const;
+  getTransferId() const {return mtransferId;}
   /**
    * \brief Get the process identifier
    * \return the process identifier
    */
   const int&
-  getProcessId() const;
+  getProcessId() const {return mprocessId;}
   /**
    * \brief Update the process identifier
    */
   void
-  setProcessId(const int& processId) const;
+  setProcessId(const int& processId) const {mprocessId=processId;}
   /**
    * \brief Update the process identifier in database
    */
@@ -120,7 +120,7 @@ public:
    * \brief Update the last execution return value
    */
   void
-  setLastExecStatus(const int& status) const;
+  setLastExecStatus(const int& status) const {mlastExecStatus=status;}
   /**
    * \brief To perform a the transfer command
    * \param cmd the transfer command to perform
@@ -204,6 +204,7 @@ public:
                      const std::string& srcFilePath,
                      const std::string& destFilePath,
                      const int& vishnuId);
+
   /**
    * \brief To add a new copy thread
    * \param srcUser the source user
@@ -281,94 +282,83 @@ public:
    */
   int
   stopThread(const FMS_Data::StopTransferOptions& options);
+
+  /**
+   * \brief To store file transfer information into database
+   */
+  void
+  updateDatabaseRecord();
+
   /**
    * \brief Get The file transfer information
    * \return The file transfer information
    */
   const FMS_Data::FileTransfer&
-  getFileTransfer() const;
+  getFileTransfer() const {return mfileTransfer;}
 
   /**
-   * \brief Update The file transfer information
-   * \param fileTransfer The new file transfer information
+   * \brief Get the ssh command
+   * \return the ssh command
    */
-  void
-  setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const;
+  static const std::string&
+  getSSHCommand(void) {return msshCommand;}
+
   /**
    * \brief Get A database instance to store file transfer information
    * \return the database instance
    */
   static Database*
   getDatabaseInstance();
-  /**
-   * \brief Update the ssh port
-   * \param sshPort The new ssh port
-   */
-  static void
-  setSSHPort(const unsigned int sshPort);
-  /**
-   * \brief Update the ssh command
-   * \param sshCommand The new ssh command
-   */
-  static void
-  setSSHCommand(const std::string& sshCommand);
+
   /**
    * \brief Get the ssh port
    * \return the ssh port
    */
   static const unsigned int
-  getSSHPort();
-  /**
-   * \brief Get the ssh command
-   * \return the ssh command
-   */
-  static const std::string&
-  getSSHCommand( );
-  /**
-   * \brief To remove some characters from string
-   * \param toFilter the string to filter
-   * \return The cleaned string
-   */
-  static std::string
-  filterString(const std::string& toFilter);
-  /**
-   * \brief To check if the transfer identifier exists
-   * \param  transferId the transfer identifier
-   */
-  static void
-  checkTransferId(std::string transferId);
-  /**
-   * \brief To add options to sql request
-   * \param name the option name
-   * \param value the option value
-   * \param request the sql request to modify
-   */
-  static void
-  addOptionRequest(const std::string& name, const std::string& value,
-                   std::string& request);
-  /**
-   * \brief To check if the user identifier exists
-   * \param userId the user identifier
-   */
-  static void
-  checkUserId(std::string userId);
-  /**
-   * \brief Get an error execution of file transfer from database
-   * \param transferid the transfer identifier
-   * \return the error message
-   */
-  static std::string
-  getErrorFromDatabase(const std::string& transferid);
+  getSSHPort() {return msshPort;}
+
 
   /**
-   * \brief A helper function to clean output message from verbosity
-   * \param outputMsg the output message
-   * \return the cleaned  output message
+   * \brief Update The file transfer information
+   * \param fileTransfer The new file transfer information
    */
-  static std::string
-  cleanOutputMsg(const std::string& outputMsg);
+  void
+  setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const {mfileTransfer=fileTransfer;}
 
 private:
+  /**
+   * \brief The vishnu instance identifier
+   */
+  int mvishnuId;
+  /**
+   * \brief The file transfer type  (copy or move)
+   */
+  File::TransferType mtransferType;
+  /**
+   * \brief The file transfer execution thread
+   */
+  boost::thread mthread;
+  /**
+   * \brief The session server object
+   */
+  SessionServer msessionServer;
+  /**
+   * \brief A mutex to synchronise several transfer threads
+   */
+  boost::mutex mmutex;
+  /**
+   * \brief The file transfer information
+   */
+  mutable FMS_Data::FileTransfer mfileTransfer;
+  /**
+   * \brief The ssh port
+   */
+  static unsigned int msshPort;
+  /**
+   * \brief The ssh command
+   */
+  static std::string msshCommand;
+
   /**
    * \brief To wait until the end of the file transfer
    */
@@ -429,13 +419,6 @@ private:
   processOptions(const FMS_Data::StopTransferOptions& options,
                  std::string& sqlRequest);
   /**
-   * \brief To store file transfer information into database
-   * \param processId the transfer process identifier
-   * \param errorMsg the eventual file transfer execution error message
-   */
-  void
-  logIntoDatabase(int processId=-1, const std::string& errorMsg="");
-  /**
    * \brief To Update file transfer data
    */
   void
@@ -450,38 +433,66 @@ private:
   updateStatus(const FMS_Data::Status& status,
                const std::string& transferId,
                const std::string& errorMsg);
+
   /**
-   * \brief The vishnu instance identifier
+   * \brief A helper function to clean output message from verbosity
+   * \param outputMsg the output message
+   * \return the cleaned  output message
    */
-  int mvishnuId;
+  static std::string
+  cleanOutputMsg(const std::string& outputMsg);
+
+
   /**
-   * \brief The file transfer type  (copy or move)
+   * \brief Get an error execution of file transfer from database
+   * \param transferid the transfer identifier
+   * \return the error message
    */
-  File::TransferType mtransferType;
+  static std::string
+  getErrorFromDatabase(const std::string& transferid);
+
+
   /**
-   * \brief The file transfer execution thread
+   * \brief To check if the user identifier exists
+   * \param userId the user identifier
    */
-  boost::thread mthread;
+  static void
+  checkUserId(std::string userId);
+
+
   /**
-   * \brief The session server object
+   * \brief To add options to sql request
+   * \param name the option name
+   * \param value the option value
+   * \param request the sql request to modify
    */
-  SessionServer msessionServer;
+  static void
+  addOptionRequest(const std::string& name,
+                   const std::string& value,
+                   std::string& request);
+
+
   /**
-   * \brief A mutex to synchronise several transfer threads
+   * \brief To check if the transfer identifier exists
+   * \param  transferId the transfer identifier
    */
-  boost::mutex mmutex;
+  static void
+  checkTransferId(std::string transferId);
+
   /**
-   * \brief The file transfer information
+   * \brief Update the ssh port
+   * \param sshPort The new ssh port
    */
-  mutable FMS_Data::FileTransfer mfileTransfer;
+  static void
+  setSSHPort(const unsigned int sshPort) {msshPort=sshPort;}
+
   /**
-   * \brief The ssh port
+   * \brief Update the ssh command
+   * \param sshCommand The new ssh command
    */
-  static unsigned int msshPort;
-  /**
-   * \brief The ssh command
-   */
-  static std::string msshCommand;
+  static void
+  setSSHCommand(const std::string& sshCommand) {msshCommand=sshCommand;}
+
 };
 
 #endif

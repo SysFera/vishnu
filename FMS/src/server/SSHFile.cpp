@@ -419,7 +419,7 @@ SSHFile::ls(const FMS_Data::LsDirOptions& options) const {
 
   lsResult = ssh.exec(lsDefaultCmd+getPath());
   if (lsResult.second.find("illegal option") != std::string::npos) {
-   lsResult = ssh.exec(lsBsdCmd+getPath());
+    lsResult = ssh.exec(lsBsdCmd+getPath());
   }
 
   if (lsResult.second.length() != 0) {
@@ -484,8 +484,34 @@ SSHFile::mv(const string& dest, const FMS_Data::CpFileOptions& options) {
 /* Transfer the file through scp or rsync. */
 int
 SSHFile::cp(const string& dest, const FMS_Data::CpFileOptions& options ) {
-  boost::scoped_ptr<FileTransferCommand> tr (FileTransferCommand::getCopyCommand(getSession(),options) );
-  string trCmd= tr->getCommand();
+
+  boost::scoped_ptr<FileTransferCommand> transferManager(
+        FileTransferCommand::getTransferManager(options, false));
+
+//  switch (options.getTrCommand()) {
+//  case vishnu::RSYNC_TRANSFER:
+//    transferManager.reset(new FileTransferCommand("rsync",
+//                                                  "/usr/bin/rsync",
+//                                                  options.isIsRecursive(),
+//                                                  false,
+//                                                  "",
+//                                                  timeout));
+//    break;
+//  default:
+//    transferManager.reset(new FileTransferCommand("scp",
+//                                                  "/usr/bin/scp",
+//                                                  options.isIsRecursive(),
+//                                                  false,
+//                                                  "",
+//                                                  timeout));
+//    break;
+//  }
+
+  std::string remoteTranferCommand = boost::str(
+                                       boost::format("%1% %2% %3")
+                                       % transferManager->getCommand()
+                                       % getPath()
+                                       % dest);
 
   if (!exists()) { //if the file does not exist
     throw FMSVishnuException(ERRCODE_INVALID_PATH, getErrorMsg());
@@ -499,10 +525,10 @@ SSHFile::cp(const string& dest, const FMS_Data::CpFileOptions& options ) {
               sshPublicKey, sshPrivateKey);
 
   pair<string,string> trResult;
-  trResult = ssh.exec(trCmd + " " + getPath() + " " + dest );
+  trResult = ssh.exec(remoteTranferCommand);
 
   if (trResult.second.find("Warning") != std::string::npos) {
-    trResult = ssh.exec(trCmd + " " + getPath() + " " + dest);
+    trResult = ssh.exec(remoteTranferCommand);
   }
 
   if (trResult.second.length() != 0) {

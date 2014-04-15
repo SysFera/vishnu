@@ -13,6 +13,7 @@
 #include "FileTypes.hpp"
 #include "SessionServer.hpp"
 #include "StringToDirEntry.hh"
+#include "FMSConstants.hpp"
 
 /**
  * \brief Main File class. Encapsulates all the files attributes.
@@ -30,8 +31,7 @@ public:
    * \param sessionServer  the session object server
    * \param path the path of the file
    */
-  File(const SessionServer& sessionServer,
-       const std::string& path);
+  File(const SessionServer& sessionServer, const std::string& path);
 
   /**
    * \brief Another constructor by reference

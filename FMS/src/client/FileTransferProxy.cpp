@@ -48,9 +48,9 @@ int FileTransferProxy::addCpAsyncThread(const CpFileOptions& options){
 
   SessionProxy sessionProxy(msessionKey);
 
-  boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,msrcFilePath));
+  boost::scoped_ptr<FileProxy> fileProxy (FileProxyFactory::getFileProxy(sessionProxy,msrcFilePath));
 
-  int result= f->cpAsync(mdestFilePath,options,mtransferInfo);
+  int result= fileProxy->cpAsync(mdestFilePath,options,mtransferInfo);
 
   return result;
 
@@ -75,21 +75,12 @@ int FileTransferProxy::stopThread(const StopTransferOptions& options) {
 
   diet_profile_t* profile = diet_profile_alloc(serviceName, 2);
 
-  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(profile,0, msessionKey)) {
-    msgErrorDiet += "with sessionKey parameter "+msessionKey;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
+  diet_string_set(profile,0, msessionKey);
 
   ::ecorecpp::serializer::serializer _ser;
-  //To serialize the option object in to optionsInString
   string optionsToString =  _ser.serialize_str(const_cast<FMS_Data::StopTransferOptions_ptr>(&options));
-
-  if (diet_string_set(profile,1, optionsToString)) {
-    msgErrorDiet += "with jobInString parameter " + optionsToString;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
+  diet_string_set(profile,1, optionsToString);
 
   if (diet_call(profile)) {
     raiseCommunicationMsgException("RPC call failed");

@@ -17,10 +17,6 @@
 class FileTransferCommand {
 public:
   /**
-   * \brief The default constructor
-   */
-  FileTransferCommand();
-  /**
    * \brief A constructor by value
    * \param name the name of the command
    * \param location the path of the command
@@ -36,81 +32,40 @@ public:
                       int timeout=0);
 
   /**
-   * \brief Get the command
-   * \return the command
-   */
-  std::string
-  getCommand() const;
-  /**
-   * \brief Get the command name
-   * \return the command name
-   */
-  std::string
-  getName() const;
-  /**
-   * \brief Get the command location
-   * \return the command location
-   */
-  std::string
-  getLocation() const;
-  /**
    * \brief Check if the command is recursive
    * \return true if the command is recursive false otherwise
    */
   bool
-  isRecursive() const;
+  isRecursive() const {return mrecursive;}
   /**
    * \brief Check if the command uses the compression
    * \return true if the command uses compression false otherwise
    */
   bool
-  useCompression() const;
+  useCompression() const {return mcompression;}
+
   /**
-   * \brief A factory to build a copy command
-   * \param sessionServer the session object server
-   * \param options the copy options
-   * \return a new file transfer command
+   * @brief Return the built-in transfer command
+   * @return A string
+   */
+  std::string
+  getCommand() const { return mcommand; }
+
+  /**
+   * @brief Return the transfer manager binary path
+   * @return A string
+   */
+  std::string
+  getLocation() const {return mlocation;}
+
+  /**
+   * @brief Return a transfer manager according to a given and options
+   * @param options Transfer options
+   * @param compress Tells whether to use compression
+   * @return
    */
   static FileTransferCommand*
-  getCopyCommand(const SessionServer& sessionServer,
-                 const FMS_Data::CpFileOptions& options,
-                 int timeout=0);
-
-protected:
-  /**
-   * \brief To update the command location
-   * \param location the new command location
-   */
-  void
-  setLocation (const std::string& location);
-  /**
-   * \brief To update the command name
-   * \param name the new command name
-   */
-  void
-  setName(const std::string& name);
-  /**
-   * \brief To update the command
-   * \param command the new command
-   */
-  void
-  setCommand(const std::string& command);
-  /**
-   * \brief Get timeout (seconds)
-   */
-  int
-  getTimeout() const;
-  /**
-   * \brief To add options to the command
-   * \param options the new options to add
-   */
-  void
-  addOptions (const std::string& options);
-  /**
-   * \brief To build the command using options
-   */
-  virtual void
-  build()=0;
+  getTransferManager(const FMS_Data::CpFileOptions& options, bool compress);
 
 private:
   /**
@@ -121,6 +76,7 @@ private:
    * \brief The location
    */
   std::string mlocation;
+
   /**
    * \brief The flag for recursivity
    */
@@ -130,13 +86,13 @@ private:
    */
   bool mcompression;
   /**
-   * \brief The command
-   */
-  std::string mcommand;
-  /**
    * \brief timeout (seconds)
    */
   int mtimeout;
+  /**
+   * \brief The command
+   */
+  std::string mcommand;
 };
 
 

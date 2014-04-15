@@ -9,20 +9,20 @@ namespace vishnu {
   /**
  * \brief Define a constant type
  */
-  typedef enum {
+  enum c_type_t {
     NONE_PARAMETER,
     BOOL_PARAMETER,
     INT_PARAMETER,
     ULONG_PARAMETER,
     STRING_PARAMETER,
     URI_PARAMETER
-  } c_type_t ;
+  };
 
   /**
  * \brief Define a parameter type
  */
 
-  typedef enum {
+  enum param_type_t {
     VISHNUID=0,
     DBTYPE,
     DBHOST,
@@ -58,12 +58,12 @@ namespace vishnu {
     SSL_CA,
     SUBSCRIBE,
     STANDALONE
-  } param_type_t;
+  };
 
   /**
  * \brief For cloud
  */
-  typedef enum {
+  enum cloud_env_vars_t {
     CLOUD_ENDPOINT,
     CLOUD_USER,
     CLOUD_USER_PASSWORD,
@@ -79,12 +79,12 @@ namespace vishnu {
     CLOUD_DEFAULT_FLAVOR,
     CLOUD_NFS_SERVER,
     CLOUD_NFS_MOUNT_POINT
-  } cloud_env_vars_t;
+  };
 
   /**
  * \brief States of jobs
  */
-  typedef enum {
+  enum job_status_t {
     STATE_UNDEFINED=0,
     STATE_SUBMITTED=1,
     STATE_QUEUED=2,
@@ -94,32 +94,52 @@ namespace vishnu {
     STATE_CANCELLED=6,
     STATE_DOWNLOADED=7,
     STATE_FAILED=8
-  } job_status_t;
+  } ;
 
   /**
    * \brief States of components
    */
-  typedef enum {
+  enum component_status_t {
     STATUS_UNDEFINED=-1,
     STATUS_LOCKED=0,
     STATUS_ACTIVE=1,
     STATUS_DELETED=2
-  } component_status_t;
+  } ;
 
-  typedef enum {
+  enum session_state_t {
     SESSION_CLOSED=0,
     SESSION_ACTIVE=1
-  }session_state_t;
+  };
 
-  typedef enum {
+  enum privilege_type_t {
     PRIVILEGE_UNDEFINED = -1,
     PRIVILEGE_USER = 0,
     PRIVILEGE_ADMIN = 1
-  } privilege_type_t;
+  };
+
+  enum transfert_type_t {
+    SCP_TRANSFER = 0,
+    RSYNC_TRANSFER = 1,
+    UNDEFINED_TRANSFER_MANAGER = 1
+  };
+
+
+  enum TransfertStatusT {
+    TRANSFER_INPROGRESS = 0,
+    TRANSFER_COMPLETED = 1,
+    TRANSFER_CANCELLED = 2,
+    TRANSFER_FAILED = 3,
+    TRANSFER_WAITING_CLIENT_RESPONSE = 4,
+  };
+
+  enum FileCopyDirectionT {
+    CopyLocalRemote = 0,
+    CopyRemoteLocal = 1
+  };
 
   /**
- * \brief A convenient data type to store a parameter
- */
+             * \brief A convenient data type to store a parameter
+             */
   struct param_t {
     /**
    * \brief key to retrieve the parameter

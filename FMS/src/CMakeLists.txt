@@ -14,6 +14,8 @@ include_directories(client api
   ${LIBJANSSON_INCLUDE_DIR}
 )
 
+set(utils_SRCS ${UTILVISHNU_SOURCE_DIR}/fmsUtils.cpp)
+
 set(client_SRCS client/FileProxy
   client/LocalFileProxy
   client/RemoteFileProxy
@@ -27,7 +29,7 @@ set(api_HEADERS api/api_fms.hpp)
 ## client CLI
 if(COMPILE_CLIENT_FMS)
   add_subdirectory(cli)
-  add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
+  add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS} ${utils_SRCS})
   SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-fms-client
     ${Boost_LIBRARIES}
@@ -47,32 +49,20 @@ if(COMPILE_SERVER_FMS)
     ${UMS_SERVER_SOURCE_DIR}
     ${FMS_SERVER_SOURCE_DIR})
 
-  set(sed_SRCS sed/fmssed.cpp
+  set(sed_SRCS
+    sed/internalApi.cpp
+    sed/fmssed.cpp
     sed/ServerFMS.cpp
-    sed/getInfosSrv.cpp
-    sed/getContentSrv.cpp
-    sed/headSrv.cpp
-    sed/tailSrv.cpp
-    sed/mkdirSrv.cpp
-    sed/mkfileSrv.cpp
-    sed/rmdirSrv.cpp
-    sed/rmfileSrv.cpp
-    sed/chgrpSrv.cpp
-    sed/chmodSrv.cpp
-    sed/lsSrv.cpp
-    sed/transferSrv.cpp
     sed/MonitorFMS.cpp
     ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
-)
+    ${utils_SRCS})
 
   set(server_SRCS
     server/File.cpp
     server/SSHFile.cpp
     server/FileFactory.cpp
     server/FileTransferCommand.cpp
-    server/FileTransferServer.cpp
-    server/ScpCommand.cpp
-    server/RsyncCommand.cpp)
+    server/FileTransferServer.cpp)
 
   add_executable(fmssed ${sed_SRCS} ${server_SRCS})
   install(TARGETS fmssed DESTINATION ${SBIN_INSTALL_DIR})

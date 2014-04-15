@@ -5,16 +5,14 @@
  * \date 16/05/2011
  */
 
+#include "internalApi.hpp"
 #include "ServerFMS.hpp"
 #include "utilVishnu.hpp"
 #include "DbFactory.hpp"
 #include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
-#include "internalApiFMS.hpp"
 #include "FMSServices.hpp"
 
-using namespace vishnu;
-using namespace FMS_Data;
 
 // {{RELAX<MISRA_0_1_3> Three static variables
 Database *ServerFMS::mdatabaseVishnu = NULL;
@@ -54,6 +52,7 @@ ServerFMS::ServerFMS()  {
 /**
  * \brief To initialize the FMS server with individual parameters
  * \param vishnuId The id of the vishnu configuration registered in the database
+ * \param mid The machine identifier
  * \param dbConfig  The configuration of the database
  * \return an error code (0 if success and 1 if an error occurs)
  */
@@ -67,12 +66,13 @@ ServerFMS::init(int vishnuId, std::string mid, DbConfiguration dbConfig) {
 
     mvishnuId = vishnuId;
 
-    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
+    std::string sqlCommand("SELECT * FROM vishnu "
+                           " WHERE vishnuid="+vishnu::convertToString(mvishnuId));
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
 
-    mmapper = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
+    mmapper = new FMSMapper(MapperRegistry::getInstance(), vishnu::FMSMAPPERNAME);
     mmapper->registerMapper();
 
     /* Checking of vishnuid on the database */
@@ -83,8 +83,8 @@ ServerFMS::init(int vishnuId, std::string mid, DbConfiguration dbConfig) {
     }
 
   } catch (VishnuException& e) {
-      std::cout << e.what() << std::endl;
-      exit(0);
+    std::cout << e.what() << std::endl;
+    exit(0);
   }
   initMap(mid);
 
@@ -108,7 +108,6 @@ void
 ServerFMS::initMap(std::string mid) {
   int (*functionPtr)(diet_profile_t*);
 
-
   functionPtr = solveTransferFile<File::copy,File::async>;
   mcb[SERVICES_FMS[FILECOPYASYNC]] = functionPtr;
 
@@ -121,7 +120,7 @@ ServerFMS::initMap(std::string mid) {
   functionPtr = solveTransferFile<File::copy,File::sync>;
   mcb[SERVICES_FMS[FILECOPY]] = functionPtr;
 
-  functionPtr = get_infos;
+  functionPtr = solveGetInfos;
   mcb[SERVICES_FMS[FILEGETINFOS]] = functionPtr;
 
   functionPtr = solveChangeGroup;
@@ -130,10 +129,10 @@ ServerFMS::initMap(std::string mid) {
   functionPtr = solveChangeMode;
   mcb[SERVICES_FMS[FILECHANGEMODE]] = functionPtr;
 
-  functionPtr = headFile;
+  functionPtr = solveHeadFile;
   mcb[SERVICES_FMS[FILEHEAD]] = functionPtr;
 
-  functionPtr = contentFile;
+  functionPtr = solveGetFileContent;
   mcb[SERVICES_FMS[FILECONTENT]] = functionPtr;
 
   functionPtr = solveCreateFile;
@@ -148,7 +147,7 @@ ServerFMS::initMap(std::string mid) {
   functionPtr = solveRemoveDir;
   mcb[SERVICES_FMS[DIRREMOVE]] = functionPtr;
 
-  functionPtr = tailFile;
+  functionPtr = solveTailFile;
   mcb[SERVICES_FMS[FILETAIL]] = functionPtr;
 
   functionPtr = solveListDir;
@@ -171,6 +170,9 @@ ServerFMS::initMap(std::string mid) {
 
   functionPtr = solveFileTransferStop;
   mcb[SERVICES_FMS[FILETRANSFERSTOP]] = functionPtr;
+
+  functionPtr = solveUpdateClientSideTransfer;
+  mcb[SERVICES_FMS[UPDATECLIENTSIDETRANSFER]] = functionPtr;
 
   mcb[std::string(SERVICES_FMS[HEARTBEATFMS])+"@"+mid] = boost::ref(heartbeat);
 }
