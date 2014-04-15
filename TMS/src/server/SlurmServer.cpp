@@ -455,14 +455,20 @@ int
 SlurmServer::cancel(const std::string& jobId) {
 
   int res = slurm_kill_job(convertToSlurmJobId(jobId), SIGKILL, false);
+
   if (res != 0) {
-    char* errorMsg = slurm_strerror(errno);
-    if(errorMsg != NULL) {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(errorMsg));
+    if (errno != ESLURM_ALREADY_DONE) {
+      char* errorMsg = slurm_strerror(errno);
+      if (errorMsg != NULL) {
+        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(errorMsg));
+      } else {
+        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SlurmServer::cancel: Unknown error");
+      }
     } else {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SlurmServer::cancel: Unknown error");
+      res =  0;
     }
   }
+
   return res;
 }
 
@@ -526,25 +532,25 @@ SlurmServer::convertSlurmStateToVishnuState(const uint16_t& state) {
 
   int res = 0;
   switch(state) {
-  case JOB_PENDING:
-  case JOB_SUSPENDED:
-    res = vishnu::STATE_WAITING;
-    break;
-  case JOB_RUNNING:
-    res = vishnu::STATE_RUNNING;
-    break;
-  case JOB_COMPLETE:
-  case JOB_FAILED:
-  case JOB_NODE_FAIL:
-  case JOB_TIMEOUT:
-    res = vishnu::STATE_COMPLETED;
-    break;
-  case JOB_CANCELLED:
-    res = vishnu::STATE_CANCELLED;
-    break;
-  default:
-    res = vishnu::STATE_COMPLETED;
-    break;
+    case JOB_PENDING:
+    case JOB_SUSPENDED:
+      res = vishnu::STATE_WAITING;
+      break;
+    case JOB_RUNNING:
+      res = vishnu::STATE_RUNNING;
+      break;
+    case JOB_COMPLETE:
+    case JOB_FAILED:
+    case JOB_NODE_FAIL:
+    case JOB_TIMEOUT:
+      res = vishnu::STATE_COMPLETED;
+      break;
+    case JOB_CANCELLED:
+      res = vishnu::STATE_CANCELLED;
+      break;
+    default:
+      res = vishnu::STATE_COMPLETED;
+      break;
   }
   return res;
 }
@@ -633,8 +639,8 @@ SlurmServer::fillJobInfo(TMS_Data::ListJobs& jobSteps, const uint32_t& batchJobI
     currentStepJobPtr->setNbNodes(job_buffer_ptr->job_array[step].num_nodes);
     currentStepJobPtr->setJobWorkingDir(job_buffer_ptr->job_array[step].work_dir);
     currentStepJobPtr->setNbNodesAndCpuPerNode(boost::str(boost::format("%1%:%2%")
-                                                      % currentStepJobPtr->getNbNodes()
-                                                      % currentStepJobPtr->getNbCpus()));
+                                                          % currentStepJobPtr->getNbNodes()
+                                                          % currentStepJobPtr->getNbCpus()));
 
     //fill the msymbol map
     msymbolMap["\%j"] = vishnu::convertToString(batchJobId);
@@ -664,14 +670,14 @@ SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
     job = allJobs->job_array;
     for (uint32_t i = 0; i < allJobs->record_count; i++) {
       switch(job[i].job_state) {
-      case JOB_PENDING: case JOB_SUSPENDED:
-        que[job[i].partition]++;
-        break;
-      case JOB_RUNNING:
-        run[job[i].partition]++;
-        break;
-      default:
-        break;
+        case JOB_PENDING: case JOB_SUSPENDED:
+          que[job[i].partition]++;
+          break;
+        case JOB_RUNNING:
+          run[job[i].partition]++;
+          break;
+        default:
+          break;
       }
     }
   }
@@ -732,18 +738,18 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
     TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
     //Set the queue state
     switch(partition[i].state_up) {
-    case PARTITION_DOWN:
-      queue->setState(vishnu::STATE_UNDEFINED);
-      break;
-    case PARTITION_INACTIVE:
-      queue->setState(1);
-      break;
-    case PARTITION_UP:case PARTITION_DRAIN:
-      queue->setState(2);
-      break;
-    default:
-      queue->setState(0);
-      break;
+      case PARTITION_DOWN:
+        queue->setState(vishnu::STATE_UNDEFINED);
+        break;
+      case PARTITION_INACTIVE:
+        queue->setState(1);
+        break;
+      case PARTITION_UP:case PARTITION_DRAIN:
+        queue->setState(2);
+        break;
+      default:
+        queue->setState(0);
+        break;
     }
 
     if (run.count(partition[i].name)) {
@@ -809,15 +815,15 @@ void SlurmServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 
         for (int step = 0; step < jobSteps.getJobs().size(); ++step) {
           switch (jobSteps.getJobs().get(step)->getStatus()) {
-          case vishnu::STATE_RUNNING:
-            nbRunningJobs++;
-            break;
-          case vishnu::STATE_SUBMITTED:
-          case vishnu::STATE_WAITING:
-          case vishnu::STATE_QUEUED:
-            nbWaitingJobs++;
-          default:
-            break;
+            case vishnu::STATE_RUNNING:
+              nbRunningJobs++;
+              break;
+            case vishnu::STATE_SUBMITTED:
+            case vishnu::STATE_WAITING:
+            case vishnu::STATE_QUEUED:
+              nbWaitingJobs++;
+            default:
+              break;
           }
           listOfJobs->getJobs().push_back(jobPtr);
         }

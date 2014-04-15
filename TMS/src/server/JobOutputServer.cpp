@@ -96,7 +96,7 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
   mjobResult.setOutputPath(outputPath) ;
   mjobResult.setErrorPath(errorPath) ;
   LOG(boost::str(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")
-                 % mjobResult.getJobId()
+                 % jobId
                  % owner), LogInfo);
 
   return mjobResult;
