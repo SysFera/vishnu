@@ -17,6 +17,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
+#include <pwd.h>
 #include <fstream>
 
 static const unsigned int MAXPATHLEN = 255;   // make this larger if you need to.
@@ -473,8 +474,11 @@ vishnu::copyFileToUserHome(const std::string& path)
   std::string result;
   try {
     bfs::path from(path);
-    bfs::path to(std::string(std::getenv("HOME")));
-    to /= bfs::basename(from);
+    struct passwd *pw = getpwuid(getuid());
+    if (! pw) {
+      throw TMSVishnuException(ERRCODE_SYSTEM, boost::str(boost::format("getpwuid() failed with uid %1%") % getuid()));
+    }
+    bfs::path to(boost::str(boost::format("%1%/%2%") % pw->pw_dir % bfs::basename(from)));
     bfs::copy_file(from, to, bfs::copy_option::overwrite_if_exists);
     result = to.native();
   } catch (const boost::filesystem::filesystem_error ex) {
