@@ -11,9 +11,10 @@
 #include "FMS_Data/CpFileOptions.hpp"
 #include "TMS_Data/LoadCriterion.hpp"
 #include "UMS_Data/Machine.hpp"
-
 #include "Options.hpp"
 #include "utilVishnu.hpp"
+#include <boost/assign/list_of.hpp>
+#include "constants.hpp"
 
 
 /**
@@ -46,6 +47,28 @@ typedef enum {
 static const std::string AUTOM_KEYWORD="autom";
 static const std::string ALL_KEYWORD="all";
 
+
+const std::map<std::string, int> BATCH_NAME_TO_TYPE_MAP = boost::assign::map_list_of
+                                                          ("TORQUE", TORQUE)
+                                                          ("LOADLEVELER", LOADLEVELER)
+                                                          ("SLURM", SLURM)
+                                                          ("LSF", LSF)
+                                                          ("SGE", SGE)
+                                                          ("DELTACLOUD", DELTACLOUD)
+                                                          ("OPENNEBULA", PBSPRO)
+                                                          ("POSIX", POSIX);
+
+const std::map<int, std::string> JOB_STATE_TO_NAME_MAP = boost::assign::map_list_of
+                                                         (vishnu::STATE_SUBMITTED, "SUBMITTED")
+                                                         (vishnu::STATE_QUEUED, "QUEUED")
+                                                         (vishnu::STATE_WAITING, "WAITING")
+                                                         (vishnu::STATE_RUNNING, "RUNNING")
+                                                         (vishnu::STATE_COMPLETED, "COMPLETED")
+                                                         (vishnu::STATE_CANCELLED, "CANCELLED")
+                                                         (vishnu::STATE_DOWNLOADED, "DOWNLOADED")
+                                                         (vishnu::STATE_FAILED, "FAILED")
+                                                         (vishnu::STATE_UNDEFINED, "UNDEFINED");
+
 namespace vishnu
 {
   /**
@@ -63,12 +86,11 @@ namespace vishnu
      */
   std::string convertBatchTypeToString(BatchType batchType);
 
-
   /**
- * \brief  function to convert job status into string
- * \param state: The state of job
- * \return The converted state value
- */
+   * \brief  function to convert job status into string
+   * \param state: The state of job
+   * \return The converted state value
+   */
   std::string
   convertJobStateToString(const int& state);
 
@@ -118,7 +140,7 @@ namespace vishnu
   void
   checkJobPriority(const int& priority);
 
-/**
+  /**
    * \brief Function to check the job nbNodesAndCpuPerNode
    * \param nbNodesAndCpuPerNode the number of nodes and cpu per node
    * \return raises an exception on error
@@ -126,7 +148,7 @@ namespace vishnu
   void
   checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode);
 
-/**
+  /**
  * \brief Function to parse textual or file parameters
  * \param opt A structure containing the set of submitted options
  * \param paramsStr a string containing all of parameters
@@ -134,42 +156,42 @@ namespace vishnu
  * \param paramsVector a vector of parameters
  * \return true if all parameters are syntaxicaly valid
  */
-int
-validateParameters(const boost::shared_ptr<Options> & opt,
-                   std::string & paramsStr,
-                   const std::string & paramOptName,
-                   const std::vector<std::string> & paramsVector);
+  int
+  validateParameters(const boost::shared_ptr<Options> & opt,
+                     std::string & paramsStr,
+                     const std::string & paramOptName,
+                     const std::vector<std::string> & paramsVector);
 
 
-/**
+  /**
  * \brief Function to get the list of output files related to a job
  * \param result : The Job Result
  * \param appendJobId : Determine whether or not append the job id before the files lists
  * \return The list of files
  * Throw exception on error
  * */
-std::string
-getResultFiles(const TMS_Data::JobResult & result,
-               const bool & appendJobId);
+  std::string
+  getResultFiles(const TMS_Data::JobResult & result,
+                 const bool & appendJobId);
 
-/**
+  /**
  * \brief Function to create a directory
  * \param dirPath The path of the directory
  * Throw exception on error
  * */
-void
-createOutputDir(std::string& dirPath);
+  void
+  createOutputDir(std::string& dirPath);
 
-/**
+  /**
  * \brief Function to get the hostname of a machine id
  * \param sessionKey The session key
  * \param machineId Id of the machine
  * \return the name of the machine
  */
-inline std::string getMachineName(const std::string& sessionKey, const std::string& machineId);
+  inline std::string getMachineName(const std::string& sessionKey, const std::string& machineId);
 
 
-/**
+  /**
  * \brief Function to copy a list of remote files to a local directory
  * \param sessionKey the session key
  * \param srcMid Id of the remote machine
@@ -180,15 +202,15 @@ inline std::string getMachineName(const std::string& sessionKey, const std::stri
  * \param startPos Position of the file
  * \return Throw exception on error
  */
-void copyFiles(const std::string& sessionKey,
-               const std::string& srcMid,
-               const std::vector<std::string>& rfiles,
-               const std::string& ldestDir,
-               const FMS_Data::CpFileOptions& copts,
-               std::string& missingFiles,
-               const int& startPos=0);
+  void copyFiles(const std::string& sessionKey,
+                 const std::string& srcMid,
+                 const std::vector<std::string>& rfiles,
+                 const std::string& ldestDir,
+                 const FMS_Data::CpFileOptions& copts,
+                 std::string& missingFiles,
+                 const int& startPos=0);
 
-/**
+  /**
  * \brief Function to copy a remote file to a local directory
  * \param sessionKey the session key
  * \param srcMachineId Id of the source machine
@@ -198,16 +220,16 @@ void copyFiles(const std::string& sessionKey,
  * \param copts Copy option (false => non recursive, 0 => scp)
  * \return The copied file or throw exception on error
  */
-std::string
-genericFileCopier(const std::string& sessionKey,
-                  const std::string& srcMachineId,
-                  const std::string& srcPath,
-                  const std::string& destMachineId,
-                  const std::string& destPath,
-                  const FMS_Data::CpFileOptions& copts);
+  std::string
+  genericFileCopier(const std::string& sessionKey,
+                    const std::string& srcMachineId,
+                    const std::string& srcPath,
+                    const std::string& destMachineId,
+                    const std::string& destPath,
+                    const FMS_Data::CpFileOptions& copts);
 
 
-/**
+  /**
  * \brief Function to copy a remote file to a local directory
  * \param sessionKey the session key
  * \param srcFiles String describing the source files
@@ -215,32 +237,32 @@ genericFileCopier(const std::string& sessionKey,
  * \param copts Copy option (false => non recursive, 0 => scp)
  * \return A string describing the destination file. The function throw exception on error
  */
-std::string
-sendInputFiles(const std::string& sessionKey,
-               const std::string& srcFiles,
-               const std::string& destMachineId,
-               const FMS_Data::CpFileOptions& copts);
+  std::string
+  sendInputFiles(const std::string& sessionKey,
+                 const std::string& srcFiles,
+                 const std::string& destMachineId,
+                 const FMS_Data::CpFileOptions& copts);
 
-/**
+  /**
  * @brief listMachinesWithUserLocalAccount
  * @param sessionKey
  * @param machines
  */
-void
-listMachinesWithUserLocalAccount(const std::string& sessionKey, UMS_Data::ListMachines& machines);
+  void
+  listMachinesWithUserLocalAccount(const std::string& sessionKey, UMS_Data::ListMachines& machines);
 
-/**
+  /**
  * \brief Function to select a machine for automatic submission
  * \param sessionKey the session key
  * \param criterion The selection criterion
  * \return the selected machine or raises an exception on error
  */
-std::string
-findMachine(const std::string& sessionKey,
-            const TMS_Data::LoadCriterion& criterion);
+  std::string
+  findMachine(const std::string& sessionKey,
+              const TMS_Data::LoadCriterion& criterion);
 
 
-/**
+  /**
  * \brief Function to compute the load performance of a given machine
  * \param sessionKey The session key
  * \param pb the request profile

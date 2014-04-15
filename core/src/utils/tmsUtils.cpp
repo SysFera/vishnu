@@ -30,28 +30,11 @@ static const unsigned int MAXPATHLEN = 255;   // make this larger if you need to
 BatchType
 vishnu::convertToBatchType(const std::string& batchName) {
 
-  BatchType batchType = UNDEFINED;
-  if (batchName == "TORQUE") {
-    batchType = TORQUE;
-  } else if (batchName == "LOADLEVELER") {
-    batchType = LOADLEVELER;
-  } else if (batchName == "SLURM") {
-    batchType = SLURM;
-  } else if (batchName == "LSF") {
-    batchType = LSF;
-  } else if (batchName == "SGE") {
-    batchType = SGE;
-  } else if (batchName == "DELTACLOUD") {
-    batchType = DELTACLOUD;
-  } else if (batchName == "OPENNEBULA") {
-    batchType = OPENNEBULA;
-  } else if (batchName == "PBS") {
-    batchType = PBSPRO;
-  } else if (batchName == "POSIX") {
-    batchType = POSIX;
+  std::map<std::string, int>::const_iterator batch = BATCH_NAME_TO_TYPE_MAP.find(batchName);
+  if (batch != BATCH_NAME_TO_TYPE_MAP.end()) {
+    return static_cast<BatchType>(batch->second);
   }
-
-  return batchType;
+  return UNDEFINED;
 }
 
 
@@ -61,40 +44,16 @@ vishnu::convertToBatchType(const std::string& batchName) {
      * \return the converted batch type
      */
 std::string vishnu::convertBatchTypeToString(BatchType batchType) {
-  std::string value;
-  switch(batchType) {
-  case TORQUE:
-    value = "TORQUE";
-    break;
-  case LOADLEVELER:
-    value = "LOADLEVELER";
-    break;
-  case SLURM:
-    value = "SLURM";
-    break;
-  case LSF:
-    value = "LSF";
-    break;
-  case SGE:
-    value = "SGE";
-    break;
-  case PBSPRO:
-    value = "PBS";
-    break;
-  case OPENNEBULA:
-    value = "OPENNEBULA";
-    break;
-  case DELTACLOUD:
-    value = "DELTACLOUD";
-    break;
-  case POSIX:
-    value = "POSIX";
-    break;
-  default:
-    value = "UNKNOWN_BATCH_TYPE";
-    break;
+
+  std::map<std::string, int>::const_iterator batch = BATCH_NAME_TO_TYPE_MAP.begin();
+
+  while (batch != BATCH_NAME_TO_TYPE_MAP.end() && batch->second != batchType) {
+    ++batch;
   }
-  return value;
+  if (batch != BATCH_NAME_TO_TYPE_MAP.end()) {
+    return batch->first;
+  }
+  return "UNKNOWN_BATCH_TYPE";
 }
 
 /**
@@ -105,38 +64,11 @@ std::string vishnu::convertBatchTypeToString(BatchType batchType) {
 std::string
 vishnu::convertJobStateToString(const int& state) {
 
-  std::string stateStr;
-  switch(state) {
-  case vishnu::STATE_SUBMITTED:
-    stateStr = "SUBMITTED";
-    break;
-  case vishnu::STATE_QUEUED:
-    stateStr = "QUEUED";
-    break;
-  case vishnu::STATE_WAITING:
-    stateStr = "WAITING";
-    break;
-  case vishnu::STATE_RUNNING:
-    stateStr = "RUNNING";
-    break;
-  case vishnu::STATE_COMPLETED:
-    stateStr = "COMPLETED";
-    break;
-  case vishnu::STATE_CANCELLED:
-    stateStr = "CANCELLED";
-    break;
-  case vishnu::STATE_DOWNLOADED:
-    stateStr = "DOWNLOADED";
-    break;
-  case vishnu::STATE_FAILED:
-    stateStr = "FAILED";
-    break;
-  case vishnu::STATE_UNDEFINED:
-  default:
-    stateStr = "UNDEFINED";
-    break;
+  std::map<int, std::string>::const_iterator it = JOB_STATE_TO_NAME_MAP.find(state);
+  if (it != JOB_STATE_TO_NAME_MAP.end()) {
+    it->second;
   }
-  return stateStr;
+  return "INVALID_JOB_STATE";
 }
 
 /**

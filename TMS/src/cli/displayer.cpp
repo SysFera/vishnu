@@ -148,7 +148,7 @@ displayProgress(Progression& p){
     cout << " End time  : -" << endl;
   }
   cout << " Percent   : " << p.getPercent() << "%" << endl;
-  cout << " Status    : " << vishnu::convertJobStateToString(p.getStatus()) << endl;
+  cout << " Status    : " << vishnu::convertJobStateToString(p.getStatus())<< endl;
   cout << endl;
 }
 
