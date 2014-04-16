@@ -12,8 +12,7 @@ endif (APPLE)
 #  ${PROJECT_BINARY_DIR}/include/diet_config_tests.h)
 #
 include_directories(${PROJECT_BINARY_DIR}/include/
-  ${VISHNU_SOURCE_DIR}/core/src/config
-)
+  ${VISHNU_SOURCE_DIR}/core/src/config)
 
 
 add_subdirectory(unit)
