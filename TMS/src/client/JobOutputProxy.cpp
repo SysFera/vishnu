@@ -155,15 +155,13 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
   std::string routputInfo = jsonData.getStringProperty("infofile");
   std::string jobListSerialized = jsonData.getStringProperty("joblist");
 
-  if (routputInfo.empty()) {
-    throw TMSVishnuException(ERRCODE_INVDATA, "Weird behavior: no output to retrieve");
+  if (routputInfo.empty()
+      || ! boost::starts_with(routputInfo, "/")) {
+    throw TMSVishnuException(ERRCODE_INVDATA, boost::str(boost::format("Weird output info file [%1%]"
+                                                                       ) % routputInfo));
   }
-  if (!boost::starts_with(routputInfo, "/") ) {
-    raiseExceptionIfNotEmptyMsg(routputInfo);
-  }
-
   TMS_Data::ListJobResults_ptr listJobResults_ptr = NULL;
-  parseEmfObject(jobListSerialized, listJobResults_ptr); /*To build the listJobResults_ptr */
+  parseEmfObject(jobListSerialized, listJobResults_ptr);
 
   FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true);
@@ -171,13 +169,16 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
 
   std::string outputDir = options.getOutputDir();
   try {
-    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", boost::filesystem::temp_directory_path().string(), copts);
-    istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
+    std::string downloadInfoFile = boost::str(boost::format("%1%/%2%")
+                                              % boost::filesystem::temp_directory_path().string()
+                                              % boost::filesystem::unique_path("vishnu-%%%%%%.dinfo").string());
+    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", downloadInfoFile, copts);
+    istringstream downloadInfoStream (vishnu::get_file_content(downloadInfoFile, false));
     int numJob = 0;
     string line;
     ListStrings lineVec;
     string missingFiles;
-    while (getline(fdescStream, line)) {
+    while (getline(downloadInfoStream, line)) {
       if (line.empty()) continue;
       boost::trim(line);
       boost::split(lineVec, line, boost::is_any_of(" "));

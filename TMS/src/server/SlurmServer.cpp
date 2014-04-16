@@ -118,19 +118,27 @@ SlurmServer::submit(const std::string& scriptPath,
   //Fill the vishnu job structure
   fillJobInfo(jobSteps, resp->job_id);
 
-  // Set default error and output paths when applicable
+  // Set error and output paths
   for (int step = 0; step < jobSteps.getJobs().size(); ++step) {
+
+    // output path
     if (desc.std_out != NULL) {
       std::string path = std::string(desc.std_out);
       replaceSymbolInToJobPath(path);
       jobSteps.getJobs().get(step)->setOutputPath(path);
+    } else {
+      jobSteps.getJobs().get(step)->setOutputPath(boost::str(boost::format("%1%/slurm-%2%.out") % desc.work_dir % resp->job_id));
     }
 
+    // error path
     if (desc.std_err != NULL) {
       std::string path = std::string(desc.std_err);
       replaceSymbolInToJobPath(path);
       jobSteps.getJobs().get(step)->setErrorPath(path);
+    } else {
+      jobSteps.getJobs().get(step)->setOutputPath(boost::str(boost::format("%1%/slurm-%2%.out") % desc.work_dir % resp->job_id));
     }
+
   }
 
   xfree(desc.script);
@@ -285,34 +293,34 @@ SlurmServer::processOptions(const std::string& scriptPath,
     throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the SelectQueueAutom (-Q) and getQueue (-q) options together.\n");
   }
 
-  if(options.getName().size()!=0){
+  if (! options.getName().empty()){
     cmdsOptions.push_back("-J");
     cmdsOptions.push_back(options.getName());
   }
-  if(options.getQueue().size()!=0) {
+  if (! options.getQueue().empty()) {
     cmdsOptions.push_back("-p");
     cmdsOptions.push_back(options.getQueue());
   }
-  if(options.getOutputPath().size()!=0) {
+  if (! options.getOutputPath().empty()) {
     cmdsOptions.push_back("-o");
     cmdsOptions.push_back(options.getOutputPath());
   }
-  if(options.getErrorPath().size()!=0) {
+  if (! options.getErrorPath().empty()) {
     cmdsOptions.push_back("-e");
     cmdsOptions.push_back(options.getErrorPath());
   }
-  if(options.getWallTime()!=-1) {
+  if (options.getWallTime() > 0) {
     cmdsOptions.push_back("-t");
     std::string timeStr = vishnu::convertWallTimeToString(options.getWallTime());
     size_t pos = timeStr.rfind(":");
     int i=0;
-    while(pos!=std::string::npos){
+    while (pos != std::string::npos){
       i++;
-      if(i==3) {
+      if (i==3) {
         timeStr = timeStr.replace(pos, 1, "-");
         break;
       }
-      if(pos==0) {
+      if (pos==0) {
         break;
       } else {
         pos = timeStr.rfind(":", pos-1);
@@ -320,17 +328,17 @@ SlurmServer::processOptions(const std::string& scriptPath,
     }
     cmdsOptions.push_back(timeStr);
   }
-  if(options.getNbCpu()!=-1) {
+  if (options.getNbCpu() > 0) {
     std::ostringstream os_str;
     os_str << options.getNbCpu();
     cmdsOptions.push_back("--ntasks="+os_str.str());
   }
-  if(options.getMemory()!=-1) {
+  if (options.getMemory() > 0) {
     std::ostringstream os_str;
     os_str << options.getMemory();
     cmdsOptions.push_back("--mem="+os_str.str());
   }
-  if(options.getNbNodesAndCpuPerNode()!="") {
+  if(! options.getNbNodesAndCpuPerNode().empty()) {
     std::string NbNodesAndCpuPerNode = options.getNbNodesAndCpuPerNode();
     size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
     if(posNbNodes!=std::string::npos) {
@@ -341,35 +349,35 @@ SlurmServer::processOptions(const std::string& scriptPath,
     }
   }
 
-  if(options.getMailNotification()!="") {
+  if (! options.getMailNotification().empty()) {
     std::string notification = options.getMailNotification();
-    if(notification.compare("BEGIN")==0) {
+    if(notification == "BEGIN") {
       cmdsOptions.push_back("--mail-type=BEGIN");
-    } else if(notification.compare("END")==0) {
+    } else if(notification == "END") {
       cmdsOptions.push_back("--mail-type=END");
-    } else if(notification.compare("ERROR")==0) {
+    } else if(notification == "ERROR"==0) {
       cmdsOptions.push_back("--mail-type=FAIL");
-    } else if(notification.compare("ALL")==0) {
+    } else if(notification == "ALL"==0) {
       cmdsOptions.push_back("--mail-type=ALL");
     } else {
-      throw UserException(ERRCODE_INVALID_PARAM, notification+" is an invalid notification type:"+" consult the vishnu user manuel");
+      throw UserException(ERRCODE_INVALID_PARAM, boost::str(boost::format("%1% is an invalid notification type") % notification));
     }
   }
 
-  if(options.getMailNotifyUser()!="") {
+  if (! options.getMailNotifyUser().empty()) {
     cmdsOptions.push_back("--mail-user="+options.getMailNotifyUser());
   }
 
-  if(options.getGroup()!="") {
+  if (! options.getGroup().empty()) {
     cmdsOptions.push_back("--gid="+options.getGroup());
   }
 
-  if(options.getWorkingDir()!="") {
+  if (! options.getWorkingDir().empty()) {
     cmdsOptions.push_back("-D");
     cmdsOptions.push_back(options.getWorkingDir());
   }
 
-  if(options.getCpuTime()!="") {
+  if (! options.getCpuTime().empty()) {
     cmdsOptions.push_back("-t");
     cmdsOptions.push_back(options.getCpuTime());
   }
@@ -434,7 +442,6 @@ SlurmServer::processOptions(const std::string& scriptPath,
       }
     }
   }
-  
 }
 
 /**
@@ -598,15 +605,6 @@ SlurmServer::fillJobInfo(TMS_Data::ListJobs& jobSteps, const uint32_t& batchJobI
     currentStepJobPtr->setBatchJobId(id);
     currentStepJobPtr->setStatus(convertSlurmStateToVishnuState(job_buffer_ptr->job_array[step].job_state));
 
-    //set default path
-    std::string stdOutPath = (boost::format("%1%/slurm-%2%.out") % job_buffer_ptr->job_array[step].work_dir % id).str();
-    if (currentStepJobPtr->getOutputPath().empty()) {
-      currentStepJobPtr->setOutputPath(stdOutPath);
-    }
-    if (currentStepJobPtr->getErrorPath().empty()) {
-      currentStepJobPtr->setErrorPath(stdOutPath);
-    }
-
     if (job_buffer_ptr->job_array[step].name != NULL) {
       currentStepJobPtr->setJobName(job_buffer_ptr->job_array[step].name);
     }
@@ -637,7 +635,6 @@ SlurmServer::fillJobInfo(TMS_Data::ListJobs& jobSteps, const uint32_t& batchJobI
     currentStepJobPtr->setMemLimit(job_buffer_ptr->job_array[step].pn_min_memory);
     currentStepJobPtr->setNbCpus(job_buffer_ptr->job_array[step].pn_min_cpus);
     currentStepJobPtr->setNbNodes(job_buffer_ptr->job_array[step].num_nodes);
-    currentStepJobPtr->setJobWorkingDir(job_buffer_ptr->job_array[step].work_dir);
     currentStepJobPtr->setNbNodesAndCpuPerNode(boost::str(boost::format("%1%:%2%")
                                                           % currentStepJobPtr->getNbNodes()
                                                           % currentStepJobPtr->getNbCpus()));

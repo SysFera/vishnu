@@ -82,13 +82,17 @@ JobServer::submitJob(std::string& scriptContent,
                      int vishnuId,
                      const std::vector<std::string>& defaultBatchOption)
 {
-  if (scriptContent.empty()) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Empty script content");
-  }
 
+  LOG("[INFO] Request to submit job", LogInfo);
   const std::string JOB_ID = vishnu::getObjectId(vishnuId, "formatidjob", vishnu::JOB, mmachineId);
   TMS_Data::Job jobInfo;
   jobInfo.setJobId(JOB_ID);
+
+  LOG(boost::str(boost::format("[INFO] Job entry added %1% into the database, performing submission process...") % JOB_ID), LogInfo);
+
+  if (scriptContent.empty()) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Empty script content");
+  }
 
   try {
     int usePosix = options->getIntProperty("posix");
@@ -248,6 +252,12 @@ JobServer::handleNativeBatchExec(int action,
       handlerExitCode = 0;
       switch(action) {
         case SubmitBatchAction: {
+          // create output dir if needed
+          if (! jobInfo.getOutputDir().empty()) {
+            vishnu::createDir(jobInfo.getOutputDir());
+          }
+
+          // submit the job
           TMS_Data::ListJobs jobSteps;
           handlerExitCode = batchServer->submit(vishnu::copyFileToUserHome(scriptPath), options->getSubmitOptions(), jobSteps, NULL);
           updateAndSaveJobSteps(jobSteps, jobInfo);
@@ -423,7 +433,7 @@ int JobServer::cancelJob(JsonObject* options)
                 % mdatabaseInstance->escapeData(jobId)
                 ).str();
 
-    LOG(boost::str(boost::format("[WARN] received request to cancel job: %1%") % jobId), LogWarning);
+    LOG(boost::str(boost::format("[WARN] Request to cancel job: %1%") % jobId), LogWarning);
   } else {
 
     // This block works as follow:
@@ -465,7 +475,7 @@ int JobServer::cancelJob(JsonObject* options)
                     % mdatabaseInstance->escapeData(mmachineId)
                     ).str();
       }
-      LOG(boost::str(boost::format("[WARN] received request to cancel all jobs submitted by %1%")
+      LOG(boost::str(boost::format("[WARN] request to cancel all jobs submitted by %1%")
                      % userId), LogWarning);
     } else {
       sqlQuery = (boost::format("%1%"
@@ -485,7 +495,7 @@ int JobServer::cancelJob(JsonObject* options)
     if (! cancelAllJobs) {
       LOG(boost::str(boost::format("[INFO] invalid cancel request with job id %1%")
                      % jobId), LogInfo);
-      throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID, "Perhaps the job is not longer running");
+      throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID, "perhaps the job is not longer running");
     } else {
       LOG("[INFO] no job matching the call", LogInfo);
     }
@@ -795,6 +805,8 @@ JobServer::setRealFilePaths(std::string& scriptContent,
     std::string path = options->getStringProperty("workingdir");
     if (! path.empty()) {
       workingDir = path;
+    } else {
+      options->setProperty("workingdir", workingDir);
     }
     scriptPath = boost::str(boost::format("/tmp/vishnuJobScript%1%-%2%")
                             % bfs::unique_path("%%%%%%").string()
@@ -804,12 +816,14 @@ JobServer::setRealFilePaths(std::string& scriptContent,
   if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos
       || mbatchType == DELTACLOUD
       || mbatchType == OPENNEBULA) {
-    std::string outputDir = boost::str(boost::format("%1%/%2%")
+    std::string outputDir = boost::str(boost::format("%1%/VISHNU_OUTPUT_DIR_%2%")
                                        % workingDir
-                                       % vishnu::generatedUniquePatternFromCurTime("OUTPUT_DIR"));
+                                       % vishnu::generatedUniquePatternFromCurTime(jobInfo.getJobId()));
     vishnu::replaceAllOccurences(scriptContent, "$VISHNU_OUTPUT_DIR", outputDir);
     vishnu::replaceAllOccurences(scriptContent, "${VISHNU_OUTPUT_DIR}", outputDir);
     jobInfo.setOutputDir(outputDir);
+  } else {
+    jobInfo.setOutputDir("");
   }
 
   jobInfo.setJobWorkingDir(workingDir);
@@ -885,6 +899,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
     currentJobPtr->setOwner(baseJobInfo.getOwner());
     currentJobPtr->setJobId(baseJobInfo.getJobId());
     currentJobPtr->setOutputDir(baseJobInfo.getOutputDir());
+    currentJobPtr->setJobWorkingDir(baseJobInfo.getJobWorkingDir());
     updateJobRecordIntoDatabase(SubmitBatchAction, *currentJobPtr);
   } else {
     int nbSteps = jobSteps.getJobs().size();
@@ -934,7 +949,7 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
                          % job.getJobId()
                          ).str();
     mdatabaseInstance->process(query);
-    LOG(boost::str(boost::format("[INFO] Job cancelled: %1%")
+    LOG(boost::str(boost::format("[INFO] job cancelled: %1%")
                    % job.getJobId()), LogInfo);
 
   } else if (action == SubmitBatchAction) {
@@ -977,18 +992,18 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
     query+="vmId='"+mdatabaseInstance->escapeData(job.getVmId())+"', ";
     query+="vmIp='"+mdatabaseInstance->escapeData(job.getVmIp())+"', ";
     query+="relatedSteps='"+mdatabaseInstance->escapeData(job.getRelatedSteps())+"'";
-    query+="WHERE jobid='"+mdatabaseInstance->escapeData(job.getJobId())+"';";
+    query+=" WHERE jobid='"+mdatabaseInstance->escapeData(job.getJobId())+"';";
 
     mdatabaseInstance->process(query);
 
     // logging
     if (job.getSubmitError().empty()) {
-      LOG(boost::str(boost::format("[INFO] Job submitted successfully: %1%. User: %2%. Owner: %3%")
+      LOG(boost::str(boost::format("[INFO] job submitted: %1%. User: %2%. Owner: %3%")
           % job.getJobId()
           % muserSessionInfo.userid
           % muserSessionInfo.user_aclogin), LogInfo);
     } else {
-      LOG((boost::str(boost::format("[WARN] Submission error: %1% [%2%]")
+      LOG((boost::str(boost::format("[WARN] submission error: %1% [%2%]")
                       % job.getJobId()
                       % job.getSubmitError())), LogWarning);
     }

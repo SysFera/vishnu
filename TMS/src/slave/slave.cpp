@@ -113,6 +113,11 @@ main(int argc, char* argv[]) {
         vishnu::createDir(jobInfo.getOutputDir(), isWorkingDir); // Create the output directory
       }
 
+      // create output dir if needed
+      if (! jobInfo.getOutputDir().empty()) {
+        vishnu::createDir(jobInfo.getOutputDir());
+      }
+
       //Submits the job
       TMS_Data::ListJobs jobSteps;
       if (batchServer->submit(vishnu::copyFileToUserHome(jobScriptPath), jsonOptions.getSubmitOptions(), jobSteps) != 0) {

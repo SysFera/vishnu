@@ -92,7 +92,7 @@ namespace vishnu
    * \return The converted state value
    */
   std::string
-  convertJobStateToString(const int& state);
+  convertJobStateToString(int state);
 
   /**
    * \brief Function a given walltime into string
@@ -336,6 +336,12 @@ namespace vishnu
          const bool & optional = true,
          const std::string defaultValue = "");
 
+  /**
+   * @brief Get the home directory of the currently logged user
+   * @return  A string
+   */
+  std::string
+  getCurrentUserHome(void);
 
   /**
    * @brief copy a given file to the current user home
@@ -344,6 +350,7 @@ namespace vishnu
    */
   std::string
   copyFileToUserHome(const std::string& path);
+
 } //END NAMESPACE
 
 #endif // TMSUTILS_HPP

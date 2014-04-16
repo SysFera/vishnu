@@ -63,11 +63,11 @@ std::string vishnu::convertBatchTypeToString(BatchType batchType) {
  * \return The converted state value
  */
 std::string
-vishnu::convertJobStateToString(const int& state) {
+vishnu::convertJobStateToString(int state) {
 
   std::map<int, std::string>::const_iterator it = JOB_STATE_TO_NAME_MAP.find(state);
   if (it != JOB_STATE_TO_NAME_MAP.end()) {
-    it->second;
+    return it->second;
   }
   return "INVALID_JOB_STATE";
 }
@@ -464,6 +464,21 @@ vishnu::getVar(const std::string& name,
 
 
 /**
+ * @brief Get the home directory of the currently logged user
+ * @return  A string, throw exception on error
+ */
+std::string
+vishnu::getCurrentUserHome(void)
+{
+  struct passwd *pw = getpwuid(getuid());
+  if (! pw) {
+    throw TMSVishnuException(ERRCODE_SYSTEM, boost::str(boost::format("getpwuid() failed with uid %1%") % getuid()));
+  }
+  return std::string(pw->pw_dir);
+}
+
+
+/**
  * @brief copy a given file to the current user home
  * @param path The file path
  * @return The resulting file path
@@ -474,11 +489,7 @@ vishnu::copyFileToUserHome(const std::string& path)
   std::string result;
   try {
     bfs::path from(path);
-    struct passwd *pw = getpwuid(getuid());
-    if (! pw) {
-      throw TMSVishnuException(ERRCODE_SYSTEM, boost::str(boost::format("getpwuid() failed with uid %1%") % getuid()));
-    }
-    bfs::path to(boost::str(boost::format("%1%/%2%") % pw->pw_dir % bfs::basename(from)));
+    bfs::path to(boost::str(boost::format("%1%/%2%") % getCurrentUserHome() % bfs::basename(from)));
     bfs::copy_file(from, to, bfs::copy_option::overwrite_if_exists);
     result = to.native();
   } catch (const boost::filesystem::filesystem_error ex) {

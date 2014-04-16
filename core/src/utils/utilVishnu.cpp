@@ -427,7 +427,7 @@ vishnu::generatedUniquePatternFromCurTime(const std::string& prefix) {
   time(&rawtime);
   struct tm * tinfo;
   tinfo = localtime(&rawtime);
-  ossBuf << "_" << (1900 + tinfo->tm_year)
+  ossBuf << (1900 + tinfo->tm_year)
          << ( tinfo->tm_mon < 9? "0": "")<< tinfo->tm_mon + 1
          << ( tinfo->tm_mday < 10? "0": "" )<< tinfo->tm_mday
          << ( tinfo->tm_hour < 10? "0": "" )<< tinfo->tm_hour

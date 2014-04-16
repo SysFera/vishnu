@@ -95,7 +95,7 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
   mjobResult.setOutputDir(outputDir) ;
   mjobResult.setOutputPath(outputPath) ;
   mjobResult.setErrorPath(errorPath) ;
-  LOG(boost::str(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")
+  LOG(boost::str(boost::format("[INFO] request to job ouput: %1%. aclogin: %2%")
                  % jobId
                  % owner), LogInfo);
 
@@ -191,7 +191,7 @@ JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
                                        ) % vishnu::convertToString(vishnu::STATE_DOWNLOADED)
                          % mdatabaseInstance->escapeData(jobId)).str();
     mdatabaseInstance->process(query);
-    LOG(boost::str(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")
+    LOG(boost::str(boost::format("[INFO] request to job ouput: %1%. aclogin: %2%")
                    % jobId
                    % muserSessionInfo.user_aclogin), LogInfo);
   }
