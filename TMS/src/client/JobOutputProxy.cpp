@@ -56,15 +56,15 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
   }
   raiseExceptionOnErrorResult(profile);
 
-  std::string routputInfo;
-  diet_string_get(profile,1, routputInfo);
+  std::string remoteOutputInfo;
+  diet_string_get(profile,1, remoteOutputInfo);
 
-  if (routputInfo.empty()) {
+  if (remoteOutputInfo.empty()) {
     throw TMSVishnuException(ERRCODE_INVDATA, "Weird behavior: no output to retrieve");
   }
 
-  if (! boost::starts_with(routputInfo, "/") ) {
-    raiseExceptionIfNotEmptyMsg(routputInfo);
+  if (! boost::starts_with(remoteOutputInfo, "/") ) {
+    raiseExceptionIfNotEmptyMsg(remoteOutputInfo);
   }
   if (outputDir.empty()) {
     outputDir = boost::str(boost::format("%1%/VISHNU_DOWNLOAD_%2%")
@@ -79,9 +79,11 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
   copts.setIsRecursive(true);
   copts.setTrCommand(0); // for using scp
   try {
-    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", outputDir, copts);
-    std::string infoFile = (boost::format("%1%/%2%") % outputDir % bfs::basename(routputInfo)).str();
-    istringstream fdescStream(vishnu::get_file_content(infoFile, false));
+    std::string downloadInfoFile = boost::str(boost::format("%1%/%2%")
+                                              % outputDir
+                                              % boost::filesystem::unique_path("vishnu-%%%%%%.dinfo").string());
+    vishnu::genericFileCopier(sessionKey, mmachineId, remoteOutputInfo, "", downloadInfoFile, copts);
+    istringstream fdescStream(vishnu::get_file_content(downloadInfoFile, false));
     string line;
     if(! getline(fdescStream, line)) {
       line = "";
@@ -152,13 +154,13 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
 
   // Treat the json object
   JsonObject jsonData(data);
-  std::string routputInfo = jsonData.getStringProperty("infofile");
+  std::string remoteOutputInfo = jsonData.getStringProperty("infofile");
   std::string jobListSerialized = jsonData.getStringProperty("joblist");
 
-  if (routputInfo.empty()
-      || ! boost::starts_with(routputInfo, "/")) {
+  if (remoteOutputInfo.empty()
+      || ! boost::starts_with(remoteOutputInfo, "/")) {
     throw TMSVishnuException(ERRCODE_INVDATA, boost::str(boost::format("Weird output info file [%1%]"
-                                                                       ) % routputInfo));
+                                                                       ) % remoteOutputInfo));
   }
   TMS_Data::ListJobResults_ptr listJobResults_ptr = NULL;
   parseEmfObject(jobListSerialized, listJobResults_ptr);
@@ -172,7 +174,7 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
     std::string downloadInfoFile = boost::str(boost::format("%1%/%2%")
                                               % boost::filesystem::temp_directory_path().string()
                                               % boost::filesystem::unique_path("vishnu-%%%%%%.dinfo").string());
-    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", downloadInfoFile, copts);
+    vishnu::genericFileCopier(sessionKey, mmachineId, remoteOutputInfo, "", downloadInfoFile, copts);
     istringstream downloadInfoStream (vishnu::get_file_content(downloadInfoFile, false));
     int numJob = 0;
     string line;
@@ -195,7 +197,7 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
     }
   } catch (FMSVishnuException &ex) {
     vishnu::saveInFile(outputDir+"/ERROR",
-                       (boost::format("File %1%: %2%")%routputInfo%ex.what()).str());
+                       boost::str(boost::format("File %1%: %2%") % remoteOutputInfo % ex.what()));
   }
   diet_profile_free(profile);
   return listJobResults_ptr;
