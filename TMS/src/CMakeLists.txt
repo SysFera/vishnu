@@ -250,7 +250,7 @@ if(COMPILE_CLIENT_TMS)
     zmq_helper)
 
   install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
-  set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
+  set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_SONAME})
   install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 endif()
 
@@ -322,7 +322,7 @@ if (COMPILE_SERVER_TMS)
 
   # generate vishnu-tms-server library
   add_library(vishnu-tms-server ${server_SRCS})
-  set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
+  set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_SONAME})
   target_link_libraries(vishnu-tms-server zmq_helper)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
 

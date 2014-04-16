@@ -29,7 +29,7 @@ set(api_HEADERS api/api_fms.hpp)
 if(COMPILE_CLIENT_FMS)
   add_subdirectory(cli)
   add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS} ${utils_SRCS})
-  SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
+  SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_SONAME})
   target_link_libraries(vishnu-fms-client
     ${Boost_LIBRARIES}
     emf4cpp-vishnu
