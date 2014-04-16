@@ -33,8 +33,10 @@ macro( tms_test NAME )
     add_executable( ${NAME}
       "${NAME}.cpp"
       #entry point
-    TestRunner.cpp
-    tmsTestUtils.cpp)
+      TestRunner.cpp
+      tmsTestUtils.cpp
+      ${logger_SRCS})
+
     include_directories( ${Boost_INCLUDE_DIRS}
       ${EMF_DATA_DIR}
       ${TMS_EMF_DATA_DIR}

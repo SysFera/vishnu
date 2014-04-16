@@ -33,7 +33,9 @@ macro( fms_test NAME )
     add_executable( ${NAME}
       "${NAME}.cpp"
       #entry point
-      TestRunner.cpp)
+      TestRunner.cpp
+      ${logger_SRCS})
+
     include_directories( ${Boost_INCLUDE_DIRS}
       ${EMF_DATA_DIR}
       ${FMS_EMF_DATA_DIR}
@@ -48,8 +50,7 @@ macro( fms_test NAME )
       ${Boost_INCLUDE_DIRS}
       ${PROJECT_BINARY_DIR}/include
       ${UMS_TEST_DIR}
-      ${FMS_TEST_DIR}
-      )
+      ${FMS_TEST_DIR})
 
     # link libraries
     target_link_libraries( ${NAME}

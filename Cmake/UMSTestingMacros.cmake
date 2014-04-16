@@ -34,7 +34,9 @@ macro( ums_test NAME )
     add_executable( ${NAME}
       "${NAME}.cpp"
       #entry point
-    TestRunner.cpp )
+      TestRunner.cpp
+      ${logger_SRCS})
+
     include_directories( ${Boost_INCLUDE_DIRS}
       ${EMF_DATA_DIR}
       ${UMS_DATA_DIR}

@@ -26,20 +26,19 @@ function( unit_test NAME )
   add_executable( ${NAME}
     "${NAME}.cpp"
     #entry point
-    TestRunner.cpp )
-  include_directories( ${Boost_INCLUDE_DIRS}
-    )
+    TestRunner.cpp
+    ${logger_SRCS})
+
+  include_directories( ${Boost_INCLUDE_DIRS})
   # link libraries
   target_link_libraries( ${NAME}
     ${Boost_LIBRARIES}
     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-    ${OPENSSL_LIBRARIES}
-    )
+    ${OPENSSL_LIBRARIES})
 
 
   foreach(LIBT ${ARGN})
-    target_link_libraries( ${NAME} ${LIBT} 
-      )
+    target_link_libraries( ${NAME} ${LIBT})
   endforeach()
   
   # test executable installation has not been tested yet -sic-
