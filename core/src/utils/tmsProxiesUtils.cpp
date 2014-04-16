@@ -104,27 +104,33 @@ std::string vishnu::getMachineName(const std::string& sessionKey, const std::str
 /**
  * \brief Function to copy a list of remote files to a local directory
  * \param srcMid: Id of the remote machine
- * \param rfiles: List of the files to copy
- * \param ldestDir: Destination directory on the local machine
+ * \param remoteFileList: List of the files to copy
+ * \param localDestinationDir: Destination directory on the local machine
  * \param copts: Copy option (false => non recursive, 0 => scp)
  * \param missingFiles: The list of missing files
  * \param startPos: Position of the file
  * \return Throw exception on error
  */
 void vishnu::copyFiles(const std::string& sessionKey,
-                       const std::string& srcMid,
-                       const std::vector<std::string>& rfiles,
-                       const std::string& ldestDir,
+                       const std::string& sourceMachineId,
+                       const std::vector<std::string>& remoteFileList,
+                       const std::string& localDestinationDir,
                        const FMS_Data::CpFileOptions& copts,
                        std::string& missingFiles,
-                       const int& startPos) {
+                       const int& startPos)
+{
   missingFiles.clear();
-  int nbFiles = rfiles.size() ;
-  for (int i=startPos; i<nbFiles; i++) {
+  int nbFiles = remoteFileList.size() ;
+  for (int index=startPos; index < nbFiles; ++index) {
     try {
-      genericFileCopier(sessionKey, srcMid, rfiles[i], "", ldestDir, copts);
+      genericFileCopier(sessionKey,
+                        sourceMachineId,
+                        remoteFileList[index],
+                        "",
+                        localDestinationDir,
+                        copts);
     } catch (...) {
-      missingFiles+=rfiles[i]+"\n";
+      missingFiles+=remoteFileList[index]+"\n";
     }
   }
 }
@@ -151,9 +157,13 @@ vishnu::genericFileCopier(const std::string& sessionKey,
   src = srcMachineId.empty()? srcPath : srcMachineId+":"+srcPath;
   dest = destMachineId.empty()? destPath : destMachineId+":"+destPath;
   if (vishnu::cp(sessionKey, src, dest, copts) != 0) {
-    string srcMachine = (srcMachineId.size() != 0)? getMachineName(sessionKey, srcMachineId) : "localhost";
-    string destMachine = (destMachineId.size() != 0)? getMachineName(sessionKey, destMachineId) : "localhost";
-    string msg = boost::str(boost::format("error while copying the file %1% (machine: %2%) to %3% (machine: %4%)") % src % dest % srcMachine % destMachine);
+    string srcMachine = (! srcMachineId.empty())? getMachineName(sessionKey, srcMachineId) : "localhost";
+    string destMachine = (! destMachineId.empty())? getMachineName(sessionKey, destMachineId) : "localhost";
+    string msg = boost::str(boost::format("error while copying the file %1% (machine: %2%) to %3% (machine: %4%)")
+                            % src
+                            % dest
+                            % srcMachine
+                            % destMachine);
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, msg);
   }
   return dest;
@@ -284,16 +294,16 @@ vishnu::getMachineLoadPerformance(const string& sessionKey,
   long load = std::numeric_limits<long>::max();
   try {
     switch(criterion.getLoadType()) {
-    case NBRUNNINGJOBS :
-      load = jobs.getNbRunningJobs();
-      break;
-    case NBJOBS :
-      load = jobs.getNbJobs();
-      break;
-    case NBWAITINGJOBS :
-    default :
-      load =jobs.getNbWaitingJobs();
-      break;
+      case NBRUNNINGJOBS :
+        load = jobs.getNbRunningJobs();
+        break;
+      case NBJOBS :
+        load = jobs.getNbJobs();
+        break;
+      case NBWAITINGJOBS :
+      default :
+        load =jobs.getNbWaitingJobs();
+        break;
     }
   } catch (VishnuException& ex) {
     std::cerr << ex.what() << std::endl;

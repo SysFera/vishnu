@@ -192,23 +192,23 @@ namespace vishnu
 
 
   /**
- * \brief Function to copy a list of remote files to a local directory
- * \param sessionKey the session key
- * \param srcMid Id of the remote machine
- * \param rfiles List of the files to copy
- * \param ldestDir Destination directory on the local machine
- * \param copts Copy option (false => non recursive, 0 => scp)
- * \param missingFiles: The list of missing files*
- * \param startPos Position of the file
- * \return Throw exception on error
- */
-  void copyFiles(const std::string& sessionKey,
-                 const std::string& srcMid,
-                 const std::vector<std::string>& rfiles,
-                 const std::string& ldestDir,
-                 const FMS_Data::CpFileOptions& copts,
-                 std::string& missingFiles,
-                 const int& startPos=0);
+   * \brief Function to copy a list of remote files to a local directory
+   * \param srcMid: Id of the remote machine
+   * \param remoteFileList: List of the files to copy
+   * \param localDestinationDir: Destination directory on the local machine
+   * \param copts: Copy option (false => non recursive, 0 => scp)
+   * \param missingFiles: The list of missing files
+   * \param startPos: Position of the file
+   * \return Throw exception on error
+   */
+  void
+  copyFiles(const std::string& sessionKey,
+            const std::string& sourceMachineId,
+            const std::vector<std::string>& remoteFileList,
+            const std::string& localDestinationDir,
+            const FMS_Data::CpFileOptions& copts,
+            std::string& missingFiles,
+            const int& startPos);
 
   /**
  * \brief Function to copy a remote file to a local directory

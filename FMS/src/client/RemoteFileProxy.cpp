@@ -501,10 +501,16 @@ RemoteFileProxy::finalizeTransfer(FMS_Data::FileTransfer& transfer, int directio
   diet_profile_t* profile = diet_profile_alloc(SERVICES_FMS[UPDATECLIENTSIDETRANSFER], 2);
   diet_string_set(profile, 0, this->getSession().getSessionKey());
 
-  if (direction == vishnu::CopyLocalRemote) {
-    transfer.setSize(boost::filesystem::file_size(transfer.getSourceFilePath()));
-  } else {
-    transfer.setSize(boost::filesystem::file_size(transfer.getDestinationFilePath()));
+  try {
+    if (direction == vishnu::CopyLocalRemote) {
+      if (! boost::filesystem::is_directory(transfer.getSourceFilePath()))
+        transfer.setSize(boost::filesystem::file_size(transfer.getSourceFilePath()));
+    } else {
+      if (! boost::filesystem::is_directory(transfer.getDestinationFilePath()))
+      transfer.setSize(boost::filesystem::file_size(transfer.getDestinationFilePath()));
+    }
+  } catch (const boost::filesystem::filesystem_error ex) {
+    throw FMSVishnuException(ERRCODE_SYSTEM, ex.what());
   }
 
   ::ecorecpp::serializer::serializer _ser;
