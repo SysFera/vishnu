@@ -503,11 +503,17 @@ RemoteFileProxy::finalizeTransfer(FMS_Data::FileTransfer& transfer, int directio
 
   try {
     if (direction == vishnu::CopyLocalRemote) {
-      if (! boost::filesystem::is_directory(transfer.getSourceFilePath()))
+      if (! boost::filesystem::is_directory(transfer.getSourceFilePath())) {
         transfer.setSize(boost::filesystem::file_size(transfer.getSourceFilePath()));
+      } else {
+        transfer.setSize(boost::filesystem::file_size(transfer.getSourceFilePath() +"/"+ boost::filesystem::basename(transfer.getDestinationFilePath())));
+      }
     } else {
-      if (! boost::filesystem::is_directory(transfer.getDestinationFilePath()))
-      transfer.setSize(boost::filesystem::file_size(transfer.getDestinationFilePath()));
+      if (! boost::filesystem::is_directory(transfer.getDestinationFilePath())) {
+        transfer.setSize(boost::filesystem::file_size(transfer.getDestinationFilePath()));
+      } else {
+        transfer.setSize(boost::filesystem::file_size(transfer.getDestinationFilePath() + "/" + boost::filesystem::basename(transfer.getSourceFilePath())));
+      }
     }
   } catch (const boost::filesystem::filesystem_error ex) {
     throw FMSVishnuException(ERRCODE_SYSTEM, ex.what());
