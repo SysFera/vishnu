@@ -19,7 +19,8 @@ if(NOT CMAKE_BUILD_TYPE)
     FORCE)
 endif()
 
-set(VISHNU_VERSION "4.0.0-SNAPSHOT")
+set(VISHNU_SONAME "4.0.0")
+set(VISHNU_VERSION "${VISHNU_SONAME}-SNAPSHOT")
 set(VISHNU_VERSION_COMMENTS "" CACHE STRING " comments about the current version ")
 
 
@@ -163,7 +164,7 @@ set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
 
 
 if(APPLE)
-  add_definitions("-DBSD_LIKE_SYSTEM")  
+  add_definitions("-DBSD_LIKE_SYSTEM")
 endif()
 
 
