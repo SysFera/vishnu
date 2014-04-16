@@ -15,8 +15,6 @@ include_directories(client api
   ${XMS_SED_SOURCE_DIR}
 )
 
-set(utils_SRCS ${UTILVISHNU_SOURCE_DIR}/fmsUtils.cpp)
-
 set(client_SRCS client/FileProxy
   client/LocalFileProxy
   client/RemoteFileProxy

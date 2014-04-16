@@ -39,6 +39,7 @@ set(utils_SRCS
   utils/Options.cpp
   utils/sessionUtils.cpp
   utils/CLICmd.cpp
+  utils/fmsUtils.cpp
   utils/cliUtil.cpp)
 
 #################### register #################################################
