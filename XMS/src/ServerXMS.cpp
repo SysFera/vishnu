@@ -285,15 +285,15 @@ ServerXMS::initMap(const std::string& mid) {
     mcb[SERVICES_FMS[FILEMOVE]] = functionPtr;
     functionPtr = solveTransferFile<File::copy,File::sync>;
     mcb[SERVICES_FMS[FILECOPY]] = functionPtr;
-    functionPtr = get_infos;
+    functionPtr = solveGetInfos;
     mcb[SERVICES_FMS[FILEGETINFOS]] = functionPtr;
     functionPtr = solveChangeGroup;
     mcb[SERVICES_FMS[FILECHANGEGROUP]] = functionPtr;
     functionPtr = solveChangeMode;
     mcb[SERVICES_FMS[FILECHANGEMODE]] = functionPtr;
-    functionPtr = headFile;
+    functionPtr = solveHeadFile;
     mcb[SERVICES_FMS[FILEHEAD]] = functionPtr;
-    functionPtr = contentFile;
+    functionPtr = solveGetFileContent;
     mcb[SERVICES_FMS[FILECONTENT]] = functionPtr;
     functionPtr = solveCreateFile;
     mcb[SERVICES_FMS[FILECREATE]] = functionPtr;
@@ -303,7 +303,7 @@ ServerXMS::initMap(const std::string& mid) {
     mcb[SERVICES_FMS[FILEREMOVE]] = functionPtr;
     functionPtr = solveRemoveDir;
     mcb[SERVICES_FMS[DIRREMOVE]] = functionPtr;
-    functionPtr = tailFile;
+    functionPtr = solveTailFile;
     mcb[SERVICES_FMS[FILETAIL]] = functionPtr;
     functionPtr = solveListDir;
     mcb[SERVICES_FMS[DIRLIST]] = functionPtr;
