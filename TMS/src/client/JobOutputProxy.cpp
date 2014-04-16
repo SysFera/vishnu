@@ -67,7 +67,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
     raiseExceptionIfNotEmptyMsg(routputInfo);
   }
   if (outputDir.empty()) {
-    outputDir = boost::str(boost::format("%1%/DOWNLOAD_%2%")
+    outputDir = boost::str(boost::format("%1%/VISHNU_DOWNLOAD_%2%")
                            % bfs::path(bfs::current_path()).string()
                            % vishnu::generatedUniquePatternFromCurTime(jobId));
     vishnu::createOutputDir(outputDir);
@@ -183,7 +183,7 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
       boost::trim(line);
       boost::split(lineVec, line, boost::is_any_of(" "));
       std::string baseDir = (! outputDir.empty())? bfs::absolute(outputDir).string() : bfs::path(bfs::current_path()).string();
-      std::string targetDir = boost::str(boost::format("%1%/DOWNLOAD_%2%")
+      std::string targetDir = boost::str(boost::format("%1%/VISHNU_DOWNLOAD_%2%")
                                          % baseDir
                                          % vishnu::generatedUniquePatternFromCurTime(lineVec[0]));
       vishnu::createOutputDir(targetDir);
