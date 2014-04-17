@@ -235,8 +235,8 @@ JobServer::handleNativeBatchExec(int action,
 
   int handlerExitCode = 0;
   std::string errorMsg = "SUCCESS";
-  if (pid == 0)  /** Child process */
-  {
+  if (pid == 0)  /** Child process */ {
+    close(ipcPipe[0]);
     handlerExitCode = 0;
     // if not cloud-mode submission, switch user before running the request
     if (mbatchType != OPENNEBULA && mbatchType != DELTACLOUD) {
@@ -290,6 +290,7 @@ JobServer::handleNativeBatchExec(int action,
     write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
     exit(handlerExitCode);
   } else { /** Parent process*/
+    close(ipcPipe[1]);
     // wait that child exists
     int exitCode;
     waitpid(pid, &exitCode, 0);

@@ -289,11 +289,11 @@ if (COMPILE_SERVER_TMS)
   # define tmsSlave binary
   add_executable(tmsSlave ${slave_SRCS})
   target_link_libraries(tmsSlave
+    ${LIBJANSSON_LIB}
     ${Boost_LIBRARIES}
     ${CMAKE_DL_LIBS}
     vishnu-core
     emf4cpp-vishnu
-    jansson
     ${USED_BATCH_LIB})
 
   add_definitions(-DMODULE_PREFIX="${CMAKE_SHARED_MODULE_PREFIX}")

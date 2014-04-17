@@ -35,7 +35,7 @@ Logger::Logger(const std::string& programName, int facility)
 
 int Logger::sync() {
   if (mbuffer.length()) {
-    syslog(mlogSeverity, mbuffer.c_str());
+    syslog(mlogSeverity, "%s", mbuffer.c_str());
     mbuffer.erase();
     mlogSeverity = LOG_DEBUG; // default to debug for each message
   }

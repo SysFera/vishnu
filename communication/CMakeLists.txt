@@ -33,12 +33,12 @@ if(NOT COMPILE_ONLY_LIBBATCH)
     ${logger_SRCS})
 
   target_link_libraries (zmq_helper
+    ${LIBJANSSON_LIB}
     ${ZMQ_LIBRARIES}
     ${Boost_LIBRARIES}
     vishnu-core
     ${LIBCRYPTO_LIB}
-    ${OPENSSL_LIBRARIES}
-    ${LIBJANSSON_LIB})
+    ${OPENSSL_LIBRARIES})
   set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
 endif(NOT COMPILE_ONLY_LIBBATCH)
