@@ -48,7 +48,7 @@ if(COMPILE_CLIENT_UMS)
   add_subdirectory(cli)
   
   add_library(vishnu-ums-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
-  set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_VERSION})
+  set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_SONAME})
   target_link_libraries(vishnu-ums-client
     ${Boost_LIBRARIES}
     emf4cpp-vishnu
@@ -95,7 +95,7 @@ if(COMPILE_SERVER_UMS)
     server/export/shell/FMSShellMapper.cpp)
 
   add_library(vishnu-ums-server ${server_SRCS})
-  set_target_properties(vishnu-ums-server PROPERTIES VERSION ${VISHNU_VERSION})
+  set_target_properties(vishnu-ums-server PROPERTIES VERSION ${VISHNU_SONAME})
   install(TARGETS vishnu-ums-server DESTINATION ${LIB_INSTALL_DIR})
 
   target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server ${CMAKE_DL_LIBS})
