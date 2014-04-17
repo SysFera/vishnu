@@ -488,24 +488,24 @@ SSHFile::cp(const string& dest, const FMS_Data::CpFileOptions& options ) {
   boost::scoped_ptr<FileTransferCommand> transferManager(
         FileTransferCommand::getTransferManager(options, false));
 
-//  switch (options.getTrCommand()) {
-//  case vishnu::RSYNC_TRANSFER:
-//    transferManager.reset(new FileTransferCommand("rsync",
-//                                                  "/usr/bin/rsync",
-//                                                  options.isIsRecursive(),
-//                                                  false,
-//                                                  "",
-//                                                  timeout));
-//    break;
-//  default:
-//    transferManager.reset(new FileTransferCommand("scp",
-//                                                  "/usr/bin/scp",
-//                                                  options.isIsRecursive(),
-//                                                  false,
-//                                                  "",
-//                                                  timeout));
-//    break;
-//  }
+  //  switch (options.getTrCommand()) {
+  //  case vishnu::RSYNC_TRANSFER:
+  //    transferManager.reset(new FileTransferCommand("rsync",
+  //                                                  "/usr/bin/rsync",
+  //                                                  options.isIsRecursive(),
+  //                                                  false,
+  //                                                  "",
+  //                                                  timeout));
+  //    break;
+  //  default:
+  //    transferManager.reset(new FileTransferCommand("scp",
+  //                                                  "/usr/bin/scp",
+  //                                                  options.isIsRecursive(),
+  //                                                  false,
+  //                                                  "",
+  //                                                  timeout));
+  //    break;
+  //  }
 
   std::string remoteTranferCommand = boost::str(
                                        boost::format("%1% %2% %3")
@@ -586,111 +586,25 @@ SSHExec::setProcessId(const int& processId) const {
 // exec a remote command
 pair<string, string>
 SSHExec::exec(const string& cmd) const {
-  vector<string> tokens;
-  ostringstream command;
-  pid_t pid;
-  pair<string,string> result;
-  int comPipeOut[2];
-  int comPipeErr[2];
-  int status;
-  char c;
+
 
   // build the remote command
   string beginMarker("beginVishnuCommand");
+  std::string command = boost::str(boost::format("%1% -l %2% -C -o BatchMode=yes "
+                                                 " -o StrictHostKeyChecking=no"
+                                                 " -o ForwardAgent=yes"
+                                                 " -p %3% %4% echo %5% && %6%"
+                                                 )% sshCommand % userName % sshPort % server % beginMarker % cmd);
 
-  command << sshCommand  << " -l " << userName;
-  command << " -C"  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
-  command << " -o ForwardAgent=yes";
-  command << " -p " << sshPort << " " << server << " " << "echo "<< beginMarker<< " && "<<  cmd;
-
-
-  istringstream is(command.str());
-
-  copy(istream_iterator<string>(is),
-       istream_iterator<string>(),
-       back_inserter<vector<string> >(tokens));
-
-  /**********************************************/
-
-  char* argv[tokens.size() + 1];
-  argv[tokens.size()] = NULL;
-
-  for (unsigned int i = 0; i < tokens.size(); ++i) {
-    argv[i]=strdup(tokens[i].c_str());
-  }
-
-  if (pipe(comPipeOut) == -1) {
-    for (unsigned int i = 0; i < tokens.size(); ++i) {
-      free(argv[i]);
+  string output;
+  pair<string,string> result;
+  if (! vishnu::execSystemCommand(command, output)) { // error
+    result.second = output;
+  } else { // success
+    size_t pos= output.find(beginMarker);
+    if (pos != std::string::npos) {
+      result.first=output.substr(pos+beginMarker.size()+1);
     }
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
-  }
-
-  if (pipe(comPipeErr) == -1) {
-    for (unsigned int i = 0; i < tokens.size(); ++i) {
-      free(argv[i]);
-    }
-    close(comPipeOut[0]);
-    close(comPipeOut[1]);
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
-  }
-  pid = fork();
-
-  if (pid == -1) {
-    for (unsigned int i = 0; i < tokens.size(); ++i) {
-      free(argv[i]);
-    }
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
-  }
-  if (pid == 0) {
-    close(comPipeOut[0]); /* Close unused read end */
-    close(comPipeErr[0]); /* Close unused write end */
-    dup2(comPipeOut[1], 1);
-    dup2(comPipeErr[1], 2);
-    close(comPipeOut[1]);
-    close(comPipeErr[1]);
-
-    if (execvp(argv[0], argv)) {
-      exit(-1);
-    }
-  }
-
-  // Store the child process id
-  setProcessId (pid);
-
-  close(comPipeOut[1]); /* Close unused write end */
-  close(comPipeErr[1]);/* Close unused write end */
-
-
-  while (read(comPipeOut[0], &c, 1)) {
-    result.first+=c;
-  }
-
-  while (read(comPipeErr[0], &c, 1)) {
-    result.second+=c;
-  }
-
-  if (waitpid(pid, &status, 0) == -1) {
-    close(comPipeOut[0]);
-    close(comPipeErr[0]);
-    for (unsigned int i=0; i<tokens.size(); ++i) {
-      free(argv[i]);
-    }
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+command.str());
-  }
-
-  close(comPipeOut[0]);
-  close(comPipeErr[0]);
-  for (unsigned int i=0; i<tokens.size(); ++i) {
-    free(argv[i]);
-  }
-  lastExecStatus = status;
-
-  // Jump to the vishnu command output marker
-  string output=result.first;
-  size_t pos= output.find(beginMarker);
-  if (pos != std::string::npos) {
-    result.first=output.substr(pos+beginMarker.size()+1);
   }
   return result;
 }

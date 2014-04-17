@@ -651,7 +651,7 @@ vishnu::validatePath(const std::string& path)
  * @return A string
  */
 bool
-vishnu::execSystemCommand(const std::string& command, std::string msg)
+vishnu::execSystemCommand(const std::string& command, std::string& msg)
 {
   bool result = true;
   FILE* pipe = popen(command.c_str(), "r");
