@@ -19,6 +19,7 @@ include_directories(
   ${FMS_EMF_DATA_DIR}
   ${FMS_DATA_DIR}
   ${FMS_CLIENT_PROXY_SOURCE_DIR}
+  ${XMS_SED_SOURCE_DIR}
 )
 
 # Java and/or python are options

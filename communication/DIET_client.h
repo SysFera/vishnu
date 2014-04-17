@@ -184,6 +184,11 @@ extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server>
  */
 void
 getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers);
+/**
+ * \brief Extract servers from list
+ */
+void
+extractMachineServersFromLine(const std::vector<std::string>& uriv, std::vector<boost::shared_ptr<Server> >& allServers, const std::string& module);
 
 
 /**

@@ -47,15 +47,15 @@ Dispatcher::configureAnnuary() {
 
   // Get initial configuration
   std::vector<std::string> cfgInfo;
-  if (config.getConfigValues(vishnu::FMS_URIADDR, cfgInfo)) {
+  if (config.getConfigValues(vishnu::SED_URIADDR, cfgInfo)) {
     ann->setInitConfig("fmssed", cfgInfo, mid);
     cfgInfo.clear();
   }
-  if (config.getConfigValues(vishnu::TMS_URIADDR, cfgInfo)) {
+  if (config.getConfigValues(vishnu::SED_URIADDR, cfgInfo)) {
     ann->setInitConfig("tmssed", cfgInfo, mid);
     cfgInfo.clear();
   }
-  if (config.getConfigValues(vishnu::UMS_URIADDR, cfgInfo)) {
+  if (config.getConfigValues(vishnu::SED_URIADDR, cfgInfo)) {
     ann->setInitConfig("umssed", cfgInfo, mid);
     cfgInfo.clear();
   }

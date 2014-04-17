@@ -14,7 +14,7 @@
 #include "MachineServer.hpp"
 #include "FileFactory.hpp"
 #include "FileStat.hpp"
-#include "ServerFMS.hpp"
+#include "ServerXMS.hpp"
 #include "FileTransferServer.hpp"
 
 /**
@@ -231,7 +231,7 @@ solveTransferFile(diet_profile_t* profile){
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    int vishnuId = ServerFMS::getInstance()->getVishnuId();
+    int vishnuId = ServerXMS::getInstance()->getVishnuId();
 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer,
                                                                                     srcHost,
@@ -469,7 +469,7 @@ solveTransferRemoteFile(diet_profile_t* profile){
                                                                                     destHost,
                                                                                     srcPath,
                                                                                     destPath,
-                                                                                    ServerFMS::getInstance()->getVishnuId()));
+                                                                                    ServerXMS::getInstance()->getVishnuId()));
     // Perfor the transfer now
     if (transferMode==File::sync) {
 

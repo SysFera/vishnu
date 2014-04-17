@@ -14,7 +14,7 @@
 #include <iostream>
 #include "boost/date_time/posix_time/posix_time.hpp"
 
-
+#include "ServerXMS.hpp"
 #include "QueryServer.hpp"
 #include "TMS_Data.hpp"
 #include "BatchServer.hpp"
@@ -156,8 +156,8 @@ public:
     //To check if the queue is defined
     if (options->getQueue().size() != 0) {
       BatchFactory factory;
-      BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-      std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
+      BatchType batchType  = ServerXMS::getInstance()->getBatchType();
+      std::string batchVersion  = ServerXMS::getInstance()->getBatchVersion();
       boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType, batchVersion));
       batchServer->listQueues(options->getQueue()); //raise an exception if options->getQueue does not exist
 

@@ -371,8 +371,13 @@ namespace vishnu {
    * \return EXIT_SUCCESS
    */
   int
-  showVersion(std::string server);
-
+  showVersion(std::string server); // FIXME: remove me
+  /**
+   * @brief Displau the version of Vishnu
+   * @return EXIT_SUCCESS
+   */
+  int
+  showVersion();
   /**
    * @brief Validate session key and return details on the user and the session
    * @param authKey The authentication key

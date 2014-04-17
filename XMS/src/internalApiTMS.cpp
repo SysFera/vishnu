@@ -13,19 +13,24 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iomanip>
+
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/format.hpp>
 #include <boost/filesystem/path.hpp>
-#include <ecore.hpp>
-#include <ecorecpp.hpp>
+
+
+//EMF
+#include <ecore.hpp> // Ecore metamodel
+#include <ecorecpp.hpp> // EMF4CPP utils
 #include "TMS_Data.hpp"
 #include "DIET_client.h"
+
 #include "utilServer.hpp"
 #include "BatchServer.hpp"
-#include "ServerTMS.hpp"
+#include "ServerXMS.hpp"
 #include "JobServer.hpp"
 #include "WorkServer.hpp"
 #include "ListJobServer.hpp"
@@ -33,7 +38,9 @@
 #include "ListProgressServer.hpp"
 #include "JobOutputServer.hpp"
 #include "WorkServer.hpp"
-#include "internalApi.hpp"
+#include "internalApiTMS.hpp"
+#include "MapperRegistry.hpp"
+
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
@@ -46,11 +53,11 @@ namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
 /**
  * \brief Function to solve the jobSubmit service
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveSubmitJob(diet_profile_t* profile) {
+solveSubmitJob(diet_profile_t* pb) {
 
   std::string scriptContent;
   std::string machineId;
@@ -58,13 +65,13 @@ solveSubmitJob(diet_profile_t* profile) {
   std::string authKey;
 
   // get profile parameters
-  diet_string_get(profile,0, authKey);
-  diet_string_get(profile,1, machineId);
-  diet_string_get(profile,2, scriptContent);
-  diet_string_get(profile,3, jsonEncodedOptions);
+  diet_string_get(pb,0, authKey);
+  diet_string_get(pb,1, machineId);
+  diet_string_get(pb,2, scriptContent);
+  diet_string_get(pb,3, jsonEncodedOptions);
 
   // reset the profile to send back result
-  diet_profile_reset(profile, 2);
+  diet_profile_reset(pb, 2);
 
   try {
     //MAPPER CREATION
@@ -75,7 +82,7 @@ solveSubmitJob(diet_profile_t* profile) {
     std::string cmd = mapper->finalize(mapperkey);
 
     //FIXME: decode job and options
-    ServerTMS* server = ServerTMS::getInstance();
+    ServerXMS* server = ServerXMS::getInstance();
 
     JobServer jobServer(authKey, machineId, server->getSedConfig());
     jobServer.setDebugLevel(server->getDebugLevel()); // Set the debug level
@@ -87,8 +94,8 @@ solveSubmitJob(diet_profile_t* profile) {
                                             server->getVishnuId(),
                                             server->getDefaultBatchOption());
 
-    diet_string_set(profile,0, "success");
-    diet_string_set(profile,1, JsonObject::serialize(jobServer.getJobInfo(jobId)));
+    diet_string_set(pb,0, "success");
+    diet_string_set(pb,1, JsonObject::serialize(jobServer.getJobInfo(jobId)));
 
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, jobId);
 
@@ -98,8 +105,8 @@ solveSubmitJob(diet_profile_t* profile) {
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
-    diet_string_set(profile,0, "error");
-    diet_string_set(profile,1, ex.what());
+    diet_string_set(pb,0, "error");
+    diet_string_set(pb,1, ex.what());
   }
 
   return 0;
@@ -107,22 +114,22 @@ solveSubmitJob(diet_profile_t* profile) {
 
 /**
  * \brief Function to solve the jobCancel service
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveCancelJob(diet_profile_t* profile) {
+solveCancelJob(diet_profile_t* pb) {
 
   std::string authKey;
   std::string machineId;
   std::string optionSerialized;
 
-  diet_string_get(profile,0, authKey);
-  diet_string_get(profile,1, machineId);
-  diet_string_get(profile,2, optionSerialized);
+  diet_string_get(pb,0, authKey);
+  diet_string_get(pb,1, machineId);
+  diet_string_get(pb,2, optionSerialized);
 
   // reset the profile to send back result
-  diet_profile_reset(profile, 2);
+  diet_profile_reset(pb, 2);
 
 
   try {
@@ -133,14 +140,14 @@ solveCancelJob(diet_profile_t* profile) {
     mapper->code(optionSerialized, mapperkey);
     std::string cmd = mapper->finalize(mapperkey);
 
-    ServerTMS* server = ServerTMS::getInstance();
+    ServerXMS* server = ServerXMS::getInstance();
     JobServer jobServer(authKey, machineId, server->getSedConfig());
 
     JsonObject options(optionSerialized);
     jobServer.cancelJob(&options);
 
-    diet_string_set(profile,0, "success");
-    diet_string_set(profile,1, "");
+    diet_string_set(pb,0, "success");
+    diet_string_set(pb,1, "");
 
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& ex) {
@@ -149,31 +156,31 @@ solveCancelJob(diet_profile_t* profile) {
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
-    diet_string_set(profile,0, "error");
-    diet_string_set(profile,1, ex.what());
+    diet_string_set(pb,0, "error");
+    diet_string_set(pb,1, ex.what());
   }
   return 0;
 }
 
 /**
  * \brief Function to solve the jobInfo service
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveJobInfo(diet_profile_t* profile) {
+solveJobInfo(diet_profile_t* pb) {
 
   std::string authKey;
   std::string machineId;
   std::string jobId;
 
   //IN Parameters
-  diet_string_get(profile, 0, authKey);
-  diet_string_get(profile, 1, machineId);
-  diet_string_get(profile, 2, jobId);
+  diet_string_get(pb, 0, authKey);
+  diet_string_get(pb, 1, machineId);
+  diet_string_get(pb, 2, jobId);
 
   // reset the profile to send back result
-  diet_profile_reset(profile, 2);
+  diet_profile_reset(pb, 2);
 
   try{
     //MAPPER CREATION
@@ -183,11 +190,11 @@ solveJobInfo(diet_profile_t* profile) {
     mapper->code(jobId, mapperkey);
     std::string cmd = mapper->finalize(mapperkey);
 
-    JobServer jobServer(authKey, machineId, ServerTMS::getInstance()->getSedConfig());
+    JobServer jobServer(authKey, machineId, ServerXMS::getInstance()->getSedConfig());
     std::string jobSerialized = JsonObject::serialize(jobServer.getJobInfo(jobId));
 
-    diet_string_set(profile,1, jobSerialized);
-    diet_string_set(profile,0, "success");
+    diet_string_set(pb,1, jobSerialized);
+    diet_string_set(pb,0, "success");
 
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& e) {
@@ -196,8 +203,8 @@ solveJobInfo(diet_profile_t* profile) {
     } catch (VishnuException& fe) {
       e.appendMsgComp(fe.what());
     }
-    diet_string_set(profile,0, "error");
-    diet_string_set(profile,1, e.what());
+    diet_string_set(pb,0, "error");
+    diet_string_set(pb,1, e.what());
   }
 
   return 0;
@@ -205,31 +212,30 @@ solveJobInfo(diet_profile_t* profile) {
 
 /**
  * \brief Function to solve the getListOfQueues service
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveListOfQueues(diet_profile_t* profile) {
+solveListOfQueues(diet_profile_t* pb) {
 
   std::string authKey;
   std::string machineId;
   std::string optionSerialized;
   std::string listQueuesSerialized;
 
-  diet_string_get(profile,0, authKey);
-  diet_string_get(profile,1, machineId);
-  diet_string_get(profile,2, optionSerialized);
+  diet_string_get(pb,0, authKey);
+  diet_string_get(pb,1, machineId);
+  diet_string_get(pb,2, optionSerialized);
 
   // reset profile to handle result
-  diet_profile_reset(profile, 2);
+  diet_profile_reset(pb, 2);
 
   TMS_Data::ListQueues_ptr listQueues = NULL;
 
 
-
   ListQueuesServer queryQueues(authKey,
-                               ServerTMS::getInstance()->getBatchType(),
-                               ServerTMS::getInstance()->getBatchVersion(),
+                               ServerXMS::getInstance()->getBatchType(),
+                               ServerXMS::getInstance()->getBatchVersion(),
                                optionSerialized);
 
   try {
@@ -246,8 +252,8 @@ solveListOfQueues(diet_profile_t* profile) {
     listQueuesSerialized =  _ser.serialize_str(listQueues);
 
 
-    diet_string_set(profile,0, "success");
-    diet_string_set(profile,1, listQueuesSerialized);
+    diet_string_set(pb,0, "success");
+    diet_string_set(pb,1, listQueuesSerialized);
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& ex) {
     try {
@@ -255,8 +261,8 @@ solveListOfQueues(diet_profile_t* profile) {
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
-    diet_string_set(profile,0, "error");
-    diet_string_set(profile,1, ex.what());
+    diet_string_set(pb,0, "error");
+    diet_string_set(pb,1, ex.what());
   }
 
   return 0;
@@ -264,11 +270,11 @@ solveListOfQueues(diet_profile_t* profile) {
 
 /**
  * \brief Function to solve the jobOutPutGetResult service
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveJobOutPutGetResult(diet_profile_t* profile) {
+solveJobOutPutGetResult(diet_profile_t* pb) {
 
   std::string authKey;
   std::string machineId;
@@ -276,13 +282,13 @@ solveJobOutPutGetResult(diet_profile_t* profile) {
   std::string jobid;
 
   //IN Parameters
-  diet_string_get(profile,0, authKey);
-  diet_string_get(profile,1, machineId);
-  diet_string_get(profile,2, optionsSerialized);
-  diet_string_get(profile,3, jobid);
+  diet_string_get(pb,0, authKey);
+  diet_string_get(pb,1, machineId);
+  diet_string_get(pb,2, optionsSerialized);
+  diet_string_get(pb,3, jobid);
 
   // reset profile to handle result
-  diet_profile_reset(profile, 2);
+  diet_profile_reset(pb, 2);
 
   try {
     //MAPPER CREATION
@@ -304,8 +310,8 @@ solveJobOutPutGetResult(diet_profile_t* profile) {
                                                          % "%%%%%%%")).string();
     vishnu::saveInFile(outputInfo, jobFiles);
 
-    diet_string_set(profile,0, "success");
-    diet_string_set(profile,1, outputInfo);
+    diet_string_set(pb,0, "success");
+    diet_string_set(pb,1, outputInfo);
 
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& e) {
@@ -315,20 +321,20 @@ solveJobOutPutGetResult(diet_profile_t* profile) {
       e.appendMsgComp(fe.what());
     }
 
-    diet_string_set(profile,0, "error");
-    diet_string_set(profile,1, e.what());
+    diet_string_set(pb,0, "error");
+    diet_string_set(pb,1, e.what());
   }
   return 0;
 }
 
 /**
  * \brief Function to solve the generic query service
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 template <class QueryParameters, class List, class QueryType>
 int
-solveGenerique(diet_profile_t* profile) {
+solveGenerique(diet_profile_t* pb) {
 
   std::string authKey;
   std::string machineId;
@@ -336,12 +342,12 @@ solveGenerique(diet_profile_t* profile) {
   std::string listSerialized = "";
 
   //IN Parameters
-  diet_string_get(profile,0, authKey);
-  diet_string_get(profile,1, machineId);
-  diet_string_get(profile,2, optionValueSerialized);
+  diet_string_get(pb,0, authKey);
+  diet_string_get(pb,1, machineId);
+  diet_string_get(pb,2, optionValueSerialized);
 
   // reset profile to handle result
-  diet_profile_reset(profile, 2);
+  diet_profile_reset(pb, 2);
 
   QueryParameters* options = NULL;
   List* list = NULL;
@@ -367,8 +373,8 @@ solveGenerique(diet_profile_t* profile) {
     listSerialized =  _ser.serialize_str(list);
 
     //OUT Parameter
-    diet_string_set(profile,0, "success");
-    diet_string_set(profile,1, listSerialized);
+    diet_string_set(pb,0, "success");
+    diet_string_set(pb,1, listSerialized);
 
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, "");
 
@@ -378,8 +384,8 @@ solveGenerique(diet_profile_t* profile) {
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
-    diet_string_set(profile,0, "error");
-    diet_string_set(profile,1,  ex.what());
+    diet_string_set(pb,0, "error");
+    diet_string_set(pb,1,  ex.what());
   }
   delete options;
   delete list;
@@ -388,31 +394,31 @@ solveGenerique(diet_profile_t* profile) {
 
 /**
  * \brief Function to solve the getListOfJobs service
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveGetListOfJobs(diet_profile_t* profile) {
-  return solveGenerique<TMS_Data::ListJobsOptions, TMS_Data::ListJobs, ListJobServer >(profile);
+solveGetListOfJobs(diet_profile_t* pb) {
+  return solveGenerique<TMS_Data::ListJobsOptions, TMS_Data::ListJobs, ListJobServer >(pb);
 }
 
 /**
  * \brief Function to solve the getJobsProgression service
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveGetListOfJobsProgression(diet_profile_t* profile) {
-  return solveGenerique<TMS_Data::ProgressOptions, TMS_Data::ListProgression, ListProgressServer >(profile);
+solveGetListOfJobsProgression(diet_profile_t* pb) {
+  return solveGenerique<TMS_Data::ProgressOptions, TMS_Data::ListProgression, ListProgressServer >(pb);
 }
 
 /**
  * \brief Function to solve the jobOutputGetCompletedJobs service
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveJobOutPutGetCompletedJobs(diet_profile_t* profile) {
+solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
   std::string authKey;
   std::string machineId;
   std::string serializedOptions;
@@ -420,12 +426,12 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* profile) {
   int mapperkey;
   std::string cmd;
 
-  diet_string_get(profile, 0, authKey);
-  diet_string_get(profile, 1, machineId);
-  diet_string_get(profile, 2, serializedOptions);
+  diet_string_get(pb, 0, authKey);
+  diet_string_get(pb, 1, machineId);
+  diet_string_get(pb, 2, serializedOptions);
 
   // reset profile to handle result
-  diet_profile_reset(profile, 2);
+  diet_profile_reset(pb, 2);
 
   try {
     //MAPPER CREATION
@@ -457,8 +463,8 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* profile) {
     data.setProperty("joblist", jobListsSerialized);
 
     // set result
-    diet_string_set(profile, 0, "success");
-    diet_string_set(profile, 1, data.encode());
+    diet_string_set(pb, 0, "success");
+    diet_string_set(pb, 1, data.encode());
 
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& e) {
@@ -468,8 +474,8 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* profile) {
       e.appendMsgComp(fe.what());
     }
     // set result
-    diet_string_set(profile, 0, "error");
-    diet_string_set(profile, 1, e.what());
+    diet_string_set(pb, 0, "error");
+    diet_string_set(pb, 1, e.what());
   }
   return 0;
 }
@@ -477,22 +483,22 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* profile) {
 
 /**
  * \brief Function to solve the service solveAddWork
- * \param profile is a structure which corresponds to the descriptor of a profile
+ * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
 int
-solveAddWork(diet_profile_t* profile) {
+solveAddWork(diet_profile_t* pb) {
   std::string authKey;
   std::string workSerialized;
   std::string opSerialized;
 
   //IN Parameters
-  diet_string_get(profile,0, authKey);
-  diet_string_get(profile,1, workSerialized);
-  diet_string_get(profile,2, opSerialized);
+  diet_string_get(pb,0, authKey);
+  diet_string_get(pb,1, workSerialized);
+  diet_string_get(pb,2, opSerialized);
 
   // reset profile to handle result
-  diet_profile_reset(profile, 2);
+  diet_profile_reset(pb, 2);
 
   //FIXME: SessionServer sessionServer = SessionServer(authKey);
 
@@ -519,17 +525,15 @@ solveAddWork(diet_profile_t* profile) {
     }
 
     //FIXME: WorkServer workServer = WorkServer(work, sessionServer);
-    //FIXME: workServer.add(ServerTMS::getInstance()->getVishnuId(), workop);
-    WorkServer workServer = WorkServer(authKey, workop->getMachineId(), work);
-    workServer.add(ServerTMS::getInstance()->getVishnuId(), workop);
+    //FIXME: workServer.add(ServerXMS::getInstance()->getVishnuId(), workop);
 
     //To serialize the user object
     ::ecorecpp::serializer::serializer _ser;
     std::string workSerializedUpdate = _ser.serialize_str(work);
 
     // set result
-    diet_string_set(profile,0, "success");
-    diet_string_set(profile,1, workSerializedUpdate);
+    diet_string_set(pb,0, "success");
+    diet_string_set(pb,1, workSerializedUpdate);
 
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDFAILED, work->getWorkId());
   } catch (VishnuException& e) {
@@ -540,8 +544,8 @@ solveAddWork(diet_profile_t* profile) {
     }
 
     // set result
-    diet_string_set(profile,0, "error");
-    diet_string_set(profile,1, e.what());
+    diet_string_set(pb,0, "error");
+    diet_string_set(pb,1, e.what());
   }
   delete work;
   return 0;

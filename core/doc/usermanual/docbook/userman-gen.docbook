@@ -433,7 +433,7 @@ Download the vishnu-client_*_i386.deb, where * stands for the VISHNU version and
         <title>Client configuration file</title>
         <programlisting>
 disp_uriAddr=tcp://127.0.0.1:5560 
-ums_uriAddr=tcp://127.0.0.1:5555
+sed_uriAddr=tcp://127.0.0.1:5555
 timeout=10
 </programlisting>
         <para>

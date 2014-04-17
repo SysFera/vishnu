@@ -72,7 +72,7 @@ public:
     if (! options->getJobId().empty()) {
       std::string jobId = options->getJobId();
       sqlRequest.append(" and jobId='"+mdatabaseInstance->escapeData(jobId)+"'");
-      boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+      boost::scoped_ptr<DatabaseResult> sqlResult(ServerXMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
       if(sqlResult->getNbTuples() == 0) {
         throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
       }
@@ -82,7 +82,7 @@ public:
 
     sqlRequest.append("  and status < 5 order by jobId");
 
-    boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+    boost::scoped_ptr<DatabaseResult> sqlResult(ServerXMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
 
     if (sqlResult->getNbTuples() != 0){
       for (size_t i = 0; i < sqlResult->getNbTuples(); ++i) {
@@ -103,8 +103,8 @@ public:
         batchJobId = *(++iter);
 
         BatchFactory factory;
-        BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-        std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
+        BatchType batchType  = ServerXMS::getInstance()->getBatchType();
+        std::string batchVersion  = ServerXMS::getInstance()->getBatchVersion();
         boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType,
                                                                                   batchVersion));
 

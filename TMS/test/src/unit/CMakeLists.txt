@@ -5,6 +5,7 @@ include_directories(
   ${EMF_DATA_DIR}
   ${UMS_EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
+  ${FMS_EMF_DATA_DIR}
   ${UMS_CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
@@ -18,9 +19,13 @@ include_directories(
   ${VISHNU_SOURCE_DIR}/core/test/mock/database/
   ${VISHNU_SOURCE_DIR}/TMS/src/utils/
   ${VISHNU_SOURCE_DIR}/UMS/src/server/
+  ${VISHNU_SOURCE_DIR}/FMS/src/server/
   ${VISHNU_SOURCE_DIR}/TMS/src/sed/
+  ${XMS_SED_SOURCE_DIR}
+  ${XMS_SED_SOURCE_DIR}
+  ${PROJECT_BINARY_DIR}
+  ${VISHNU_SOURCE_DIR}/core/src/version
   )
-
 
 include(UnitTest)
 
@@ -54,10 +59,12 @@ endif()
 add_library(vishnu-tms-server-mock ${server_mock_SRCS})
 set_target_properties(vishnu-tms-server-mock PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-tms-server-mock vishnu-ums-server-mock mockDb  ${LIBJANSSON_LIB})
-set(sed_mock_SRCS ${VISHNU_SOURCE_DIR}/TMS/src/sed/tmssed.cpp
-  ${VISHNU_SOURCE_DIR}/TMS/src/sed/ServerTMS.cpp
-  ${VISHNU_SOURCE_DIR}/TMS/src/sed/internalApi.cpp
-  ${VISHNU_SOURCE_DIR}/TMS/src/sed/MonitorTMS.cpp
+set(sed_mock_SRCS ${VISHNU_SOURCE_DIR}/XMS/src/xmssed.cpp
+  ${VISHNU_SOURCE_DIR}/XMS/src/ServerXMS.cpp
+  ${VISHNU_SOURCE_DIR}/XMS/src//internalApiUMS.cpp
+  ${VISHNU_SOURCE_DIR}/XMS/src/internalApiTMS.cpp
+  ${VISHNU_SOURCE_DIR}/XMS/src/internalApiFMS.cpp
+  ${VISHNU_SOURCE_DIR}/XMS/src/MonitorXMS.cpp
   ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
   )
 add_library(tmssed-mock ${sed_mock_SRCS})
@@ -76,5 +83,5 @@ target_link_libraries(tmssed-mock
   zmq_helper
   ${USED_BATCH_LIB})
 
-unit_test(ListJobServerUnitTests vishnu-tms-server-mock tmssed-mock)
+unit_test(ListJobServerUnitTests vishnu-tms-server-mock tmssed-mock vishnu-ums-server vishnu-fms-server)
 endif(COMPILE_SERVERS)

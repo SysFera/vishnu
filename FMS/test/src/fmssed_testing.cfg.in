@@ -8,5 +8,5 @@ databaseUserName=@TEST_DB_LOGIN@
 databaseUserPassword=@TEST_DB_PASSWORD@
 intervalMonitor=1
 vishnuMachineId=machine_FMS
-fms_uriAddr=@TEST_ZMQ_FMS_URI@
+sed_uriAddr=@TEST_ZMQ_FMS_URI@
 disp_uriSubs=@TEST_ZMQ_DISPATCHER_URI_SUB@

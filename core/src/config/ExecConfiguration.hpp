@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 #include <exception>
+#include <iostream>
+#include <cstdlib>
 
 #include "constants.hpp"
 #include "CommonParser.hpp"

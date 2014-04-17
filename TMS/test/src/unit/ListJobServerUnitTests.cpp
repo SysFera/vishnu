@@ -3,7 +3,6 @@
 #include <boost/format.hpp>
 #include <cstdlib>
 #include "TMSVishnuException.hpp"
-#include "ServerTMS.hpp"
 #include "ListJobServer.hpp"
 
 

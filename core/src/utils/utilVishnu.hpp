@@ -309,7 +309,7 @@ validatePath(const std::string& path);
  * @return A string
  */
 bool
-execSystemCommand(const std::string& command, std::string msg);
+execSystemCommand(const std::string& command, std::string& msg);
 
 } //END NAMESPACE
 #endif // _UTILVISHNU_H_

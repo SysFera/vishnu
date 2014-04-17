@@ -44,9 +44,8 @@ namespace vishnu {
     DISP_URIADDR,
     DISP_URISUBS,
     DISP_NBTHREAD,
-    FMS_URIADDR,
-    TMS_URIADDR,
-    UMS_URIADDR,
+    HOST_URIADDR,
+    SED_URIADDR,
     CLOUDENDPOINT,
     DEBUG_LEVEL,
     DB_USE_SSL,
@@ -57,7 +56,10 @@ namespace vishnu {
     SERVER_SSL_CERTICATE,
     SSL_CA,
     SUBSCRIBE,
-    STANDALONE
+    STANDALONE,
+    HAS_UMS,
+    HAS_TMS,
+    HAS_FMS
   };
 
   /**
@@ -138,8 +140,8 @@ namespace vishnu {
   };
 
   /**
-             * \brief A convenient data type to store a parameter
-             */
+ * \brief A convenient data type to store a parameter
+ */
   struct param_t {
     /**
    * \brief key to retrieve the parameter

@@ -265,30 +265,37 @@ if (COMPILE_SERVER_TMS)
     ${UMS_SERVER_SOURCE_DIR}
     ${FMS_SERVER_SOURCE_DIR}
     ${USED_BATCH_INCLUDE_DIR}
-    ${TESTVISHNU_SOURCE_DIR}/../third-party)
+    ${XMS_SED_SOURCE_DIR}
+    ${TESTVISHNU_SOURCE_DIR}/../third-party
+    ${PROJECT_BINARY_DIR})
   
 
  if(NOT COMPILE_ONLY_LIBBATCH)
    # define tmsSlave related source files
-  set(slave_SRCS slave/slave.cpp ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
+  set(slave_SRCS slave/slave.cpp ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
+    server/BatchFactory.cpp
+    utils/SharedLibrary.cc
+    ../../core/src/utils/utilPosix.cpp
+    ../../communication/utils.cpp
+    ${logger_SRCS})
+
+ if(WIN32)
+   set(slave_SRCS ${slave_SRCS} utils/SharedLibraryImpl_win32.cc)
+ else()
+   set(slave_SRCS ${slave_SRCS} utils/SharedLibraryImpl_posix.cc)
+ endif()
+
 
   # define tmsSlave binary
   add_executable(tmsSlave ${slave_SRCS})
   target_link_libraries(tmsSlave
     ${Boost_LIBRARIES}
+    ${CMAKE_DL_LIBS}
     vishnu-core
-    vishnu-core-server
-    vishnu-tms-server
     emf4cpp-vishnu
+    jansson
     ${USED_BATCH_LIB})
 
-  # set tmssed related source files
-  set(sed_SRCS sed/tmssed.cpp
-    sed/ServerTMS.cpp
-    sed/internalApi.cpp
-    sed/MonitorTMS.cpp
-    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp)
-  
   add_definitions(-DMODULE_PREFIX="${CMAKE_SHARED_MODULE_PREFIX}")
   add_definitions(-DMODULE_SUFFIX="${CMAKE_SHARED_MODULE_SUFFIX}")
 
@@ -306,35 +313,19 @@ if (COMPILE_SERVER_TMS)
     ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
     ${logger_SRCS})
 
- if(WIN32)
-   set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_win32.cc)
- else()
-   set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_posix.cc)
- endif()
- 
+  if(WIN32)
+    set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_win32.cc)
+  else()
+    set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_posix.cc)
+  endif()
+
   # generate vishnu-tms-server library
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server zmq_helper)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
 
-  # generate tmssed binary
-  add_executable(tmssed ${sed_SRCS} ${logger_SRCS})
-  target_link_libraries(tmssed
-    ${Boost_LIBRARIES}
-    ${DATABASE_LIBS}
-    vishnu-core
-    ${LIBCRYPT_LIB}
-    vishnu-core-server
-    vishnu-tms-server
-    ${LDAP_LIBRARIES}
-    emf4cpp-vishnu
-    ${ZMQ_LIBRARIES}
-    zmq_helper
-    ${USED_BATCH_LIB})
-
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR})
-  install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
  endif(NOT COMPILE_ONLY_LIBBATCH)
 
   if (torque)

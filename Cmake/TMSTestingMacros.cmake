@@ -52,6 +52,7 @@ macro( tms_test NAME )
       ${PROJECT_BINARY_DIR}/include
       ${UMS_TEST_DIR}
       ${TMS_TEST_DIR}
+      ${UMS_SED_SOURCE_DIR}
       )
 
     # link libraries
@@ -62,6 +63,7 @@ macro( tms_test NAME )
       ${LIBCRYPT_LIB}
       vishnu-tms-client
       vishnu-ums-client
+      vishnu-ums-server
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     file(READ "${NAME}.cpp" content)

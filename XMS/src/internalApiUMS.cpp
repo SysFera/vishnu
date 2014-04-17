@@ -5,11 +5,11 @@
 * \date 31/01/2011
 */
 
-#include "internalApi.hpp"
+#include "internalApiUMS.hpp"
 #include <string>
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
-#include "ServerUMS.hpp"
+#include "ServerXMS.hpp"
 #include "vishnu_version.hpp"
 #include "VersionManager.hpp"
 #include "ObjectIdServer.hpp"
@@ -247,8 +247,8 @@ solveUserCreate(diet_profile_t* pb) {
 
     userServer.init();
     userServer.add(user,
-                   ServerUMS::getInstance()->getVishnuId(),
-                   ServerUMS::getInstance()->getSendmailScriptPath());
+                   ServerXMS::getInstance()->getVishnuId(),
+                   ServerXMS::getInstance()->getSendmailScriptPath());
 
     // To serialize the user object
     ::ecorecpp::serializer::serializer _ser;
@@ -474,7 +474,7 @@ solveUserPasswordReset(diet_profile_t* pb) {
     cmd = mapper->finalize(mapperkey);
 
     userServer.init();
-    userServer.resetPassword(user, ServerUMS::getInstance()->getSendmailScriptPath());
+    userServer.resetPassword(user, ServerXMS::getInstance()->getSendmailScriptPath());
 
     // set success result
     diet_string_set(pb, 0, "success");
@@ -532,7 +532,7 @@ solveMachineCreate(diet_profile_t* pb) {
     }
 
     MachineServer machineServer = MachineServer(machine, sessionServer);
-    machineServer.add(ServerUMS::getInstance()->getVishnuId());
+    machineServer.add(ServerXMS::getInstance()->getVishnuId());
 
     // To serialize the user object
     ::ecorecpp::serializer::serializer _ser;
@@ -1143,7 +1143,7 @@ solveSystemAuthCreate(diet_profile_t* pb) {
     }
 
     AuthSystemServer authSystemServer(authSystem, sessionServer);
-    authSystemServer.add(ServerUMS::getInstance()->getVishnuId());
+    authSystemServer.add(ServerXMS::getInstance()->getVishnuId());
 
     // To serialize the user object
     ::ecorecpp::serializer::serializer _ser;

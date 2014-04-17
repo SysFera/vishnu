@@ -9,5 +9,5 @@ databaseUserPassword=@TEST_DB_PASSWORD@
 sendmailScriptPath=@SENDMAILPY@
 vishnuMachineId=machine_1
 authenticationType=@TEST_AUTHENTYPE@
-ums_uriAddr=@TEST_ZMQ_UMS_URI@
+sed_uriAddr=@TEST_ZMQ_UMS_URI@
 disp_uriSubs=@TEST_ZMQ_DISPATCHER_URI_SUB@

@@ -4,7 +4,7 @@
   Author: Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
   */
 
-#include "internalApi.hpp"
+#include "internalApiFMS.hpp"
 #include "SessionServer.hpp"
 #include "ListFileTransfers.hpp"
 #include <istream>
@@ -995,7 +995,7 @@ solveFileTransferStop(diet_profile_t* profile) {
     if(! vishnu::parseEmfObject(optionsSerialized, options_ptr)) {
       SystemException(ERRCODE_INVDATA, "solveFileTransferStop: options object is not well built");
     }
-    FileTransferServer fileTransferServer(sessionServer, ServerFMS::getInstance()->getVishnuId());
+    FileTransferServer fileTransferServer(sessionServer, ServerXMS::getInstance()->getVishnuId());
     fileTransferServer.stopThread(*options_ptr);
     delete options_ptr;
 
@@ -1038,7 +1038,7 @@ solveUpdateClientSideTransfer(diet_profile_t* profile)
     }
 
     FileTransferServer transferServer(SessionServer(sessionKey),
-                                      ServerFMS::getInstance()->getVishnuId());
+                                      ServerXMS::getInstance()->getVishnuId());
     transferServer.setFileTransfer(*transfer);
     transferServer.updateDatabaseRecord();
     delete transfer;
