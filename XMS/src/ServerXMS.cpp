@@ -319,6 +319,8 @@ ServerXMS::initMap(const std::string& mid) {
     mcb[SERVICES_FMS[FILETRANSFERSLIST]] = functionPtr;
     functionPtr = solveFileTransferStop;
     mcb[SERVICES_FMS[FILETRANSFERSTOP]] = functionPtr;
+    functionPtr = solveUpdateClientSideTransfer;
+    mcb[SERVICES_FMS[UPDATECLIENTSIDETRANSFER]] = functionPtr;
   }
 
 }

@@ -34,6 +34,7 @@ typedef enum {
   REMOTEFILEMOVE,
   FILETRANSFERSLIST,
   FILETRANSFERSTOP,
+  UPDATECLIENTSIDETRANSFER,
   NB_SRV_FMS  // MUST always be the last
 } fms_service_t;
 
@@ -58,7 +59,8 @@ static const char* SERVICES_FMS[NB_SRV_FMS] = {
   "RemoteFileCopy",  // 17
   "RemoteFileMove",  // 18
   "FileTransfersList",  // 19
-  "FileTransferStop"  // 20
+  "FileTransferStop",  // 20
+  "UpdateClientSideTransfer"  // 21
 };
 
 static const bool MACHINE_SPECIC_SERVICES_FMS[NB_SRV_FMS] = {
@@ -82,7 +84,8 @@ static const bool MACHINE_SPECIC_SERVICES_FMS[NB_SRV_FMS] = {
   false,   // 17
   false,   // 18
   false,   // 19
-  false   // 20
+  false,   // 20
+  false  // 21
 };
 
 #endif  // _FMSSERVICES_HPP_
