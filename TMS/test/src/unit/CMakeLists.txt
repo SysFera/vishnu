@@ -5,6 +5,7 @@ include_directories(
   ${EMF_DATA_DIR}
   ${UMS_EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
+  ${FMS_EMF_DATA_DIR}
   ${UMS_CLIENT_PROXY_SOURCE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
@@ -62,6 +63,7 @@ set(sed_mock_SRCS ${VISHNU_SOURCE_DIR}/XMS/src/xmssed.cpp
   ${VISHNU_SOURCE_DIR}/XMS/src/ServerXMS.cpp
   ${VISHNU_SOURCE_DIR}/XMS/src//internalApiUMS.cpp
   ${VISHNU_SOURCE_DIR}/XMS/src/internalApiTMS.cpp
+  ${VISHNU_SOURCE_DIR}/XMS/src/internalApiFMS.cpp
   ${VISHNU_SOURCE_DIR}/XMS/src/MonitorXMS.cpp
   ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
   )
