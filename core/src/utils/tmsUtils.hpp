@@ -69,6 +69,39 @@ const std::map<int, std::string> JOB_STATE_TO_NAME_MAP = boost::assign::map_list
                                                          (vishnu::STATE_FAILED, "FAILED")
                                                          (vishnu::STATE_UNDEFINED, "UNDEFINED");
 
+
+const std::set<std::string> TORQUE_SUPPORTED_VERSION = boost::assign::list_of
+                                                       ("2.3");
+const std::set<std::string> PBS_SUPPORTED_VERSION = boost::assign::list_of
+                                                    ("10.4");
+const std::set<std::string> LSF_SUPPORTED_VERSION = boost::assign::list_of
+                                                    ("7.0");
+const std::set<std::string> SGE_SUPPORTED_VERSION = boost::assign::list_of
+                                                    ("11");
+const std::set<std::string> LOADLEVELER_SUPPORTED_VERSION = boost::assign::list_of
+                                                            ("2.x")
+                                                            ("3.x");
+const std::set<std::string> SLURM_SUPPORTED_VERSION = boost::assign::list_of
+                                                      ("2.2")
+                                                      ("2.3")
+                                                      ("2.4")
+                                                      ("2.5")
+                                                      ("2.6");
+const std::set<std::string> DELTACLOUD_SUPPORTED_VERSION = boost::assign::list_of
+                                                           ("ANY");
+const std::set<std::string> OPENNEBULA_SUPPORTED_VERSION = boost::assign::list_of
+                                                           ("ANY");
+
+
+const std::map<int, std::set<std::string> > SUPPORTED_BATCH_VERSIONS = boost::assign::map_list_of
+                                                                       (TORQUE, TORQUE_SUPPORTED_VERSION)
+                                                                       (PBSPRO, PBS_SUPPORTED_VERSION)
+                                                                       (LSF, LSF_SUPPORTED_VERSION)
+                                                                       (SGE, SGE_SUPPORTED_VERSION)
+                                                                       (DELTACLOUD, DELTACLOUD_SUPPORTED_VERSION)
+                                                                       (OPENNEBULA, OPENNEBULA_SUPPORTED_VERSION)
+                                                                       (LOADLEVELER, LOADLEVELER_SUPPORTED_VERSION)
+                                                                       (SLURM, SLURM_SUPPORTED_VERSION);
 namespace vishnu
 {
   /**
@@ -350,6 +383,16 @@ namespace vishnu
    */
   std::string
   copyFileToUserHome(const std::string& path);
+
+  /**
+   * @brief Check a version of a given batch type is supported
+   * @param btype The batch type
+   * @param version The given version
+   * @param supportedVersion If case of error return supported batch version
+   * @return True on success, false otherwise
+   */
+  bool
+  checkIfSupportedBatchVersion(BatchType btype, const std::string& version, std::string& supportedVersion);
 
 } //END NAMESPACE
 
