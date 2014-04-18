@@ -55,6 +55,7 @@ getBatchConfiguration(SedConfig& cfg) {
 
   if (cfg.batchType == DELTACLOUD || cfg.batchType == OPENNEBULA) {
     exportCloudSpecificParam(&cfg.config);
+  } else if (cfg.batchType == POSIX) {
   } else {
     std::string versError;
     if (! vishnu::checkIfSupportedBatchVersion(cfg.batchType, cfg.batchVersion, versError)) {
