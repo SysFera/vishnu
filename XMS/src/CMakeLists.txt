@@ -26,19 +26,23 @@ include_directories(
   ${AUTHENTICATOR_INCLUDE_DIR}
   ${XMS_SED_SOURCE_DIR})
 
-set(sed_SRCS xmssed.cpp
-  MonitorXMS.cpp
-  ServerXMS.cpp
-  internalApiUMS.cpp
-  internalApiTMS.cpp
-  internalApiFMS.cpp
-  ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp)
+if(NOT COMPILE_ONLY_LIBBATCH)
 
-add_executable(xmssed ${sed_SRCS})
-target_link_libraries(xmssed vishnu-core vishnu-core-server
-  vishnu-ums-server
-  vishnu-tms-server
-  vishnu-fms-server
-  )
+  set(sed_SRCS xmssed.cpp
+    MonitorXMS.cpp
+    ServerXMS.cpp
+    internalApiUMS.cpp
+    internalApiTMS.cpp
+    internalApiFMS.cpp
+    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp)
+  
+  add_executable(xmssed ${sed_SRCS})
+  target_link_libraries(xmssed vishnu-core vishnu-core-server
+    vishnu-ums-server
+    vishnu-tms-server
+    vishnu-fms-server
+    )
+
+endif(NOT COMPILE_ONLY_LIBBATCH)
 
 install(TARGETS xmssed DESTINATION ${SBIN_INSTALL_DIR})
