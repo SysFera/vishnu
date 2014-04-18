@@ -127,23 +127,40 @@ disp_nbthread=5
 
 
 ###############################################################################
-#                UMS Related Parameters                                       #
+#                Server Parameters                                            #
 ###############################################################################
 
-# sed_uriAddr (M<UMS>|O<Dispatcher,Client>):
-#   * For UMS, this sets the address and the port on which the UMS SeD
-#     will listen on
-#   * For Dispactcher and clients it indicates address(es) for connecting
-#     to UMS SeDs.
-#     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: sed_uriAddr=uri_umssed1 sed1_name;uri_umssed2 sed2_name;...
-#     uri_umssed<i> correspond to valid URIs. sed<i>_name set the
-#     names associated to the SeDs
-#     E.g. sed_uriAddr=tcp://127.0.0.1:5562 localsed;tcp://192.168.1.1:5562 lansed
+# sed_uriAddr (S<SED>)
+#   * Sets the address and the port on which the SeD will listen on
+#     E.g. sed_uriAddr=tcp://127.0.0.1:5562, means that the server will listen on
+#     the local loop on the port 5562
 #
 sed_uriAddr=tcp://127.0.0.1:5562
 
-# sendmailScriptPath (M<UMS>): Sets the path to the script for sending emails
+# enableUMS (S<SED>)
+# Sets whether to enable UMS services within the SeD.
+# 0 means disable and non-zero means enables
+enableUMS=1
+
+# enableFMS (S<SED>)
+# Sets whether to enable FMS services within the SeD.
+# 0 means disable and non-zero means enables
+enableFMS=1
+
+
+# enableTMS (S<SED>)
+# Sets whether to enable TMS services within the SeD.
+# 0 means disable and non-zero means enables
+enableTMS=1
+
+# vishnuMachineId (M<FMS,TMS>|O<UMS>): Optional for UMS and mandatory for FMS,
+# and TMS, this key corresponds to the identity of the machine in vishnu
+# When set, it MUST correspond to a valid machine identifier.
+#
+vishnuMachineId=machine_1
+
+# sendmailScriptPath (M<UMS>)
+# Sets the path to the script for sending emails
 #
 sendmailScriptPath=@CMAKE_INSTALL_PREFIX@/sbin/sendmail.py
 
@@ -156,41 +173,6 @@ sendmailScriptPath=@CMAKE_INSTALL_PREFIX@/sbin/sendmail.py
 # If not set, UMS mode will be selected.
 #
 #authenticationType=UMS
-
-
-###############################################################################
-#                FMS Specfic Parameters                                       #
-###############################################################################
-
-# sed_uriAddr (M<FMS>|O<Dispatcher,Client>):
-#   * For FMS, this sets the address and the port on which the FMS SeD
-#     will listen on
-#   * For Dispactcher and clients it indicates address(es) for connecting
-#     to FMS SeDs.
-#     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: sed_uriAddr=uri_fmssed1 sed1_name;uri_fmssed2 sed2_name;...
-#     uri_fmssed<i> correspond to valid URIs. sed<i>_name set the
-#     names associated to the SeDs
-#     E.g. sed_uriAddr=tcp://127.0.0.1:5563 localsed;tcp://192.168.1.1:5563 lansed
-#
-sed_uriAddr=tcp://127.0.0.1:5563
-
-
-###############################################################################
-#                TMS Related Parameters                                       #
-###############################################################################
-# sed_uriAddr (M<TMS>|O<Dispatcher,Client>):
-#   * For TMS, this sets the address and the port on which the TMS SeD
-#     will listen on
-#   * For Dispactcher and clients it indicates address(es) for connecting
-#     to TMS SeDs.
-#     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: sed_uriAddr=uri_tmssed1 sed1_name;uri_tmssed2 sed2_name;...
-#     uri_tmssed<i> correspond to valid  URIs. sed<i>_name set the
-#     names associated to the SeDs.
-#     E.g. sed_uriAddr=tcp://127.0.0.1:5565 localsed;tcp://192.168.1.1:5565 lansed
-#
-sed_uriAddr=tcp://127.0.0.1:5565
 
 # batchSchedulerType (M<TMS>): Defines the type of the batch scheduler TMS
 # will handle.
@@ -225,25 +207,30 @@ intervalMonitor=30
 ###############################################################################
 #                Other Parameters                                             #
 ###############################################################################
-
-# vishnuMachineId (M<FMS,TMS>|O<UMS>): Optional for UMS and mandatory for FMS,
-# and TMS, this key corresponds to the identifier of the machine in VISHNU
-# environment.
-# When set, it MUST correspond to valid machine identifier.
-#
-vishnuMachineId=machine_1
-
 # timeout (M<Dispatcher>|O<FMS,TMS,UMS,Client>): In seconds, this defines the
 # duration afer which a request is considered as expired.
 #
 timeout=120
-# debugLevel (O): specifies the debug level. The higher the more debug information
-# you'll get. Default is 0.
+
+# debugLevel (O): Specifies the debug level. The higher to filter log information
+# regarding the criticity of log.
+# Default is 0, means everything is logged.
 #
 # debugLevel=0
 
-# subscribe(M<FMS,TMS,UMS>): If not 0, the servers will try to register in the dispatcher
+# subscribe(M<FMS,TMS,UMS>): Sets whether the SeD should register to the Dispatcher
+#  * Sets to non-zero if registration is needed, 0 otherwise
 subscribe=0
 
-# standalone(M<FMS,TMS,UMS>): If not 0, use setuid to change user in TMS, otherwise use ssh
+# standalone(M<TMS>): Sets the method to use to change local user in TMS
+#   * 0 means to use SSH and non-zero means to use setuid
 standalone=1
+
+# host_uriAddr (S<Client>)
+# Sets a list of semi-colon-separated addresses where SeD can be found.
+#     Each item in the list should have the form <sed_addr> <sed_name>
+#     Where <sed_addr> sets the address of the SeD while <sed_name> sets the name of
+#     the SeD. The name MUST match the name of the SeD in vishnu.
+#     E.g. sed_uriAddr=tcp://127.0.0.1:5561 tmssed1;tcp://192.168.1.1:5562 umssed1
+#
+host_uriAddr=tcp://127.0.0.1:5570 sed_name;

@@ -19,6 +19,8 @@
 #include <boost/algorithm/string/find.hpp>
 #include <pwd.h>
 #include <fstream>
+#include <algorithm>
+#include <iterator>
 
 static const unsigned int MAXPATHLEN = 255;   // make this larger if you need to.
 
@@ -497,4 +499,34 @@ vishnu::copyFileToUserHome(const std::string& path)
   }
 
   return result;
+}
+
+
+
+/**
+ * @brief Check a version of a given batch type is supported
+ * @param btype The batch type
+ * @param version The given version
+ * @param supportedVersion In case of error returns supported batch version
+ * @return True on success, false otherwise
+ */
+bool
+vishnu::checkIfSupportedBatchVersion(BatchType btype, const std::string& version, std::string& supportedVersion)
+{
+  std::map<int, std::set<std::string> >::const_iterator batchIter = SUPPORTED_BATCH_VERSIONS.find(btype);
+
+  if (batchIter != SUPPORTED_BATCH_VERSIONS.end()) {
+    std::set<std::string>::const_iterator versionIter = batchIter->second.find(version);
+    if (versionIter != batchIter->second.end()) {
+      return true;
+    } else {
+      std::ostringstream oss;
+      std::copy(batchIter->second.begin(), batchIter->second.end(), std::ostream_iterator<std::string>(oss, ", "));
+      supportedVersion = oss.str();
+    }
+  } else {
+    supportedVersion = boost::str(boost::format("Unknown batch type %1%") % btype);
+  }
+
+  return false;
 }

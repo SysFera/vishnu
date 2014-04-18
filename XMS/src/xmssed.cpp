@@ -7,6 +7,8 @@
 #include "MonitorXMS.hpp"
 #include "ServerXMS.hpp"
 #include "CommServer.hpp"
+#include "tmsUtils.hpp"
+#include "Logger.hpp"
 
 
 
@@ -28,8 +30,8 @@ void
 exportCloudSpecificParam(ExecConfiguration_Ptr config) {
   std::string paramValue;
   if (config->getConfigValue<std::string>(vishnu::CLOUDENDPOINT, paramValue)) {
-  setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT].c_str(),
-         paramValue.c_str(), 1);
+    setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT].c_str(),
+        paramValue.c_str(), 1);
   }
 }
 
@@ -42,7 +44,7 @@ getBatchConfiguration(SedConfig& cfg) {
   cfg.batchType = vishnu::convertToBatchType(batchTypeStr);
   if (cfg.batchType == UNDEFINED) {
     std::cerr << boost::format("Invalid batch backend: %1%\n")
-        % batchTypeStr;
+                 % batchTypeStr;
     exit(1);
   }
 
@@ -51,59 +53,16 @@ getBatchConfiguration(SedConfig& cfg) {
     cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, cfg.batchVersion);
   }
 
-  std::string versError;
-  switch (cfg.batchType) {
-  case TORQUE: {
-    if (cfg.batchVersion != "2.3") {
-      versError = "2.3";
-    }
-    break;
-  }
-  case PBSPRO: {
-    if (cfg.batchVersion != "10.4") {
-      versError = "10.4";
-    }
-    break;
-  }
-  case LOADLEVELER: {
-    if (cfg.batchVersion != "3.x" && cfg.batchVersion != "2.x") {
-      versError = "2.x and 3.x";
-    }
-    break;
-  }
-  case SLURM: {
-    if (cfg.batchVersion != "2.2" &&
-      cfg.batchVersion != "2.3" &&
-      cfg.batchVersion != "2.4") {
-        versError = "2.2, 2.3 and 2.4";
-    }
-    break;
-    }
-  case LSF: {
-    if (cfg.batchVersion != "7.0") {
-      versError = "7.0";
-    }
-    break;
-  }
-  case SGE: {
-    if (cfg.batchVersion != "11") {
-      versError = "11";
-    }
-    break;
-  }
-  case DELTACLOUD:
-  case OPENNEBULA:
+  if (cfg.batchType == DELTACLOUD || cfg.batchType == OPENNEBULA) {
     exportCloudSpecificParam(&cfg.config);
-    break;
-  default:
-    break;
-  }
-
-  if (!versError.empty()) {
-    std::cerr << "\nError: specified batch version is not supported.\n"
-              << "Supported versions for " << batchTypeStr
-              << " are: " << versError << "\n";
-    exit(1);
+  } else if (cfg.batchType != POSIX) {
+    std::string versError;
+    if (! vishnu::checkIfSupportedBatchVersion(cfg.batchType, cfg.batchVersion, versError)) {
+      std::string logMsg = boost::str(boost::format("[ERROR] specified batch version is not supported.\n"
+                                                    "Supported versions for %1% are %2%") %batchTypeStr % versError);
+      std::cerr << logMsg <<"\n";
+      exit(1);
+    }
   }
 }
 
@@ -150,14 +109,14 @@ void
 controlSignal (int signum) {
   int res;
   switch (signum) {
-  case SIGCHLD:
-    res = waitpid (-1, NULL, WNOHANG);
-    while (res > 0) {
+    case SIGCHLD:
       res = waitpid (-1, NULL, WNOHANG);
-    }
-    break;
-  default:
-    break;
+      while (res > 0) {
+        res = waitpid (-1, NULL, WNOHANG);
+      }
+      break;
+    default:
+      break;
   }
 }
 
