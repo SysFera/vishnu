@@ -61,7 +61,6 @@ getBatchConfiguration(SedConfig& cfg) {
       std::string logMsg = boost::str(boost::format("[ERROR] specified batch version is not supported.\n"
                                                     "Supported versions for %1% are %2%") %batchTypeStr % versError);
       std::cerr << logMsg <<"\n";
-      LOG(logMsg, LogCrit);
       exit(1);
     }
   }
