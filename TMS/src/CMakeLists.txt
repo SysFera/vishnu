@@ -274,6 +274,7 @@ if (COMPILE_SERVER_TMS)
    # define tmsSlave related source files
   set(slave_SRCS slave/slave.cpp ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
     server/BatchFactory.cpp
+    server/BatchServer.cpp
     utils/SharedLibrary.cc
     ../../core/src/utils/utilPosix.cpp
     ../../communication/utils.cpp
