@@ -507,7 +507,7 @@ vishnu::copyFileToUserHome(const std::string& path)
  * @brief Check a version of a given batch type is supported
  * @param btype The batch type
  * @param version The given version
- * @param supportedVersion If case of error return supported batch version
+ * @param supportedVersion In case of error returns supported batch version
  * @return True on success, false otherwise
  */
 bool
