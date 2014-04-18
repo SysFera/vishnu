@@ -620,6 +620,7 @@ TransferExec::TransferExec (const SessionServer& sessionServer,
 // Set the file transfer process identifier into database
 void
 TransferExec::updatePid(const int& pid) const {
+
   setProcessId(pid);
   std::string query = (boost::format("UPDATE filetransfer SET processid=%1%"
                                      " WHERE transferId='%2%';")
@@ -630,105 +631,25 @@ TransferExec::updatePid(const int& pid) const {
 
 // Perform a remote command through ssh
 std::pair<std::string, std::string>
-TransferExec::exec(const std::string& cmd) const {
-  std::vector<std::string> tokens;
-  std::ostringstream trCommand;
-  pid_t pid;
+TransferExec::exec(const std::string& cmd) const
+{
+  std::string command = boost::str(boost::format("%1% -l %2% -C -o BatchMode=yes "
+                                                 " -o StrictHostKeyChecking=no"
+                                                 " -o ForwardAgent=yes"
+                                                 " -p %3% %4% %5%"
+                                                 )
+                                   % FileTransferServer::getSSHCommand()
+                                   % getSrcUser()
+                                   % FileTransferServer::getSSHPort()
+                                   % getSrcMachineName()
+                                   % cmd);
+
+  std::string output;
   std::pair<std::string, std::string> result;
-  int transferComPipeOut[2];
-  int transferComPipeErr[2];
-  int status;
-
-  // build the transfer command
-  trCommand  << FileTransferServer::getSSHCommand() << " -t -q " << " -l " << getSrcUser();
-  trCommand <<" -C "  << " -o BatchMode=yes " << " -o StrictHostKeyChecking=no";
-  trCommand << " -o ForwardAgent=yes";
-  trCommand << " -p " << FileTransferServer::getSSHPort() << " " << getSrcMachineName() << " " << cmd;
-
-  // Exec The transfer command
-
-  std::istringstream is(trCommand.str());
-
-  copy(std::istream_iterator<std::string>(is),
-       std::istream_iterator<std::string>(),
-       std::back_inserter<std::vector<std::string> >(tokens));
-
-
-
-  char* argv[tokens.size()+1];
-  argv[tokens.size()]=NULL;
-
-  for (unsigned int i=0; i<tokens.size(); ++i){
-    argv[i]=strdup(tokens[i].c_str());
+  if (! vishnu::execSystemCommand(command, output)) { // error
+    result.second = output;
+  } else { // success
+    result.first = output;
   }
-
-  if (pipe(transferComPipeOut)==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i){
-      free(argv[i]);
-    }
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "Error creating communication pipe");
-  }
-
-  if (pipe(transferComPipeErr)==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i){
-      free(argv[i]);
-    }
-    close(transferComPipeOut[0]);
-    close(transferComPipeOut[1]);
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error creating communication pipe");
-  }
-
-  pid = fork();
-  if (pid==-1) {
-    for (unsigned int i=0; i<tokens.size(); ++i){
-      free(argv[i]);
-    }
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error forking process");
-  }
-  if (pid == 0) {
-    close(transferComPipeOut[0]); /* Close unused read end */
-    close(transferComPipeErr[0]); /* Close unused write end */
-    dup2(transferComPipeOut[1], 1);
-    dup2(transferComPipeErr[1], 2);
-    close(transferComPipeOut[1]);
-    close(transferComPipeErr[1]);
-    if (execvp(argv[0], argv)) {
-      exit(-1);
-    }
-  }
-
-  // Store the child process id
-  updatePid (pid);
-
-  close(transferComPipeOut[1]); /* Close unused write end */
-
-  close(transferComPipeErr[1]);/* Close unused write end */
-
-
-  char c;
-  while (read(transferComPipeOut[0], &c, 1)){
-    result.first+=c;
-  }
-
-  while (read(transferComPipeErr[0], &c, 1)){
-    result.second+=c;
-  }
-
-  if (waitpid(pid, &status, 0)==-1) {
-    close(transferComPipeOut[0]);
-    close(transferComPipeErr[0]);
-    for (unsigned int i=0; i<tokens.size(); ++i){
-      free(argv[i]);
-    }
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,"Error executing command "+trCommand.str());
-  }
-
-  close(transferComPipeOut[0]);
-  close(transferComPipeErr[0]);
-  for (unsigned int i=0; i<tokens.size(); ++i){
-    free(argv[i]);
-  }
-  mlastExecStatus = status;
-
   return result;
 }
