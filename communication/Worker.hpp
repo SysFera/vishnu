@@ -118,18 +118,25 @@ serverWorkerSockets(const std::string& serverUri,
   // bind the sockets
   try {
     socket_server.bind(serverUri.c_str());
-    LOG(boost::str(boost::format("[INFO] ZMQ socket bound (%1%)") % serverUri), LogInfo);
+    std::string logMsg = boost::str(boost::format("[INFO] Server started on %1%") % serverUri);
+    std::cerr << logMsg <<"\n";
+    LOG(logMsg, LogInfo);
+    std::cerr << "See log file for runtime info";
   } catch (const zmq::error_t& e) {
-    LOG(boost::str(boost::format("[ERROR] zmq socket_server (%1%) binding failed (%2%)")
-                   % serverUri % e.what()), LogErr);
+    std::string logMsg = boost::str(boost::format("[ERROR] zmq socket_server (%1%) binding failed (%2%)")
+                                    % serverUri % e.what());
+    std::cerr << logMsg <<"\n";
+    LOG(logMsg, LogErr);
     return 1;
   }
 
   try {
     socket_workers.bind(workerUri.c_str());
   } catch (const zmq::error_t& e) {
-    LOG(boost::str(boost::format("[ERROR] zmq socket_worker (%1%) binding failed (%2%)")
-                   % workerUri % e.what()), LogErr);
+    std::string logMsg = boost::str(boost::format("[ERROR] zmq socket_worker (%1%) binding failed (%2%)")
+                                    % workerUri % e.what());
+    std::cerr << logMsg<<"\n";
+    LOG(logMsg, LogErr);
     return 1;
   }
 
