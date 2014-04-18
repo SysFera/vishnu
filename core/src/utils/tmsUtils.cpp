@@ -525,7 +525,7 @@ vishnu::checkIfSupportedBatchVersion(BatchType btype, const std::string& version
       supportedVersion = oss.str();
     }
   } else {
-    supportedVersion = boost::str(boost::format("Unknown batch type") % btype);
+    supportedVersion = boost::str(boost::format("Unknown batch type %1%") % btype);
   }
 
   return false;
