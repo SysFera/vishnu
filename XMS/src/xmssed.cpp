@@ -55,7 +55,7 @@ getBatchConfiguration(SedConfig& cfg) {
 
   if (cfg.batchType == DELTACLOUD || cfg.batchType == OPENNEBULA) {
     exportCloudSpecificParam(&cfg.config);
-  } else {
+  } else if (cfg.batchType != POSIX) {
     std::string versError;
     if (! vishnu::checkIfSupportedBatchVersion(cfg.batchType, cfg.batchVersion, versError)) {
       std::string logMsg = boost::str(boost::format("[ERROR] specified batch version is not supported.\n"
