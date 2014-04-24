@@ -98,11 +98,14 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   int retCode = 0;
   if (! options.getJobId().empty()) { // cancel a specific job
     TMS_Data::Job job;
-    vishnu::getJobInfo(sessionKey, options.getJobId(), job);
+    if (options.getMachineId().empty()) {
+      vishnu::getJobInfo(sessionKey, options.getJobId(), job);
+    } else {
+      job.setSubmitMachineId(options.getMachineId());
+    }
+    std::cout << options.getMachineId()<< " "<< options.getJobId()<<"\n";
     retCode = JobProxy(sessionKey, job.getSubmitMachineId()).cancelJob(options);
-
   } else {
-
     std::string machineId = options.getMachineId();
     UMS_Data::ListMachines machines;
     if (! machineId.empty() && machineId != ALL_KEYWORD) { // cancel job on the specified machine

@@ -582,8 +582,8 @@ vishnu::validateAuthKey(const std::string& authKey,
   boost::scoped_ptr<DatabaseResult> sqlResult(database->getResult(sqlQuery));
   if (sqlResult->getNbTuples() < 1) {
     throw TMSVishnuException(ERRCODE_INVALID_PARAM,
-                             "Can't get user local account. Check that:"
-                             "  * your session is still active"
+                             "Can't get user local account. Check that:\n"
+                             "  * your session is still active\n"
                              "  * you have a local account on this server");
   }
 
