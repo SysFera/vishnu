@@ -6,6 +6,7 @@
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
 #include "ServerXMS.hpp"
+#include "Logger.hpp"
 
 
 MonitorXMS::MonitorXMS(int interval) :
@@ -40,8 +41,8 @@ MonitorXMS::init(const SedConfig& cfg) {
   mauthenticator = authfactory.createAuthenticatorInstance(authenticatorConfig);
 
   std::string sqlCommand =
-   str(format("SELECT * FROM vishnu where vishnuid=%1%")
-     % vishnu::convertToString(vishnuId));
+      str(format("SELECT * FROM vishnu where vishnuid=%1%")
+          % vishnu::convertToString(vishnuId));
 
   try {
     /*connection to the database*/
@@ -60,21 +61,21 @@ MonitorXMS::init(const SedConfig& cfg) {
 void
 MonitorXMS::checkJobs(int batchtype){
   std::string sqlRequest = boost::str(boost::format(
-    "SELECT jobId, batchJobId, vmIp, vmId "
-    " FROM job, vsession "
-    " WHERE vsession.numsessionid=job.vsession_numsessionid "
-    " AND submitMachineId='%1%' "
-    " AND batchType=%2% "
-    " AND status >= %3% "
-    " AND status < %4% ")
-      % mmachineId
-      % vishnu::convertToString(batchtype)
-      % vishnu::STATE_UNDEFINED
-      % vishnu::STATE_COMPLETED);
-  BatchFactory factory;
-  boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchtype, mbatchVersion));
+                                        "SELECT jobId, batchJobId, vmIp, vmId "
+                                        " FROM job, vsession "
+                                        " WHERE vsession.numsessionid=job.vsession_numsessionid "
+                                        " AND submitMachineId='%1%' "
+                                        " AND batchType=%2% "
+                                        " AND status >= %3% "
+                                        " AND status < %4% ")
+                                      % mmachineId
+                                      % vishnu::convertToString(batchtype)
+                                      % vishnu::STATE_UNDEFINED
+                                      % vishnu::STATE_COMPLETED);
 
   try {
+    BatchFactory factory;
+    boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchtype, mbatchVersion));
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
     std::vector<std::string> buffer;
@@ -88,18 +89,17 @@ MonitorXMS::checkJobs(int batchtype){
       job.setBatchJobId( *item++ );
       job.setVmIp( *item++ );
       job.setVmId( *item++ );
-      job.setOwner( *item );
 
       try {
         int state;
         switch (batchtype) {
-        case DELTACLOUD:
-        case OPENNEBULA:
-          state = batchServer->getJobState( JsonObject::serialize(job) );
-          break;
-        default:
-          state = batchServer->getJobState(job.getBatchJobId());
-          break;
+          case DELTACLOUD:
+          case OPENNEBULA:
+            state = batchServer->getJobState(JsonObject::serialize(job));
+            break;
+          default:
+            state = batchServer->getJobState(job.getBatchJobId());
+            break;
         }
         std::string query = boost::str(boost::format("UPDATE job SET status=%1%"
                                                      " WHERE jobId='%2%';")
@@ -108,13 +108,15 @@ MonitorXMS::checkJobs(int batchtype){
           query.append(boost::str(boost::format("UPDATE job SET endDate=CURRENT_TIMESTAMP"
                                                 " WHERE jobId='%1%';") % job.getJobId()));
         }
-        mdatabaseVishnu->process(query.c_str());
+        mdatabaseVishnu->process(query);
       } catch (VishnuException& ex) {
-        std::clog << boost::format("[TMSMONITOR][ERROR] %1%\n")%ex.what();
+        LOG(boost::str(boost::format("[TMSMONITOR][ERROR] %1%") % ex.what()), LogErr);
       }
     }
   } catch (VishnuException& ex) {
-    std::clog << boost::format("[TMSMONITOR][ERROR] %1%\n")%ex.what();
+    LOG(boost::str(boost::format("[TMSMONITOR][ERROR] %1%") % ex.what()), LogErr);
+  } catch (...) {
+    LOG("[TMSMONITOR][ERROR] Unknow error", LogErr);
   }
 }
 
@@ -201,23 +203,20 @@ MonitorXMS::checkFile(){
 
 int
 MonitorXMS::run() {
-  if (mhasUMS)
-    checkSession();
-  if (mhasTMS) {
-    checkJobs(mbatchType);
-    if (mbatchType != POSIX){
-      checkJobs(POSIX);
+  while (kill(getppid(), 0) == 0) {
+    if (mhasUMS) {
+      checkSession();
     }
+    if (mhasTMS) {
+      checkJobs(mbatchType);
+      if (mbatchType != POSIX){
+        checkJobs(POSIX);
+      }
+    }
+    if (mhasFMS) {
+      checkFile();
+    }
+    sleep(minterval);
   }
-  if (mhasFMS)
-    checkFile();
-
-// KEPT Waiting to know wtf is this
-//  std::string vmUser = "root";
-//  if (mbatchType == DELTACLOUD) {
-//    vmUser = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true, "root");
-//  }
-  sleep(minterval);
-
   return 0;
 }

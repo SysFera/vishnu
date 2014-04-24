@@ -147,7 +147,6 @@ main(int argc, char* argv[], char* envp[]) {
 
   // forking a child: sed monitoring
   pid_t pid;
-  pid_t ppid;
   pid = fork();
 
   if (pid > 0) {
@@ -175,13 +174,14 @@ main(int argc, char* argv[], char* envp[]) {
       exit(1);
     }
   } else if (pid == 0) {
-    MonitorXMS monitor;
+    int interval;
+    if (! cfg.config.getConfigValue(vishnu::INTERVALMONITOR, interval)) {
+      interval = 60;
+    }
+    MonitorXMS monitor(interval);
     cfg.dbConfig.setDbPoolSize(1);
     monitor.init(cfg);
-    ppid = getppid();
-    while (kill(ppid, 0) == 0) {
-      monitor.run();
-    }
+    monitor.run();
   } else {
     std::cerr << "There was a problem initializing the server\n";
     return 1;
