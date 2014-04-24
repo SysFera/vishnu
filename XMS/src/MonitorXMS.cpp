@@ -61,7 +61,7 @@ MonitorXMS::init(const SedConfig& cfg) {
 void
 MonitorXMS::checkJobs(int batchtype){
   std::string sqlRequest = boost::str(boost::format(
-                                        "SELECT jobId, batchJobId, vmIp, vmId "
+                                        "SELECT jobId, batchJobId, vmIp, vmId, owner "
                                         " FROM job, vsession "
                                         " WHERE vsession.numsessionid=job.vsession_numsessionid "
                                         " AND submitMachineId='%1%' "
@@ -89,6 +89,7 @@ MonitorXMS::checkJobs(int batchtype){
       job.setBatchJobId( *item++ );
       job.setVmIp( *item++ );
       job.setVmId( *item++ );
+      job.setOwner( *item );
 
       try {
         int state;
