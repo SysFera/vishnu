@@ -248,7 +248,6 @@ solveListOfQueues(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser;
     listQueuesSerialized =  _ser.serialize_str(listQueues);
 
-
     diet_string_set(pb,0, "success");
     diet_string_set(pb,1, listQueuesSerialized);
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, "");

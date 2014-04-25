@@ -216,9 +216,12 @@ OpenNebulaServer::listQueues(const std::string& serializedOptions) {
 
   OneCloudInstance cloud(mcloudEndpoint, getSessionString());
 
-  TMS_Data::ListQueues_ptr queues;
-  queues->getQueues().push_back(cloud.getQueueInfo());
-
+  TMS_Data::ListQueues_ptr queues = new TMS_Data::ListQueues();
+  TMS_Data::Queue* queue = cloud.getQueueInfo();
+  if (! queue)  {
+    TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Null queue info");
+  }
+  queues->getQueues().push_back(queue);
   return queues;
 }
 

@@ -238,7 +238,6 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list() {
   raiseExceptionOnErrorResult(profile);
 
   std::string listObjectInString;
-
   diet_string_get(profile,1, listObjectInString);
   parseEmfObject(listObjectInString, mlistObject, "Error by receiving List object serialized");
 

@@ -362,21 +362,21 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
     state = (lsQueues.getQueues().get(i))->getState();
 
     os << setw(maxNameSize+2) << left << name;
-    if(Memory > 0) {
+    if(Memory >= 0) {
       os << setw(maxMemorySize+2) << left << Memory;
     } else {
-      os << setw(maxMemorySize+2) << left <<  " --- ";
+      os << setw(maxMemorySize+2) << left <<  " - ";
     }
-    if(walltime > 0) {
+    if(walltime >= 0) {
       os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
     } else {
-      os << setw(maxWalltimeSize+2) << left << " --- ";
+      os << setw(maxWalltimeSize+2) << left << " - ";
     }
 
-    if(node > 0) {
+    if(node >= 0) {
       os << setw(maxNodeSize+2) << left << node;
     } else {
-      os << setw(maxNodeSize+2) << " --- ";
+      os << setw(maxNodeSize+2) << " - ";
     }
     os << setw(maxNbRunJobsSize+2) << left << nbRunJobs;
     os << setw(maxNbJobsQueSize+2) << left << nbJobsQue;

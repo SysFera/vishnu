@@ -267,6 +267,8 @@ OneCloudInstance::retrieveCloudInfo(metasched_cloud_t& cloudInfo)
   cloudInfo.load_memory = 0;
   cloudInfo.host_ready  = 0;
   cloudInfo.highest_mean_resource_le_50_p = 0;
+  cloudInfo.cpu_number_hosts_le_50p = 0;
+  cloudInfo.mem_number_hosts_le_50p = 0;
 
   double cpuLoad = 0;
   double memLoad = 0;
@@ -309,8 +311,18 @@ OneCloudInstance::retrieveCloudInfo(metasched_cloud_t& cloudInfo)
 
 TMS_Data::Queue_ptr OneCloudInstance::getQueueInfo(void)
 {
+  updatePool();
   metasched_cloud_t cloudInfo;
   retrieveCloudInfo(cloudInfo);
   TMS_Data::Queue_ptr queue = new TMS_Data::Queue();
-  queue->setDescription(create_cloud_json_object(cloudInfo).encode());
+  queue->setState(vishnu::STATUS_ACTIVE);
+  queue->setMemory(cloudInfo.load_memory);
+  queue->setNbRunningJobs(cloudInfo.vm_number);
+  queue->setNode(cloudInfo.host_number);
+  std::string details = create_cloud_json_object(cloudInfo).encode();
+  for (std::string::iterator it = details.begin(), end = details.end(); it != end; ++it) {
+    if (*it == '"') *it = '\'';
+  }
+  queue->setDescription(details);
+  return queue;
 }
