@@ -257,3 +257,60 @@ void OneCloudInstance::parseVmInfo(xercesc::DOMNode* node, VmT& vm)
     }  // HOST_SHARE
   }
 }
+
+void
+OneCloudInstance::retrieveCloudInfo(metasched_cloud_t& cloudInfo)
+{
+  cloudInfo.host_number = mhostPool.size();
+  cloudInfo.vm_number   = 0;
+  cloudInfo.load_cpu    = 0;
+  cloudInfo.load_memory = 0;
+  cloudInfo.host_ready  = 0;
+  cloudInfo.highest_mean_resource_le_50_p = 0;
+
+  double cpuLoad = 0;
+  double memLoad = 0;
+
+  HostPoolT::iterator host;
+  HostPoolT::iterator lastHost = mhostPool.end();
+  for(host=mhostPool.begin(); host!=lastHost; ++host) {
+    switch(host->state) {
+      case MONITORING_MONITORED:
+      case MONITORED:
+        ++cloudInfo.host_ready;
+        cloudInfo.vm_number += host->runningVms;
+        cloudInfo.load_cpu += host->usedCpu;
+        cloudInfo.load_memory += host->usedMemory;
+
+        // compute cpu load
+        cpuLoad = computeLoad(host->usedCpu, host->maxCpu);
+        if (cpuLoad< 50) {
+          ++cloudInfo.cpu_number_hosts_le_50p;
+          if (cpuLoad > cloudInfo.highest_mean_resource_le_50_p) {
+            cloudInfo.highest_mean_resource_le_50_p = cpuLoad;
+          }
+        }
+
+        // compute memory load
+        memLoad = computeLoad(host->usedMemory, host->maxMemory);
+        if ( memLoad< 50) {
+          ++cloudInfo.mem_number_hosts_le_50p;
+          if (memLoad > cloudInfo.highest_mean_resource_le_50_p) {
+            cloudInfo.highest_mean_resource_le_50_p = memLoad;
+          }
+        }
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+
+TMS_Data::Queue_ptr OneCloudInstance::getQueueInfo(void)
+{
+  metasched_cloud_t cloudInfo;
+  retrieveCloudInfo(cloudInfo);
+  TMS_Data::Queue_ptr queue = new TMS_Data::Queue();
+  queue->setDescription(create_cloud_json_object(cloudInfo).encode());
+}

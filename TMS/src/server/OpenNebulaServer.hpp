@@ -43,7 +43,7 @@ public:
    * \return raises an exception on error
    */
   int
-  cancel(const std::string& vmId) ;
+  cancel(const std::string& vmId);
 
   /**
    * \brief Function to get the status of the job
@@ -63,12 +63,12 @@ public:
 
 
   /**
-   * \brief Function to request the status of queues
-   * \param optQueueName (optional) the name of the queue to request
-   * \return The requested status in to ListQueues data structure
+   * \brief This function get the information about different cloud endpoint
+ * \param serializedOptions (optional) Serialied options
+   * \return The list of cloud information
    */
-  TMS_Data::ListQueues*
-  listQueues(const std::string& optQueueName=std::string());
+  TMS_Data::ListQueues_ptr
+  listQueues(const std::string& serializedOptions=std::string());
 
   /**
    * \brief Function to get a list of submitted jobs

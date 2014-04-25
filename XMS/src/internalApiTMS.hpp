@@ -93,5 +93,13 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb);
 int
 solveAddWork(diet_profile_t* pb);
 
+/**
+ * @brief Function that deals with metascheduling to choose which the target TMS is suitable to run a task
+ * @param pb is a structure which corresponds to the descriptor of a profile
+ * @return 0 on success, raise exception on error
+ */
+int
+solveMetasched(diet_profile_t* pb);
+
 
 #endif

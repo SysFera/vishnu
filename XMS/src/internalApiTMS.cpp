@@ -547,3 +547,43 @@ solveAddWork(diet_profile_t* pb) {
   delete work;
   return 0;
 }
+
+/**
+ * @brief Function that deals with metascheduling to choose which the target TMS is suitable to run a task
+ * @param pb is a structure which corresponds to the descriptor of a profile
+ * @return 0 on success, raise exception on error
+ */
+int
+solveMetasched(diet_profile_t* pb)
+{
+  std::string authKey;
+  std::string workSerialized;
+  std::string optionsSerialized;
+
+  //IN Parameters
+  diet_string_get(pb,0, authKey);
+  diet_string_get(pb,1, workSerialized);
+  diet_string_get(pb,2, optionsSerialized);
+
+  // reset profile to handle result
+  diet_profile_reset(pb, 2);
+
+  try {
+    ServerXMS* server = ServerXMS::getInstance();
+    std::string cloudEndpointString;
+    server->getSedConfig()->getRequiredConfigValue<std::string>(vishnu::CLOUDENDPOINT, cloudEndpointString);
+
+    ListQueuesServer queryQueues(authKey,
+                                 server->getBatchType(),
+                                 server->getBatchVersion(),
+                                 cloudEndpointString);
+    TMS_Data::ListQueues_ptr listQueues = queryQueues.list();
+
+    diet_string_set(pb,0, "success");
+    diet_string_set(pb,1, "TODO");
+  } catch (VishnuException& ex) {
+    diet_string_set(pb,0, "error");
+    diet_string_set(pb,1, ex.what());
+  }
+  return 0;
+}

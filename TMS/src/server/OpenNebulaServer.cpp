@@ -207,16 +207,19 @@ OpenNebulaServer::getJobStartTime(const std::string& jobJsonSerialized) {
 }
 
 /**
- * \brief Function to request the status of queues
- * \param optQueueName (optional) the name of the queue to request
- * \return The requested status in to ListQueues data structure
+ * \brief This function get the information about different cloud endpoint
+ * \param serializedOptions (optional) Serialied options
+ * \return The list of cloud information
  */
-TMS_Data::ListQueues*
-OpenNebulaServer::listQueues(const std::string& optQueueName) {
+TMS_Data::ListQueues_ptr
+OpenNebulaServer::listQueues(const std::string& serializedOptions) {
 
-  //TODO The semantic is no yet defined
-  throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "listQueues is not supported");
-  return NULL;
+  OneCloudInstance cloud(mcloudEndpoint, getSessionString());
+
+  TMS_Data::ListQueues_ptr queues;
+  queues->getQueues().push_back(cloud.getQueueInfo());
+
+  return queues;
 }
 
 
