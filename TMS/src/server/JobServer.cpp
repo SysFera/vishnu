@@ -394,22 +394,29 @@ int JobServer::cancelJob(JsonObject* options)
   if (userId == ALL_KEYWORD
       && muserSessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
-                             (boost::format("Option privileged users can cancel all user jobs")).str());
+                             boost::str(boost::format("Option privileged users can cancel all user jobs")));
   }
 
   // Only a admin user can delete jobs from another user
   if (! userId.empty()
       && muserSessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
-                             (boost::format("Only privileged users can cancel other users jobs")).str());
+                             boost::str(boost::format("Only privileged users can cancel other users jobs")));
   }
   // Checking the jobid belongs to the user
   if (!jobId.empty()){
-    std::string reqTmp = (boost::format("select job.owner from job, vsession where job.jobid='%1%' and job.vsession_numsessionid=vsession.numsessionid and vsession.sessionkey='%2%'") %mdatabaseInstance->escapeData(jobId) %mdatabaseInstance->escapeData(mauthKey)).str();
+    std::string reqTmp = boost::str(boost::format("SELECT job.owner "
+                                                  " FROM job, vsession "
+                                                  " WHERE job.jobid='%1%' "
+                                                  " AND job.vsession_numsessionid=vsession.numsessionid "
+                                                  " AND vsession.sessionkey='%2%'"
+                                                  )
+                                    % mdatabaseInstance->escapeData(jobId)
+                                    % mdatabaseInstance->escapeData(mauthKey));
     boost::scoped_ptr<DatabaseResult> sqlQueryResult(mdatabaseInstance->getResult(reqTmp));
     if (sqlQueryResult->getNbTuples() == 0 && muserSessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
       throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
-                               (boost::format("Only privileged users can cancel other users jobs")).str());
+                               boost::str(boost::format("Only privileged users can cancel other users jobs")));
     }
   }
 
@@ -418,21 +425,18 @@ int JobServer::cancelJob(JsonObject* options)
                        || jobId == ALL_KEYWORD
                        || userId == ALL_KEYWORD;
 
-  std::string baseSqlQuery = (boost::format("SELECT job.owner, job.status, "
-                                            "       job.jobId, job.batchJobId, "
-                                            "       job.vmId, job.batchType"
-                                            " FROM job, vsession "
-                                            " WHERE job.status < %1%") % vishnu::STATE_COMPLETED
-                              ).str();
+  std::string baseSqlQuery = boost::str(boost::format("SELECT job.owner, job.status, "
+                                                      "       job.jobId, job.batchJobId, "
+                                                      "       job.vmId, job.batchType"
+                                                      " FROM job, vsession "
+                                                      " WHERE job.status < %1%") % vishnu::STATE_COMPLETED);
   std::string sqlQuery;
   if (! cancelAllJobs) {
-
-    sqlQuery = (boost::format("%1%"
-                              " AND vsession.numsessionid=job.vsession_numsessionid"
-                              " AND jobId='%2%';")
-                % baseSqlQuery
-                % mdatabaseInstance->escapeData(jobId)
-                ).str();
+    sqlQuery = boost::str(boost::format("%1%"
+                                        " AND vsession.numsessionid=job.vsession_numsessionid"
+                                        " AND jobId='%2%';")
+                          % baseSqlQuery
+                          % mdatabaseInstance->escapeData(jobId));
 
     LOG(boost::str(boost::format("[WARN] Request to cancel job: %1%") % jobId), LogWarning);
   } else {
@@ -451,40 +455,37 @@ int JobServer::cancelJob(JsonObject* options)
     if (addUserFilter) {
       if (userId.empty()) {
         // here we'll delete all the jobs of the logged user
-        sqlQuery = (boost::format("%1%"
-                                  " AND vsession.numsessionid=job.vsession_numsessionid"
-                                  " AND owner='%2%'"
-                                  " AND submitMachineId='%3%';"
-                                  )
-                    % baseSqlQuery
-                    % mdatabaseInstance->escapeData(muserSessionInfo.user_aclogin)
-                    % mdatabaseInstance->escapeData(mmachineId)
-                    ).str();
+        sqlQuery = boost::str(boost::format("%1%"
+                                            " AND vsession.numsessionid=job.vsession_numsessionid"
+                                            " AND owner='%2%'"
+                                            " AND submitMachineId='%3%';"
+                                            )
+                              % baseSqlQuery
+                              % mdatabaseInstance->escapeData(muserSessionInfo.user_aclogin)
+                              % mdatabaseInstance->escapeData(mmachineId));
       } else {
         // here we'll delete jobs submitted by the given user
-        sqlQuery = (boost::format("SELECT job.owner, job.status, "
-                                  "       job.jobId, job.batchJobId, "
-                                  "       job.vmId, job.batchType"
-                                  " FROM users, job"
-                                  " WHERE job.status < %1%"
-                                  "  AND users.numuserid=job.job_owner_id"
-                                  "  AND users.userid='%2%'"
-                                  "  AND submitMachineId='%3%';"
-                                  )
-                    %  vishnu::STATE_COMPLETED
-                    % mdatabaseInstance->escapeData(userId)
-                    % mdatabaseInstance->escapeData(mmachineId)
-                    ).str();
+        sqlQuery = boost::str(boost::format("SELECT job.owner, job.status, "
+                                            "       job.jobId, job.batchJobId, "
+                                            "       job.vmId, job.batchType"
+                                            " FROM users, job"
+                                            " WHERE job.status < %1%"
+                                            "  AND users.numuserid=job.job_owner_id"
+                                            "  AND users.userid='%2%'"
+                                            "  AND submitMachineId='%3%';"
+                                            )
+                              % vishnu::STATE_COMPLETED
+                              % mdatabaseInstance->escapeData(userId)
+                              % mdatabaseInstance->escapeData(mmachineId));
       }
       LOG(boost::str(boost::format("[WARN] request to cancel all jobs submitted by %1%")
                      % userId), LogWarning);
     } else {
-      sqlQuery = (boost::format("%1%"
-                                " AND vsession.numsessionid=job.vsession_numsessionid"
-                                " AND submitMachineId='%2%';")
-                  % baseSqlQuery
-                  % mdatabaseInstance->escapeData(mmachineId)
-                  ).str();
+      sqlQuery = boost::str(boost::format("%1%"
+                                          " AND vsession.numsessionid=job.vsession_numsessionid"
+                                          " AND submitMachineId='%2%';")
+                            % baseSqlQuery
+                            % mdatabaseInstance->escapeData(mmachineId));
       LOG(boost::str(boost::format("[WARN] received request to cancel all user jobs from %1%")
                      % muserSessionInfo.user_aclogin), LogWarning);
     }
@@ -945,10 +946,9 @@ void
 JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
 {
   if (action == CancelBatchAction) {
-    std::string query = (boost::format("UPDATE job set status=%1% where jobid='%2%';")
-                         % vishnu::convertToString(job.getStatus())
-                         % job.getJobId()
-                         ).str();
+    std::string query = boost::str(boost::format("UPDATE job set status=%1% where jobid='%2%';")
+                                   % vishnu::convertToString(job.getStatus())
+                                   % job.getJobId());
     mdatabaseInstance->process(query);
     LOG(boost::str(boost::format("[INFO] job cancelled: %1%")
                    % job.getJobId()), LogInfo);
@@ -1000,9 +1000,9 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
     // logging
     if (job.getSubmitError().empty()) {
       LOG(boost::str(boost::format("[INFO] job submitted: %1%. User: %2%. Owner: %3%")
-          % job.getJobId()
-          % muserSessionInfo.userid
-          % muserSessionInfo.user_aclogin), LogInfo);
+                     % job.getJobId()
+                     % muserSessionInfo.userid
+                     % muserSessionInfo.user_aclogin), LogInfo);
     } else {
       LOG((boost::str(boost::format("[WARN] submission error: %1% [%2%]")
                       % job.getJobId()
@@ -1033,10 +1033,11 @@ JobServer::getSystemUid(const std::string& name)
 
 void
 JobServer::checkMachineId(std::string machineId) {
-  std::string sqlMachineRequest = (boost::format("SELECT machineid"
-                                                 " FROM machine"
-                                                 " WHERE machineid='%1%'"
-                                                 " AND status<>%2%")%mdatabaseInstance->escapeData(machineId) %vishnu::STATUS_DELETED).str();
+  std::string sqlMachineRequest = boost::str(
+                                    boost::format("SELECT machineid"
+                                                  " FROM machine"
+                                                  " WHERE machineid='%1%'"
+                                                  " AND status<>%2%")%mdatabaseInstance->escapeData(machineId) %vishnu::STATUS_DELETED);
   boost::scoped_ptr<DatabaseResult> machine(mdatabaseInstance->getResult(sqlMachineRequest.c_str()));
   if(machine->getNbTuples()==0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
