@@ -55,7 +55,7 @@ const std::map<std::string, int> BATCH_NAME_TO_TYPE_MAP = boost::assign::map_lis
                                                           ("LSF", LSF)
                                                           ("SGE", SGE)
                                                           ("DELTACLOUD", DELTACLOUD)
-                                                          ("OPENNEBULA", PBSPRO)
+                                                          ("OPENNEBULA", OPENNEBULA)
                                                           ("POSIX", POSIX);
 
 const std::map<int, std::string> JOB_STATE_TO_NAME_MAP = boost::assign::map_list_of
