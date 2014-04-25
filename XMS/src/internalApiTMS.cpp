@@ -230,9 +230,6 @@ solveListOfQueues(diet_profile_t* pb) {
   // reset profile to handle result
   diet_profile_reset(pb, 2);
 
-  TMS_Data::ListQueues_ptr listQueues = NULL;
-
-
   ListQueuesServer queryQueues(authKey,
                                ServerXMS::getInstance()->getBatchType(),
                                ServerXMS::getInstance()->getBatchVersion(),
@@ -246,7 +243,7 @@ solveListOfQueues(diet_profile_t* pb) {
     mapper->code(optionSerialized, mapperkey);
     std::string cmd = mapper->finalize(mapperkey);
 
-    listQueues = queryQueues.list();
+    TMS_Data::ListQueues_ptr listQueues = queryQueues.list();
 
     ::ecorecpp::serializer::serializer _ser;
     listQueuesSerialized =  _ser.serialize_str(listQueues);
