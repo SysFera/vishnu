@@ -197,9 +197,9 @@ std::string JsonObject::encode(int flag) {
    * @brief decode
    * @param encodedJson
    */
-void JsonObject::decode(const std::string& encodedJson) {
+void JsonObject::decode(const std::string& data) {
   json_error_t error;
-  m_jsonObject = json_loads(encodedJson.c_str(), 0, &error);
+  m_jsonObject = json_loads(data.c_str(), 0, &error);
   if (! m_jsonObject) {
     throw SystemException(ERRCODE_INVDATA,
                           boost::str(boost::format("error when parsing invalid json data [%1%]") % data));

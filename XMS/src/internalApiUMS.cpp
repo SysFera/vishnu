@@ -400,7 +400,6 @@ solveUserPasswordChange(diet_profile_t* pb) {
   std::string password;
   std::string newPassword;
   std::string version;
-  std::string errorInfo;
 
   // IN Parameters
   diet_string_get(pb, 0, userId);

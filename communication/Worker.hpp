@@ -59,7 +59,11 @@ public:
           std::string resultSerialized = doCall(data);
           socket.send(resultSerialized);
         } catch (const VishnuException& ex) {
-          socket.send(ex.what());
+          diet_profile_t* profile = diet_profile_alloc("docall", 2);
+          diet_string_set(profile, 0, "error");
+          diet_string_set(profile, 1, ex.what());
+          socket.send(JsonObject::serialize(profile));
+          diet_profile_free(profile);
           LOG(boost::str(boost::format("[ERROR] %1%\n")%ex.what()), LogErr);
         }
       }
