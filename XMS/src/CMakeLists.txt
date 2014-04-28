@@ -41,7 +41,8 @@ if(NOT COMPILE_ONLY_LIBBATCH)
     vishnu-ums-server
     vishnu-tms-server
     vishnu-fms-server
-    )
+    vishnu-ums-client
+    vishnu-tms-client)
   install(TARGETS xmssed DESTINATION ${SBIN_INSTALL_DIR})
 
 endif(NOT COMPILE_ONLY_LIBBATCH)

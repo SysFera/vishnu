@@ -23,6 +23,7 @@ typedef enum {
   ADDWORK,
   WORKUPDATE,
   WORKDELETE,
+  HANDLE_SCHEDULING,
   NB_SRV_TMS  // MUST always be the last
 } tms_service_t;
 
@@ -32,15 +33,17 @@ static const char* SERVICES_TMS[NB_SRV_TMS] = {
   "jobSubmit",  // 0
   "jobCancel",  // 1
   "jobInfo",    // 2
-  "getJobsProgression",  // 4
-  "getListOfQueues",  // 5
-  "jobOutputGetResult",  // 6
-  "jobOutputGetCompletedJobs",  // 7
-  "getListOfJobs_all",  // 8
-  "addwork",  // 10
-  "workUpdate",  // 11
-  "workDelete"  // 12
+  "getJobsProgression",  // 3
+  "getListOfQueues",  // 4
+  "jobOutputGetResult",  // 5
+  "jobOutputGetCompletedJobs",  // 6
+  "getListOfJobs_all",  // 7
+  "addwork",  // 8
+  "workUpdate",  // 9
+  "workDelete",  // 10
+  "scheduling"  // 11
 };
+
 
 
 // FIXME: compilation fails without inlining

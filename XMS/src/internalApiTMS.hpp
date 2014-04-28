@@ -99,7 +99,7 @@ solveAddWork(diet_profile_t* pb);
  * @return 0 on success, raise exception on error
  */
 int
-solveMetasched(diet_profile_t* pb);
+solveScheduling(diet_profile_t* pb);
 
 
 #endif

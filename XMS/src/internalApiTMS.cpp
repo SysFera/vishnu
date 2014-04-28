@@ -40,7 +40,8 @@
 #include "WorkServer.hpp"
 #include "internalApiTMS.hpp"
 #include "MapperRegistry.hpp"
-
+#include "api_tms.hpp"
+#include "api_ums.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
@@ -550,33 +551,33 @@ solveAddWork(diet_profile_t* pb) {
  * @return 0 on success, raise exception on error
  */
 int
-solveMetasched(diet_profile_t* pb)
+solveScheduling(diet_profile_t* pb)
 {
   std::string authKey;
-  std::string workSerialized;
   std::string optionsSerialized;
 
   //IN Parameters
   diet_string_get(pb,0, authKey);
-  diet_string_get(pb,1, workSerialized);
-  diet_string_get(pb,2, optionsSerialized);
+  diet_string_get(pb,1, optionsSerialized);
 
   // reset profile to handle result
   diet_profile_reset(pb, 2);
 
   try {
-    ServerXMS* server = ServerXMS::getInstance();
-    std::string cloudEndpointString;
-    server->getSedConfig()->getRequiredConfigValue<std::string>(vishnu::CLOUDENDPOINT, cloudEndpointString);
+    UMS_Data::ListMachines machines;
+    vishnu::vishnuInitialize(getenv("VISHNU_CONFIG_FILE"), 0, NULL);
+    std::cout << "dsds1\n"<<authKey<<"\n";
+    vishnu::listMachines(authKey, machines, UMS_Data::ListMachineOptions());
+    std::cout << "dsdsddd\n";
+    for(int index = 0; index < machines.getMachines().size(); ++index) {
+      TMS_Data::ListQueues queues;
+      queues.getQueues().clear();
+      vishnu::listQueues(authKey, machines.getMachines().get(index)->getMachineId(), queues);
+    }
 
-    ListQueuesServer queryQueues(authKey,
-                                 server->getBatchType(),
-                                 server->getBatchVersion(),
-                                 cloudEndpointString);
-    TMS_Data::ListQueues_ptr listQueues = queryQueues.list();
-
+    // TODO select machine from queue
     diet_string_set(pb,0, "success");
-    diet_string_set(pb,1, "TODO");
+    diet_string_set(pb,1, "machineid");
   } catch (VishnuException& ex) {
     diet_string_set(pb,0, "error");
     diet_string_set(pb,1, ex.what());

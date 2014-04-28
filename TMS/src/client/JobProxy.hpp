@@ -24,7 +24,7 @@ public:
   */
   explicit JobProxy(const std::string& sessionKey,
                     const std::string& machineId = "");
-   /**
+  /**
     * \brief Destructor
    */
   ~JobProxy();
@@ -78,6 +78,17 @@ private:
   * \brief The id of the machine
   */
   std::string mmachineId;
+
+
+  /**
+   * @brief request a machine from the given metascheduler
+   * @param metaschedMachineId The machine id of the metascheduler machine
+   * @param options The job options
+   * @return The id of the selected machine, throw exception on error
+   */
+  std::string
+  requestMachineFromMetacheduler(const std::string& metaschedMachineId,
+                                 const TMS_Data::SubmitOptions& options);
 
 };
 #endif //_JOB_PROXY_H

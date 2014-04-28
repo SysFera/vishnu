@@ -136,7 +136,6 @@ diet_profile_reset(diet_profile_t* prof, int nbparams) {
 
 int
 diet_call(diet_profile_t* prof) {
-  std::string uri;
   std::vector<std::string> uriv;
   std::string disp;
   std::vector<std::string> dispv;
@@ -172,7 +171,7 @@ diet_call(diet_profile_t* prof) {
     disp = dispv[0];
   }
 
-  if (allServers.size() == 0 && disp.empty()) {
+  if (allServers.empty() && disp.empty()) {
     std::cerr << boost::format("No corresponding %1% server found\n") % service;
     return 1;
   }

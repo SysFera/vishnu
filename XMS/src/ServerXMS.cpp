@@ -274,6 +274,8 @@ ServerXMS::initMap(const std::string& mid) {
       mcb[SERVICES_TMS[GETLISTOFJOBS_ALL]] = functionPtr;
       functionPtr = solveAddWork;
       mcb[SERVICES_TMS[ADDWORK]] = functionPtr;
+      functionPtr = solveScheduling;
+      mcb[std::string(SERVICES_TMS[HANDLE_SCHEDULING])+"@"+mid] = functionPtr;
   }
 
   if (mhasFMS){

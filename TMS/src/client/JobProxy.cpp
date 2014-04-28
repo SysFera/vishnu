@@ -42,14 +42,7 @@ JobProxy::submitJob(const std::string& scriptPath,
 
   // select a machine if not machine set
   if (mmachineId.empty() || mmachineId == AUTOM_KEYWORD) {
-    TMS_Data::LoadCriterion loadCriterion;
-    int criterion = optionsData.getIntProperty("criterion");
-    if (criterion < 0 ) {
-      loadCriterion.setLoadType(criterion);
-    } else {
-      loadCriterion.setLoadType(NBWAITINGJOBS);
-    }
-    mmachineId = vishnu::findMachine(msessionKey, loadCriterion);
+    mmachineId = requestMachineFromMetacheduler("tchieudjie", options);
   }
 
   // now create and initialize the service profile
@@ -73,7 +66,6 @@ JobProxy::submitJob(const std::string& scriptPath,
   diet_string_set(profile,2, scriptContent);
   diet_string_set(profile,3, optionsData.encode());
 
-  // FIXME: do it before setting parameter 3
   if (diet_call(profile)) {
     raiseCommunicationMsgException("RPC call failed");
   }
@@ -171,4 +163,33 @@ JobProxy::getData() const{
  * \brief Destructor
  */
 JobProxy::~JobProxy() {
+}
+
+
+/**
+ * @brief request a machine from the given metascheduler
+ * @param metaschedMachineId The machine id of the metascheduler machine
+ * @param options The job options
+ * @return The id of the selected machine, throw exception on error
+ */
+std::string
+JobProxy::requestMachineFromMetacheduler(const std::string& metaschedMachineId,
+                                         const TMS_Data::SubmitOptions& options)
+{
+  // Set RPC pameters
+  string serviceName = boost::str(boost::format("%1%@%2%")% SERVICES_TMS[HANDLE_SCHEDULING] % metaschedMachineId);
+  diet_profile_t* profile = diet_profile_alloc(serviceName, 2);
+  diet_string_set(profile,0, msessionKey);
+  diet_string_set(profile,1, JsonObject(options).encode());
+
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
+  }
+  raiseExceptionOnErrorResult(profile);
+
+  std::string machineId;
+  diet_string_get(profile,1, machineId);
+  diet_profile_free(profile);
+
+  return machineId;
 }
