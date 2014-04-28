@@ -53,8 +53,8 @@ private:
     boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
     int ret = server_->call(profile.get());
     if (ret != 0) {
-      std::string err = (boost::format("Service call failed for %1%\n")%profile.get()->name).str();
-      throw SystemException(ERRCODE_SYSTEM, err);
+      throw SystemException(ERRCODE_SYSTEM,
+                            boost::str(boost::format("Service call failed for the profile %1%\n") % profile.get()->name));
     }
     return my_serialize(profile.get());
   }
