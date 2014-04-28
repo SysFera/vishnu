@@ -125,7 +125,7 @@ serverWorkerSockets(const std::string& serverUri,
     std::string logMsg = boost::str(boost::format("[INFO] Server started on %1%") % serverUri);
     std::cerr << logMsg <<"\n";
     LOG(logMsg, LogInfo);
-    std::cerr << "[INFO] See the log file for runtime info";
+    std::cerr << "[INFO] See the log file for runtime info\n";
   } catch (const zmq::error_t& e) {
     std::string logMsg = boost::str(boost::format("[ERROR] zmq socket_server (%1%) binding failed (%2%)")
                                     % serverUri % e.what());

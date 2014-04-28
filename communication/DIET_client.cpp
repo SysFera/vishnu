@@ -154,7 +154,7 @@ diet_call(diet_profile_t* prof) {
   } else if (module == "tms") {
     param = vishnu::SED_URIADDR;
   } else {
-    std::cerr << boost::format("No corresponding %1% server found") % service;
+    std::cerr << boost::format("No corresponding %1% server found\n") % service;
     return 1;
   }
 
@@ -171,7 +171,7 @@ diet_call(diet_profile_t* prof) {
   }
 
   if (allServers.size() == 0 && disp.empty()) {
-    std::cerr << boost::format("No corresponding %1% server found") % service;
+    std::cerr << boost::format("No corresponding %1% server found\n") % service;
     return 1;
   }
 
