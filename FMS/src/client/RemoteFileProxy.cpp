@@ -428,7 +428,6 @@ RemoteFileProxy::transferFile(const std::string& dest,
       finalizeTransfer(fileTransfer, direction);
     } else { // asynchronous
       pid_t pid = fork();
-      std::cout << pid <<"\n";
       if (pid < 0) {
         fileTransfer.setErrorMsg("cannot fork process for asynchronous transfer");
         finalizeTransfer(fileTransfer, direction);
@@ -528,16 +527,6 @@ RemoteFileProxy::finalizeTransfer(FMS_Data::FileTransfer& transfer, int directio
   raiseExceptionOnErrorResult(profile);
 
   std::clog << boost::format("transfer completed\n") ;
-  std::cout << "------------ transfer infomation for file " << transfer.getTransferId() << std::endl;
-  std::cout << std::right << "transferId: " << transfer.getTransferId()   << std::endl;
-  std::cout << std::right << "errorMsg: " << transfer.getErrorMsg()  << std::endl;
-  std::cout << std::right << "userId: " << transfer.getUserId()   << std::endl;
-  std::cout << std::right << "clientMachineId: " << transfer.getClientMachineId()   << std::endl;
-  std::cout << std::right << "sourceMachineId: " << transfer.getSourceMachineId()   << std::endl;
-  std::cout << std::right << "destinationMachineId: " << transfer.getDestinationMachineId()   << std::endl;
-  std::cout << std::right << "sourceFilePath: " << transfer.getSourceFilePath()   << std::endl;
-  std::cout << std::right << "destinationFilePath: " << transfer.getDestinationFilePath()   << std::endl;
-  std::cout << std::right << "size: " << transfer.getSize()   << std::endl;
 
   diet_profile_free(profile);
 }
