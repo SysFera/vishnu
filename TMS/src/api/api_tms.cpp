@@ -103,7 +103,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     } else {
       job.setSubmitMachineId(options.getMachineId());
     }
-    std::cout << options.getMachineId()<< " "<< options.getJobId()<<"\n";
     retCode = JobProxy(sessionKey, job.getSubmitMachineId()).cancelJob(options);
   } else {
     std::string machineId = options.getMachineId();
