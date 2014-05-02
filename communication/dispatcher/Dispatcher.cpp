@@ -100,9 +100,18 @@ Dispatcher::bayWatch(boost::shared_ptr<Annuary> ann, int timeout, std::string& c
 
 void
 Dispatcher::configureHandlers() {
+  std::string ipcUriBase;
 
-  const std::string FRONTEND_IPC_URI = "ipc:///tmp/vishnu-disp.front.sock";
-  const std::string BACKEND_IPC_URI = "ipc:///tmp/vishnu-disp.back.sock";
+  if (!config.getConfigValue<std::string>(vishnu::IPC_URI_BASE, ipcUriBase)) {
+    ipcUriBase = "/tmp/vishnu-";
+  }
+
+  std::string FRONTEND_IPC_URI = \
+    boost::str(
+      boost::format("ipc://%1%disp.front.sock") % ipcUriBase);
+  std::string BACKEND_IPC_URI = \
+    boost::str(
+      boost::format("ipc://%1%disp.back.sock") % ipcUriBase);
 
   bool useSsl = false;
   if (! config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) ||
