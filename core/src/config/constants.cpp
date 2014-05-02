@@ -46,7 +46,8 @@ namespace vishnu {
     /* [33] */ {STANDALONE, "standalone", BOOL_PARAMETER},
     /* [34] */ {HAS_UMS, "enableUMS", BOOL_PARAMETER},
     /* [35] */ {HAS_TMS, "enableTMS", BOOL_PARAMETER},
-    /* [36] */ {HAS_FMS, "enableFMS", BOOL_PARAMETER}
+    /* [36] */ {HAS_FMS, "enableFMS", BOOL_PARAMETER},
+    /* [37] */ {IPC_URI_BASE, "ipcUriBase", URI_PARAMETER}
   };
 
   std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS =  boost::assign::map_list_of

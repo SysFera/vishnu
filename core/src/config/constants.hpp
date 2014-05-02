@@ -59,7 +59,8 @@ namespace vishnu {
     STANDALONE,
     HAS_UMS,
     HAS_TMS,
-    HAS_FMS
+    HAS_FMS,
+    IPC_URI_BASE
   };
 
   /**

@@ -81,6 +81,10 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
     cfg.config.getConfigValue<bool>(vishnu::HAS_TMS, cfg.hasTMS);
     cfg.config.getConfigValue<bool>(vishnu::HAS_FMS, cfg.hasFMS);
 
+    if (!cfg.config.getConfigValue<std::string>(vishnu::IPC_URI_BASE, cfg.ipcUriBase)) {
+      cfg.ipcUriBase = "/tmp/vishnu-";
+    }
+
     if (!cfg.hasUMS && !cfg.hasTMS && !cfg.hasFMS) {
       std::cerr << "Error: XMS is not configured to run any services\n";
       exit(1);

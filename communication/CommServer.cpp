@@ -145,7 +145,13 @@ initSeD(const std::string& sedType,
   // Init logging
   std::clog.rdbuf(new Logger("vishnu", LOG_LOCAL0));
 
-  const std::string IPC_URI = (boost::format("ipc:///tmp/vishnu-%1%.sock")%sedType).str();
+  std::string ipcUriBase;
+  if (!config.getConfigValue<std::string>(vishnu::IPC_URI_BASE, ipcUriBase)) {
+    ipcUriBase = "/tmp/vishnu-";
+  }
+
+  const std::string IPC_URI = (boost::format("ipc://%1%%2%.sock")
+                               % ipcUriBase % sedType).str();
 
   std::string dispUri;
   config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, dispUri);

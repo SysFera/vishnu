@@ -26,6 +26,7 @@ struct SedConfig {
   std::string batchVersion;
   std::string defaultBatchConfig;
   std::string sendmailScriptPath;
+  std::string ipcUriBase;
   int vishnuId;
   bool sub;
   bool hasUMS;
