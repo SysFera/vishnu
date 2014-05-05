@@ -7,6 +7,8 @@
 #ifndef INTERNALAPI_HPP
 #define INTERNALAPI_HPP
 
+#include <boost/make_shared.hpp>
+
 #include "DIET_client.h"
 #include "File.hpp"
 #include "Mapper.hpp"
@@ -233,12 +235,13 @@ solveTransferFile(diet_profile_t* profile){
 
     int vishnuId = ServerXMS::getInstance()->getVishnuId();
 
-    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer,
-                                                                                    srcHost,
-                                                                                    destHost,
-                                                                                    srcPath,
-                                                                                    destPath,
-                                                                                    vishnuId));
+    boost::shared_ptr<FileTransferServer> fileTransferServer = \
+      boost::make_shared<FileTransferServer>(sessionServer,
+                                             srcHost,
+                                             destHost,
+                                             srcPath,
+                                             destPath,
+                                             vishnuId);
 
     // Perfor the transfer now
     if (transferMode == File::sync) {
@@ -464,12 +467,13 @@ solveTransferRemoteFile(diet_profile_t* profile){
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer,
-                                                                                    srcHost,
-                                                                                    destHost,
-                                                                                    srcPath,
-                                                                                    destPath,
-                                                                                    ServerXMS::getInstance()->getVishnuId()));
+    boost::shared_ptr<FileTransferServer> fileTransferServer = \
+      boost::make_shared<FileTransferServer>(sessionServer,
+                                             srcHost,
+                                             destHost,
+                                             srcPath,
+                                             destPath,
+                                             ServerXMS::getInstance()->getVishnuId());
     // Perfor the transfer now
     if (transferMode==File::sync) {
 
