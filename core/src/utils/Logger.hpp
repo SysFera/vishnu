@@ -54,6 +54,7 @@ std::ostream& operator<< (std::ostream& os, const LogPriority& log_priority);
 class Logger : public std::basic_streambuf<char, std::char_traits<char> > {
 public:
     explicit Logger(const std::string& programName, int facility);
+    ~Logger();
 
 protected:
     int sync();
