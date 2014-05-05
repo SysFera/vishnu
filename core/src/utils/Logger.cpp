@@ -33,6 +33,10 @@ Logger::Logger(const std::string& programName, int facility)
   openlog(mprogramName.c_str(), LOG_PID, facility);
 }
 
+Logger::~Logger() {
+  closelog();
+}
+
 int Logger::sync() {
   if (mbuffer.length()) {
     syslog(mlogSeverity, "%s", mbuffer.c_str());
