@@ -44,7 +44,7 @@ boost::shared_ptr<ServiceMap> sMap;
 static void
 fill_sMap() {
   unsigned int nb;
-  sMap = boost::shared_ptr<ServiceMap>(new ServiceMap);
+  sMap = boost::make_shared<ServiceMap>();
   /* UMS services */
   for (nb = 0; nb < NB_SRV_UMS; nb++) {
     (*sMap)[SERVICES_UMS[nb]] = "UMS";
