@@ -1,6 +1,6 @@
 # This is a commented sample configuration file for VISHNU
 # Copyright (c) SysFera SA
-# Last update: 16/01/2013
+# Last update: 30/04/2014
 #
 
 # Legends:
@@ -19,62 +19,26 @@
 # FMS: File Management System
 # TMS: Task Management System
 # UMS: User Management System
+# XMS: Server name
 # FQDN: Full Qualified Domain Name
 
 
 ###############################################################################
 #               Common Parameters                                             #
 ###############################################################################
-# vishnuId (M<FMS,TMS,UMS>): Sets the identifier of the VISHNU instance
-#
-vishnuId=1
 
-# databaseType (M<FMS,TMS,UMS>): Defines the type of the database.
-# Possible values are 'mysql' or 'postgresql'
-#
-databaseType=mysql
-
-# databaseHost (M<FMS,TMS,UMS>): Defines the IP address or the FQDN of the
-# database server.
-# Here we assume that the database and VISHNU are hosted on the same server
-#
-databaseHost=localhost
-
-# databasePort (OS<FMS,TMS,UMS>): Defines the port of the database server.
-#
-#databasePort=3306
-
-# databaseName (M<FMS,TMS,UMS>): Sets the name of the database instance
-#
-databaseName=vishnu
-
-# databaseUserName (M<FMS,TMS,UMS>): Sets the login name for authenticating
-# against the database
-#
-databaseUserName=vishnu_user
-
-# databaseUserPassword (M<FMS,TMS,UMS>): Sets the password associated to
-# the database user
-#
-databaseUserPassword=vishnu_user
-
-# databaseConnectionsNb (OS<FMS,TMS,UMS>): Sets the size of the pool of
-# threads to handle database connexions
-#
-#databaseConnectionsNb=10
-
-# useSsl (OS<Dispatcher,FMS,TMS,UMS>): Sets whether to enable TLS connections
+# useSsl (OS<Dispatcher,XMS>): Sets whether to enable TLS connections
 # Set to a non-zero value to enable SSL connection.
 #
 #useSsl=0
 
-# serverSslCertificate (OS<Dispatcher,FMS,TMS,UMS>): Sets the path to the
+# serverSslCertificate (OS<Dispatcher,XMS>): Sets the path to the
 # server certificate
 # This parameter is required if the parameter useSsl is set to a non-zero value
 #
 #serverSslCertificate=/opt/etc/sysfera/cert/server-cert.pem
 
-# serverPrivateKey (OS<Dispatcher,FMS,TMS,UMS>): Sets the path to the
+# serverPrivateKey (OS<Dispatcher,XMS>): Sets the path to the
 # server private key
 # This parameter is required if the parameter useSsl is set to a non-zero value
 #
@@ -85,15 +49,26 @@ databaseUserPassword=vishnu_user
 #
 #sslCa=/opt/etc/sysfera/cert/ca.pem
 
-# databaseUseSsl (OS<FMS,TMS,UMS>): Sets whether to use SSL-ciphered connection
-# Set to non-zero value to enable SSL connection.
+# timeout (M<Dispatcher>|O<XMS,Client>): In seconds, this defines the
+# duration afer which a request is considered as expired.
 #
-#databaseUseSsl=0
+timeout=120
 
-# databaseSslCa (OS<FMS,TMS,UMS>): Sets the path to the authority certificates
-# This parameter is necessary only when the parameter databaseUseSsl is set to non-zero
+# debugLevel (O): Specifies the debug level. The higher to filter log information
+# regarding the criticity of log.
+# Default is 0, means everything is logged.
 #
-#databaseSslCa=/opt/etc/sysfera/mysql-ssl/ca.pem
+# debugLevel=0
+
+
+# host_uriAddr (S<Client>)
+# Sets a list of semi-colon-separated addresses where SeD can be found.
+#     Each item in the list should have the form <sed_addr> <sed_name>
+#     Where <sed_addr> sets the address of the SeD while <sed_name> sets the name of
+#     the SeD. The name MUST match the name of the SeD in vishnu.
+#     E.g. sed_uriAddr=tcp://127.0.0.1:5561 tmssed1;tcp://192.168.1.1:5562 umssed1
+#
+host_uriAddr=tcp://127.0.0.1:5570 sed_name;
 
 
 ###############################################################################
@@ -108,7 +83,7 @@ databaseUserPassword=vishnu_user
 #
 disp_uriAddr=tcp://127.0.0.1:5560
 
-# disp_uriSubs (M<Dispatcher>|O<TMS|FMS|UMS>):
+# disp_uriSubs (M<Dispatcher>|O<XMS>):
 # ** For the Dispatcher, it indicates the address to listen on for SeD subscription
 # ** For SeD (FMS, TMS, UMS), this corresponds to the address from which
 #    the module will register itself to the Dispatcher
@@ -129,31 +104,68 @@ disp_nbthread=5
 ###############################################################################
 #                Server Parameters                                            #
 ###############################################################################
+# vishnuId (M<XMS>): Sets the identifier of the VISHNU instance
+#
+vishnuId=1
 
-# sed_uriAddr (S<SED>)
+# databaseType (M<XMS>): Defines the type of the database.
+# Possible values are 'mysql' or 'postgresql'
+#
+databaseType=mysql
+
+# databaseHost (M<XMS>): Defines the IP address or the FQDN of the
+# database server.
+# Here we assume that the database and VISHNU are hosted on the same server
+#
+databaseHost=localhost
+
+# databasePort (OS<XMS>): Defines the port of the database server.
+#
+#databasePort=3306
+
+# databaseName (M<XMS>): Sets the name of the database instance
+#
+databaseName=vishnu
+
+# databaseUserName (M<XMS>): Sets the login name for authenticating
+# against the database
+#
+databaseUserName=vishnu_user
+
+# databaseUserPassword (M<XMS>): Sets the password associated to
+# the database user
+#
+databaseUserPassword=vishnu_user
+
+# databaseConnectionsNb (OS<XMS>): Sets the size of the pool of
+# threads to handle database connexions
+#
+#databaseConnectionsNb=10
+
+# sed_uriAddr (M<XMS>)
 #   * Sets the address and the port on which the SeD will listen on
 #     E.g. sed_uriAddr=tcp://127.0.0.1:5562, means that the server will listen on
 #     the local loop on the port 5562
 #
 sed_uriAddr=tcp://127.0.0.1:5562
 
-# enableUMS (S<SED>)
+# enableUMS (M<XMS>)
 # Sets whether to enable UMS services within the SeD.
 # 0 means disable and non-zero means enables
 enableUMS=1
 
-# enableFMS (S<SED>)
+# enableFMS (M<XMS>)
 # Sets whether to enable FMS services within the SeD.
 # 0 means disable and non-zero means enables
 enableFMS=1
 
 
-# enableTMS (S<SED>)
+# enableTMS (M<XMS>)
 # Sets whether to enable TMS services within the SeD.
 # 0 means disable and non-zero means enables
 enableTMS=1
 
-# vishnuMachineId (M<FMS,TMS>|O<UMS>): Optional for UMS and mandatory for FMS,
+# vishnuMachineId (M<XMS>): Optional for UMS and mandatory for FMS,
 # and TMS, this key corresponds to the identity of the machine in vishnu
 # When set, it MUST correspond to a valid machine identifier.
 #
@@ -164,7 +176,7 @@ vishnuMachineId=machine_1
 #
 sendmailScriptPath=@CMAKE_INSTALL_PREFIX@/sbin/sendmail.py
 
-# authenticationType (M<UMS>): Defines the underlying authentication mode
+# authenticationType (O<XMS>): Defines the underlying authentication mode used by the UMS module
 # VISHNU supports four modes of authentication:
 #  * UMS: Authentication against the built-in user management system (default).
 #  * LDAP: Authentication against an LDAP directory
@@ -174,13 +186,13 @@ sendmailScriptPath=@CMAKE_INSTALL_PREFIX@/sbin/sendmail.py
 #
 #authenticationType=UMS
 
-# batchSchedulerType (M<TMS>): Defines the type of the batch scheduler TMS
+# batchSchedulerType (O<XMS>): Defines the type of the batch scheduler TMS
 # will handle.
 # VISHNU supports TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBS and POSIX
 batchSchedulerType=POSIX
 
 
-# batchSchedulerVersion (M<TMS>): Defines the versoin of the batch scheduler TMS
+# batchSchedulerVersion (O<XMS>): Defines the versoin of the batch scheduler TMS
 # will handle.
 # Required for TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBS
 # Unused for POSIX
@@ -193,44 +205,31 @@ batchSchedulerType=POSIX
 # PBS: 10.4
 batchSchedulerVersion=2.2
 
-# intervalMonitor (M<TMS>): In seconds, this key defines the interval after
+# intervalMonitor (M<XMS>): In seconds, this key defines the interval after
 # which the jobs are monitored
 #
 intervalMonitor=30
 
-# defaultBatchConfig (OS<TMS>): Sets the path to the default batch configuration
+# defaultBatchConfig (OS<XMS>): Sets the path to the default batch configuration
 # file.
 #
 #defaultBatchConfig=$HOME/defaultbatch.cfg
 
-
-###############################################################################
-#                Other Parameters                                             #
-###############################################################################
-# timeout (M<Dispatcher>|O<FMS,TMS,UMS,Client>): In seconds, this defines the
-# duration afer which a request is considered as expired.
+# databaseUseSsl (OS<XMS>): Sets whether to use SSL-ciphered connection
+# Set to non-zero value to enable SSL connection.
 #
-timeout=120
+#databaseUseSsl=0
 
-# debugLevel (O): Specifies the debug level. The higher to filter log information
-# regarding the criticity of log.
-# Default is 0, means everything is logged.
+# databaseSslCa (OS<XMS>): Sets the path to the authority certificates
+# This parameter is necessary only when the parameter databaseUseSsl is set to non-zero
 #
-# debugLevel=0
+#databaseSslCa=/opt/etc/sysfera/mysql-ssl/ca.pem
 
-# subscribe(M<FMS,TMS,UMS>): Sets whether the SeD should register to the Dispatcher
+# subscribe(M<XMS>): Sets whether the SeD should register to the Dispatcher
 #  * Sets to non-zero if registration is needed, 0 otherwise
 subscribe=0
 
-# standalone(M<TMS>): Sets the method to use to change local user in TMS
+# standalone(M<XMS>): Sets the method to use to change local user in TMS services
 #   * 0 means to use SSH and non-zero means to use setuid
 standalone=1
 
-# host_uriAddr (S<Client>)
-# Sets a list of semi-colon-separated addresses where SeD can be found.
-#     Each item in the list should have the form <sed_addr> <sed_name>
-#     Where <sed_addr> sets the address of the SeD while <sed_name> sets the name of
-#     the SeD. The name MUST match the name of the SeD in vishnu.
-#     E.g. sed_uriAddr=tcp://127.0.0.1:5561 tmssed1;tcp://192.168.1.1:5562 umssed1
-#
-host_uriAddr=tcp://127.0.0.1:5570 sed_name;

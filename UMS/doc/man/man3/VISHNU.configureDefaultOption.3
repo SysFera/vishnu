@@ -2,12 +2,12 @@
 .\"     Title: VISHNU.configureDefaultOption
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: UMS Python API Reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0 alpha
 .\"  Language: English
 .\"
-.TH "VISHNU\&.CONFIGUREDE" "3" "November 2013" "VISHNU 3.2.0" "UMS Python API Reference"
+.TH "VISHNU\&.CONFIGUREDE" "3" "May 2014" "VISHNU 4.0.0 alpha" "UMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.configureDefaultOption \- configures a default option value
 .SH "SYNOPSIS"
-.HP \w'ret=VISHNU\&.configureDefaultOption('u
-.BI "ret=VISHNU\&.configureDefaultOption(string\ " "sessionKey" ", OptionValue\ " "optionValue" ");"
+.HP \w'ret,\ optionValue=VISHNU\&.configureDefaultOption('u
+.BI "ret,\ optionValue=VISHNU\&.configureDefaultOption(string\ " "sessionKey" ");"
 .SH "DESCRIPTION"
 .PP
 Options in VISHNU corresponds to parameters of some VISHNU commands (e\&.g\&. the close policy for vishnu_connect) that can be preset in the user configuration stored by the VISHNU system\&. This command allows an administrator to configure the default value of an option; this is the value that will be applied when the user has no configuration defined for that option using the vishnu_configure_option command\&. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS)

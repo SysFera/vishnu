@@ -1,10 +1,9 @@
-s is a sample setup file for VISHNU tests
+# This is a sample setup file for VISHNU tests
 # Copyright (c) SysFera SA
 # Last update: 04/02/2013
 #
 #Definitions
 #FMS: File Management System
-#IMS: Information Management System
 #TMS: Task Management System
 #UMS: User Management System
 ###############################################################################

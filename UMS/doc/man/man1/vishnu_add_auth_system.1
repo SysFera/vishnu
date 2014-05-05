@@ -2,12 +2,12 @@
 .\"     Title: vishnu_add_auth_system
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: UMS Command reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0 alpha
 .\"  Language: English
 .\"
-.TH "VISHNU_ADD_AUTH_SYST" "1" "November 2013" "VISHNU 3.2.0" "UMS Command reference"
+.TH "VISHNU_ADD_AUTH_SYST" "1" "May 2014" "VISHNU 4.0.0 alpha" "UMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 vishnu_add_auth_system \- adds a new user\-authentication system in VISHNU
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_add_auth_system\fR\ 'u
-\fBvishnu_add_auth_system\fR [\fB\-h\fR] [\fB\-b\ \fR\fB\fIldapBase\fR\fR] \fIname\fR \fIURI\fR \fIauthLogin\fR \fIauthPassword\fR \fIuserPasswordEncryption\fR \fItype\fR
+\fBvishnu_add_auth_system\fR [\fB\-h\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] [\fB\-i\ \fR\fB\fIURI\fR\fR] [\fB\-u\ \fR\fB\fIauthLogin\fR\fR] [\fB\-w\ \fR\fB\fIauthPassword\fR\fR] [\fB\-e\ \fR\fB\fIuserPasswordEncryption\fR\fR] [\fB\-t\ \fR\fB\fItype\fR\fR] [\fB\-s\ \fR\fB\fIstatus\fR\fR] [\fB\-b\ \fR\fB\fIldapBase\fR\fR] \fIauthSystemId\fR
 .SH "DESCRIPTION"
 .PP
 This command allows an admin to add a new user\-authentication system in VISHNU\&. Several user\-authentication system\*(Aqs information are mandatory such as: URI, login, password, type and optionally for LDAP the DN of the root entry\&. By default, the type of the user\-authentication system is LDAP\&.
@@ -40,6 +40,41 @@ This command allows an admin to add a new user\-authentication system in VISHNU\
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
+.RE
+.PP
+\fB\-n \fR\fB\fIname\fR\fR
+.RS 4
+corresponds to the user\-authentication system\*(Aqs name\&.
+.RE
+.PP
+\fB\-i \fR\fB\fIURI\fR\fR
+.RS 4
+is the URI of the user\-authentication systems (by the form host:port for LDAP)\&.
+.RE
+.PP
+\fB\-u \fR\fB\fIauthLogin\fR\fR
+.RS 4
+is the login used to connect to the user\-authentication system\&.
+.RE
+.PP
+\fB\-w \fR\fB\fIauthPassword\fR\fR
+.RS 4
+is the password used to connect to the user\-authentication system\&.
+.RE
+.PP
+\fB\-e \fR\fB\fIuserPasswordEncryption\fR\fR
+.RS 4
+represents the encryption method used to encrypt user\*(Aqs password\&. The value must be an integer\&. Predefined values are: \-1 (UNDEFINED), 0 (SSHA)\&.
+.RE
+.PP
+\fB\-t \fR\fB\fItype\fR\fR
+.RS 4
+represents the type of the user\-authentication system\&. The value must be an integer\&. Predefined values are: \-1 (UNDEFINED), 0 (LDAP)\&.
+.RE
+.PP
+\fB\-s \fR\fB\fIstatus\fR\fR
+.RS 4
+represents the status of the user\-authentication system\&. The value must be an integer\&. Predefined values are: \-1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED)\&.
 .RE
 .PP
 \fB\-b \fR\fB\fIldapBase\fR\fR

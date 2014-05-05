@@ -2,12 +2,12 @@
 .\"     Title: vishnu_add_user
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: UMS Command reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0 alpha
 .\"  Language: English
 .\"
-.TH "VISHNU_ADD_USER" "1" "November 2013" "VISHNU 3.2.0" "UMS Command reference"
+.TH "VISHNU_ADD_USER" "1" "May 2014" "VISHNU 4.0.0 alpha" "UMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 vishnu_add_user \- adds a new VISHNU user
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_add_user\fR\ 'u
-\fBvishnu_add_user\fR [\fB\-h\fR] \fIfirstname\fR \fIlastname\fR \fIprivilege\fR \fIemail\fR
+\fBvishnu_add_user\fR [\fB\-h\fR] \fIuserId\fR \fImachineId\fR \fIacLogin\fR \fIsshKeyPath\fR \fIhomeDirectory\fR
 .SH "DESCRIPTION"
 .PP
 This command allows an admin to add a new user in VISHNU\&. Several user information are necessary such as: lastname, firtsname and email address\&. The admin also gives a VISHNU privilege to the new user and a new userId and password are sent to the user by email\&.

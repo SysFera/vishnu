@@ -40,14 +40,14 @@ BOOST_AUTO_TEST_CASE( dispatcher_version )
   }
 }
 
-BOOST_AUTO_TEST_CASE( ums_version )
+BOOST_AUTO_TEST_CASE( xms_version )
 {
   std::map<std::string, std::string> result;
   std::map<std::string, std::string>::iterator it;
   BOOST_MESSAGE(" Testing UMS get version" );
   {
     if (mums_version!=std::string("NO")){
-      BOOST_CHECK  (getServerVersion(result, "umssed")==0);
+      BOOST_CHECK  (getServerVersion(result, "xmssed")==0);
       BOOST_CHECK (result.size() == 1);
       it = result.begin();
       std::string vers = it->second;
@@ -56,51 +56,7 @@ BOOST_AUTO_TEST_CASE( ums_version )
       std::string neo(car);
       BOOST_CHECK (neo == mums_version);
     } else {
-      BOOST_CHECK_THROW  (getServerVersion(result, "umssed"), VishnuException);
-    }
-  }
-
-}
-
-BOOST_AUTO_TEST_CASE( fms_version )
-{
-  std::map<std::string, std::string> result;
-  std::map<std::string, std::string>::iterator it;
-  BOOST_MESSAGE(" Testing FMS get version" );
-  {
-    if (mfms_version!=std::string("NO")){
-      BOOST_CHECK  (getServerVersion(result, "fmssed")==0);
-      BOOST_CHECK (result.size() == 1);
-      it = result.begin();
-      std::string vers = it->second;
-      boost::algorithm::trim(vers);
-      const char* car = vers.c_str(); // Use a char* because otherwize a **** invisible character is in the end of the string and fucks comparison
-      std::string neo(car);
-      BOOST_CHECK (neo == mfms_version);
-    } else {
-      BOOST_CHECK_THROW  (getServerVersion(result, "fmssed"), VishnuException);
-    }
-  }
-
-}
-
-BOOST_AUTO_TEST_CASE( tms_version )
-{
-  std::map<std::string, std::string> result;
-  std::map<std::string, std::string>::iterator it;
-  BOOST_MESSAGE(" Testing TMS get version" );
-  {
-    if (mtms_version!=std::string("NO")){
-      BOOST_CHECK  (getServerVersion(result, "tmssed")==0);
-      BOOST_CHECK (result.size() == 1);
-      it = result.begin();
-      std::string vers = it->second;
-      boost::algorithm::trim(vers);
-      const char* car = vers.c_str(); // Use a char* because otherwize a **** invisible character is in the end of the string and fucks comparison
-      std::string neo(car);
-      BOOST_CHECK (neo == mtms_version);
-    } else {
-      BOOST_CHECK_THROW  (getServerVersion(result, "tmssed"), VishnuException);
+      BOOST_CHECK_THROW  (getServerVersion(result, "xmssed"), VishnuException);
     }
   }
 

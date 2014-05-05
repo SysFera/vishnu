@@ -382,6 +382,15 @@ suppression du chapite lié aux web services</para>
 </revdescription>
 </revision>
 
+<revision>
+<revnumber>40</revnumber>
+<date>30/04/2014</date>
+<authorinitials>K. Coulomb</authorinitials>
+<revdescription>
+<para>Mise en place du xmssed</para>
+</revdescription>
+</revision>
+
 </revhistory>
 </info>
 <chapter>
@@ -486,13 +495,7 @@ VISHNU.</para>
 <para>UMS : User Management Service ou système de gestion des utilisateurs</para>
 </listitem>
 <listitem>
-<para>SeD FMS : désigne l'exécutable qui supporte le service FMS. </para>
-</listitem>
-<listitem>
-<para>SeD TMS : désigne l'exécutable qui supporte le service TMS. </para>
-</listitem>
-<listitem>
-<para>SeD UMS : désigne l'exécutable qui supporte le service UMS. </para>
+<para>SeD XMS : désigne l'exécutable qui supporte les services de n'importe quel module . </para>
 </listitem>
 <listitem>
 <para>Client FMS : désigne l'ensemble des programmes pour accéder
@@ -643,9 +646,9 @@ et <emphasis>regex</emphasis> doivent être installés
 VISHNU utilise CMake comme système de construction. Les différentes fonctionnalités
 sont activées ou désactivées à la demande grâce à des variables Cmake spécifiques.
 Positionnée à <emphasis>ON</emphasis> une variable permet d'activer la fonctionnalité
-associée. Ex. -DCOMPILE_UMS=ON active la compilation du module UMS.
+associée. Ex. -DCOMPILE_TMS=ON active la compilation des services du module TMS.
 Un positionnement à <emphasis>OFF</emphasis> désactive la compilation de la fonctionnalité.
-Ex. -DCOMPILE_UMS=ON désactive la compilation du module UMS.
+Ex. -DCOMPILE_TMS=ON désactive la compilation du module TMS.
 </para>
 <para>
 Dans certains cas on peut avoir besoin de mots-clés spécifiques pour activer une fonctionnalité.
@@ -885,17 +888,7 @@ $INSTALL_PREFIX/sbin/dispatcher : binaire du Dispatcher
 </listitem>
 <listitem>
 <para>
-$INSTALL_PREFIX/sbin/umssed : binaire du SeD UMS
-</para>
-</listitem>
-<listitem>
-<para>
-$INSTALL_PREFIX/sbin/fmssed : binaire du SeD FMS
-</para>
-</listitem>
-<listitem>
-<para>
-$INSTALL_PREFIX/sbin/tmssed : binaire du SeD TMS
+$INSTALL_PREFIX/sbin/xmssed : binaire du SeD XMS
 </para>
 </listitem>
 <listitem>
@@ -935,7 +928,7 @@ $INSTALL_PREFIX/etc : contient des exemples de fichiers de configuration.
 le répertoire core/database du package d'installation VISHNU. Seules des bases
 de données PostgreSQL ou MySQL sont actuellement supportées. Une seule base de
 données est nécessaire et suffisante pour l'ensemble des composants d'une
-infrastructure VISHNU (UMS, TMS, et FMS).
+infrastructure VISHNU.
 </para>
 
 
@@ -1144,17 +1137,7 @@ Dispatcher: $INSTALL_PREFIX/sbin/dispatcher
 </listitem>
 <listitem>
 <para>
-SeD UMS: $INSTALL_PREFIX/sbin/umssed
-</para>
-</listitem>
-<listitem>
-<para>
-SeD FMS: $INSTALL_PREFIX/sbin/fmssed
-</para>
-</listitem>
-<listitem>
-<para>
-SeD TMS : $INSTALL_PREFIX/sbin/tmssed
+SeD XMS: $INSTALL_PREFIX/sbin/xmssed
 </para>
 </listitem>
 </itemizedlist>
@@ -1173,9 +1156,10 @@ NOTER QUE LES FORMATS DES URIs ACCEPTES SONT LES MÊMES QUE CEUX ACCEPTES PAR ZE
 </para>
 <programlisting>
 <![CDATA[
+
 # This is a commented sample configuration file for VISHNU
 # Copyright (c) SysFera SA
-# Last update: 16/01/2013
+# Last update: 30/04/2014
 #
 
 # Legends:
@@ -1194,40 +1178,56 @@ NOTER QUE LES FORMATS DES URIs ACCEPTES SONT LES MÊMES QUE CEUX ACCEPTES PAR ZE
 # FMS: File Management System
 # TMS: Task Management System
 # UMS: User Management System
+# XMS: Server name
 # FQDN: Full Qualified Domain Name
 
 
 ###############################################################################
 #               Common Parameters                                             #
 ###############################################################################
-# vishnuId (M<FMS,TMS,UMS>): Sets the identifier of the VISHNU instance
-#
-vishnuId=1
 
-# databaseType (M<FMS,TMS,UMS>): Defines the type of the database.
-# Possible values are 'mysql' or 'postgresql'
+# useSsl (OS<Dispatcher,XMS>): Sets whether to enable TLS connections
+# Set to a non-zero value to enable SSL connection.
 #
-databaseType=mysql
+#useSsl=0
 
-# databaseHost (M<FMS,TMS,UMS>): Defines the IP address or the FQDN of the
-# database server.
-# Here we assume that the database and VISHNU are hosted on the same server
+# serverSslCertificate (OS<Dispatcher,XMS>): Sets the path to the
+# server certificate
+# This parameter is required if the parameter useSsl is set to a non-zero value
 #
-databaseHost=localhost
+#serverSslCertificate=/opt/etc/sysfera/cert/server-cert.pem
 
-# databaseName (M<FMS,TMS,UMS>): Sets the name of the database instance
+# serverPrivateKey (OS<Dispatcher,XMS>): Sets the path to the
+# server private key
+# This parameter is required if the parameter useSsl is set to a non-zero value
 #
-databaseName=vishnu
+#serverPrivateKey=/opt/etc/sysfera/cert/server-key.pem
 
-# databaseUserName (M<FMS,TMS,UMS>): Sets the login name for authenticating
-# against the database
+# sslCa (OS<Client>): Sets the path to the authority certificates
+# This parameter is optional and is only used by clients to valide the server certificate
 #
-databaseUserName=vishnu
+#sslCa=/opt/etc/sysfera/cert/ca.pem
 
-# databaseUserPassword (M<FMS,TMS,UMS>): Sets the password associated to
-# the database user
+# timeout (M<Dispatcher>|O<XMS,Client>): In seconds, this defines the
+# duration afer which a request is considered as expired.
 #
-databaseUserPassword=vishnu
+timeout=120
+
+# debugLevel (O): Specifies the debug level. The higher to filter log information
+# regarding the criticity of log.
+# Default is 0, means everything is logged.
+#
+# debugLevel=0
+
+
+# host_uriAddr (S<Client>)
+# Sets a list of semi-colon-separated addresses where SeD can be found.
+#     Each item in the list should have the form <sed_addr> <sed_name>
+#     Where <sed_addr> sets the address of the SeD while <sed_name> sets the name of
+#     the SeD. The name MUST match the name of the SeD in vishnu.
+#     E.g. sed_uriAddr=tcp://127.0.0.1:5561 tmssed1;tcp://192.168.1.1:5562 umssed1
+#
+host_uriAddr=tcp://127.0.0.1:5570 sed_name;
 
 
 ###############################################################################
@@ -1242,7 +1242,7 @@ databaseUserPassword=vishnu
 #
 disp_uriAddr=tcp://127.0.0.1:5560
 
-# disp_uriSubs (M<Dispatcher>|O<TMS|FMS|UMS>):
+# disp_uriSubs (M<Dispatcher>|O<XMS>):
 # ** For the Dispatcher, it indicates the address to listen on for SeD subscription
 # ** For SeD (FMS, TMS, UMS), this corresponds to the address from which
 #    the module will register itself to the Dispatcher
@@ -1259,35 +1259,83 @@ disp_uriSubs=tcp://127.0.0.1:5561
 #
 disp_nbthread=5
 
-# subscribe (O<TMS|FMS|UMS>):
-# ** Indicates if the SeD have to register in the dispatcher or not
-# * 1 for yes
-# * 0 for no
-subscribe=1
-
 
 ###############################################################################
-#                UMS Related Parameters                                       #
+#                Server Parameters                                            #
 ###############################################################################
+# vishnuId (M<XMS>): Sets the identifier of the VISHNU instance
+#
+vishnuId=1
 
-# sed_uriAddr (M<UMS>|O<Dispatcher,Client>):
-#   * For UMS, this sets the address and the port on which the UMS SeD
-#     will listen on
-#   * For Dispactcher and clients it indicates address(es) for connecting
-#     to UMS SeDs.
-#     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: sed_uriAddr=uri_umssed1 sed1_name;uri_umssed2 sed2_name;...
-#     uri_umssed<i> correspond to valid URIs. sed<i>_name set the
-#     names associated to the SeDs
-#     E.g. sed_uriAddr=tcp://127.0.0.1:5562 localsed;tcp://192.168.1.1:5562 lansed
+# databaseType (M<XMS>): Defines the type of the database.
+# Possible values are 'mysql' or 'postgresql'
+#
+databaseType=mysql
+
+# databaseHost (M<XMS>): Defines the IP address or the FQDN of the
+# database server.
+# Here we assume that the database and VISHNU are hosted on the same server
+#
+databaseHost=localhost
+
+# databasePort (OS<XMS>): Defines the port of the database server.
+#
+#databasePort=3306
+
+# databaseName (M<XMS>): Sets the name of the database instance
+#
+databaseName=vishnu
+
+# databaseUserName (M<XMS>): Sets the login name for authenticating
+# against the database
+#
+databaseUserName=vishnu_user
+
+# databaseUserPassword (M<XMS>): Sets the password associated to
+# the database user
+#
+databaseUserPassword=vishnu_user
+
+# databaseConnectionsNb (OS<XMS>): Sets the size of the pool of
+# threads to handle database connexions
+#
+#databaseConnectionsNb=10
+
+# sed_uriAddr (M<XMS>)
+#   * Sets the address and the port on which the SeD will listen on
+#     E.g. sed_uriAddr=tcp://127.0.0.1:5562, means that the server will listen on
+#     the local loop on the port 5562
 #
 sed_uriAddr=tcp://127.0.0.1:5562
 
-# sendmailScriptPath (M<UMS>): Sets the path to the script for sending emails
-#
-sendmailScriptPath=/opt/software/GIT/vishnu_1/core/src/utils/sendmail.py
+# enableUMS (M<XMS>)
+# Sets whether to enable UMS services within the SeD.
+# 0 means disable and non-zero means enables
+enableUMS=1
 
-# authenticationType (M<UMS>): Defines the underlying authentication mode
+# enableFMS (M<XMS>)
+# Sets whether to enable FMS services within the SeD.
+# 0 means disable and non-zero means enables
+enableFMS=1
+
+
+# enableTMS (M<XMS>)
+# Sets whether to enable TMS services within the SeD.
+# 0 means disable and non-zero means enables
+enableTMS=1
+
+# vishnuMachineId (M<XMS>): Optional for UMS and mandatory for FMS,
+# and TMS, this key corresponds to the identity of the machine in vishnu
+# When set, it MUST correspond to a valid machine identifier.
+#
+vishnuMachineId=machine_1
+
+# sendmailScriptPath (M<UMS>)
+# Sets the path to the script for sending emails
+#
+sendmailScriptPath=@CMAKE_INSTALL_PREFIX@/sbin/sendmail.py
+
+# authenticationType (O<XMS>): Defines the underlying authentication mode used by the UMS module
 # VISHNU supports four modes of authentication:
 #  * UMS: Authentication against the built-in user management system (default).
 #  * LDAP: Authentication against an LDAP directory
@@ -1297,70 +1345,55 @@ sendmailScriptPath=/opt/software/GIT/vishnu_1/core/src/utils/sendmail.py
 #
 #authenticationType=UMS
 
-
-###############################################################################
-#                FMS Specfic Parameters                                       #
-###############################################################################
-
-# sed_uriAddr (M<FMS>|O<Dispatcher,Client>):
-#   * For FMS, this sets the address and the port on which the FMS SeD
-#     will listen on
-#   * For Dispactcher and clients it indicates address(es) for connecting
-#     to FMS SeDs.
-#     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: sed_uriAddr=uri_fmssed1 sed1_name;uri_fmssed2 sed2_name;...
-#     uri_fmssed<i> correspond to valid URIs. sed<i>_name set the
-#     names associated to the SeDs
-#     E.g. sed_uriAddr=tcp://127.0.0.1:5563 localsed;tcp://192.168.1.1:5563 lansed
-#
-sed_uriAddr=tcp://127.0.0.1:5563
-###############################################################################
-#                TMS Related Parameters                                       #
-###############################################################################
-# sed_uriAddr (M<TMS>|O<Dispatcher,Client>):
-#   * For TMS, this sets the address and the port on which the TMS SeD
-#     will listen on
-#   * For Dispactcher and clients it indicates address(es) for connecting
-#     to TMS SeDs.
-#     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: sed_uriAddr=uri_tmssed1 sed1_name;uri_tmssed2 sed2_name;...
-#     uri_tmssed<i> correspond to valid  URIs. sed<i>_name set the
-#     names associated to the SeDs.
-#     E.g. sed_uriAddr=tcp://127.0.0.1:5565 localsed;tcp://192.168.1.1:5565 lansed
-#
-sed_uriAddr=tcp://127.0.0.1:5565
-
-# batchSchedulerType (M<TMS>): Defines the type of the batch scheduler TMS
+# batchSchedulerType (O<XMS>): Defines the type of the batch scheduler TMS
 # will handle.
-# VISHNU supports TORQUE, LOADLEVELER, SLURM, LSF, SGE and PBS
-batchSchedulerType=SLURM
+# VISHNU supports TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBS and POSIX
+batchSchedulerType=POSIX
 
-# intervalMonitor (M<TMS>): In seconds, this key defines the interval after
+
+# batchSchedulerVersion (O<XMS>): Defines the versoin of the batch scheduler TMS
+# will handle.
+# Required for TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBS
+# Unused for POSIX
+# Supported versions are:
+# TORQUE: 2.3
+# LOADLEVELER: 2.5
+# SLURM: 2.2, 2.3
+# LSF: 7.0
+# SGE: 11
+# PBS: 10.4
+batchSchedulerVersion=2.2
+
+# intervalMonitor (M<XMS>): In seconds, this key defines the interval after
 # which the jobs are monitored
 #
 intervalMonitor=30
 
-# defaultBatchConfig (OS<TMS>): Sets the path to the default batch configuration
+# defaultBatchConfig (OS<XMS>): Sets the path to the default batch configuration
 # file.
 #
 #defaultBatchConfig=$HOME/defaultbatch.cfg
 
-
-###############################################################################
-#                Other Parameters                                             #
-###############################################################################
-
-# vishnuMachineId (M<FMS,TMS>|O<UMS>): Optional for UMS and mandatory for FMS,
-# and TMS, this key corresponds to the identifier of the machine in VISHNU
-# environment.
-# When set, it MUST correspond to valid machine identifier.
+# databaseUseSsl (OS<XMS>): Sets whether to use SSL-ciphered connection
+# Set to non-zero value to enable SSL connection.
 #
-vishnuMachineId=machine_1
+#databaseUseSsl=0
 
-# timeout (M<Dispatcher>|O<FMS,TMS,UMS>): In seconds, this defines the
-# duration afer which a request is considered as expired.
+# databaseSslCa (OS<XMS>): Sets the path to the authority certificates
+# This parameter is necessary only when the parameter databaseUseSsl is set to non-zero
 #
-timeout=120
+#databaseSslCa=/opt/etc/sysfera/mysql-ssl/ca.pem
+
+# subscribe(M<XMS>): Sets whether the SeD should register to the Dispatcher
+#  * Sets to non-zero if registration is needed, 0 otherwise
+subscribe=0
+
+# standalone(M<XMS>): Sets the method to use to change local user in TMS services
+#   * 0 means to use SSH and non-zero means to use setuid
+standalone=1
+
+
+
 ]]>
 </programlisting>
 <section>
@@ -1376,26 +1409,14 @@ Vous pouvez vous en inspirer pour l'adapter à votre installation. Tout texte ap
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;; PARAMETRES LIES A LA PRISE EN CHARGE DES COMPOSANTS DE VISHNU ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Attention: il faut bien respecter les nommages 'umssed',
-; 'tmssed', 'fmssed'. Sinon ils ne seront pas bien pris en charge
+; Attention: il faut bien respecter les nommages.
+; Sinon ils ne seront pas bien pris en charge
 
-; Définir le SeD UMS comme un processus à surveiller
-; Son alias est umssed
+; Définir le SeD XMS comme un processus à surveiller
+; Son alias est xmssed
 ; command indique la commande à exécuter. A modifier selon votre installation
-[program:umssed]
-command=umssed ~/conf/ums_config.cfg ; Commande comme on ferait dans un terminal
-
-; Définir le SeD FMS comme un processus à surveiller
-; Son alias est fmssed
-; command indique la commande à exécuter. A modifier selon votre installation
-[program:fmssed]
-command=fmssed ~/conf/fms_config.cfg
-
-; Définir le SeD TMS comme un processus à surveiller
-; Son alias est tmssed
-; command indique la commande à exécuter. A modifier selon votre installation
-[program:tmssed]
-command=tmssed ~/conf/tms_config.cfg
+[program:xmssed]
+command=xmssed ~/conf/xms_config.cfg ; Commande comme on ferait dans un terminal
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; PARAMETRES SPECIFIQUES A SUPERVISORD ;;;;;;;;;;;;;;;;;;;;;
@@ -1695,7 +1716,7 @@ fournie se connecte sur le serveur SMTP de 'localhost' sur le port 25, sans auth
 <section>
 <title>Configuration des clés privées/publiques ssh requises pour FMS</title>
 <para>
-Toutes les commandes éxécutées par le SeD FMS sont lancées via ssh
+Toutes les commandes éxécutées par le SeD FMS sont lancées
 sous le nom de l'utilisateur ayant émis la requête. Les services FMS
 sont de deux types : il y a ceux qui n'impliquent qu'une machine
 distante : Exemple getFilesInfo,listDir,etc.. et ceux qui impliquent au
@@ -1708,23 +1729,29 @@ effectue la commande. Par conséquent la clé publique du SeD doit
 concernée.</para>
 </listitem>
 <listitem>
-<para>Dans le second cas, deux connexions ssh sont nécessaires. Le SeD se connecte sur la machine source et
+<para>Dans le second cas, jusqu'à deux connexions ssh peuvent être nécessaires. 
+Si la machine cliente de l'utilisateur est concernée, la commande est lancée directement depuis la machine
+cliente (qu'elle soit source ou destination), dans l'environnement d'exécution de la commande cliente. Si la machine
+locale n'est pas concernée, alors
+le SeD se connecte sur la machine source et
 lance le transfert (seconde connexion) vers la machine destination. Par conséquent:
 <itemizedlist>
 <listitem>
-<para>la clé publique du SeD doit être ajoutée au fichier authorized_key de la machine source pour
+<para>pour les transferts entre deux machines distantes, la clé publique du SeD doit être ajoutée au fichier authorized_key de la machine source pour
 permettre la première connexion.
 </para>
 </listitem>
 <listitem>
-<para>La machine source doit pouvoir se connecter sur la machine destination par ssh, avec la clé privée enregistrée dans la base de VISHNU lors de l'ajout du compte (local account) liant la machine source à VISHNU. Par ailleurs si le mécanisme d'agent forwarding (de ssh) est activée entre ces différentes machines, il n'est alors plus nécessaire qu'il y ait un autre couple de clés entre la machine source et destination. </para>
+<para>La machine source doit pouvoir se connecter sur la machine destination par ssh, avec la clé privée enregistrée dans la base de VISHNU lors de l'ajout du compte (local account) liant la machine source à VISHNU. Par ailleurs si le mécanisme d'agent forwarding (de ssh) 
+est activé entre ces différentes machines, il n'est alors plus nécessaire qu'il y ait un autre couple de clés entre la machine source et destination. </para>
 </listitem>
 </itemizedlist>
 </para>
 </listitem>
 </itemizedlist>
 En somme, il est alors obligatoire que la clé publique du SeD soit ajoutée à tous les comptes utilisateurs des machines impliquées
-par les requêtes FMS. Toutes les clés protégées par des passphrases ne sont pas supportées.
+par les requêtes FMS. Toutes les clés protégées par des passphrases ne sont pas supportées pour les transferts entre 2 machines distantes
+car il n'est pas possible d'utiliser un agent de l'utilisateur contenant cette passphrase.
 </para>
 </section>
 
@@ -1732,6 +1759,8 @@ par les requêtes FMS. Toutes les clés protégées par des passphrases ne sont 
 <section>
 <title>Configuration des clés privées/publiques ssh requises pour TMS</title>
 <para>
+Attention, ce qui suit est valable uniquement si le mode standalone est désactivé (valeur à 0), sinon le changement d'utilisateur se fait
+avec setuip et non ssh.
 Les commandes de soumission, d'annulation et de récupération des résultats de jobs éxécutées par le SeD TMS sont lancées via ssh
 sous le nom de l'utilisateur ayant émis la requête. Pour pouvoir exécuter ces commandes correctement, la clé publique du compte dédié au SeD TMS doit
 être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur. Toutes les clés protégées par des passphrases ne
@@ -1796,7 +1825,7 @@ Après installation, il est possible d'utiliser les fonctionnalités de TMS sur 
 ne possédant pas de batch scheduler. Ce mode de fonctionnement natif est appelé TMS Posix Shell. Le type de batch scheduler associé est 'POSIX'.
 </para>
 <para>
-Lors de la compilation, ce module est activé automatiquement et indépendamment du batch scheduler sélectionné. Il est également possible de ne compiler que ce module en choississant 'POSIX' comme bacth scheduler lors de la compilation. Le flag dans le fichier de configuration du serveur TMS sera également POSIX. Il faut noter que lors de la compilation de VISHNU pour un batch scheduler classique, ce pseudo batch est automatiquement compilé, et l'utilisateur peut lors du submit explicitement demander à soumettre sur le batch posix en utilisant l'option -p. Sinon, c'est systématiquement le vrai batch scheduler auquel vishnu soumet. Cela implique que d'un point de vue système, vishnu a constamment 3 processus 'tmssed' dans le cas d'un batch scheduler classique, un premier qui est le serveur réalisant les services, et les 2 autres correspondent à des moniteurs utilisés par vishnu (pour interroger les batchs schedulers sous-jacents) pour avoir les données à jour associées aux jobs. De plus, afin de gérer les jobs utilisateurs et pouvoir les annuler, pour chaque utilisateur ayant un job, cet utilisateur aura un démon qui
+Lors de la compilation, ce module est activé automatiquement et indépendamment du batch scheduler sélectionné. Il est également possible de ne compiler que ce module en choississant 'POSIX' comme bacth scheduler lors de la compilation. Le flag dans le fichier de configuration du serveur TMS sera également POSIX. Il faut noter que lors de la compilation de VISHNU pour un batch scheduler classique, ce pseudo batch est automatiquement compilé, et l'utilisateur peut lors du submit explicitement demander à soumettre sur le batch posix en utilisant l'option -p. Sinon, c'est systématiquement le vrai batch scheduler auquel vishnu soumet. Cela implique que d'un point de vue système, vishnu a constamment 3 processus pour le module TMS dans le cas d'un batch scheduler classique, un premier qui est le serveur réalisant les services, et les 2 autres correspondent à des moniteurs utilisés par vishnu (pour interroger les batchs schedulers sous-jacents) pour avoir les données à jour associées aux jobs. De plus, afin de gérer les jobs utilisateurs et pouvoir les annuler, pour chaque utilisateur ayant un job, cet utilisateur aura un démon qui
 tournera, pourra controller les jobs, et fournir des informations au moniteur au
 travers d'une socket unix.
 </para>

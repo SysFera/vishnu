@@ -179,10 +179,6 @@
                     <para>FMS ("Files Management System"): nom du module Vishnu de gestion des
                         transferts de fichiers</para>
                 </listitem>
-                <listitem>
-                    <para>IMS ("Information Management System"): nom du module Vishnu de gestion des
-                        informations</para>
-                </listitem>
             </itemizedlist>
         </section>
     </chapter>
