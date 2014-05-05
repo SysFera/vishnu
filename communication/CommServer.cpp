@@ -1,6 +1,7 @@
 #include "CommServer.hpp"
 
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 #include <unistd.h> // for sleep
 
 #include "Database.hpp"
@@ -83,7 +84,7 @@ keepRegistered(const std::string& sedType,
   config.getConfigValue<int>(vishnu::TIMEOUT, timeout);
   std::string dispUri;
   config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, dispUri);
-  boost::shared_ptr<Server> srv = boost::shared_ptr<Server> (new Server(sedType, services, sedUri));
+  boost::shared_ptr<Server> srv = boost::make_shared<Server>(sedType, services, sedUri);
   std::string requestData = "1" + srv.get()->toString(); /* prefixed with 1 to say registering request */
 
   std::string response;

@@ -8,6 +8,7 @@
 #define _WORKER_HPP_
 
 #include <iostream>
+#include <boost/make_shared.hpp>
 
 #include "zhelpers.hpp"
 #include "utils.hpp"
@@ -115,7 +116,8 @@ serverWorkerSockets(const std::string& serverUri,
                     WorkerParam params,
                     bool useSsl,
                     const std::string& cafile) {
-  boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
+  boost::shared_ptr<zmq::context_t> context = \
+      boost::make_shared<zmq::context_t>(1);
   zmq::socket_t socket_server(*context, ZMQ_ROUTER);
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
 
