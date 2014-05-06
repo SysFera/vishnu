@@ -2,12 +2,12 @@
 .\"     Title: VISHNU.getCompletedJobsOutput
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS Python API Reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "VISHNU\&.GETCOMPLETE" "3" "November 2013" "VISHNU 3.2.0" "TMS Python API Reference"
+.TH "VISHNU\&.GETCOMPLETE" "3" "May 2014" "VISHNU 4.0.0" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,23 +28,18 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-VISHNU.getCompletedJobsOutput \- gets standard output and error output files of completed jobs (applies only once for each job)
+VISHNU.getCompletedJobsOutput \- gets the ouput files of all completed jobs
 .SH "SYNOPSIS"
 .HP \w'ret,\ listOfResults=VISHNU\&.getCompletedJobsOutput('u
-.BI "ret,\ listOfResults=VISHNU\&.getCompletedJobsOutput(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "outDir\ =\ string()" ");"
+.BI "ret,\ listOfResults=VISHNU\&.getCompletedJobsOutput(string\ " "sessionKey" ", string\ " "outDir\ =\ string()" ", JobOutputOptions\ " "options\ =\ JobOutputOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows getting the output files of all the completed jobs\&.
+This command allows to get the output files of completed jobs\&. You can specify the target machine using the option \-\-machineId\&. If no machine is specified, if if the specified machine is "all", the request will be performed on all the machines where the user has a local account Note that all subsequent requests for this command will ignore jobs already downloaded\&. Unless the user explicitly use the option \-\-force or \-f
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
 .RS 4
 Input argument\&. The session key\&.
-.RE
-.PP
-\fImachineId\fR
-.RS 4
-Input argument\&. Is the id of the machine on which the jobs are been submitted\&.
 .RE
 .PP
 \fIlistOfResults\fR
@@ -55,6 +50,11 @@ Output argument\&. Is the list of jobs results\&.
 \fIoutDir\fR
 .RS 4
 Input argument\&. Specifies the output directory where the files will be stored (by default, the current directory)\&.
+.RE
+.PP
+\fIoptions\fR
+.RS 4
+Input argument\&. Object containing options\&.
 .RE
 .SH "RETURNED OBJECTS"
 .PP

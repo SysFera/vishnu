@@ -2,12 +2,12 @@
 .\"     Title: vishnu_submit_job
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS Command reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "VISHNU_SUBMIT_JOB" "1" "November 2013" "VISHNU 3.2.0" "TMS Command reference"
+.TH "VISHNU_SUBMIT_JOB" "1" "May 2014" "VISHNU 4.0.0" "TMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,10 +31,10 @@
 vishnu_submit_job \- Allows to submit a job consisting in running a given script on a machine\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_submit_job\fR\ 'u
-\fBvishnu_submit_job\fR [\fB\-h\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-t\ \fR\fB\fIwallTime\fR\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-N\ \fR\fB\fInbNodesAndCpuPerNode\fR\fR] [\fB\-o\ \fR\fB\fIoutputPath\fR\fR] [\fB\-e\ \fR\fB\fIerrorPath\fR\fR] [\fB\-M\ \fR\fB\fImailNotification\fR\fR] [\fB\-u\ \fR\fB\fImailNotifyUser\fR\fR] [\fB\-g\ \fR\fB\fIgroup\fR\fR] [\fB\-D\ \fR\fB\fIworkingDir\fR\fR] [\fB\-T\ \fR\fB\fIcpuTime\fR\fR] [\fB\-Q\fR] [\fB\-L\ \fR\fB\fIloadType\fR\fR] [\fB\-F\ \fR\fB\fIfileParams\fR\fR] [\fB\-V\ \fR\fB\fItextParams\fR\fR] [\fB\-w\ \fR\fB\fIworkId\fR\fR] [\fB\-S\ \fR\fB\fIspecificParams\fR\fR] [\fB\-p\fR] \fImachineId\fR \fIscriptFilePath\fR
+\fBvishnu_submit_job\fR [\fB\-h\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-t\ \fR\fB\fIwallTime\fR\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-N\ \fR\fB\fInbNodesAndCpuPerNode\fR\fR] [\fB\-o\ \fR\fB\fIoutputPath\fR\fR] [\fB\-e\ \fR\fB\fIerrorPath\fR\fR] [\fB\-M\ \fR\fB\fImailNotification\fR\fR] [\fB\-u\ \fR\fB\fImailNotifyUser\fR\fR] [\fB\-g\ \fR\fB\fIgroup\fR\fR] [\fB\-D\ \fR\fB\fIworkingDir\fR\fR] [\fB\-T\ \fR\fB\fIcpuTime\fR\fR] [\fB\-Q\fR] [\fB\-L\ \fR\fB\fIloadType\fR\fR] [\fB\-F\ \fR\fB\fIfileParams\fR\fR] [\fB\-V\ \fR\fB\fItextParams\fR\fR] [\fB\-w\ \fR\fB\fIworkId\fR\fR] [\fB\-S\ \fR\fB\fIspecificParams\fR\fR] [\fB\-p\fR] [\fB\-r\ \fR\fB\fImachine\fR\fR] \fIscriptFilePath\fR
 .SH "DESCRIPTION"
 .PP
-This command is used to submit a job to the specific batch scheduler associated to a machine\&. It allows describing a job in a script, using either the batch scheduler\*(Aqs directives or VISHNU\*(Aqs generic directives for all batch schedulers\&. If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script using VISHNU\*(Aqs generic directives for all batch schedulers
+Command to submit a job to the specific batch scheduler associated to a machine\&. You must set a script to execute\&. It\*(Aqs possible to specify a target machine using the option \-\-machineId\&. If no machine is set, or if the specified machine is "autom", the job will be submitted on a machine automatically selected by vishnu\&. You can use the load criterion option (\-\-useLoad) to set the algorithm vishnu should select the target machine
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -140,6 +140,11 @@ Sets a list of specific parameters for the batch scheduler so at the job submiti
 \fB\-p \fR\fB\fIposix\fR\fR
 .RS 4
 allows to submit on the shell instead of using the batch scheduler\&.
+.RE
+.PP
+\fB\-r \fR\fB\fImachine\fR\fR
+.RS 4
+Sets the target machine\&.
 .RE
 .SH "JOB OUTPUT ENVIRONMENT VARIABLES"
 .PP
@@ -249,13 +254,13 @@ The following diagnostics may be issued on stderr and the command will return th
 .RE
 .SH "EXAMPLE"
 .PP
-To submit on machine_1 the script toto:
+To submit the script toto\&.sh on machine_1:
 .PP
-vishnu_submit_job machine_1 toto
+vishnu_submit_job \-m machine_1 toto\&.sh
 .PP
-To submit automatically the script toto on the best machine (by the default the machine which has the minimum number of waiting jobs is selected):
+To submit the script on a machine selected by vishnu
 .PP
-vishnu_submit_job autom toto
+vishnu_submit_job toto\&.sh
 .PP
 To submit automatically the script toto on the best machine by using a machine which has the minimum total number of jobs:
 .PP

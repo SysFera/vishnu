@@ -2,12 +2,12 @@
 .\"     Title: vishnu_get_job_progress
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS Command reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "VISHNU_GET_JOB_PROGR" "1" "November 2013" "VISHNU 3.2.0" "TMS Command reference"
+.TH "VISHNU_GET_JOB_PROGR" "1" "May 2014" "VISHNU 4.0.0" "TMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,10 +31,10 @@
 vishnu_get_job_progress \- gets the progression status of jobs
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_get_job_progress\fR\ 'u
-\fBvishnu_get_job_progress\fR [\fB\-h\fR] [\fB\-i\ \fR\fB\fIjobId\fR\fR] [\fB\-u\ \fR\fB\fIjobOwner\fR\fR] \fImachineId\fR
+\fBvishnu_get_job_progress\fR [\fB\-h\fR] [\fB\-i\ \fR\fB\fIjobId\fR\fR] [\fB\-u\ \fR\fB\fIuser\fR\fR] [\fB\-m\ \fR\fB\fImachineId\fR\fR]
 .SH "DESCRIPTION"
 .PP
-This command allows getting the progression status of a job based on the wall\-clock time specified\&.
+This command allows to get the progression of jobs
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -47,9 +47,14 @@ help about the command\&.
 Specifies the id of the job whose progression the user wants to see\&.\&.
 .RE
 .PP
-\fB\-u \fR\fB\fIjobOwner\fR\fR
+\fB\-u \fR\fB\fIuser\fR\fR
 .RS 4
 Specifies the owner of the job\&.\&.
+.RE
+.PP
+\fB\-m \fR\fB\fImachineId\fR\fR
+.RS 4
+Displays the progression of jobs on the given machine\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
@@ -106,9 +111,17 @@ The following diagnostics may be issued on stderr and the command will return th
 .RE
 .SH "EXAMPLE"
 .PP
-To get the progress of the job J_1 on machine_1:
+To get the progress of the jobs\&. If no machine and no job has been specified,
 .PP
-vishnu_get_job_progress machine_1 \-i J_1
+this list the progression of all jobs submitted by the users\&. Using suitable options,
+.PP
+it\*(Aqs possible to filter the result according to the machine id or the the job id
+.PP
+vishnu_get_job_progress # get the progression of all jobs
+.PP
+vishnu_get_job_progress \-m machine_1 # get the progression of all jobs on machine_1
+.PP
+vishnu_get_job_progress \-i J_1 # get the progression of the job J_1
 .SH "AUTHOR"
 .PP
 \fB SysFera SA\fR <\&info@sysfera.com\&>

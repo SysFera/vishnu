@@ -52,8 +52,8 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="jobId" dataType="//@typeList/@types.0" description="The Id of the job"/>
       <ports name="outputInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.8" description="The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit"/>
-      <ports name="options" dataType="//@modules.0/@typeList/@types.12" description="An object containing the options provided by the user" optional="true"/>
-      <usedServices href="TMS_Internal.apim#//@modules.0/@services.4"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.12" description="An object containing the options provided by the user" optional="true" shortOptionLetter=""/>
+      <usedServices href="TMS_Internal.apim#//@modules.0/@services.6"/>
       <details key="description" value="This command allows to download the ouput files of a given job from &#xA;the remote machine to the local machine. "/>
       <details key="exCLI" value="To get the output of the job J_1:&#xA;vishnu_get_job_output J_1"/>
     </services>
@@ -62,7 +62,7 @@
       <ports name="listOfResults" direction="OUT" dataType="//@modules.0/@typeList/@types.7" description="Is the list of jobs results"/>
       <ports name="outDir" dataType="//@typeList/@types.0" description="Specifies the output directory where the files will be stored (by default, the current directory)" optional="true" shortOptionLetter="o" longOptionName="" defaultValueLiteral="string()"/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.12" description="Object containing options" optional="true"/>
-      <usedServices href="TMS_Internal.apim#//@modules.0/@services.5"/>
+      <usedServices href="TMS_Internal.apim#//@modules.0/@services.7"/>
       <details key="description" value="This command allows to get the output files of completed jobs.&#xA;You can specify the target machine using the option --machineId.&#xA;If no machine is specified, if if the specified machine is &quot;all&quot;, the &#xA;request will be performed on all the machines where the user has &#xA;a local account&#xA;&#xA;Note that all subsequent requests for this command will ignore jobs already downloaded. &#xA;Unless the user explicitly use the option --force or -f"/>
       <details key="exCLI" value="vishnu_get_completed_jobs_output --machineId machine_1    # get the completed job on machine_1&#xA;vishnu_get_completed_jobs_output                                                 # get the output of all completed jobs"/>
     </services>
@@ -119,7 +119,7 @@
         <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//CancelOptions"/>
       </types>
       <types name="JobOutputOptions" description="Option type for filter job ouput">
-        <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//JobOuputOptions"/>
+        <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//JobOutputOptions"/>
       </types>
     </typeList>
     <resultCodeList>

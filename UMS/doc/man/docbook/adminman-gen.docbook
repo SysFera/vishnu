@@ -66,9 +66,8 @@ same conditions as regards security.</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_add_user</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>userId</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
-              choice="plain"><replaceable>acLogin</replaceable></arg><arg choice="plain"><replaceable>sshKeyPath</replaceable></arg><arg
-              choice="plain"><replaceable>homeDirectory</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>firstname</replaceable></arg><arg choice="plain"><replaceable>lastname</replaceable></arg><arg
+              choice="plain"><replaceable>privilege</replaceable></arg><arg choice="plain"><replaceable>email</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -186,7 +185,12 @@ and password are sent to the user by email.</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_update_user</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>options</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-f <replaceable>firstname</replaceable></option></arg><arg
+              choice="opt"><option>-l <replaceable>lastname</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>privilege</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>email</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
+              choice="plain"><replaceable>userId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -199,6 +203,38 @@ and password are sent to the user by email.</para>
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-f <replaceable>firstname</replaceable></option></term>
+            <listitem>
+              <para>represents the updated firstname of the user.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-l <replaceable>lastname</replaceable></option></term>
+            <listitem>
+              <para>represents the updated lastname of the user.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-p <replaceable>privilege</replaceable></option></term>
+            <listitem>
+              <para>represents the updated privilege of the user.
+The value must be an integer. Predefined values are: 0 (USER), 1 (ADMIN).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>email</replaceable></option></term>
+            <listitem>
+              <para>represents the updated email address of the user.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>status</replaceable></option></term>
+            <listitem>
+              <para>represents the status of the user (LOCKED or ACTIVE).
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -515,13 +551,9 @@ and password are sent to the user by email.</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_add_machine</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>site</replaceable></option></arg><arg
-              choice="opt"><option>-d <replaceable>machineDescription</replaceable></option></arg><arg
-              choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
-              choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
-              choice="opt"><option>-k <replaceable>sshPublicKeyFile</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>name</replaceable></arg><arg choice="plain"><replaceable>site</replaceable></arg><arg
+              choice="plain"><replaceable>language</replaceable></arg><arg choice="plain"><replaceable>sshPublicKeyFile</replaceable></arg><arg
+              choice="plain"><replaceable>machineDescription</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -538,43 +570,6 @@ have to add it to the authorized keys of their own account on the machine.</para
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-n <replaceable>name</replaceable></option></term>
-            <listitem>
-              <para>represents the name of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-s <replaceable>site</replaceable></option></term>
-            <listitem>
-              <para>represents the location of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-d <replaceable>machineDescription</replaceable></option></term>
-            <listitem>
-              <para>represents the description of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-l <replaceable>language</replaceable></option></term>
-            <listitem>
-              <para>represents the language used for the description of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-t <replaceable>status</replaceable></option></term>
-            <listitem>
-              <para>represents the status of the machine.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED).</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-k <replaceable>sshPublicKeyFile</replaceable></option></term>
-            <listitem>
-              <para>contains the path to the SSH public key used by VISHNU to access local user accounts.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -881,7 +876,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_list_users</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-u <replaceable>userId</replaceable></option></arg><arg
-              choice="plain"><replaceable>authSystemId</replaceable></arg><arg choice="plain"><replaceable>acLogin</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-i <replaceable>authSystemId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -899,7 +894,13 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE
           <varlistentry>
             <term><option>-u <replaceable>userId</replaceable></option></term>
             <listitem>
-              <para>represents an admin option to add a user-authentication account of a specific user.</para>
+              <para>allows an admin to get information about a specific user identified by his/her userId.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-i <replaceable>authSystemId</replaceable></option></term>
+            <listitem>
+              <para>is an option to list users who have local user-authentication configurations on a specific user-authentication system.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1106,15 +1107,11 @@ that option using the vishnu_configure_option command. The current supported opt
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_add_auth_system</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
-              choice="opt"><option>-i <replaceable>URI</replaceable></option></arg><arg
-              choice="opt"><option>-u <replaceable>authLogin</replaceable></option></arg><arg
-              choice="opt"><option>-w <replaceable>authPassword</replaceable></option></arg><arg
-              choice="opt"><option>-e <replaceable>userPasswordEncryption</replaceable></option></arg><arg
-              choice="opt"><option>-t <replaceable>type</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
               choice="opt"><option>-b <replaceable>ldapBase</replaceable></option></arg><arg
-              choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>name</replaceable></arg><arg choice="plain"><replaceable>URI</replaceable></arg><arg
+              choice="plain"><replaceable>authLogin</replaceable></arg><arg choice="plain"><replaceable>authPassword</replaceable></arg><arg
+              choice="plain"><replaceable>userPasswordEncryption</replaceable></arg><arg
+              choice="plain"><replaceable>type</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1129,51 +1126,6 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-n <replaceable>name</replaceable></option></term>
-            <listitem>
-              <para>corresponds to the user-authentication system's name.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-i <replaceable>URI</replaceable></option></term>
-            <listitem>
-              <para>is the URI of the user-authentication systems (by the form host:port for LDAP).</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-u <replaceable>authLogin</replaceable></option></term>
-            <listitem>
-              <para>is the login used to connect to the user-authentication system.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-w <replaceable>authPassword</replaceable></option></term>
-            <listitem>
-              <para>is the password used to connect to the user-authentication system.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-e <replaceable>userPasswordEncryption</replaceable></option></term>
-            <listitem>
-              <para>represents the encryption method used to encrypt user's password.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SSHA).</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-t <replaceable>type</replaceable></option></term>
-            <listitem>
-              <para>represents the type of the user-authentication system.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (LDAP).</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-s <replaceable>status</replaceable></option></term>
-            <listitem>
-              <para>represents the status of the user-authentication system.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1274,7 +1226,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_update_auth_system</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg></cmdsynopsis>
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="opt"><option>-i <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>authLogin</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>authPassword</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>userPasswordEncryption</replaceable></option></arg><arg
+              choice="opt"><option>-t <replaceable>type</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>status</replaceable></option></arg><arg
+              choice="opt"><option>-b <replaceable>ldapBase</replaceable></option></arg><arg
+              choice="plain"><replaceable>authSystemId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1292,15 +1252,54 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-a <replaceable>addOption</replaceable></option></term>
+            <term><option>-n <replaceable>name</replaceable></option></term>
             <listitem>
-              <para>option for adding a key.</para>
+              <para>corresponds to the user-authentication system's name.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-r <replaceable>removeOption</replaceable></option></term>
+            <term><option>-i <replaceable>URI</replaceable></option></term>
             <listitem>
-              <para>option for removing a key.</para>
+              <para>is the URI of the user-authentication systems (by the form host:port for LDAP).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>authLogin</replaceable></option></term>
+            <listitem>
+              <para>is the login used to connect to the user-authentication system.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-w <replaceable>authPassword</replaceable></option></term>
+            <listitem>
+              <para>is the password used to connect to the user-authentication system.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-e <replaceable>userPasswordEncryption</replaceable></option></term>
+            <listitem>
+              <para>represents the encryption method used to encrypt user's password.
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (SSHA).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-t <replaceable>type</replaceable></option></term>
+            <listitem>
+              <para>represents the type of the user-authentication system.
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (LDAP).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>status</replaceable></option></term>
+            <listitem>
+              <para>represents the status of the user-authentication system.
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-b <replaceable>ldapBase</replaceable></option></term>
+            <listitem>
+              <para>is an option for user-authentication system based on LDAP which specifies the DN of the root entry .</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2588,7 +2587,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listUsers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers&amp; <parameter>listuser</parameter></paramdef><paramdef>const ListAuthAccounts&amp; <parameter>options = ListAuthAccounts()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listUsers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers&amp; <parameter>listuser</parameter></paramdef><paramdef>const ListUsersOptions&amp; <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2670,7 +2669,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>configures a default option value</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::configureDefaultOption</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const ListOptionsValues&amp; <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::configureDefaultOption</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const OptionValue&amp; <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2759,7 +2758,7 @@ that option using the vishnu_configure_option command. The current supported opt
         <refpurpose>adds a new user-authentication system in VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSysOptions&amp; <parameter>newAuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystem&amp; <parameter>newAuthSys</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2841,7 +2840,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
         <refpurpose>updates a user-authentication system in VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::updateAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const ListAuthSysOptions&amp; <parameter>AuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::updateAuthSystem</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const AuthSystem&amp; <parameter>AuthSys</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4017,7 +4016,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listuser, options=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listuser=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4111,7 +4110,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>configures a default option value</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, optionValue=VISHNU.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.configureDefaultOption</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>OptionValue <parameter>optionValue</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4212,7 +4211,7 @@ that option using the vishnu_configure_option command. The current supported opt
         <refpurpose>adds a new user-authentication system in VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.addAuthSystem</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSysOptions <parameter>newAuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.addAuthSystem</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystem <parameter>newAuthSys</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4306,7 +4305,7 @@ type and optionally for LDAP the DN of the root entry. By default, the type of t
         <refpurpose>updates a user-authentication system in VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.updateAuthSystem</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSysOptions <parameter>AuthSys</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.updateAuthSystem</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>AuthSystem <parameter>AuthSys</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>

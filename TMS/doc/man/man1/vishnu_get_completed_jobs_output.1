@@ -2,12 +2,12 @@
 .\"     Title: vishnu_get_completed_jobs_output
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS Command reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "VISHNU_GET_COMPLETED" "1" "November 2013" "VISHNU 3.2.0" "TMS Command reference"
+.TH "VISHNU_GET_COMPLETED" "1" "May 2014" "VISHNU 4.0.0" "TMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_get_completed_jobs_output \- gets standard output and error output files of completed jobs (applies only once for each job)
+vishnu_get_completed_jobs_output \- gets the ouput files of all completed jobs
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_get_completed_jobs_output\fR\ 'u
-\fBvishnu_get_completed_jobs_output\fR [\fB\-h\fR] [\fB\-o\ \fR\fB\fIoutDir\fR\fR] \fImachineId\fR
+\fBvishnu_get_completed_jobs_output\fR [\fB\-h\fR] [\fB\-o\ \fR\fB\fIoutDir\fR\fR] [\fB\-m\ \fR\fB\fImachineId\fR\fR] [\fB\-o\ \fR\fB\fIoutputDir\fR\fR] [\fB\-d\ \fR\fB\fIdays\fR\fR]
 .SH "DESCRIPTION"
 .PP
-This command allows getting the output files of all the completed jobs\&.
+This command allows to get the output files of completed jobs\&. You can specify the target machine using the option \-\-machineId\&. If no machine is specified, if if the specified machine is "all", the request will be performed on all the machines where the user has a local account Note that all subsequent requests for this command will ignore jobs already downloaded\&. Unless the user explicitly use the option \-\-force or \-f
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -45,6 +45,21 @@ help about the command\&.
 \fB\-o \fR\fB\fIoutDir\fR\fR
 .RS 4
 Specifies the output directory where the files will be stored (by default, the current directory)\&.
+.RE
+.PP
+\fB\-m \fR\fB\fImachineId\fR\fR
+.RS 4
+Get the output of jobs on the given machine\&.
+.RE
+.PP
+\fB\-o \fR\fB\fIoutputDir\fR\fR
+.RS 4
+The directory to store the output files\&.
+.RE
+.PP
+\fB\-d \fR\fB\fIdays\fR\fR
+.RS 4
+Considers only jobs submitted in the last <days> days\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
@@ -113,9 +128,9 @@ The following diagnostics may be issued on stderr and the command will return th
 .RE
 .SH "EXAMPLE"
 .PP
-To get the completed job on machine_1:
+vishnu_get_completed_jobs_output \-\-machineId machine_1 # get the completed job on machine_1
 .PP
-vishnu_get_completed_jobs_output machine_1
+vishnu_get_completed_jobs_output # get the output of all completed jobs
 .SH "AUTHOR"
 .PP
 \fB SysFera SA\fR <\&info@sysfera.com\&>

@@ -3,7 +3,7 @@
         href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
 <!--;TMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user) -->
 <book
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(user);TMS.apim#MAN(user);FMS.apim#MAN(user);IMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);FMS.apim#CPP(user);IMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user);FMS.apim#PYTHON(user);IMS.apim#PYTHON(user)">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(user);TMS.apim#MAN(user);FMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);FMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user);FMS.apim#PYTHON(user)">
   <info>
     <author>
       <personname>
@@ -245,6 +245,14 @@ Add the use of the .netrc file of the connection and the reconnection.
 
 <para>Added note about batch scheduler variables priority.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>26</revnumber>
+        <date>28/02/2014</date>
+        <authorinitials>K. Coulomb</authorinitials>
+        <revdescription>
+
+<para>Remove IMS.</para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2012</year>
@@ -306,13 +314,13 @@ the VISHNU installation procedure and the way to use it.
           <para>Chapter 2 describes the VISHNU software (installation procedure, usage description and troubleshooting).</para>
         </listitem>
         <listitem>
-          <para>Chapter 3, Chapter 4, Chapter 5 and Chapter 6 contain the VISHNU commands reference respectively for UMS, TMS, FMS and IMS package.</para>
+          <para>Chapter 3, Chapter 4, Chapter 5 and Chapter 6 contain the VISHNU commands reference respectively for UMS, TMS and FMS package.</para>
         </listitem>
         <listitem>
-          <para>Chapter 7, Chapter 8, Chapter 9 and Chapter 10 contain the C++ API reference respectively for UMS, TMS, FMS and IMS package.</para>
+          <para>Chapter 7, Chapter 8, Chapter 9 and Chapter 10 contain the C++ API reference respectively for UMS, TMS and FMS package.</para>
         </listitem>
         <listitem>
-          <para>Chapter 11, Chapter 12, Chapter 13 and Chapter 14 contain the Python API reference respectively for UMS, TMS, FMS and IMS package.</para>
+          <para>Chapter 11, Chapter 12, Chapter 13 and Chapter 14 contain the Python API reference respectively for UMS, TMS and FMS package.</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -335,9 +343,6 @@ VISHNU is designed to easy the access to high-performance computing resources. T
 <itemizedlist>
         <listitem>
           <para>User management services (UMS): authentication and session management.</para>
-        </listitem>
-        <listitem>
-          <para>Information management services (IMS): monitoring and control services.</para>
         </listitem>
         <listitem>
           <para>Tasks management services (TMS): submission of tasks (jobs) on computing resources.</para>
@@ -413,11 +418,6 @@ This section details the main steps of the installation process for the clients,
                   <para><emphasis role="bold">To compile the FMS package : </emphasis></para>
                   <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
                 </listitem>
-                <listitem>
-                  <para><emphasis role="bold">To compile the IMS package : </emphasis></para>
-                  <para>> cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON </para>
-                  <para>-DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-                </listitem>
               </itemizedlist>
             </listitem>
           </itemizedlist>
@@ -471,7 +471,7 @@ From the version 3.1.0, VISHNU supports secured communications through SSL chann
     </section>
     <section>
       <title>Software usage description </title>
-      <para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), one that deals with the files management (FMS) and one that handles the information of the system (IMS). These clients can be installed altogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message &quot;Vishnu not available&quot;. Below each package will be described to present the services they offer to the users.</para>
+      <para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), and one that deals with the files management (FMS). These clients can be installed altogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message &quot;Vishnu not available&quot;. Below each package will be described to present the services they offer to the users.</para>
       <para>More information about the datatypes can be found in the [VISHNU_API] document.</para>
       <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
       <section>
@@ -928,23 +928,6 @@ The user can create (or remove) a regular file located in a remote host by using
               </listitem>
             </itemizedlist>
 </para>
-        </section>
-      </section>
-      <section>
-        <title>IMS package </title>
-        <section>
-          <title>Export of commands</title>
-          <para>
-The user can export the commands made during a session in shell format. The file must have been created before the call, the file will contain a shell script that can be executed. For safety reasons, the connect and change password cannot be in the file. Thus, to execute the shell script, the connect command must be added after the first line of the file that declares the shell format.
-</para>
-        </section>
-        <section>
-          <title>Get system information</title>
-          <para>The get system information is to get information about a machine of the system. It can give information about the memory and/or diskspace available on the machine.</para>
-        </section>
-        <section>
-          <title>Get the metric </title>
-          <para>The user can get the current metrics on a machine or the history of the metrics on a machine to know the evolution of the metric. The user can choose to get the metrics of a specific type (parameters are 1, 2, 3 respectively free CPUload, free diskspace and free memory). Note, when getting the history of metrics, by default, only the first 1000 results are gotten. This is to avoid having to much results with a single command (the metric table may be filled very fastly).</para>
         </section>
       </section>
       <section>
@@ -3727,13 +3710,16 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
               choice="opt"><option>-V <replaceable>textParams</replaceable></option></arg><arg
               choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>specificParams</replaceable></option></arg><arg
-              choice="opt"><option>-p</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="opt"><option>-p</option></arg><arg choice="opt"><option>-r <replaceable>machine</replaceable></option></arg><arg
               choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.
-If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are  used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
+        <para>Command to submit a job to the specific batch scheduler associated to a machine. 
+You must set a script to execute. 
+It's possible to specify a target machine using the option --machineId. 
+If no machine is set, or if the specified machine is &quot;autom&quot;, the job will be submitted on a machine automatically selected by vishnu.
+You can use the load criterion option (--useLoad) to set the algorithm vishnu should select the target machine</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -3881,6 +3867,12 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
               <para>allows to submit on the shell instead of using the batch scheduler.</para>
             </listitem>
           </varlistentry>
+          <varlistentry>
+            <term><option>-r <replaceable>machine</replaceable></option></term>
+            <listitem>
+              <para>Sets the target machine.</para>
+            </listitem>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="job output environment variables">
@@ -4008,10 +4000,10 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To submit on machine_1 the script toto:</para>
-        <para>vishnu_submit_job machine_1 toto</para>
-        <para>To submit automatically the script toto on the best machine (by the default the machine which has the minimum number of waiting jobs is selected):</para>
-        <para>vishnu_submit_job autom toto</para>
+        <para>To submit the script toto.sh on machine_1:</para>
+        <para>vishnu_submit_job -m machine_1 toto.sh</para>
+        <para>To submit the script on a machine selected by vishnu</para>
+        <para>vishnu_submit_job toto.sh</para>
         <para>To submit automatically the script toto on the best machine by using a machine which has the minimum total number of jobs:</para>
         <para>vishnu_submit_job autom toto -L 1</para>
       </refsect1>
@@ -4027,11 +4019,11 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_get_job_info</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting information about a specific job. It can return the job's status, for example.</para>
+        <para>This command allows getting details about a given job</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -4119,8 +4111,8 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To get the info on the job J_1 on machine_1:</para>
-        <para>vishnu_get_job_info machine_1 J_1</para>
+        <para>To get details about the job J_1</para>
+        <para>vishnu_get_job_info J_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4135,12 +4127,12 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_get_job_progress</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
-              choice="opt"><option>-u <replaceable>jobOwner</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-u <replaceable>user</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the progression status of a job based on the wall-clock time specified.</para>
+        <para>This command allows to get the progression of jobs</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -4158,9 +4150,15 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-u <replaceable>jobOwner</replaceable></option></term>
+            <term><option>-u <replaceable>user</replaceable></option></term>
             <listitem>
               <para>Specifies the owner of the job..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>Displays the progression of jobs on the given machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4228,8 +4226,12 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To get the progress of the job J_1 on machine_1:</para>
-        <para>vishnu_get_job_progress machine_1 -i J_1</para>
+        <para>To get the progress of the jobs. If no machine and no job has been specified, </para>
+        <para>this list the progression of all jobs submitted by the users. Using suitable options, </para>
+        <para>it's possible to filter the result according to the machine id or the the job id</para>
+        <para>vishnu_get_job_progress                               # get the progression of all jobs </para>
+        <para>vishnu_get_job_progress -m machine_1    # get the progression of all jobs on machine_1</para>
+        <para>vishnu_get_job_progress  -i J_1                    # get the progression of the job J_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4367,11 +4369,11 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
               choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>multipleStatus</replaceable></option></arg><arg
               choice="opt"><option>-b</option></arg><arg choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
-              choice="opt"><option>-l</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-l</option></arg><arg choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
+        <para>This command allows to display the job submitted by the user. Using the appropriate option, the jobs can be filtered according to a given machine</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -4456,6 +4458,12 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
               <para>lists all information of the job.</para>
             </listitem>
           </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>lists the jobs on the target machine.</para>
+            </listitem>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="environment">
@@ -4533,10 +4541,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To list the jobs on machine_1:</para>
-        <para>vishnu_list_jobs machine_1</para>
-        <para>To list submitted jobs on all machines:</para>
-        <para>vishnu_list_jobs all</para>
+        <para>To list all submitted jobs</para>
+        <para>vishnu_list_jobs</para>
+        <para>To list jobs submitted on machine_1</para>
+        <para>vishnu_list_jobs -m machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4550,12 +4558,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_get_job_output</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-o <replaceable>outDir</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-o <replaceable>outputDir</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>days</replaceable></option></arg><arg
+              choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting a job's output files.</para>
+        <para>This command allows to download the ouput files of a given job from 
+the remote machine to the local machine. </para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -4567,9 +4578,21 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-o <replaceable>outDir</replaceable></option></term>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
             <listitem>
-              <para>The output directory where the files will be stored (default is current directory).</para>
+              <para>Get the output of jobs on the given machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-o <replaceable>outputDir</replaceable></option></term>
+            <listitem>
+              <para>The directory to store the output files.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>days</replaceable></option></term>
+            <listitem>
+              <para>Considers only jobs submitted in the last &lt;days> days.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4657,8 +4680,8 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To get the output of the job J_1 on machine_1:</para>
-        <para>vishnu_get_job_output machine_1 J_1</para>
+        <para>To get the output of the job J_1:</para>
+        <para>vishnu_get_job_output J_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4668,16 +4691,25 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refmeta>
       <refnamediv>
         <refname>vishnu_get_completed_jobs_output</refname>
-        <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
+        <refpurpose>gets the ouput files of all completed jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_get_completed_jobs_output</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-o <replaceable>outDir</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-o <replaceable>outputDir</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>days</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the output files of all the completed jobs.</para>
+        <para>This command allows to get the output files of completed jobs.
+You can specify the target machine using the option --machineId.
+If no machine is specified, if if the specified machine is &quot;all&quot;, the 
+request will be performed on all the machines where the user has 
+a local account
+
+Note that all subsequent requests for this command will ignore jobs already downloaded. 
+Unless the user explicitly use the option --force or -f</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -4692,6 +4724,24 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><option>-o <replaceable>outDir</replaceable></option></term>
             <listitem>
               <para>Specifies the output directory where the files will be stored (by default, the current directory).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>Get the output of jobs on the given machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-o <replaceable>outputDir</replaceable></option></term>
+            <listitem>
+              <para>The directory to store the output files.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>days</replaceable></option></term>
+            <listitem>
+              <para>Considers only jobs submitted in the last &lt;days> days.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4771,8 +4821,8 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To get the completed job on machine_1:</para>
-        <para>vishnu_get_completed_jobs_output machine_1</para>
+        <para>vishnu_get_completed_jobs_output --machineId machine_1    # get the completed job on machine_1</para>
+        <para>vishnu_get_completed_jobs_output                                                 # get the output of all completed jobs</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -4786,7 +4836,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_cancel_job</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>user</replaceable></option></arg><arg
+              choice="opt"><option>-j <replaceable>jobId</replaceable></option></arg><arg
+              choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4799,6 +4852,32 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>Cancels only jobs submitted on the given machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>user</replaceable></option></term>
+            <listitem>
+              <para>Cancels only jobs submitted by the given user. Using this option requires root privileges
+
+If the user is root, and the identifier corresponds to the keyword  'all', 
+then all the jobs submitted through vishnu, regardless of the user or the machine,  will be cancelled. 
+** Option to be used with caution **.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-j <replaceable>jobId</replaceable></option></term>
+            <listitem>
+              <para>Sets the identifier of the job to cancel. 
+If the identifier corresponds to the keyword  'all',  then all the jobs submitted 
+through vishnu by the user that request the command, regardless of the 
+target machine, will be cancelled. 
+** Option be used with caution **.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4886,10 +4965,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To cancel the submission of the job J_1 on machine_1:</para>
-        <para>vishnu_cancel_job machine_1 J_1</para>
-        <para>To cancel cancel all submitted jobs on machine_1</para>
-        <para>vishnu_cancel_job machine_1 all</para>
+        <para>To cancel the job J_</para>
+        <para>vishnu_cancel_job J_1</para>
+        <para>To cancel all my submitted jobs</para>
+        <para>vishnu_cancel_job all</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -5969,15 +6048,15 @@ values can be obtained using the vishnu_list_machine command).
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_more</refentrytitle>
+        <refentrytitle>vishnu_cat</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_more</refname>
+        <refname>vishnu_cat</refname>
         <refpurpose>displays content  of  files located on remote machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_more</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_cat</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -7021,494 +7100,6 @@ values can be obtained using the vishnu_list_machine command).
         <title>EXAMPLE</title>
         <para>To get the data concerning the file toto on machine_1:</para>
         <para>vishnu_stat machine_1:/tmp/toto</para>
-      </refsect1>
-    </refentry>
-  </reference>
-  <reference>
-    <title>IMS Command reference</title>
-    <refentry>
-      <refmeta>
-        <refentrytitle>vishnu_export_commands</refentrytitle>
-        <manvolnum>1</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>vishnu_export_commands</refname>
-        <refpurpose>exports all the commands made by a user during a session</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_export_commands</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-t <replaceable>exportType</replaceable></option></arg><arg
-              choice="plain"><replaceable>oldSessionId</replaceable></arg></cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>Exports all the VISHNU commands submitted during a completed session. This session must be in closed state.
-The output of this command is a file containing a shell script. For safety reasons, the commands having a password for parameter are not exported
-(for example the vishnu_connect and vishnu_change_password commands). This means the shell script must be run after opening
-a session manually or by adding the vishnu_connect command to the script.
-The access to other user's sessions is only permitted to administrators.</para>
-      </refsect1>
-      <refsect1 id="options">
-        <title>OPTIONS</title>
-        <variablelist>
-          <varlistentry>
-            <term><option>-h <replaceable>help</replaceable></option></term>
-            <listitem>
-              <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-t <replaceable>exportType</replaceable></option></term>
-            <listitem>
-              <para>The type to export.
-The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (SHELL).</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="environment">
-        <title>ENVIRONMENT</title>
-        <variablelist>
-          <varlistentry>
-            <term><envar>VISHNU_CONFIG_FILE</envar></term>
-            <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="diagnostics">
-        <title>DIAGNOSTICS</title>
-        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="example">
-        <title>EXAMPLE</title>
-        <para>To export the commands made during the session with id S01 in the file toto:</para>
-        <para>vishnu_export_commands S01 /tmp/toto</para>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>vishnu_get_metric_current_value</refentrytitle>
-        <manvolnum>1</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>vishnu_get_metric_current_value</refname>
-        <refpurpose>displays the current values of system metrics</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_get_metric_current_value</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-t <replaceable>metricType</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>Displays the current values of the monitored metrics on the system identified by the machineId argument : cpuload, free diskspace and free memory. 
-The units of displayed values are percentages for cpuload and Megabytes (Mb) for diskspace and memory. The provided values are always standard integers (no float values).
-Please note that retrieving these values uses some valuable system ressources and should not occur too frequently to avoid an impact on system performance.
-</para>
-      </refsect1>
-      <refsect1 id="options">
-        <title>OPTIONS</title>
-        <variablelist>
-          <varlistentry>
-            <term><option>-h <replaceable>help</replaceable></option></term>
-            <listitem>
-              <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-t <replaceable>metricType</replaceable></option></term>
-            <listitem>
-              <para>The type of the metric.
-The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 2 (FREEDISKSPACE), 3 (FREEMEMORY).</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="environment">
-        <title>ENVIRONMENT</title>
-        <variablelist>
-          <varlistentry>
-            <term><envar>VISHNU_CONFIG_FILE</envar></term>
-            <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="diagnostics">
-        <title>DIAGNOSTICS</title>
-        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="example">
-        <title>EXAMPLE</title>
-        <para>To get the current values of the metrics on machine_1:</para>
-        <para>vishnu_get_metric_current_value machine_1</para>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>vishnu_get_metric_history</refentrytitle>
-        <manvolnum>1</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>vishnu_get_metric_history</refname>
-        <refpurpose>displays the history of values of a system metric</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_get_metric_history</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-s <replaceable>startTime</replaceable></option></arg><arg
-              choice="opt"><option>-e <replaceable>endTime</replaceable></option></arg><arg
-              choice="opt"><option>-t <replaceable>type</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>Displays the chronological list of values of the metrics on the system identified by the machineId argument. Using the options it is possible to specify a type of metric and the starting and ending dates of the desired monitoring period. Note that some data will be available only if the required VISHNU agent (IMS server) has been running locally on the machine during the specified period.</para>
-      </refsect1>
-      <refsect1 id="options">
-        <title>OPTIONS</title>
-        <variablelist>
-          <varlistentry>
-            <term><option>-h <replaceable>help</replaceable></option></term>
-            <listitem>
-              <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-s <replaceable>startTime</replaceable></option></term>
-            <listitem>
-              <para>The start time to get the history.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-e <replaceable>endTime</replaceable></option></term>
-            <listitem>
-              <para>The end time to get the history.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-t <replaceable>type</replaceable></option></term>
-            <listitem>
-              <para>The type of metric searched.
-The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 2 (FREEDISKSPACE), 3 (FREEMEMORY).</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="environment">
-        <title>ENVIRONMENT</title>
-        <variablelist>
-          <varlistentry>
-            <term><envar>VISHNU_CONFIG_FILE</envar></term>
-            <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="diagnostics">
-        <title>DIAGNOSTICS</title>
-        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="example">
-        <title>EXAMPLE</title>
-        <para>To get the history of the metrics on machine_1:</para>
-        <para>vishnu_get_metric_history machine_1</para>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>vishnu_get_update_frequency</refentrytitle>
-        <manvolnum>1</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>vishnu_get_update_frequency</refname>
-        <refpurpose>gets the update frequency of the IMS database</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_get_update_frequency</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This function allows a user to get the update frequency, to know  how often the state of the machines is automatically polled to get historical data.</para>
-      </refsect1>
-      <refsect1 id="options">
-        <title>OPTIONS</title>
-        <variablelist>
-          <varlistentry>
-            <term><option>-h <replaceable>help</replaceable></option></term>
-            <listitem>
-              <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="environment">
-        <title>ENVIRONMENT</title>
-        <variablelist>
-          <varlistentry>
-            <term><envar>VISHNU_CONFIG_FILE</envar></term>
-            <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="diagnostics">
-        <title>DIAGNOSTICS</title>
-        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="example">
-        <title>EXAMPLE</title>
-        <para>To get the update frequency:</para>
-        <para>vishnu_get_update_frequency</para>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>vishnu_get_system_info</refentrytitle>
-        <manvolnum>1</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>vishnu_get_system_info</refname>
-        <refpurpose>To get the system info on a machine</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_get_system_info</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This function allows a user to get system information about a machine. A system information describes a machine. The option is  the machine id (if no machine id, the information for all the machines are given)</para>
-      </refsect1>
-      <refsect1 id="options">
-        <title>OPTIONS</title>
-        <variablelist>
-          <varlistentry>
-            <term><option>-h <replaceable>help</replaceable></option></term>
-            <listitem>
-              <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-m <replaceable>machineId</replaceable></option></term>
-            <listitem>
-              <para>The machine id.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="environment">
-        <title>ENVIRONMENT</title>
-        <variablelist>
-          <varlistentry>
-            <term><envar>VISHNU_CONFIG_FILE</envar></term>
-            <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="diagnostics">
-        <title>DIAGNOSTICS</title>
-        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="example">
-        <title>EXAMPLE</title>
-        <para>To get all the system info for all the machine:</para>
-        <para>vishnu_get_system_info</para>
       </refsect1>
     </refentry>
   </reference>
@@ -9384,12 +8975,15 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         <refpurpose>Allows to submit a job consisting in running a given script on a machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfo</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfo</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.
-If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are  used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
+        <para>Command to submit a job to the specific batch scheduler associated to a machine. 
+You must set a script to execute. 
+It's possible to specify a target machine using the option --machineId. 
+If no machine is set, or if the specified machine is &quot;autom&quot;, the job will be submitted on a machine automatically selected by vishnu.
+You can use the load criterion option (--useLoad) to set the algorithm vishnu should select the target machine</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -9398,12 +8992,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which the job must be submitted.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -9491,11 +9079,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets information on a job from its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting information about a specific job. It can return the job's status, for example.</para>
+        <para>This command allows getting details about a given job</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -9504,12 +9092,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the job is running.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -9583,11 +9165,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets the progression status of jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobProgress</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListProgression&amp; <parameter>listProgress</parameter></paramdef><paramdef>const ProgressOptions&amp; <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobProgress</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListProgression&amp; <parameter>listProgress</parameter></paramdef><paramdef>const ProgressOptions&amp; <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the progression status of a job based on the wall-clock time specified.</para>
+        <para>This command allows to get the progression of jobs</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -9596,12 +9178,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine to get the jobs progression.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -9755,11 +9331,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets a list of all submitted jobs on a machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listJobs</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef><paramdef>const ListJobsOptions&amp; <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listJobs</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef><paramdef>const ListJobsOptions&amp; <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
+        <para>This command allows to display the job submitted by the user. Using the appropriate option, the jobs can be filtered according to a given machine</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -9768,12 +9344,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the jobs are running.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -9847,11 +9417,12 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets standard output and error output files of a job given its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>JobResult&amp; <parameter>outputInfo</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>JobResult&amp; <parameter>outputInfo</parameter></paramdef><paramdef>const JobOutputOptions&amp; <parameter>options = JobOutputOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting a job's output files.</para>
+        <para>This command allows to download the ouput files of a given job from 
+the remote machine to the local machine. </para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -9860,12 +9431,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Gets outputPath and errorPath of a job from its id.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -9881,9 +9446,9 @@ If the machine identifier is equal to autom, the job will be automatically submi
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>outDir</emphasis></term>
+            <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. The output directory where the files will be stored (default is current directory).</para>
+              <para>Input argument. An object containing the options provided by the user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -9950,14 +9515,21 @@ If the machine identifier is equal to autom, the job will be automatically submi
       </refmeta>
       <refnamediv>
         <refname>getCompletedJobsOutput</refname>
-        <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
+        <refpurpose>gets the ouput files of all completed jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getCompletedJobsOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobResults&amp; <parameter>listOfResults</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getCompletedJobsOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListJobResults&amp; <parameter>listOfResults</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = string()</parameter></paramdef><paramdef>const JobOutputOptions&amp; <parameter>options = JobOutputOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the output files of all the completed jobs.</para>
+        <para>This command allows to get the output files of completed jobs.
+You can specify the target machine using the option --machineId.
+If no machine is specified, if if the specified machine is &quot;all&quot;, the 
+request will be performed on all the machines where the user has 
+a local account
+
+Note that all subsequent requests for this command will ignore jobs already downloaded. 
+Unless the user explicitly use the option --force or -f</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -9966,12 +9538,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the jobs are been submitted.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -9984,6 +9550,12 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>outDir</emphasis></term>
             <listitem>
               <para>Input argument. Specifies the output directory where the files will be stored (by default, the current directory).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. Object containing options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -10045,7 +9617,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>Allows to cancel a job submitted on a given machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cancelJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cancelJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>const CancelOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -10061,15 +9633,15 @@ If the machine identifier is equal to autom, the job will be automatically submi
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the job is running.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
             <term><emphasis>jobId</emphasis></term>
             <listitem>
               <para>Input argument. The Id of the job.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. Object containing the options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -11031,15 +10603,15 @@ values can be obtained using the vishnu_list_machine command).
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>more</refentrytitle>
+        <refentrytitle>cat</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>more</refname>
+        <refname>cat</refname>
         <refpurpose>displays content  of  files located on remote machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::more</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cat</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -11985,358 +11557,6 @@ values can be obtained using the vishnu_list_machine command).
           </varlistentry>
           <varlistentry>
             <term>&quot;The transfer id is unknown&quot; [203]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-  </reference>
-  <reference>
-    <title>IMS C++ API Reference</title>
-    <refentry>
-      <refmeta>
-        <refentrytitle>exportCommands</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>exportCommands</refname>
-        <refpurpose>exports all the commands made by a user during a session</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::exportCommands</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>oldSessionId</parameter></paramdef><paramdef>string&amp; <parameter>filename</parameter></paramdef><paramdef>const ExportOp&amp; <parameter>options = ExportOp()</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>Exports all the VISHNU commands submitted during a completed session. This session must be in closed state.
-The output of this command is a file containing a shell script. For safety reasons, the commands having a password for parameter are not exported
-(for example the vishnu_connect and vishnu_change_password commands). This means the shell script must be run after opening
-a session manually or by adding the vishnu_connect command to the script.
-The access to other user's sessions is only permitted to administrators.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>oldSessionId</emphasis></term>
-            <listitem>
-              <para>Input argument. The id of the session to export (session has ended).</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>filename</emphasis></term>
-            <listitem>
-              <para>Input/Output argument. The path of the output file containing the Vishnu shell commands.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>options</emphasis></term>
-            <listitem>
-              <para>Input argument. Options which encapsulate the option for the export.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>getMetricCurrentValue</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>getMetricCurrentValue</refname>
-        <refpurpose>displays the current values of system metrics</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricCurrentValue</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListMetric&amp; <parameter>metricValue</parameter></paramdef><paramdef>const CurMetricOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>Displays the current values of the monitored metrics on the system identified by the machineId argument : cpuload, free diskspace and free memory. 
-The units of displayed values are percentages for cpuload and Megabytes (Mb) for diskspace and memory. The provided values are always standard integers (no float values).
-Please note that retrieving these values uses some valuable system ressources and should not occur too frequently to avoid an impact on system performance.
-</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. The id of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>metricValue</emphasis></term>
-            <listitem>
-              <para>Output argument. Value of the metric.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>options</emphasis></term>
-            <listitem>
-              <para>Input argument. The options for the current metric value.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>getMetricHistory</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>getMetricHistory</refname>
-        <refpurpose>displays the history of values of a system metric</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getMetricHistory</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListMetric&amp; <parameter>metricValues</parameter></paramdef><paramdef>const MetricHistOp&amp; <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>Displays the chronological list of values of the metrics on the system identified by the machineId argument. Using the options it is possible to specify a type of metric and the starting and ending dates of the desired monitoring period. Note that some data will be available only if the required VISHNU agent (IMS server) has been running locally on the machine during the specified period.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. The id of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>metricValues</emphasis></term>
-            <listitem>
-              <para>Output argument. List of metric values.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>options</emphasis></term>
-            <listitem>
-              <para>Input argument. The optional fields for the metric history.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>getUpdateFrequency</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>getUpdateFrequency</refname>
-        <refpurpose>gets the update frequency of the IMS database</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getUpdateFrequency</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>int&amp; <parameter>freq</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This function allows a user to get the update frequency, to know  how often the state of the machines is automatically polled to get historical data.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>freq</emphasis></term>
-            <listitem>
-              <para>Output argument. Frequency the data are updated, in second.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>getSystemInfo</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>getSystemInfo</refname>
-        <refpurpose>To get the system info on a machine</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getSystemInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListSysInfo&amp; <parameter>res</parameter></paramdef><paramdef>const SysInfoOp&amp; <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This function allows a user to get system information about a machine. A system information describes a machine. The option is  the machine id (if no machine id, the information for all the machines are given)</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>res</emphasis></term>
-            <listitem>
-              <para>Output argument. The list of the system information gotten.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>options</emphasis></term>
-            <listitem>
-              <para>Input argument. Optional field for system information.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;The database generated an error&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error code&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;If a parameter is invalid&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key is unrecognized.&quot; [28]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -14484,12 +13704,15 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         <refpurpose>Allows to submit a job consisting in running a given script on a machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.
-If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are  used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
+        <para>Command to submit a job to the specific batch scheduler associated to a machine. 
+You must set a script to execute. 
+It's possible to specify a target machine using the option --machineId. 
+If no machine is set, or if the specified machine is &quot;autom&quot;, the job will be submitted on a machine automatically selected by vishnu.
+You can use the load criterion option (--useLoad) to set the algorithm vishnu should select the target machine</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -14498,12 +13721,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which the job must be submitted.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -14603,11 +13820,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets information on a job from its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>Job <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>Job <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting information about a specific job. It can return the job's status, for example.</para>
+        <para>This command allows getting details about a given job</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -14616,12 +13833,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the job is running.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -14707,11 +13918,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets the progression status of jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listProgress=VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listProgress=VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the progression status of a job based on the wall-clock time specified.</para>
+        <para>This command allows to get the progression of jobs</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -14720,12 +13931,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine to get the jobs progression.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -14903,11 +14108,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets a list of all submitted jobs on a machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listOfJobs=VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listOfJobs=VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
+        <para>This command allows to display the job submitted by the user. Using the appropriate option, the jobs can be filtered according to a given machine</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -14916,12 +14121,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the jobs are running.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -15007,11 +14206,12 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets standard output and error output files of a job given its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>JobResult <parameter>outputInfo</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>JobResult <parameter>outputInfo</parameter></paramdef><paramdef>JobOutputOptions <parameter>options = JobOutputOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting a job's output files.</para>
+        <para>This command allows to download the ouput files of a given job from 
+the remote machine to the local machine. </para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -15020,12 +14220,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Gets outputPath and errorPath of a job from its id.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -15041,9 +14235,9 @@ If the machine identifier is equal to autom, the job will be automatically submi
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>outDir</emphasis></term>
+            <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. The output directory where the files will be stored (default is current directory).</para>
+              <para>Input argument. An object containing the options provided by the user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -15122,14 +14316,21 @@ If the machine identifier is equal to autom, the job will be automatically submi
       </refmeta>
       <refnamediv>
         <refname>VISHNU.getCompletedJobsOutput</refname>
-        <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
+        <refpurpose>gets the ouput files of all completed jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listOfResults=VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listOfResults=VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef><paramdef>JobOutputOptions <parameter>options = JobOutputOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the output files of all the completed jobs.</para>
+        <para>This command allows to get the output files of completed jobs.
+You can specify the target machine using the option --machineId.
+If no machine is specified, if if the specified machine is &quot;all&quot;, the 
+request will be performed on all the machines where the user has 
+a local account
+
+Note that all subsequent requests for this command will ignore jobs already downloaded. 
+Unless the user explicitly use the option --force or -f</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -15138,12 +14339,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the jobs are been submitted.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -15156,6 +14351,12 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>outDir</emphasis></term>
             <listitem>
               <para>Input argument. Specifies the output directory where the files will be stored (by default, the current directory).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. Object containing options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -15229,7 +14430,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>Allows to cancel a job submitted on a given machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.cancelJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.cancelJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>CancelOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -15245,15 +14446,15 @@ If the machine identifier is equal to autom, the job will be automatically submi
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the job is running.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
             <term><emphasis>jobId</emphasis></term>
             <listitem>
               <para>Input argument. The Id of the job.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. Object containing the options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -16345,15 +15546,15 @@ values can be obtained using the vishnu_list_machine command).
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.more</refentrytitle>
+        <refentrytitle>VISHNU.cat</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>VISHNU.more</refname>
+        <refname>VISHNU.cat</refname>
         <refpurpose>displays content  of  files located on remote machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, fileContent=VISHNU.more</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, fileContent=VISHNU.cat</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -17412,423 +16613,6 @@ values can be obtained using the vishnu_list_machine command).
           </varlistentry>
           <varlistentry>
             <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-  </reference>
-  <reference>
-    <title>IMS Python API Reference</title>
-    <refentry>
-      <refmeta>
-        <refentrytitle>VISHNU.exportCommands</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>VISHNU.exportCommands</refname>
-        <refpurpose>exports all the commands made by a user during a session</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.exportCommands</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>oldSessionId</parameter></paramdef><paramdef>string <parameter>filename</parameter></paramdef><paramdef>ExportOp <parameter>options = ExportOp()</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>Exports all the VISHNU commands submitted during a completed session. This session must be in closed state.
-The output of this command is a file containing a shell script. For safety reasons, the commands having a password for parameter are not exported
-(for example the vishnu_connect and vishnu_change_password commands). This means the shell script must be run after opening
-a session manually or by adding the vishnu_connect command to the script.
-The access to other user's sessions is only permitted to administrators.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>oldSessionId</emphasis></term>
-            <listitem>
-              <para>Input argument. The id of the session to export (session has ended).</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>filename</emphasis></term>
-            <listitem>
-              <para>Input/Output argument. The path of the output file containing the Vishnu shell commands.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>options</emphasis></term>
-            <listitem>
-              <para>Input argument. Options which encapsulate the option for the export.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="returned objects">
-        <title>RETURNED OBJECTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>errorCode (integer)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry/>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>VISHNU.getMetricCurrentValue</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>VISHNU.getMetricCurrentValue</refname>
-        <refpurpose>displays the current values of system metrics</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, metricValue=VISHNU.getMetricCurrentValue</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>CurMetricOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>Displays the current values of the monitored metrics on the system identified by the machineId argument : cpuload, free diskspace and free memory. 
-The units of displayed values are percentages for cpuload and Megabytes (Mb) for diskspace and memory. The provided values are always standard integers (no float values).
-Please note that retrieving these values uses some valuable system ressources and should not occur too frequently to avoid an impact on system performance.
-</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. The id of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>metricValue</emphasis></term>
-            <listitem>
-              <para>Output argument. Value of the metric.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>options</emphasis></term>
-            <listitem>
-              <para>Input argument. The options for the current metric value.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="returned objects">
-        <title>RETURNED OBJECTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>errorCode (integer)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry/>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>VISHNU.getMetricHistory</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>VISHNU.getMetricHistory</refname>
-        <refpurpose>displays the history of values of a system metric</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, metricValues=VISHNU.getMetricHistory</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>MetricHistOp <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>Displays the chronological list of values of the metrics on the system identified by the machineId argument. Using the options it is possible to specify a type of metric and the starting and ending dates of the desired monitoring period. Note that some data will be available only if the required VISHNU agent (IMS server) has been running locally on the machine during the specified period.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. The id of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>metricValues</emphasis></term>
-            <listitem>
-              <para>Output argument. List of metric values.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>options</emphasis></term>
-            <listitem>
-              <para>Input argument. The optional fields for the metric history.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="returned objects">
-        <title>RETURNED OBJECTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>errorCode (integer)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry/>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>VISHNU.getUpdateFrequency</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>VISHNU.getUpdateFrequency</refname>
-        <refpurpose>gets the update frequency of the IMS database</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, freq=VISHNU.getUpdateFrequency</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This function allows a user to get the update frequency, to know  how often the state of the machines is automatically polled to get historical data.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>freq</emphasis></term>
-            <listitem>
-              <para>Output argument. Frequency the data are updated, in second.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="returned objects">
-        <title>RETURNED OBJECTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>errorCode (integer)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>freq(int)</emphasis></term>
-            <listitem>
-              <para>Frequency the data are updated, in second</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>VISHNU.getSystemInfo</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>VISHNU.getSystemInfo</refname>
-        <refpurpose>To get the system info on a machine</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, res=VISHNU.getSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>SysInfoOp <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This function allows a user to get system information about a machine. A system information describes a machine. The option is  the machine id (if no machine id, the information for all the machines are given)</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>res</emphasis></term>
-            <listitem>
-              <para>Output argument. The list of the system information gotten.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>options</emphasis></term>
-            <listitem>
-              <para>Input argument. Optional field for system information.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="returned objects">
-        <title>RETURNED OBJECTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>errorCode (integer)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry/>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Undefined error code&quot; [9])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key is unrecognized.&quot; [28])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
             <listitem/>
           </varlistentry>
         </variablelist>

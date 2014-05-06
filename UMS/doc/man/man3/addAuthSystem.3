@@ -31,7 +31,7 @@
 addAuthSystem \- adds a new user\-authentication system in VISHNU
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::addAuthSystem('u
-.BI "int vishnu::addAuthSystem(const\ string&\ " "sessionKey" ", ListAuthSysOptions&\ " "newAuthSys" ");"
+.BI "int vishnu::addAuthSystem(const\ string&\ " "sessionKey" ", AuthSystem&\ " "newAuthSys" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows an admin to add a new user\-authentication system in VISHNU\&. Several user\-authentication system\*(Aqs information are mandatory such as: URI, login, password, type and optionally for LDAP the DN of the root entry\&. By default, the type of the user\-authentication system is LDAP\&.

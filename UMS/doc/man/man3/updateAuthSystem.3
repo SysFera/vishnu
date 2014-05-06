@@ -31,7 +31,7 @@
 updateAuthSystem \- updates a user\-authentication system in VISHNU
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::updateAuthSystem('u
-.BI "int vishnu::updateAuthSystem(const\ string&\ " "sessionKey" ", const\ ListAuthSysOptions&\ " "AuthSys" ");"
+.BI "int vishnu::updateAuthSystem(const\ string&\ " "sessionKey" ", const\ AuthSystem&\ " "AuthSys" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows an admin to update a user\-authentication system in VISHNU\&. It is possible to change the parameters which follow: URI, login, password, type and optionally for LDAP the DN of the root entry\&. By default, the type of the user\-authentication system is LDAP\&.

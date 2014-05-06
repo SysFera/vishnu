@@ -2,12 +2,12 @@
 .\"     Title: VISHNU.submitJob
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS Python API Reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "VISHNU\&.SUBMITJOB" "3" "November 2013" "VISHNU 3.2.0" "TMS Python API Reference"
+.TH "VISHNU\&.SUBMITJOB" "3" "May 2014" "VISHNU 4.0.0" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,20 +31,15 @@
 VISHNU.submitJob \- Allows to submit a job consisting in running a given script on a machine\&.
 .SH "SYNOPSIS"
 .HP \w'ret=VISHNU\&.submitJob('u
-.BI "ret=VISHNU\&.submitJob(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "scriptFilePath" ", Job\ " "jobInfo" ", SubmitOptions\ " "options\ =\ SubmitOptions()" ");"
+.BI "ret=VISHNU\&.submitJob(string\ " "sessionKey" ", string\ " "scriptFilePath" ", Job\ " "jobInfo" ", SubmitOptions\ " "options\ =\ SubmitOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-This command is used to submit a job to the specific batch scheduler associated to a machine\&. It allows describing a job in a script, using either the batch scheduler\*(Aqs directives or VISHNU\*(Aqs generic directives for all batch schedulers\&. If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script using VISHNU\*(Aqs generic directives for all batch schedulers
+Command to submit a job to the specific batch scheduler associated to a machine\&. You must set a script to execute\&. It\*(Aqs possible to specify a target machine using the option \-\-machineId\&. If no machine is set, or if the specified machine is "autom", the job will be submitted on a machine automatically selected by vishnu\&. You can use the load criterion option (\-\-useLoad) to set the algorithm vishnu should select the target machine
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
 .RS 4
 Input argument\&. The session key\&.
-.RE
-.PP
-\fImachineId\fR
-.RS 4
-Input argument\&. Is the id of the machine on which the job must be submitted\&.
 .RE
 .PP
 \fIscriptFilePath\fR
