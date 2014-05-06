@@ -398,15 +398,14 @@ getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers){
   vishnu::param_type_t param;
   vishnu::param_type_t tms;
   std::vector<std::string> uriv;
-  bool hastms;
+  bool hastms(false);
   param = vishnu::SED_URIADDR;
   tms = vishnu::HAS_TMS;
   config.getConfigValues(param, uriv);
   config.getConfigValue<bool>(tms, hastms);
-  if (uriv.size()>0)
+  if (uriv.size() > 0) {
       extractMachineServersFromLine(uriv, allServers, "xmssed");
-
-  uriv.clear();
+  }
 }
 
 
@@ -414,7 +413,8 @@ getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers){
  * @brief Raise exception when profile hold error status
  * @param profile The profile to analyse
  */
-void raiseExceptionOnErrorResult(diet_profile_t* profile) {
+void
+raiseExceptionOnErrorResult(diet_profile_t* profile) {
   if (profile && profile->param_count == 2) {
     std::string status;
     std::string msg;

@@ -41,7 +41,8 @@ public:
    * \return 0 on success, an error code otherwise
    */
   int
-  add(const std::string& name, const std::string& uri, const std::vector<std::string>& services);
+  add(const std::string& name, const std::string& uri,
+      const std::vector<std::string>& services);
 
   /**
    * \brief Remove the server called name listening on port at address of the annuary
@@ -76,7 +77,8 @@ public:
    * \param mid a machine identifier
    */
   void
-  setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo, std::string mid = "");
+  setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo,
+                std::string mid = "");
 
   /**
    * \brief Prints the content of the annuary

@@ -109,8 +109,9 @@ Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgI
     std::string mid_tmp = mid;
     iss >> uri;
     iss >> mid_tmp;
-    if (mid_tmp.empty())
-      mid_tmp=mid;
+    if (mid_tmp.empty()) {
+      mid_tmp = mid;
+    }
     std::vector<std::string> services;
     fillServices(services, module, mid_tmp);
     mservers.push_back(boost::make_shared<Server>(module, services, uri));
