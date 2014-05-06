@@ -298,9 +298,7 @@ JobServer::handleNativeBatchExec(int action,
     // get possible error message send by the child
     size_t nbRead = read(ipcPipe[0], ipcMsgBuffer, 255);
     errorMsg = std::string(ipcMsgBuffer, nbRead);
-    if (! WIFEXITED(exitCode)
-        || WEXITSTATUS(exitCode) != 0
-        || errorMsg != "SUCCESS") {
+    if (errorMsg != "SUCCESS") {
       throw TMSVishnuException(ERRCODE_RUNTIME_ERROR,
                                boost::str(boost::format("Job worker process exited with status %1%, message: %2%")
                                           % exitCode
