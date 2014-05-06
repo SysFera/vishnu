@@ -550,7 +550,7 @@ vishnu::parseVersion(const std::string& version) {
     if (found != std::string::npos) {
       minor = rest.substr(0, found);
       rest2 = rest.substr(found+1, rest.size()) ;
-      found = rest2.find_first_of("-");
+      found = rest2.find_first_of("-.");
       if (found != std::string::npos) {
         patch = rest2.substr(0,found);
       } else {
