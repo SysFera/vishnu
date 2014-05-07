@@ -71,6 +71,14 @@
           <para> Updated for version 3.1 of Vishnu</para>
         </revdescription>
       </revision>
+      <revision>
+        <revnumber>7</revnumber>
+        <date>30/04/2014</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para> Updated for version 4.0.0 of Vishnu</para>
+        </revdescription>
+      </revision>
     </revhistory>
   </info>
 
@@ -138,9 +146,6 @@
             <para><emphasis role="bold">FMS</emphasis>: File Management Service (VISHNU Module)</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">IMS</emphasis>: Information Management Service (VISHNU Module)</para>
-          </listitem>
-          <listitem>
             <para><emphasis role="bold">kB</emphasis>: Kilo-bytes</para>
           </listitem>
           <listitem>
@@ -166,6 +171,9 @@
           </listitem>
 	  <listitem>
 	    <para><emphasis role="bold">UMS</emphasis>: Users Management Service (VISHNU Module)</para>
+	  </listitem>
+	  <listitem>
+	    <para><emphasis role="bold">xmssed</emphasis>: binary that can load the VISHNU Modules servers</para>
 	  </listitem>
         </itemizedlist>
       </para>
@@ -263,7 +271,7 @@
               </entry>
               <entry>
                 <para>- The configuration sets whether VISHNU uses encryption
-                for its internal communications.
+                  for its internal communications.
                 </para>
               </entry>
               <entry>
@@ -286,13 +294,10 @@
             <row>
               <entry><para>System services</para></entry>
               <entry>
-                <para>VISHNU will provide the following services:</para>
+                <para>VISHNU will provide the following modules:</para>
                 <itemizedlist>
                   <listitem>
                     <para>User management services (UMS): authentication and session management.</para>
-                  </listitem>
-                  <listitem>
-                    <para>Information management services (IMS): monitoring and control services.</para>
                   </listitem>
                   <listitem>
                     <para>Tasks management services (TMS): submission of tasks (jobs) on computing resources.</para>
@@ -333,7 +338,7 @@
               <entry><para>Architecture choices</para></entry>
               <entry>
                 <para>- VISHNU will be based on a lightweight communication
-                layer for all communications between clients and servers.</para>
+                  layer for all communications between clients and servers.</para>
                 <para>- VISHNU will be modular so that new services can be easily integrated with the existing ones and so that each module can have its own version.</para>
                 <para>- VISHNU will use the SSH protocol for file transfers and for tunneling of application flows across network firewalls.</para>
                 <para>- VISHNU will use the mechanisms of the underlying Unix security system to protect access to sensitive information (e.g. SSH keys).</para>
@@ -396,19 +401,18 @@
           <listitem>
             <para><emphasis role="bold">VISHNU Services Servers (VSS)</emphasis>: this is a generic component of the functional architecture that
               represents all the VISHNU server components providing services to the user. The different classes of this generic component are 
-              the following in the context of the VISHNU 1.0 project, but the list of classes could be extended in the future:</para>
-            <para>
-              <itemizedlist>
-                <listitem>
-                  <para>FMS Server (File Management Server): this role can be assigned only to a Storage Server</para></listitem>
-                <listitem>
-                  <para>IMS Server (Infrastructure Management Server): this role can be assigned to any VSS</para></listitem>
-                <listitem>
-                  <para>TMS Server (Tasks Management Server): this role can be assigned only to a Computing Server</para></listitem>
-                <listitem>
-                  <para>UMS Server (Users Management Server): this role can be assigned to any VSS</para></listitem>
-              </itemizedlist>
-            </para>
+              the following in the context of the VISHNU 4.0 project, but the list of classes could be extended in the future:</para>
+            <itemizedlist>
+              <listitem>
+                <para>FMS Server (File Management Server): this role can be assigned only to a Storage Server</para>
+              </listitem>
+              <listitem>
+              <para>TMS Server (Tasks Management Server): this role can be assigned only to a Computing Server</para>
+              </listitem>
+              <listitem>
+                <para>UMS Server (Users Management Server): this role can be assigned to any VSS</para>
+              </listitem>
+            </itemizedlist>
           </listitem>
           <listitem>
             <para><emphasis role="bold">VISHNU Backbone servers (VBS)</emphasis>: this is a generic component of the functional architecture that 
@@ -450,7 +454,7 @@
       <title>Functional architecture diagram</title>
       <para>The Figure <xref linkend="fig:vishnu_archi"/> shows the different functional parts of VISHNU and their interactions. On the client side (upper
         part of the diagram) are shown the different interface components that are provided to the users: APIs and command-line interface.
-        These interfaces provide access to the different VISHNU modules (UMS, TMS, FMS, IMS) using a client component, that is itself
+        These interfaces provide access to the different VISHNU modules (UMS, TMS, FMS) using a client component, that is itself
         connected with the corresponding server component through the
         communication layer (ZMQ). The server components handle data items that
         belong to a database. The TMS and FMS Server components also handle some specific interaction with external entities: the
@@ -675,7 +679,7 @@
     </section>
 
   </chapter><!-- PART 2 : FUNCTIONAL ARCHITECTURE -->
-  
+
   <!-- PART 3 : TECHNICAL ARCHITECTURE -->
   <chapter>
     <title>Technical architecture</title>
@@ -688,7 +692,7 @@
         on one dedicated host and where all clients and servers can connect to each other without crossing network firewalls.
         VISHNU uses ZMQ for communications between the client systems and the dispatcher or a VSS.
         All VSS connect directly to the Database Server and can communicate together through ZMQ or
-	transfer files through SSH (not shown on the diagram).
+        transfer files through SSH (not shown on the diagram).
       </para>
       <figure id="fig:tech_arch_diagram">
         <title>VISHNU Technical architecture diagram</title>
@@ -709,11 +713,11 @@
           <listitem><para><emphasis role="bold">Network A</emphasis>: contains a client system (user laptop).</para></listitem>
           <listitem><para><emphasis role="bold">Network B</emphasis>: contains VISHNU VBSs. This network could also contain some VSS servers.</para></listitem>
           <listitem><para><emphasis role="bold">Network C</emphasis>: contains the Database Server.</para></listitem>
-          <listitem><para><emphasis role="bold">Network D</emphasis>: contains a VSS (that could be a UMS, TMS, IMS or FMS Server).</para></listitem>
+          <listitem><para><emphasis role="bold">Network D</emphasis>: contains a VSS (that could be a UMS, TMS or FMS Server).</para></listitem>
       </itemizedlist></para>
       <para>In this architecture, all inter-network communications are using the SSH protocol.</para>
       <para>The role of the SSH tunnels is to allow ZMQ (TCP) and database communications across network firewalls. Within a network, all
-	communications are as described in Section <xref linkend="sec:tech_arch"/>.</para>
+        communications are as described in Section <xref linkend="sec:tech_arch"/>.</para>
       <para>The startup and termination phases are identical to the architecture
         of Section <xref linkend="sec:tech_arch"/>, the SSH tunnels being started and managed by the administrator
         of the platform.</para>
@@ -728,11 +732,11 @@
       </figure>
     </section>
   </chapter><!-- PART 3 : TECHNICAL ARCHITECTURE -->
-  
+
   <chapter><!-- PART 4 : MODULES ARCHITECTURE -->
     <title>VISHNU modules architecture</title>
     <para>This chapter contains details of the VISHNU architecture for some of
-    the VISHNU modules.</para>
+      the VISHNU modules.</para>
     
     <section>
       <title>TMS module details</title>
@@ -746,7 +750,7 @@
         <para> The following steps and diagrams represent the different steps of a job submission through vishnu </para>  
         <para>  
           <itemizedlist>
-            <listitem><para> A TMS server must be running on each VISHNU Machine where a batch scheduler is installed.</para></listitem> 
+            <listitem><para> A XMS server with TMS enabled must be running on each VISHNU Machine where a batch scheduler is installed.</para></listitem> 
             <listitem><para> The user must open the VISHNU session before using the VISHNU submit job function.  </para></listitem>
             <listitem><para> After authentification of the user, a valid VISHNU session key is created, the submit function uses 
                 this session key to submit a job through the VISHNU system.   </para></listitem>
@@ -759,8 +763,8 @@
             <listitem><para> To submit a job the VISHNU submit function program contacts VISHNU agent to get the reference of the machine on which the job will be submitted.
             </para></listitem>
             <listitem><para> The submit function program contacts the selected machine and sends all input data (sessionKey, machineId, scriptPath and options) and waits for the output values : a valid output valid or a VISHNU exception. The machineId is valid if it exists in the vishnu database and if the submit job owner has an account on this machine. </para></listitem>
-            <listitem><para> The TMS server launched on the selected machine receives the input values, checks the validity of the sessionKey and machineId by contacting the VISHNU Database.  </para></listitem>
-            <listitem><para> If the two values are valid, the TMS server calls the underlying batch scheduler API submit function (llsubmit(...)  for the LoadLeveler scheduler, pbs_submit(...) for Torque scheduler, slurm_submit_batch_job(...) for SLURM scheduler...).</para></listitem>
+            <listitem><para> The XMS server launched on the selected machine receives the input values, checks the validity of the sessionKey and machineId by contacting the VISHNU Database.  </para></listitem>
+            <listitem><para> If the two values are valid, the XMS server calls the underlying batch scheduler API submit function (llsubmit(...)  for the LoadLeveler scheduler, pbs_submit(...) for Torque scheduler, slurm_submit_batch_job(...) for SLURM scheduler...).</para></listitem>
             <listitem><para> If the job was performed successfully, the TMS creates a vishnu jobId and sends it back to the user.</para></listitem>
           </itemizedlist>
         </para>
@@ -779,10 +783,10 @@
       </section> 
 
       <section>
-        <title>TMS server deployment</title>
+        <title>XMS server deployment with TMS</title>
         <para>The following diagram shows the relationships and their cardinalities between the different hosts involved in the deployment
-          of the VISHNU TMS module. Several TMS Servers can be deployed within a single VISHNU infrastructure and each will provide the same set
-          of services for a given batch scheduler. The TMS Servers will share the same VISHNU database where all logs and
+          of the VISHNU TMS module. Several XMS Servers can be deployed within a single VISHNU infrastructure with XMS enabled and each will provide the same set
+          of services for a given batch scheduler. The XMS Servers will share the same VISHNU database where all logs and
           dynamical information will be stored.</para>
         <figure>
           <title>TMS deployment diagram</title>
@@ -832,7 +836,7 @@
         </para>
         
         <para>The call sequence is designed around the usage of the <emphasis role="bold">scp</emphasis> and <emphasis role="bold">rsync</emphasis>
-          command-line programs according to the project requirements. Therefore the FMS Server software will use system &quot;"exec"&quot; calls to
+          command-line programs according to the project requirements. Therefore the XMS Server software with FMS will use system &quot;"exec"&quot; calls to
           launch file transfers or other system calls related to file management (chmod, ls, etc.). This solution allows access to many hosts from a
           single FMS server (see deployment paragraph below), but reduces the interoperability as it depends on unix/linux-specific features.
         </para>
@@ -880,6 +884,6 @@
     </section>
     
   </chapter><!-- PART 4 : MODULES ARCHITECTURE -->
-  
+
 </book>
 

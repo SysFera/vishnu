@@ -25,7 +25,7 @@ public :
   ~PingerProxy();
   /**
    * \brief Ping the servers on the machine and store the ping result in result
-   * \param server name of server to ping, may be 'dispatcher', 'umssed', 'tmssed', 'fmssed', 'imssed'
+   * \param server name of server to ping, may be 'dispatcher' or 'xmssed'
    * \param mid the machine identifier of the machine to ping
    * \param result a map of URI / version (or failure as version if ping failed)
    */

@@ -2,12 +2,12 @@
 .\"     Title: cancelJob
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS C++ API Reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "CANCELJOB" "3" "November 2013" "VISHNU 3.2.0" "TMS C++ API Reference"
+.TH "CANCELJOB" "3" "May 2014" "VISHNU 4.0.0" "TMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 cancelJob \- Allows to cancel a job submitted on a given machine\&.
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::cancelJob('u
-.BI "int vishnu::cancelJob(const\ string&\ " "sessionKey" ", const\ string&\ " "machineId" ", const\ string&\ " "jobId" ");"
+.BI "int vishnu::cancelJob(const\ string&\ " "sessionKey" ", const\ string&\ " "jobId" ", const\ CancelOptions&\ " "options" ");"
 .SH "DESCRIPTION"
 .PP
 cancels a job from its id\&. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator\&.
@@ -42,14 +42,14 @@ cancels a job from its id\&. If job id is equal to all, all submitted jobs by al
 Input argument\&. The session key\&.
 .RE
 .PP
-\fImachineId\fR
-.RS 4
-Input argument\&. Is the id of the machine on which the job is running\&.
-.RE
-.PP
 \fIjobId\fR
 .RS 4
 Input argument\&. The Id of the job\&.
+.RE
+.PP
+\fIoptions\fR
+.RS 4
+Input argument\&. Object containing the options\&.
 .RE
 .SH "EXCEPTIONS"
 .PP

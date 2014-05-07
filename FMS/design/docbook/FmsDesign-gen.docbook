@@ -1248,7 +1248,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::more</para>
+        <para>FMS::cat</para>
       </section>
       <section>
         <title>Service dirList</title>

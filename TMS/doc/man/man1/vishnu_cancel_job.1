@@ -2,12 +2,12 @@
 .\"     Title: vishnu_cancel_job
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS Command reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "VISHNU_CANCEL_JOB" "1" "November 2013" "VISHNU 3.2.0" "TMS Command reference"
+.TH "VISHNU_CANCEL_JOB" "1" "May 2014" "VISHNU 4.0.0" "TMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 vishnu_cancel_job \- Allows to cancel a job submitted on a given machine\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_cancel_job\fR\ 'u
-\fBvishnu_cancel_job\fR [\fB\-h\fR] \fImachineId\fR \fIjobId\fR
+\fBvishnu_cancel_job\fR [\fB\-h\fR] [\fB\-m\ \fR\fB\fImachineId\fR\fR] [\fB\-u\ \fR\fB\fIuser\fR\fR] [\fB\-j\ \fR\fB\fIjobId\fR\fR] \fIjobId\fR
 .SH "DESCRIPTION"
 .PP
 cancels a job from its id\&. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator\&.
@@ -40,6 +40,21 @@ cancels a job from its id\&. If job id is equal to all, all submitted jobs by al
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
+.RE
+.PP
+\fB\-m \fR\fB\fImachineId\fR\fR
+.RS 4
+Cancels only jobs submitted on the given machine\&.
+.RE
+.PP
+\fB\-u \fR\fB\fIuser\fR\fR
+.RS 4
+Cancels only jobs submitted by the given user\&. Using this option requires root privileges If the user is root, and the identifier corresponds to the keyword \*(Aqall\*(Aq, then all the jobs submitted through vishnu, regardless of the user or the machine, will be cancelled\&. ** Option to be used with caution **\&.
+.RE
+.PP
+\fB\-j \fR\fB\fIjobId\fR\fR
+.RS 4
+Sets the identifier of the job to cancel\&. If the identifier corresponds to the keyword \*(Aqall\*(Aq, then all the jobs submitted through vishnu by the user that request the command, regardless of the target machine, will be cancelled\&. ** Option be used with caution **\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
@@ -116,13 +131,13 @@ The following diagnostics may be issued on stderr and the command will return th
 .RE
 .SH "EXAMPLE"
 .PP
-To cancel the submission of the job J_1 on machine_1:
+To cancel the job J_
 .PP
-vishnu_cancel_job machine_1 J_1
+vishnu_cancel_job J_1
 .PP
-To cancel cancel all submitted jobs on machine_1
+To cancel all my submitted jobs
 .PP
-vishnu_cancel_job machine_1 all
+vishnu_cancel_job all
 .SH "AUTHOR"
 .PP
 \fB SysFera SA\fR <\&info@sysfera.com\&>

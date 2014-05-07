@@ -2,12 +2,12 @@
 .\"     Title: VISHNU.getJobInfo
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS Python API Reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "VISHNU\&.GETJOBINFO" "3" "November 2013" "VISHNU 3.2.0" "TMS Python API Reference"
+.TH "VISHNU\&.GETJOBINFO" "3" "May 2014" "VISHNU 4.0.0" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,20 +31,15 @@
 VISHNU.getJobInfo \- gets information on a job from its id
 .SH "SYNOPSIS"
 .HP \w'ret=VISHNU\&.getJobInfo('u
-.BI "ret=VISHNU\&.getJobInfo(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "jobId" ", Job\ " "jobInfos" ");"
+.BI "ret=VISHNU\&.getJobInfo(string\ " "sessionKey" ", string\ " "jobId" ", Job\ " "jobInfos" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows getting information about a specific job\&. It can return the job\*(Aqs status, for example\&.
+This command allows getting details about a given job
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
 .RS 4
 Input argument\&. The session key\&.
-.RE
-.PP
-\fImachineId\fR
-.RS 4
-Input argument\&. Is the id of the machine on which the job is running\&.
 .RE
 .PP
 \fIjobId\fR

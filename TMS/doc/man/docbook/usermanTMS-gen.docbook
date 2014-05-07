@@ -13,7 +13,7 @@
       </address>
     </author>
     <title>User Manual</title>
-    <date>November 2013</date>
+    <date>May 2014</date>
     <copyright>
       <year>2013</year>
       <holder>SysFera SA</holder>
@@ -51,7 +51,7 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>3.2.0</releaseinfo>
+    <releaseinfo>4.0.0</releaseinfo>
   </info>
   <reference>
     <title>TMS Command reference</title>
@@ -84,13 +84,16 @@ same conditions as regards security.</para>
               choice="opt"><option>-V <replaceable>textParams</replaceable></option></arg><arg
               choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>specificParams</replaceable></option></arg><arg
-              choice="opt"><option>-p</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="opt"><option>-p</option></arg><arg choice="opt"><option>-r <replaceable>machine</replaceable></option></arg><arg
               choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.
-If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are  used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
+        <para>Command to submit a job to the specific batch scheduler associated to a machine. 
+You must set a script to execute. 
+It's possible to specify a target machine using the option --machineId. 
+If no machine is set, or if the specified machine is &quot;autom&quot;, the job will be submitted on a machine automatically selected by vishnu.
+You can use the load criterion option (--useLoad) to set the algorithm vishnu should select the target machine</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -238,6 +241,12 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
               <para>allows to submit on the shell instead of using the batch scheduler.</para>
             </listitem>
           </varlistentry>
+          <varlistentry>
+            <term><option>-r <replaceable>machine</replaceable></option></term>
+            <listitem>
+              <para>Sets the target machine.</para>
+            </listitem>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="job output environment variables">
@@ -365,10 +374,10 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To submit on machine_1 the script toto:</para>
-        <para>vishnu_submit_job machine_1 toto</para>
-        <para>To submit automatically the script toto on the best machine (by the default the machine which has the minimum number of waiting jobs is selected):</para>
-        <para>vishnu_submit_job autom toto</para>
+        <para>To submit the script toto.sh on machine_1:</para>
+        <para>vishnu_submit_job -m machine_1 toto.sh</para>
+        <para>To submit the script on a machine selected by vishnu</para>
+        <para>vishnu_submit_job toto.sh</para>
         <para>To submit automatically the script toto on the best machine by using a machine which has the minimum total number of jobs:</para>
         <para>vishnu_submit_job autom toto -L 1</para>
       </refsect1>
@@ -384,11 +393,11 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_get_job_info</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting information about a specific job. It can return the job's status, for example.</para>
+        <para>This command allows getting details about a given job</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -476,8 +485,8 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To get the info on the job J_1 on machine_1:</para>
-        <para>vishnu_get_job_info machine_1 J_1</para>
+        <para>To get details about the job J_1</para>
+        <para>vishnu_get_job_info J_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -492,12 +501,12 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_get_job_progress</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
-              choice="opt"><option>-u <replaceable>jobOwner</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-u <replaceable>user</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the progression status of a job based on the wall-clock time specified.</para>
+        <para>This command allows to get the progression of jobs</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -515,9 +524,15 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-u <replaceable>jobOwner</replaceable></option></term>
+            <term><option>-u <replaceable>user</replaceable></option></term>
             <listitem>
               <para>Specifies the owner of the job..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>Displays the progression of jobs on the given machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -585,8 +600,12 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To get the progress of the job J_1 on machine_1:</para>
-        <para>vishnu_get_job_progress machine_1 -i J_1</para>
+        <para>To get the progress of the jobs. If no machine and no job has been specified, </para>
+        <para>this list the progression of all jobs submitted by the users. Using suitable options, </para>
+        <para>it's possible to filter the result according to the machine id or the the job id</para>
+        <para>vishnu_get_job_progress                               # get the progression of all jobs </para>
+        <para>vishnu_get_job_progress -m machine_1    # get the progression of all jobs on machine_1</para>
+        <para>vishnu_get_job_progress  -i J_1                    # get the progression of the job J_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -724,11 +743,11 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
               choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>multipleStatus</replaceable></option></arg><arg
               choice="opt"><option>-b</option></arg><arg choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
-              choice="opt"><option>-l</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-l</option></arg><arg choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
+        <para>This command allows to display the job submitted by the user. Using the appropriate option, the jobs can be filtered according to a given machine</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -792,7 +811,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><option>-S <replaceable>multipleStatus</replaceable></option></term>
             <listitem>
-              <para>lists the jobs with the specified status (combination of multiple status). Its format contains  the first letter or the value (interger) of each chosen status. For exemple to list the cancelled and terminated jobs,  you use the format CT or 65.</para>
+              <para>lists the jobs with the specified status. Its format contains the first letter or the value (interger) of each chosen status (except for the status COMPLETED where the T letter for TERMINATED is used to avoid confusion with CANCELLED). It's also possible to use a combination of multiple statuses. For example, to list the cancelled and completed jobs,  you can use the format CT or 65.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -811,6 +830,12 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><option>-l <replaceable>listAll</replaceable></option></term>
             <listitem>
               <para>lists all information of the job.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>lists the jobs on the target machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -890,10 +915,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To list the jobs on machine_1:</para>
-        <para>vishnu_list_jobs machine_1</para>
-        <para>To list submitted jobs on all machines:</para>
-        <para>vishnu_list_jobs all</para>
+        <para>To list all submitted jobs</para>
+        <para>vishnu_list_jobs</para>
+        <para>To list jobs submitted on machine_1</para>
+        <para>vishnu_list_jobs -m machine_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -907,12 +932,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_get_job_output</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-o <replaceable>outDir</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-o <replaceable>outputDir</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>days</replaceable></option></arg><arg
+              choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting a job's output files.</para>
+        <para>This command allows to download the ouput files of a given job from 
+the remote machine to the local machine. </para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -924,9 +952,21 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-o <replaceable>outDir</replaceable></option></term>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
             <listitem>
-              <para>The output directory where the files will be stored (default is current directory).</para>
+              <para>Get the output of jobs on the given machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-o <replaceable>outputDir</replaceable></option></term>
+            <listitem>
+              <para>The directory to store the output files.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>days</replaceable></option></term>
+            <listitem>
+              <para>Considers only jobs submitted in the last &lt;days> days.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1014,8 +1054,8 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To get the output of the job J_1 on machine_1:</para>
-        <para>vishnu_get_job_output machine_1 J_1</para>
+        <para>To get the output of the job J_1:</para>
+        <para>vishnu_get_job_output J_1</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1025,16 +1065,25 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refmeta>
       <refnamediv>
         <refname>vishnu_get_completed_jobs_output</refname>
-        <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
+        <refpurpose>gets the ouput files of all completed jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_get_completed_jobs_output</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-o <replaceable>outDir</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-o <replaceable>outputDir</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>days</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the output files of all the completed jobs.</para>
+        <para>This command allows to get the output files of completed jobs.
+You can specify the target machine using the option --machineId.
+If no machine is specified, if if the specified machine is &quot;all&quot;, the 
+request will be performed on all the machines where the user has 
+a local account
+
+Note that all subsequent requests for this command will ignore jobs already downloaded. 
+Unless the user explicitly use the option --force or -f</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -1049,6 +1098,24 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><option>-o <replaceable>outDir</replaceable></option></term>
             <listitem>
               <para>Specifies the output directory where the files will be stored (by default, the current directory).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>Get the output of jobs on the given machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-o <replaceable>outputDir</replaceable></option></term>
+            <listitem>
+              <para>The directory to store the output files.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>days</replaceable></option></term>
+            <listitem>
+              <para>Considers only jobs submitted in the last &lt;days> days.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1128,8 +1195,8 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To get the completed job on machine_1:</para>
-        <para>vishnu_get_completed_jobs_output machine_1</para>
+        <para>vishnu_get_completed_jobs_output --machineId machine_1    # get the completed job on machine_1</para>
+        <para>vishnu_get_completed_jobs_output                                                 # get the output of all completed jobs</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1143,7 +1210,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_cancel_job</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>user</replaceable></option></arg><arg
+              choice="opt"><option>-j <replaceable>jobId</replaceable></option></arg><arg
+              choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1156,6 +1226,32 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>Cancels only jobs submitted on the given machine.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>user</replaceable></option></term>
+            <listitem>
+              <para>Cancels only jobs submitted by the given user. Using this option requires root privileges
+
+If the user is root, and the identifier corresponds to the keyword  'all', 
+then all the jobs submitted through vishnu, regardless of the user or the machine,  will be cancelled. 
+** Option to be used with caution **.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-j <replaceable>jobId</replaceable></option></term>
+            <listitem>
+              <para>Sets the identifier of the job to cancel. 
+If the identifier corresponds to the keyword  'all',  then all the jobs submitted 
+through vishnu by the user that request the command, regardless of the 
+target machine, will be cancelled. 
+** Option be used with caution **.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1243,10 +1339,10 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
       </refsect1>
       <refsect1 id="example">
         <title>EXAMPLE</title>
-        <para>To cancel the submission of the job J_1 on machine_1:</para>
-        <para>vishnu_cancel_job machine_1 J_1</para>
-        <para>To cancel cancel all submitted jobs on machine_1</para>
-        <para>vishnu_cancel_job machine_1 all</para>
+        <para>To cancel the job J_</para>
+        <para>vishnu_cancel_job J_1</para>
+        <para>To cancel all my submitted jobs</para>
+        <para>vishnu_cancel_job all</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -1477,12 +1573,15 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <refpurpose>Allows to submit a job consisting in running a given script on a machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfo</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::submitJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>scriptFilePath</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfo</parameter></paramdef><paramdef>const SubmitOptions&amp; <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.
-If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are  used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
+        <para>Command to submit a job to the specific batch scheduler associated to a machine. 
+You must set a script to execute. 
+It's possible to specify a target machine using the option --machineId. 
+If no machine is set, or if the specified machine is &quot;autom&quot;, the job will be submitted on a machine automatically selected by vishnu.
+You can use the load criterion option (--useLoad) to set the algorithm vishnu should select the target machine</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1491,12 +1590,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which the job must be submitted.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1584,11 +1677,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets information on a job from its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>Job&amp; <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting information about a specific job. It can return the job's status, for example.</para>
+        <para>This command allows getting details about a given job</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1597,12 +1690,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the job is running.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1676,11 +1763,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets the progression status of jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobProgress</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListProgression&amp; <parameter>listProgress</parameter></paramdef><paramdef>const ProgressOptions&amp; <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobProgress</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListProgression&amp; <parameter>listProgress</parameter></paramdef><paramdef>const ProgressOptions&amp; <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the progression status of a job based on the wall-clock time specified.</para>
+        <para>This command allows to get the progression of jobs</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1689,12 +1776,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine to get the jobs progression.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1848,11 +1929,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets a list of all submitted jobs on a machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listJobs</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef><paramdef>const ListJobsOptions&amp; <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listJobs</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListJobs&amp; <parameter>listOfJobs</parameter></paramdef><paramdef>const ListJobsOptions&amp; <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
+        <para>This command allows to display the job submitted by the user. Using the appropriate option, the jobs can be filtered according to a given machine</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1861,12 +1942,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the jobs are running.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1940,11 +2015,12 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets standard output and error output files of a job given its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>JobResult&amp; <parameter>outputInfo</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getJobOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>JobResult&amp; <parameter>outputInfo</parameter></paramdef><paramdef>const JobOutputOptions&amp; <parameter>options = JobOutputOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting a job's output files.</para>
+        <para>This command allows to download the ouput files of a given job from 
+the remote machine to the local machine. </para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -1953,12 +2029,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Gets outputPath and errorPath of a job from its id.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -1974,9 +2044,9 @@ If the machine identifier is equal to autom, the job will be automatically submi
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>outDir</emphasis></term>
+            <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. The output directory where the files will be stored (default is current directory).</para>
+              <para>Input argument. An object containing the options provided by the user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2043,14 +2113,21 @@ If the machine identifier is equal to autom, the job will be automatically submi
       </refmeta>
       <refnamediv>
         <refname>getCompletedJobsOutput</refname>
-        <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
+        <refpurpose>gets the ouput files of all completed jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getCompletedJobsOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>ListJobResults&amp; <parameter>listOfResults</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getCompletedJobsOutput</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>ListJobResults&amp; <parameter>listOfResults</parameter></paramdef><paramdef>const string&amp; <parameter>outDir = string()</parameter></paramdef><paramdef>const JobOutputOptions&amp; <parameter>options = JobOutputOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the output files of all the completed jobs.</para>
+        <para>This command allows to get the output files of completed jobs.
+You can specify the target machine using the option --machineId.
+If no machine is specified, if if the specified machine is &quot;all&quot;, the 
+request will be performed on all the machines where the user has 
+a local account
+
+Note that all subsequent requests for this command will ignore jobs already downloaded. 
+Unless the user explicitly use the option --force or -f</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2059,12 +2136,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the jobs are been submitted.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2077,6 +2148,12 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>outDir</emphasis></term>
             <listitem>
               <para>Input argument. Specifies the output directory where the files will be stored (by default, the current directory).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. Object containing options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2138,7 +2215,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>Allows to cancel a job submitted on a given machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cancelJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cancelJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef><paramdef>const CancelOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2154,15 +2231,15 @@ If the machine identifier is equal to autom, the job will be automatically submi
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the job is running.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
             <term><emphasis>jobId</emphasis></term>
             <listitem>
               <para>Input argument. The Id of the job.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. Object containing the options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2325,12 +2402,15 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>Allows to submit a job consisting in running a given script on a machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.submitJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>scriptFilePath</parameter></paramdef><paramdef>Job <parameter>jobInfo</parameter></paramdef><paramdef>SubmitOptions <parameter>options = SubmitOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command is used to submit a job to the specific batch scheduler associated to a machine. It allows describing a job in a script, using either the batch scheduler's directives or VISHNU's generic directives for all batch schedulers.
-If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are  used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
+        <para>Command to submit a job to the specific batch scheduler associated to a machine. 
+You must set a script to execute. 
+It's possible to specify a target machine using the option --machineId. 
+If no machine is set, or if the specified machine is &quot;autom&quot;, the job will be submitted on a machine automatically selected by vishnu.
+You can use the load criterion option (--useLoad) to set the algorithm vishnu should select the target machine</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2339,12 +2419,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which the job must be submitted.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2444,11 +2518,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets information on a job from its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>Job <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>Job <parameter>jobInfos</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting information about a specific job. It can return the job's status, for example.</para>
+        <para>This command allows getting details about a given job</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2457,12 +2531,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the job is running.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2548,11 +2616,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets the progression status of jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listProgress=VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listProgress=VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the progression status of a job based on the wall-clock time specified.</para>
+        <para>This command allows to get the progression of jobs</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2561,12 +2629,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine to get the jobs progression.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2744,11 +2806,11 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets a list of all submitted jobs on a machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listOfJobs=VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listOfJobs=VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows displaying the jobs submitted on a specific machine's batch scheduler. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
+        <para>This command allows to display the job submitted by the user. Using the appropriate option, the jobs can be filtered according to a given machine</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2757,12 +2819,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the jobs are running.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2848,11 +2904,12 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets standard output and error output files of a job given its id</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>JobResult <parameter>outputInfo</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>JobResult <parameter>outputInfo</parameter></paramdef><paramdef>JobOutputOptions <parameter>options = JobOutputOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting a job's output files.</para>
+        <para>This command allows to download the ouput files of a given job from 
+the remote machine to the local machine. </para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2861,12 +2918,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Gets outputPath and errorPath of a job from its id.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2882,9 +2933,9 @@ If the machine identifier is equal to autom, the job will be automatically submi
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>outDir</emphasis></term>
+            <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. The output directory where the files will be stored (default is current directory).</para>
+              <para>Input argument. An object containing the options provided by the user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2963,14 +3014,21 @@ If the machine identifier is equal to autom, the job will be automatically submi
       </refmeta>
       <refnamediv>
         <refname>VISHNU.getCompletedJobsOutput</refname>
-        <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
+        <refpurpose>gets the ouput files of all completed jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listOfResults=VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listOfResults=VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef><paramdef>JobOutputOptions <parameter>options = JobOutputOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
-        <para>This command allows getting the output files of all the completed jobs.</para>
+        <para>This command allows to get the output files of completed jobs.
+You can specify the target machine using the option --machineId.
+If no machine is specified, if if the specified machine is &quot;all&quot;, the 
+request will be performed on all the machines where the user has 
+a local account
+
+Note that all subsequent requests for this command will ignore jobs already downloaded. 
+Unless the user explicitly use the option --force or -f</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -2979,12 +3037,6 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
               <para>Input argument. The session key.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the jobs are been submitted.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2997,6 +3049,12 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><emphasis>outDir</emphasis></term>
             <listitem>
               <para>Input argument. Specifies the output directory where the files will be stored (by default, the current directory).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. Object containing options.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -3070,7 +3128,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>Allows to cancel a job submitted on a given machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.cancelJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.cancelJob</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>jobId</parameter></paramdef><paramdef>CancelOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3086,15 +3144,15 @@ If the machine identifier is equal to autom, the job will be automatically submi
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>machineId</emphasis></term>
-            <listitem>
-              <para>Input argument. Is the id of the machine on which  the job is running.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
             <term><emphasis>jobId</emphasis></term>
             <listitem>
               <para>Input argument. The Id of the job.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>options</emphasis></term>
+            <listitem>
+              <para>Input argument. Object containing the options.</para>
             </listitem>
           </varlistentry>
         </variablelist>

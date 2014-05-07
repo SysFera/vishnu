@@ -2,12 +2,12 @@
 .\"     Title: vishnu_list_jobs
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS Command reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "VISHNU_LIST_JOBS" "1" "November 2013" "VISHNU 3.2.0" "TMS Command reference"
+.TH "VISHNU_LIST_JOBS" "1" "May 2014" "VISHNU 4.0.0" "TMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,10 +31,10 @@
 vishnu_list_jobs \- gets a list of all submitted jobs on a machine\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_list_jobs\fR\ 'u
-\fBvishnu_list_jobs\fR [\fB\-h\fR] [\fB\-i\ \fR\fB\fIjobId\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-d\ \fR\fB\fIfromSubmitDate\fR\fR] [\fB\-D\ \fR\fB\fItoSubmitDate\fR\fR] [\fB\-u\ \fR\fB\fIowner\fR\fR] [\fB\-s\ \fR\fB\fIstatus\fR\fR] [\fB\-p\ \fR\fB\fIpriority\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-S\ \fR\fB\fImultipleStatus\fR\fR] [\fB\-b\fR] [\fB\-w\ \fR\fB\fIworkId\fR\fR] [\fB\-l\fR] \fImachineId\fR
+\fBvishnu_list_jobs\fR [\fB\-h\fR] [\fB\-i\ \fR\fB\fIjobId\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-d\ \fR\fB\fIfromSubmitDate\fR\fR] [\fB\-D\ \fR\fB\fItoSubmitDate\fR\fR] [\fB\-u\ \fR\fB\fIowner\fR\fR] [\fB\-s\ \fR\fB\fIstatus\fR\fR] [\fB\-p\ \fR\fB\fIpriority\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-S\ \fR\fB\fImultipleStatus\fR\fR] [\fB\-b\fR] [\fB\-w\ \fR\fB\fIworkId\fR\fR] [\fB\-l\fR] [\fB\-m\ \fR\fB\fImachineId\fR\fR]
 .SH "DESCRIPTION"
 .PP
-This command allows displaying the jobs submitted on a specific machine\*(Aqs batch scheduler\&. If machine identifier is equal to all, submitted jobs on all machines are listed
+This command allows to display the job submitted by the user\&. Using the appropriate option, the jobs can be filtered according to a given machine
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -84,7 +84,7 @@ the jobs with the specified queue name\&.
 .PP
 \fB\-S \fR\fB\fImultipleStatus\fR\fR
 .RS 4
-lists the jobs with the specified status (combination of multiple status)\&. Its format contains the first letter or the value (interger) of each chosen status\&. For exemple to list the cancelled and terminated jobs, you use the format CT or 65\&.
+lists the jobs with the specified status\&. Its format contains the first letter or the value (interger) of each chosen status (except for the status COMPLETED where the T letter for TERMINATED is used to avoid confusion with CANCELLED)\&. It\*(Aqs also possible to use a combination of multiple statuses\&. For example, to list the cancelled and completed jobs, you can use the format CT or 65\&.
 .RE
 .PP
 \fB\-b \fR\fB\fIbatchJob\fR\fR
@@ -100,6 +100,11 @@ Allows to gather information about jobs related to a given Work\&.\&.
 \fB\-l \fR\fB\fIlistAll\fR\fR
 .RS 4
 lists all information of the job\&.
+.RE
+.PP
+\fB\-m \fR\fB\fImachineId\fR\fR
+.RS 4
+lists the jobs on the target machine\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
@@ -168,13 +173,13 @@ The following diagnostics may be issued on stderr and the command will return th
 .RE
 .SH "EXAMPLE"
 .PP
-To list the jobs on machine_1:
+To list all submitted jobs
 .PP
-vishnu_list_jobs machine_1
+vishnu_list_jobs
 .PP
-To list submitted jobs on all machines:
+To list jobs submitted on machine_1
 .PP
-vishnu_list_jobs all
+vishnu_list_jobs \-m machine_1
 .SH "AUTHOR"
 .PP
 \fB SysFera SA\fR <\&info@sysfera.com\&>

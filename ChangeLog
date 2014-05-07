@@ -1,3 +1,18 @@
++----------------------+
+| VISHNU 4.0.0 - alpha |
++----------------------+
+* New architecture : one binary for all servers "xmssed"
+* New architecture for file transfers, when the client machine is in the transfer, it launches the transfer.
+* IMS module removed, UMS module gets export and definition of identifiers
+* TMS module API has been cleaned (no more machineId necessary when not needed)
+* New services : vishnu_ping, vishnu_list_server, vishnu_get_server_version
+* Messages are in JSON (some emf serialized object still remain in some JSON messages)
+* New configuration keys (less URIs, servers to register or not in the dispatcher, TMS user mode to use)
+* TMS can change the user using either SSH or setuid based on the configuration of the platform
+* Process start writing in syslog
+* Add native OpenNebula support
+
+
 +--------------+
 | VISHNU 3.2.1 |
 +--------------+

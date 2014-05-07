@@ -2,12 +2,12 @@
 .\"     Title: vishnu_get_job_output
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
-.\"      Date: November 2013
+.\"      Date: May 2014
 .\"    Manual: TMS Command reference
-.\"    Source: VISHNU 3.2.0
+.\"    Source: VISHNU 4.0.0
 .\"  Language: English
 .\"
-.TH "VISHNU_GET_JOB_OUTPU" "1" "November 2013" "VISHNU 3.2.0" "TMS Command reference"
+.TH "VISHNU_GET_JOB_OUTPU" "1" "May 2014" "VISHNU 4.0.0" "TMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,10 +31,10 @@
 vishnu_get_job_output \- gets standard output and error output files of a job given its id
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_get_job_output\fR\ 'u
-\fBvishnu_get_job_output\fR [\fB\-h\fR] [\fB\-o\ \fR\fB\fIoutDir\fR\fR] \fImachineId\fR \fIjobId\fR
+\fBvishnu_get_job_output\fR [\fB\-h\fR] [\fB\-m\ \fR\fB\fImachineId\fR\fR] [\fB\-o\ \fR\fB\fIoutputDir\fR\fR] [\fB\-d\ \fR\fB\fIdays\fR\fR] \fIjobId\fR
 .SH "DESCRIPTION"
 .PP
-This command allows getting a job\*(Aqs output files\&.
+This command allows to download the ouput files of a given job from the remote machine to the local machine\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -42,9 +42,19 @@ This command allows getting a job\*(Aqs output files\&.
 help about the command\&.
 .RE
 .PP
-\fB\-o \fR\fB\fIoutDir\fR\fR
+\fB\-m \fR\fB\fImachineId\fR\fR
 .RS 4
-The output directory where the files will be stored (default is current directory)\&.
+Get the output of jobs on the given machine\&.
+.RE
+.PP
+\fB\-o \fR\fB\fIoutputDir\fR\fR
+.RS 4
+The directory to store the output files\&.
+.RE
+.PP
+\fB\-d \fR\fB\fIdays\fR\fR
+.RS 4
+Considers only jobs submitted in the last <days> days\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
@@ -121,9 +131,9 @@ The following diagnostics may be issued on stderr and the command will return th
 .RE
 .SH "EXAMPLE"
 .PP
-To get the output of the job J_1 on machine_1:
+To get the output of the job J_1:
 .PP
-vishnu_get_job_output machine_1 J_1
+vishnu_get_job_output J_1
 .SH "AUTHOR"
 .PP
 \fB SysFera SA\fR <\&info@sysfera.com\&>

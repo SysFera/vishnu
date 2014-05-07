@@ -123,6 +123,16 @@
           </para>
         </revdescription>
         </revision>
+	<revision>
+        <revnumber>12</revnumber>
+        <date>05/05/2014</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>
+            Remove IMS module
+          </para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
@@ -151,15 +161,12 @@
         <listitem>
           <para>FMS: Files Management Service</para>
         </listitem>
-        <listitem>
-          <para>IMS: Information Management Service</para>
-        </listitem>
       </itemizedlist></para>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains three sections:<itemizedlist>
            <listitem>
             <para>A first section containing &quot;Use case descriptions&quot; that follow the standard UML
               description of a use case. Each use case is identified by a code beginning with a letter corresponding to the
-              VISHNU Module that realizes the use case (U for UMS, T for TMS, F for FMS, I for IMS).</para>
+              VISHNU Module that realizes the use case (U for UMS, T for TMS, F for FMS).</para>
           </listitem>
           <listitem>
             <para>A second section containing the &quot;Use case diagrams&quot; that describe the organization
@@ -296,9 +303,6 @@
   </chapter>
   <chapter annotations="TMS/specs/TMS.asta#UCDIAG+UCDESC+DICT(TMS Analyse/DATA_DICTIONARY)">
     <title>Use cases for Tasks Management Service (TMS)</title>
-  </chapter>
-  <chapter annotations="IMS/specs/IMS.asta#UCDIAG+UCDESC+DICT(IMS Analyse/DATA_DICTIONARY)">
-    <title>Use cases for Information Management Service (IMS)</title>
   </chapter>
   <chapter annotations="FMS/specs/FMS.asta#UCDIAG+UCDESC+DICT(FMS Analyse/DATA_DICTIONARY)">
     <title>Use cases for File Management Service (FMS)</title>

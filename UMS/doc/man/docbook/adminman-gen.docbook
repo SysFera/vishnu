@@ -13,7 +13,7 @@
       </address>
     </author>
     <title>User Manual</title>
-    <date>November 2013</date>
+    <date>May 2014</date>
     <copyright>
       <year>2013</year>
       <holder>SysFera SA</holder>
@@ -51,7 +51,7 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>3.2.0</releaseinfo>
+    <releaseinfo>4.0.0 alpha</releaseinfo>
   </info>
   <reference>
     <title>UMS Command reference</title>
@@ -542,201 +542,6 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_save_configuration</refentrytitle>
-        <manvolnum>1</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>vishnu_save_configuration</refname>
-        <refpurpose>saves the configuration of VISHNU</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_save_configuration</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This commands allows an admin to save the VISHNU configuration. This configuration contains the list of users, the lists of machines and the list of local user configurations. It is saved on a xml format on a file registered on the directory $HOME/.vishnu/configurationSaved/.</para>
-      </refsect1>
-      <refsect1 id="options">
-        <title>OPTIONS</title>
-        <variablelist>
-          <varlistentry>
-            <term><option>-h <replaceable>help</replaceable></option></term>
-            <listitem>
-              <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="environment">
-        <title>ENVIRONMENT</title>
-        <variablelist>
-          <varlistentry>
-            <term><envar>VISHNU_CONFIG_FILE</envar></term>
-            <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="diagnostics">
-        <title>DIAGNOSTICS</title>
-        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (System)&quot; [4]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;A problem occurs during the configuration saving &quot; [39]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="example">
-        <title>EXAMPLE</title>
-        <para>To save the current configuration:</para>
-        <para>vishnu_save_configuration</para>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>vishnu_restore_configuration</refentrytitle>
-        <manvolnum>1</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>vishnu_restore_configuration</refname>
-        <refpurpose>restores the configuration of VISHNU</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_restore_configuration</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>filePath</replaceable></arg></cmdsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This function must be used carefully as it replaces all the content of the VISHNU central database
-with the information stored in the provided file. This file contains the list of users, the lists of machines 
-and the list of local user configurations. It can be created using the 
-vishnu_save_configuration command.
-The &quot;root&quot; VISHNU user is the only user authorized to call this function, and this action must be done
-without any other user connected to VISHNU.
-After restoring, the vishnu database is re-initialized.</para>
-      </refsect1>
-      <refsect1 id="options">
-        <title>OPTIONS</title>
-        <variablelist>
-          <varlistentry>
-            <term><option>-h <replaceable>help</replaceable></option></term>
-            <listitem>
-              <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="environment">
-        <title>ENVIRONMENT</title>
-        <variablelist>
-          <varlistentry>
-            <term><envar>VISHNU_CONFIG_FILE</envar></term>
-            <listitem>
-              <para>Contains the path to the local configuration file for VISHNU.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="diagnostics">
-        <title>DIAGNOSTICS</title>
-        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (System)&quot; [4]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;A problem occurs during the configuration restoring&quot; [40]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="example">
-        <title>EXAMPLE</title>
-        <para>To restore the configuration in /tmp/toto.cfg:</para>
-        <para>vishnu_restore_configuration /tmp/toto.cfg</para>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
         <refentrytitle>vishnu_add_machine</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
@@ -859,13 +664,8 @@ have to add it to the authorized keys of their own account on the machine.</para
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_update_machine</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
-              choice="opt"><option>-s <replaceable>site</replaceable></option></arg><arg
-              choice="opt"><option>-d <replaceable>machineDescription</replaceable></option></arg><arg
-              choice="opt"><option>-l <replaceable>language</replaceable></option></arg><arg
-              choice="opt"><option>-t <replaceable>status</replaceable></option></arg><arg
-              choice="opt"><option>-k <replaceable>sshPublicKeyFile</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="plain"><replaceable>firstname</replaceable></arg><arg choice="plain"><replaceable>lastname</replaceable></arg><arg
+              choice="plain"><replaceable>privilege</replaceable></arg><arg choice="plain"><replaceable>email</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -878,43 +678,6 @@ have to add it to the authorized keys of their own account on the machine.</para
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-n <replaceable>name</replaceable></option></term>
-            <listitem>
-              <para>represents the name of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-s <replaceable>site</replaceable></option></term>
-            <listitem>
-              <para>represents the location of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-d <replaceable>machineDescription</replaceable></option></term>
-            <listitem>
-              <para>represents the description of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-l <replaceable>language</replaceable></option></term>
-            <listitem>
-              <para>represents the language used for the description of the machine.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-t <replaceable>status</replaceable></option></term>
-            <listitem>
-              <para>represents the status of the machine.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED).</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><option>-k <replaceable>sshPublicKeyFile</replaceable></option></term>
-            <listitem>
-              <para>contains the path to the SSH public key used by VISHNU to access local user accounts.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1237,7 +1000,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE
 that can be preset in the user configuration stored by the VISHNU system.
 This command allows an administrator to configure the default value of an option;
 this is the value that will be applied when the user has no configuration defined for
-that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS), VISHNU_TRANSFER_TIMEOUT (transfer command timeout in seconds)</para>
+that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS)</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -2576,148 +2339,6 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>saveConfiguration</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>saveConfiguration</refname>
-        <refpurpose>saves the configuration of VISHNU</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::saveConfiguration</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Configuration&amp; <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This commands allows an admin to save the VISHNU configuration. This configuration contains the list of users, the lists of machines and the list of local user configurations. It is saved on a xml format on a file registered on the directory $HOME/.vishnu/configurationSaved/.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>configuration</emphasis></term>
-            <listitem>
-              <para>Output argument. The configuration is an object which encapsulates the configuration description.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (System)&quot; [4]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;A problem occurs during the configuration saving &quot; [39]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>restoreConfiguration</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>restoreConfiguration</refname>
-        <refpurpose>restores the configuration of VISHNU</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restoreConfiguration</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This function must be used carefully as it replaces all the content of the VISHNU central database
-with the information stored in the provided file. This file contains the list of users, the lists of machines 
-and the list of local user configurations. It can be created using the 
-vishnu_save_configuration command.
-The &quot;root&quot; VISHNU user is the only user authorized to call this function, and this action must be done
-without any other user connected to VISHNU.
-After restoring, the vishnu database is re-initialized.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>filePath</emphasis></term>
-            <listitem>
-              <para>Input argument. The filePath is the path of the file used to restore VISHNU configuration.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (Database connection)&quot; [3]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu not available (System)&quot; [4]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The user is not an administrator&quot; [25]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;A problem occurs during the configuration restoring&quot; [40]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
         <refentrytitle>addMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
@@ -3057,7 +2678,7 @@ have to add it to the authorized keys of their own account on the machine.</para
 that can be preset in the user configuration stored by the VISHNU system.
 This command allows an administrator to configure the default value of an option;
 this is the value that will be applied when the user has no configuration defined for
-that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS), VISHNU_TRANSFER_TIMEOUT (transfer command timeout in seconds)</para>
+that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS)</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -4111,172 +3732,6 @@ and password are sent to the user by email.</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>VISHNU.saveConfiguration</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>VISHNU.saveConfiguration</refname>
-        <refpurpose>saves the configuration of VISHNU</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.saveConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Configuration <parameter>configuration</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This commands allows an admin to save the VISHNU configuration. This configuration contains the list of users, the lists of machines and the list of local user configurations. It is saved on a xml format on a file registered on the directory $HOME/.vishnu/configurationSaved/.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>configuration</emphasis></term>
-            <listitem>
-              <para>Output argument. The configuration is an object which encapsulates the configuration description.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="returned objects">
-        <title>RETURNED OBJECTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>errorCode (integer)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry/>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;A problem occurs during the configuration saving &quot; [39])</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>VISHNU.restoreConfiguration</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>VISHNU.restoreConfiguration</refname>
-        <refpurpose>restores the configuration of VISHNU</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.restoreConfiguration</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>filePath</parameter></paramdef></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This function must be used carefully as it replaces all the content of the VISHNU central database
-with the information stored in the provided file. This file contains the list of users, the lists of machines 
-and the list of local user configurations. It can be created using the 
-vishnu_save_configuration command.
-The &quot;root&quot; VISHNU user is the only user authorized to call this function, and this action must be done
-without any other user connected to VISHNU.
-After restoring, the vishnu database is re-initialized.</para>
-      </refsect1>
-      <refsect1 id="arguments">
-        <title>ARGUMENTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>sessionKey</emphasis></term>
-            <listitem>
-              <para>Input argument. The sessionKey is the encrypted identifier of the session generated by VISHNU.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry>
-            <term><emphasis>filePath</emphasis></term>
-            <listitem>
-              <para>Input argument. The filePath is the path of the file used to restore VISHNU configuration.</para>
-            </listitem>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="returned objects">
-        <title>RETURNED OBJECTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>errorCode (integer)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry/>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Vishnu not available (Database connection)&quot; [3])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Vishnu not available (System)&quot; [4])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;A problem occurs during the configuration restoring&quot; [40])</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
         <refentrytitle>VISHNU.addMachine</refentrytitle>
         <manvolnum>3</manvolnum>
       </refmeta>
@@ -4664,7 +4119,7 @@ have to add it to the authorized keys of their own account on the machine.</para
 that can be preset in the user configuration stored by the VISHNU system.
 This command allows an administrator to configure the default value of an option;
 this is the value that will be applied when the user has no configuration defined for
-that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS), VISHNU_TRANSFER_TIMEOUT (transfer command timeout in seconds)</para>
+that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS)</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
