@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_tms_at )
 {
   unsigned int nb;
   for (nb = 0; nb < NB_SRV_TMS; nb++) {
-    if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
+    if (isMachineSpecificServicesTMS(nb)) {
       BOOST_MESSAGE("Checking module " << SERVICES_TMS[nb] << "@cluster");
       BOOST_REQUIRE_EQUAL(get_module(std::string(SERVICES_TMS[nb]) + "@cluster"), "TMS");
     }
