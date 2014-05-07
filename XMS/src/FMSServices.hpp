@@ -63,6 +63,8 @@ static const char* SERVICES_FMS[NB_SRV_FMS] = {
   "UpdateClientSideTransfer"  // 21
 };
 
+// FIXME: compilation fails without inlining
+// needs to be moved in an implementation file
 inline bool
 isMachineSpecificServicesFMS(unsigned id) {
   return false;

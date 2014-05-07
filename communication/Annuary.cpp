@@ -129,7 +129,7 @@ Annuary::fillServices(std::vector< std::string> &services,
   if (name == "umssed") {
     for (nb = 0; nb < NB_SRV_UMS; nb++) {
       tmpserv = SERVICES_UMS[nb];
-      if (MACHINE_SPECIC_SERVICES_UMS[nb]) {
+      if (isMachineSpecificServicesUMS(nb)) {
         tmpserv += "@" + mid;
       }
       services.push_back(tmpserv);
@@ -137,7 +137,7 @@ Annuary::fillServices(std::vector< std::string> &services,
   } else if (name == "tmssed") {
     for (nb = 0; nb < NB_SRV_TMS; nb++) {
       tmpserv = SERVICES_TMS[nb];
-      if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
+      if (isMachineSpecificServicesTMS(nb)) {
         tmpserv += "@" + mid;
       }
       services.push_back(tmpserv);

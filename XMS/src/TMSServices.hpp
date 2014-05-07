@@ -42,19 +42,13 @@ static const char* SERVICES_TMS[NB_SRV_TMS] = {
   "workDelete"  // 12
 };
 
-static const bool MACHINE_SPECIC_SERVICES_TMS[NB_SRV_TMS] = {
-  true,   // 0
-  true,   // 1
-  true,   // 2
-  true,   // 4
-  true,   // 5
-  true,   // 6
-  true,   // 7
-  false,  // 8
-  false,  // 10
-  false,  // 11
-  false   // 12
-};
 
+// FIXME: compilation fails without inlining
+// needs to be moved in an implementation file
+inline bool
+isMachineSpecificServicesTMS(unsigned id) {
+    bool machineLocal = (id <= 7) ? true : false;
+  return machineLocal;
+}
 
 #endif  // _TMSSERVICES_HPP_
