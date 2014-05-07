@@ -145,7 +145,7 @@ Annuary::fillServices(std::vector< std::string> &services,
   } else if (name == "fmssed") {
     for (nb = 0; nb < NB_SRV_FMS; nb++) {
       tmpserv = SERVICES_FMS[nb];
-      if (MACHINE_SPECIC_SERVICES_FMS[nb]) {
+      if (isMachineSpecificServicesFMS(nb)) {
         tmpserv += "@" + mid;
       }
       services.push_back(tmpserv);
