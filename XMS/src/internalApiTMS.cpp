@@ -577,7 +577,6 @@ solveScheduling(diet_profile_t* pb)
     //Decode clouds
     std::vector<metasched_cloud_t> clouds;
     for (int index = 0; index < queues.getQueues().size(); ++index) {
-      std::cout << queues.getQueues().get(index)->getDescription() <<">><\n";
       std::string cloudInfo = queues.getQueues().get(index)->getDescription();
       for(int c = 0; c < cloudInfo.size(); ++c) {
         if (cloudInfo[c] == '\'') cloudInfo[c] = '\"';
@@ -589,11 +588,6 @@ solveScheduling(diet_profile_t* pb)
       print_cloud(cloud);
     }
 
-//    UserSessionInfo& userSessionInfo;
-//    SessionServer
-//    vishnu::validateAuthKey(authKey,
-//                            database,
-//                            userSessionInfo);
     metasched_task_t task;
     task.id_cloud_comesFrom = 1;
     task.task_type = 1;
