@@ -65,7 +65,7 @@ VersionProxy::getVersion(const std::string& server,
     result.insert(std::make_pair("dispatcher", response));
     empty = false;
   }
-
+  response = "";
 
   // Get the list of the servers in the dispatcher
   communicate_dispatcher("2", response, true);
