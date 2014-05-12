@@ -89,7 +89,7 @@ endif(deltacloud)
 if(opennebula)
   set(OPENNEBULA_UTILS opennebula_utils/OneRPCManager.cpp
                        opennebula_utils/OneCloudInstance.cpp
-                       opennebula_utils/metasched.cpp)
+                       ${TMS_UTILS_DIR}/metasched.cpp)
   set(OPENNEBULASERVER server/OpenNebulaServer.cpp )
   set(OPENNEBULA_ALL_INCLUDE_DIR opennebula_utils/
                                  ${LIBXMLRPC_INCLUDE_DIR}

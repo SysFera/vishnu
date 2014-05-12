@@ -15,6 +15,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include "Logger.hpp"
+#include "utils.hpp"
 
 OneCloudInstance::OneCloudInstance(const std::string& rpcUrl, const std::string &authChain)
   : mrpcUrl(rpcUrl),

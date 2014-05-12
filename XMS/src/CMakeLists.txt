@@ -5,13 +5,14 @@ include_directories(
   ${UMS_EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
   ${FMS_EMF_DATA_DIR}
+  ${COMMUNICATION_INCLUDE_DIR}
+  ${OPENNEBULA_UTILS_INCLUDE}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${PROJECT_BINARY_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
   ${ZMQ_INCLUDE_DIR}
-  ${COMMUNICATION_INCLUDE_DIR}
   ${VISHNU_SOURCE_DIR}/UMS/src/sed
   ${LIBJANSSON_INCLUDE_DIR}
   ${REGISTRY_SOURCE_DIR}
@@ -24,20 +25,25 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   ${REGISTRY_SOURCE_DIR}
   ${AUTHENTICATOR_INCLUDE_DIR}
+  ${TMS_UTILS_DIR}
   ${XMS_SED_SOURCE_DIR})
 
 if(NOT COMPILE_ONLY_LIBBATCH)
-
-  set(sed_SRCS xmssed.cpp
+  set(sed_SRCS
+    xmssed.cpp
     MonitorXMS.cpp
     ServerXMS.cpp
     internalApiUMS.cpp
     internalApiTMS.cpp
     internalApiFMS.cpp
-    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp)
+    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
+    ${TMS_UTILS_DIR}/metasched.cpp)
   
+message ("${sed_SRCS}")
   add_executable(xmssed ${sed_SRCS})
-  target_link_libraries(xmssed vishnu-core vishnu-core-server
+  target_link_libraries(xmssed
+    vishnu-core
+    vishnu-core-server
     vishnu-ums-server
     vishnu-tms-server
     vishnu-fms-server

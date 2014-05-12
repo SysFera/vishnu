@@ -42,6 +42,7 @@
 #include "MapperRegistry.hpp"
 #include "api_tms.hpp"
 #include "api_ums.hpp"
+#include "metasched.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 
@@ -247,10 +248,9 @@ solveListOfQueues(diet_profile_t* pb) {
     TMS_Data::ListQueues_ptr listQueues = queryQueues.list();
 
     ::ecorecpp::serializer::serializer _ser;
-    listQueuesSerialized =  _ser.serialize_str(listQueues);
 
     diet_string_set(pb,0, "success");
-    diet_string_set(pb,1, listQueuesSerialized);
+    diet_string_set(pb,1, _ser.serialize_str(listQueues));
     FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& ex) {
     try {
@@ -566,18 +566,48 @@ solveScheduling(diet_profile_t* pb)
   try {
     UMS_Data::ListMachines machines;
     vishnu::vishnuInitialize(getenv("VISHNU_CONFIG_FILE"), 0, NULL);
-    std::cout << "dsds1\n"<<authKey<<"\n";
     vishnu::listMachines(authKey, machines, UMS_Data::ListMachineOptions());
-    std::cout << "dsdsddd\n";
+
+    // retrieve cloud info
+    TMS_Data::ListQueues queues;
     for(int index = 0; index < machines.getMachines().size(); ++index) {
-      TMS_Data::ListQueues queues;
-      queues.getQueues().clear();
-      vishnu::listQueues(authKey, machines.getMachines().get(index)->getMachineId(), queues);
+      vishnu::listQueues(authKey, machines.getMachines().get(index)->getMachineId(), queues, "no queue name");
     }
 
-    // TODO select machine from queue
+    //Decode clouds
+    std::vector<metasched_cloud_t> clouds;
+    for (int index = 0; index < queues.getQueues().size(); ++index) {
+      std::cout << queues.getQueues().get(index)->getDescription() <<">><\n";
+      std::string cloudInfo = queues.getQueues().get(index)->getDescription();
+      for(int c = 0; c < cloudInfo.size(); ++c) {
+        if (cloudInfo[c] == '\'') cloudInfo[c] = '\"';
+      }
+      JsonObject jsonCloud(cloudInfo);
+      metasched_cloud_t cloud = json_to_cloud(&jsonCloud);
+      cloud.cloud_id = index;
+      clouds.push_back(cloud);
+      print_cloud(cloud);
+    }
+
+//    UserSessionInfo& userSessionInfo;
+//    SessionServer
+//    vishnu::validateAuthKey(authKey,
+//                            database,
+//                            userSessionInfo);
+    metasched_task_t task;
+    task.id_cloud_comesFrom = 1;
+    task.task_type = 1;
+    task.id_cloud_owner = 1;
+    task.id_cloud_comesFrom = 1;
+    task.task_id = 1;
+
+    std::vector<server_data_t> allTaks;
+    int selectedCloud = choose_cloud(task, clouds, allTaks);
+    if (selectedCloud < 0 || selectedCloud >= machines.getMachines().size()) {
+      throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Machine selection failed");
+    }
     diet_string_set(pb,0, "success");
-    diet_string_set(pb,1, "machineid");
+    diet_string_set(pb,1, machines.getMachines().get(selectedCloud)->getMachineId());
   } catch (VishnuException& ex) {
     diet_string_set(pb,0, "error");
     diet_string_set(pb,1, ex.what());

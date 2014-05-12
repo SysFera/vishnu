@@ -147,7 +147,7 @@ SSHJobExec::sshexec(const std::string& actionName,
   // Execute the command and treat the possibly errors and check output
   if (! vishnu::execSystemCommand(cmd, msgError)) {
     if (merrorInfo.find("password") != std::string::npos) {
-      merrorInfo.append(" You must copy the publickey in your authorized_keys file.");
+      merrorInfo.append("\nYou must copy the publickey in your authorized_keys file.");
     }
     if (merrorInfo.empty()) {
       merrorInfo = boost::str(boost::format("Unknown error while executing the command: %1%") % cmd);
@@ -176,7 +176,7 @@ SSHJobExec::sshexec(const std::string& actionName,
       } else {
         TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
         jobSteps = *(ecoreFactory->createListJobs());
-        merrorInfo.append("stderr: ").append(vishnu::get_file_content(stderrFilePath, false));
+    merrorInfo.append("\n").append(vishnu::get_file_content(stderrFilePath, false));
         for (unsigned int j = 0; j < jobStepsPtr->getJobs().size(); j++) {
           TMS_Data::Job_ptr job = ecoreFactory->createJob();
           job->setSubmitError(merrorInfo);
@@ -202,7 +202,7 @@ SSHJobExec::sshexec(const std::string& actionName,
   }
 
   if (! merrorInfo.empty()) {
-    LOG(merrorInfo, LogErr);
+    LOG(merrorInfo, LogInfo);
     merrorInfo.clear();
   }
   CLEANUP_SUBMITTING_DATA(mdebugLevel);
