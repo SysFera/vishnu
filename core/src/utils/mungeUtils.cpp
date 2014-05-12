@@ -28,7 +28,7 @@ MungeCredential::createCredentials(const std::string& payload) {
     throw SystemException(ERRCODE_SYSTEM, munge_strerror(err));
   }
 
-  std::string credential = std::string(mungeResult);
+  std::string credentia(mungeResult);
   free(mungeResult);
   return credential;
 }
@@ -110,5 +110,3 @@ MungeCredential::getHome(void) {
   }
   return std::string("");
 }
-
-
