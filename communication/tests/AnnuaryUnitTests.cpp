@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE( test_setInitConfig_TMS_n )
 
   for (nb = 0; nb < NB_SRV_TMS; nb++) {
     tmpserv = SERVICES_TMS[nb];
-    if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
+    if (isMachineSpecificServicesTMS(nb)) {
       BOOST_REQUIRE(ann.get(tmpserv + "@cluster1").empty());
       BOOST_REQUIRE(ann.get(tmpserv + "@cluster2").empty());
     } else {

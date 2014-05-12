@@ -109,8 +109,9 @@ Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgI
     std::string mid_tmp = mid;
     iss >> uri;
     iss >> mid_tmp;
-    if (mid_tmp.empty())
-      mid_tmp=mid;
+    if (mid_tmp.empty()) {
+      mid_tmp = mid;
+    }
     std::vector<std::string> services;
     fillServices(services, module, mid_tmp);
     mservers.push_back(boost::make_shared<Server>(module, services, uri));
@@ -128,7 +129,7 @@ Annuary::fillServices(std::vector< std::string> &services,
   if (name == "umssed") {
     for (nb = 0; nb < NB_SRV_UMS; nb++) {
       tmpserv = SERVICES_UMS[nb];
-      if (MACHINE_SPECIC_SERVICES_UMS[nb]) {
+      if (isMachineSpecificServicesUMS(nb)) {
         tmpserv += "@" + mid;
       }
       services.push_back(tmpserv);
@@ -136,7 +137,7 @@ Annuary::fillServices(std::vector< std::string> &services,
   } else if (name == "tmssed") {
     for (nb = 0; nb < NB_SRV_TMS; nb++) {
       tmpserv = SERVICES_TMS[nb];
-      if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
+      if (isMachineSpecificServicesTMS(nb)) {
         tmpserv += "@" + mid;
       }
       services.push_back(tmpserv);
@@ -144,7 +145,7 @@ Annuary::fillServices(std::vector< std::string> &services,
   } else if (name == "fmssed") {
     for (nb = 0; nb < NB_SRV_FMS; nb++) {
       tmpserv = SERVICES_FMS[nb];
-      if (MACHINE_SPECIC_SERVICES_FMS[nb]) {
+      if (isMachineSpecificServicesFMS(nb)) {
         tmpserv += "@" + mid;
       }
       services.push_back(tmpserv);
