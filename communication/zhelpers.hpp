@@ -180,8 +180,9 @@ public:
    */
   LazyPirateClient(zmq::context_t& ctx,
                    const std::string& addr,
-                   const int& timeout = DEFAULT_TIMEOUT)
-    : addr_(addr), ctx_(ctx), timeout_(timeout * 1000000) {
+                   const int& timeout = DEFAULT_TIMEOUT,
+                   int verbosity = 1)
+    : addr_(addr), ctx_(ctx), timeout_(timeout * 1000000), _verbosity(verbosity) {
     reset();
   }
 
@@ -206,15 +207,25 @@ public:
           if (buff_.length()) {
             return true;
           } else {
-            std::cerr << "E: received weird reply from server\n";
+            if (_verbosity) {
+              std::cerr << "E: received weird reply from server\n";
+            }
           }
         } else {
+          if (_verbosity == 0){
+            break;
+          }
+
           if (--retries == 0) {
-            std::cerr << "E: server seems offline, abandonning\n";
+            if (_verbosity) {
+              std::cerr << "E: server seems offline, abandonning\n";
+            }
             expect_reply = false;
             break;
           } else {
-            std::cerr << boost::format("W: no response from %1%, retrying ...\n") % addr_;
+            if (_verbosity) {
+              std::cerr << boost::format("W: no response from %1%, retrying ...\n") % addr_;
+            }
             reset();
             sock_->send(data);
           }
@@ -264,6 +275,10 @@ private:
    * \brief The timeout
    */
   long timeout_;
+  /**
+   * \brief The verbosity of the communication
+   */
+  int _verbosity;
 };
 
 

@@ -90,12 +90,12 @@ diet_call(diet_profile_t* prof);
  * \brief Generic function created to encapsulate the code
  */
 int
-diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout = false);
+diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout = false, int verbosity = 1);
 /**
  * \brief Generic function created to encapsulate the code
  */
 int
-abstract_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout = false);
+abstract_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout = false, int verbosity = 1);
 /**
  * @brief ssl_call_gen
  * @param prof
@@ -170,7 +170,7 @@ diet_initialize(const char* cfg, int argc, char** argv);
  * \return 0 on success
  */
 int
-communicate_dispatcher(const std::string& requestData, std::string& response, bool shortTimeout = false);
+communicate_dispatcher(const std::string& requestData, std::string& response, bool shortTimeout = false, int verbosity = 1);
 
 /**
  * \brief Extract the servers from a serialized message list
