@@ -199,10 +199,10 @@ diet_call(diet_profile_t* prof) {
 }
 
 int
-diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout) {
+diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout, int verbosity) {
   int timeout = shortTimeout?SHORT_TIMEOUT:getTimeout();
   zmq::context_t ctx(5);
-  LazyPirateClient lpc(ctx, uri, timeout);
+  LazyPirateClient lpc(ctx, uri, timeout, verbosity);
   std::string s1 = my_serialize(prof);
   if (!lpc.send(s1)) {
     std::cerr << "E: request failed, exiting ...\n";
@@ -287,7 +287,7 @@ diet_initialize(const char* cfg, int argc, char** argv) {
 }
 
 int
-communicate_dispatcher(const std::string& requestData, std::string& response, bool shortTimeout){
+communicate_dispatcher(const std::string& requestData, std::string& response, bool shortTimeout, int verbosity){
   int timeout = shortTimeout?SHORT_TIMEOUT:getTimeout();
   std::string uriDispatcher;
   config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriDispatcher);
@@ -307,7 +307,7 @@ communicate_dispatcher(const std::string& requestData, std::string& response, bo
     }
   } else {
     zmq::context_t ctx(1);
-    LazyPirateClient lpc(ctx, uriDispatcher, timeout);
+    LazyPirateClient lpc(ctx, uriDispatcher, timeout, verbosity);
     if (!lpc.send(requestData)) {
       return -1; // Dont throw exception
     }
@@ -333,7 +333,7 @@ extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server>
 }
 
 int
-abstract_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout){
+abstract_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout, int verbosity){
   bool useSsl = false;
   std::string cafile;
   if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl)
@@ -341,7 +341,7 @@ abstract_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeou
     config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
     return ssl_call_gen(prof, vishnu::getHostFromUri(uri), vishnu::getPortFromUri(uri), cafile);
   }
-  return diet_call_gen(prof, uri, shortTimeout);
+  return diet_call_gen(prof, uri, shortTimeout, verbosity);
 }
 
 

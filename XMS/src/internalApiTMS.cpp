@@ -491,7 +491,6 @@ solveAddWork(diet_profile_t* pb) {
   std::string authKey;
   std::string workSerialized;
   std::string opSerialized;
-
   //IN Parameters
   diet_string_get(pb,0, authKey);
   diet_string_get(pb,1, workSerialized);
@@ -524,8 +523,8 @@ solveAddWork(diet_profile_t* pb) {
       throw TMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
     }
 
-    //FIXME: WorkServer workServer = WorkServer(work, sessionServer);
-    //FIXME: workServer.add(ServerXMS::getInstance()->getVishnuId(), workop);
+    WorkServer workServer = WorkServer(authKey, workop->getMachineId(), work);
+    workServer.add(ServerXMS::getInstance()->getVishnuId(), workop);
 
     //To serialize the user object
     ::ecorecpp::serializer::serializer _ser;
