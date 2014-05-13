@@ -212,11 +212,8 @@ public:
             }
           }
         } else {
-          if (_verbosity == 0){
-            break;
-          }
-
-          if (--retries == 0) {
+          if (--retries == 0 || _verbosity == 0) {
+            retries = 0;
             if (_verbosity) {
               std::cerr << "E: server seems offline, abandonning\n";
             }
