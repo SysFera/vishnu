@@ -17,25 +17,24 @@
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
 
-struct InfoJobFunc {
-
-  std::string mjobId;
-
-  InfoJobFunc(const std::string& jobId)
-    : mjobId(jobId)
+class InfoJobFunc {
+public:
+  InfoJobFunc(const std::string& jobId, const std::string& machineId)
+    : mjobId(jobId), mmachineId(machineId)
   {
-
   }
 
   int operator()(const std::string& sessionKey) {
     TMS_Data::Job job;
-    int res = getJobInfo(sessionKey, mjobId, job);
+    int res = vishnu::getJobInfo(sessionKey, mjobId, mmachineId, job);
     displayJob(job);
     return res;
   }
+
+private:
+  std::string mjobId;
+  std::string mmachineId;
 };
 
 
@@ -43,8 +42,9 @@ int
 main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string configFile;
-  string jobId;
+  std::string configFile;
+  std::string jobId;
+  std::string machineId;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
@@ -61,11 +61,17 @@ main (int argc, char* argv[]){
            jobId,1);
   opt->setPosition("jobId",1);
 
+  // All cli options
+  opt->add("machine,m",
+           "The id of the target machine. If not set, the request will be routed to the dispatcher",
+           CONFIG,
+           machineId);
+
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  InfoJobFunc infoJobFunc(jobId);
+  InfoJobFunc infoJobFunc(jobId, machineId);
   return GenericCli().run(infoJobFunc, configFile, argc, argv);
 }

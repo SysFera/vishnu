@@ -65,12 +65,15 @@ namespace vishnu {
   * \brief The getJobInfo function gets information on a job from its id
   * \param session: The session information
   * \param jobId: The id of the job
+  * \param machineId: The id of the target machine.
+  *                   Could be empty, in this case the request'll be routed to the dispatcher
   * \param jobInfos: The resulting information on the job
   * \return int: an error code
   */
   int
   getJobInfo(const std::string& sessionKey,
              const std::string& jobId,
+             const std::string& machineId,
              TMS_Data::Job& jobInfos)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 

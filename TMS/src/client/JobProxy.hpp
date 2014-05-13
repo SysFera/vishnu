@@ -56,7 +56,7 @@ public:
    * \return raises an exception on error
    */
   TMS_Data::Job
-  getJobInfo(const std::string& jobId);
+  getJobInfo(const std::string& jobId, const std::string& machineId);
 
   /**
   * \brief Function to get job information

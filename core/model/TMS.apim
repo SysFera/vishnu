@@ -14,6 +14,7 @@
     <services name="getJobInfo" description="gets information on a job from its id" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="jobId" dataType="//@typeList/@types.0" description="The id of the job "/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the target machine. Can be empty, in this case the request will be routed to the dispatcher" shortOptionLetter="" longOptionName=""/>
       <ports name="jobInfos" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The resulting information on the job"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.2"/>
       <details key="description" value="This command allows getting details about a given job"/>

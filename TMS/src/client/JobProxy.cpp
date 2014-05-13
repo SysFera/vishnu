@@ -98,8 +98,8 @@ int
 JobProxy::cancelJob(const TMS_Data::CancelOptions& options) {
 
   std::string serviceName = boost::str(boost::format("%1%@%2%")
-                             % SERVICES_TMS[JOBCANCEL]
-                             % mmachineId);
+                                       % SERVICES_TMS[JOBCANCEL]
+                                       % mmachineId);
 
   // Set RPC parameters
   JsonObject optionsData(options);
@@ -125,17 +125,21 @@ JobProxy::cancelJob(const TMS_Data::CancelOptions& options) {
  * \return raises an exception on error
  */
 TMS_Data::Job
-JobProxy::getJobInfo(const std::string& jobId) {
+JobProxy::getJobInfo(const std::string& jobId, const std::string& machineId) {
 
-  TMS_Data::LoadCriterion loadCriterion;
-  loadCriterion.setLoadType(NBJOBS);
-  mmachineId = vishnu::findMachine(msessionKey, loadCriterion);
+  if (machineId.empty()) {
+    TMS_Data::LoadCriterion loadCriterion;
+    loadCriterion.setLoadType(NBJOBS);
+    mmachineId = vishnu::findMachine(msessionKey, loadCriterion);
+  } else {
+    mmachineId = machineId;
+  }
 
   std::string serviceName = boost::str(boost::format("%1%@%2%")
-                             % SERVICES_TMS[JOBINFO]
-                             % mmachineId);
+                                       % SERVICES_TMS[JOBINFO]
+                                       % mmachineId);
 
-  // Now prepare the service call
+  // prepare the service call
   diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
   diet_string_set(profile,0, msessionKey);
   diet_string_set(profile,1, mmachineId);

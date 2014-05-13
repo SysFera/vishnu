@@ -99,7 +99,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   if (! options.getJobId().empty()) { // cancel a specific job
     TMS_Data::Job job;
     if (options.getMachineId().empty()) {
-      vishnu::getJobInfo(sessionKey, options.getJobId(), job);
+      vishnu::getJobInfo(sessionKey, options.getJobId(), "", job);
     } else {
       job.setSubmitMachineId(options.getMachineId());
     }
@@ -129,12 +129,15 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 bInfo function gets information on a job from its id
  * \param session : The session information
  * \param jobId : The id of the job
+ * \param machineId: The id of the target machine.
+ *                   Could be empty, in this case the request'll be routed to the dispatcher
  * \param jobInfos : The resulting information on the job
  * \return int : an error code
  */
 int
 vishnu::getJobInfo(const std::string& sessionKey,
                    const std::string& jobId,
+                   const std::string& machineId,
                    Job& job)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
@@ -142,7 +145,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   checkEmptyString(jobId, "The job id");
 
   JobProxy jobProxy(sessionKey);
-  job = jobProxy.getJobInfo(jobId);
+  job = jobProxy.getJobInfo(jobId, machineId);
 
   return 0;
 
@@ -340,7 +343,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   std::string machineId =  options.getMachineId();
   if (machineId.empty()) {
     TMS_Data::Job jobInfo;
-    getJobInfo(sessionKey, jobId, jobInfo);
+    getJobInfo(sessionKey, jobId, machineId, jobInfo);
     machineId = jobInfo.getSubmitMachineId();
   }
 
