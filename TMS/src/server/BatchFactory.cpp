@@ -18,8 +18,7 @@ static int created = 0;
 /**
  * \brief Constructor
  */
-BatchFactory::BatchFactory() {
-  mbatchServer = NULL;
+BatchFactory::BatchFactory() : mbatchServer(NULL) {
 }
 
 
@@ -98,7 +97,8 @@ BatchFactory::getBatchServerInstance(int batchType,
 /**
  * \brief Function to delete a batchServer.
  */
-void BatchFactory::deleteBatchServerInstance() {
+void
+BatchFactory::deleteBatchServerInstance() {
   delete mbatchServer;
 }
 /**
