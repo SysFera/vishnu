@@ -41,11 +41,10 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
 
   //To get the output and error path of the job
   std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, outputDir "
-                           "FROM vsession, job "
-                           "WHERE vsession.numsessionid=job.vsession_numsessionid"
-                           "  AND job.jobId='"+mdatabaseInstance->escapeData(jobId)+"' ";
+                           "FROM job "
+                           "WHERE job.jobId='"+mdatabaseInstance->escapeData(jobId)+"' ";
   std::string machineTmp = options->getStringProperty("machineid");
-  if (!machineTmp.empty()){
+  if (! machineTmp.empty()){
     sqlRequest += "  AND job.submitMachineId='"+mdatabaseInstance->escapeData(machineTmp)+"'" ;
   }
 
@@ -87,10 +86,6 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
 
   outputPath = outputPath.substr(outputPath.find(":")+1);
   errorPath = errorPath.substr(errorPath.find(":")+1);
-
-  if(outputPath.empty() || errorPath.empty()) {
-    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
-  }
 
   mjobResult.setOutputDir(outputDir) ;
   mjobResult.setOutputPath(outputPath) ;

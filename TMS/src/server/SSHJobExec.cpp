@@ -137,39 +137,34 @@ SSHJobExec::sshexec(const std::string& actionName,
   vishnu::saveInFile(jobPath, mjobSerialized);
 
   cmd += boost::str(boost::format("tmsSlave %1% %2% %3% %4% %5% %6% 2> %7%")
-          % actionName
-          % vishnu::convertBatchTypeToString(mbatchType)
-          % mbatchVersion
-          % jobPath
-          % errorPath
-          % detailsForSubmit
-          % stderrFilePath);
+                    % actionName
+                    % vishnu::convertBatchTypeToString(mbatchType)
+                    % mbatchVersion
+                    % jobPath
+                    % errorPath
+                    % detailsForSubmit
+                    % stderrFilePath);
 
-  // Execute the command and treat the possibly errors
-  int ret = system(cmd.c_str());
+  std::string msgError;
+  // Execute the command and treat the possibly errors and check output
+  if (! vishnu::execSystemCommand(cmd, msgError)) {
+    if (merrorInfo.find("password") != std::string::npos) {
+      merrorInfo.append(" You must copy the publickey in your authorized_keys file.");
+    }
+    if (merrorInfo.empty()) {
+      merrorInfo = boost::str(boost::format("Unknown error while executing the command: %1%") % cmd);
+    }
+    CLEANUP_SUBMITTING_DATA(mdebugLevel);
+    LOG(merrorInfo, LogErr);
+    throw SystemException(ERRCODE_SSH, merrorInfo);
+  }
+
   if (bfs::exists(errorPath)) {
     merrorInfo.append(vishnu::get_file_content(errorPath, false));
   }
 
   if (bfs::exists(stderrFilePath)) {
     merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
-  }
-
-  // Check if something went false
-  if (ret != 0) {
-    if (merrorInfo.find("password") != std::string::npos) {
-      merrorInfo.append(" You must copy the publickey in your authorized_keys file.");
-    }
-    if (WEXITSTATUS(ret) == 1 && mbatchType==SLURM) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
-      merrorInfo.append(" SLURM ERROR");
-    }
-    if (merrorInfo.empty()) {
-      merrorInfo = boost::str(boost::format("Unknown error while executing the command: %1%"
-                                  "\nError code: %2%") % cmd % ret);
-    }
-    CLEANUP_SUBMITTING_DATA(mdebugLevel);
-    LOG(merrorInfo, LogErr);
-    throw SystemException(ERRCODE_SSH, merrorInfo);
   }
 
   // THE FOLLOWIND CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
