@@ -77,7 +77,7 @@ BOOST_AUTO_TEST_CASE(get_job_information_normal_call)
 
       Job job;
 
-      BOOST_CHECK_EQUAL(getJobInfo(sessionKey, jobInfo.getJobId(), job), 0  );
+      BOOST_CHECK_EQUAL(getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job), 0  );
 
     // Check the success of getJobInfo function
 
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_sessionKey)
 
       Job job;
 
-      BOOST_CHECK_THROW(getJobInfo("bad sessionKey ", jobInfo.getJobId(), job), VishnuException);
+      BOOST_CHECK_THROW(getJobInfo("bad sessionKey ", jobInfo.getJobId(), machineId, job), VishnuException);
 
       BOOST_TEST_MESSAGE("***********************  Get a job info: bad sessionKey  ok!!!!*****************************");
 
@@ -175,7 +175,7 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_JobId)
 
   // setting get job information function parameters
     Job job;
-    BOOST_CHECK_THROW(getJobInfo(sessionKey, "bad job id", job),VishnuException );
+    BOOST_CHECK_THROW(getJobInfo(sessionKey, "bad job id", machineId, job),VishnuException );
 
     BOOST_TEST_MESSAGE("***********************  Get a job info: bad job ID ok!!!!*****************************");
   }

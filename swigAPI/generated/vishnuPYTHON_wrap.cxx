@@ -37789,20 +37789,23 @@ SWIGINTERN PyObject *_wrap_getJobInfo(PyObject *SWIGUNUSEDPARM(self), PyObject *
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
-  TMS_Data::Job *arg3 = 0 ;
+  std::string *arg3 = 0 ;
+  TMS_Data::Job *arg4 = 0 ;
   int res1 = SWIG_OLDOBJ ;
   int res2 = SWIG_OLDOBJ ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
   char *  kwnames[] = {
-    (char *) "sessionKey",(char *) "jobId",(char *) "jobInfos", NULL 
+    (char *) "sessionKey",(char *) "jobId",(char *) "machineId",(char *) "jobInfos", NULL 
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:getJobInfo",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOOO:getJobInfo",kwnames,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
@@ -37825,16 +37828,27 @@ SWIGINTERN PyObject *_wrap_getJobInfo(PyObject *SWIGUNUSEDPARM(self), PyObject *
     }
     arg2 = ptr;
   }
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__Job,  0 );
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getJobInfo" "', argument " "3"" of type '" "TMS_Data::Job &""'"); 
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getJobInfo" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobInfo" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
   }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobInfo" "', argument " "3"" of type '" "TMS_Data::Job &""'"); 
+  res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_TMS_Data__Job,  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getJobInfo" "', argument " "4"" of type '" "TMS_Data::Job &""'"); 
   }
-  arg3 = reinterpret_cast< TMS_Data::Job * >(argp3);
+  if (!argp4) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getJobInfo" "', argument " "4"" of type '" "TMS_Data::Job &""'"); 
+  }
+  arg4 = reinterpret_cast< TMS_Data::Job * >(argp4);
   try {
-    result = (int)vishnu::getJobInfo((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+    result = (int)vishnu::getJobInfo((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -37854,10 +37868,12 @@ SWIGINTERN PyObject *_wrap_getJobInfo(PyObject *SWIGUNUSEDPARM(self), PyObject *
   resultobj = SWIG_From_int(static_cast< int >(result));
   if (SWIG_IsNewObj(res1)) delete arg1;
   if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
   return resultobj;
 fail:
   if (SWIG_IsNewObj(res1)) delete arg1;
   if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
   return NULL;
 }
 
@@ -40883,7 +40899,10 @@ static PyMethodDef SwigMethods[] = {
 		""},
 	 { (char *)"addWork", (PyCFunction) _wrap_addWork, METH_VARARGS | METH_KEYWORDS, (char *)"addWork(string sessionKey, Work newWork, AddWorkOptions options = TMS_Data::AddWorkOptions()) -> int"},
 	 { (char *)"cancelJob", (PyCFunction) _wrap_cancelJob, METH_VARARGS | METH_KEYWORDS, (char *)"cancelJob(string sessionKey, CancelOptions options) -> int"},
-	 { (char *)"getJobInfo", (PyCFunction) _wrap_getJobInfo, METH_VARARGS | METH_KEYWORDS, (char *)"getJobInfo(string sessionKey, string jobId, Job jobInfos) -> int"},
+	 { (char *)"getJobInfo", (PyCFunction) _wrap_getJobInfo, METH_VARARGS | METH_KEYWORDS, (char *)"\n"
+		"getJobInfo(string sessionKey, string jobId, string machineId, \n"
+		"    Job jobInfos) -> int\n"
+		""},
 	 { (char *)"listJobs", (PyCFunction) _wrap_listJobs, METH_VARARGS | METH_KEYWORDS, (char *)"listJobs(string sessionKey, ListJobsOptions options = TMS_Data::ListJobsOptions()) -> int"},
 	 { (char *)"getJobProgress", (PyCFunction) _wrap_getJobProgress, METH_VARARGS | METH_KEYWORDS, (char *)"getJobProgress(string sessionKey, ProgressOptions options = TMS_Data::ProgressOptions()) -> int"},
 	 { (char *)"listQueues", (PyCFunction) _wrap_listQueues, METH_VARARGS | METH_KEYWORDS, (char *)"listQueues(string sessionKey, string machineId, string queueName = std::string()) -> int"},

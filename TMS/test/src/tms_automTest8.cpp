@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_normal_call)
       boost::this_thread::sleep(sleepTime);
 
       Job job;
-      BOOST_REQUIRE(getJobInfo(sessionKey, jobInfo.getJobId(), job) == 0);
+      BOOST_REQUIRE(getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job) == 0);
 
       BOOST_TEST_MESSAGE("************ The job status is " << job.getStatus() );
 

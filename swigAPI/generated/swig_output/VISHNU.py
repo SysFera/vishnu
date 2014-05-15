@@ -4559,7 +4559,10 @@ def cancelJob(*args, **kwargs):
   return _VISHNU.cancelJob(*args, **kwargs)
 
 def getJobInfo(*args, **kwargs):
-  """getJobInfo(string sessionKey, string jobId, Job jobInfos) -> int"""
+  """
+    getJobInfo(string sessionKey, string jobId, string machineId, 
+        Job jobInfos) -> int
+    """
   return _VISHNU.getJobInfo(*args, **kwargs)
 
 def listJobs(*args, **kwargs):

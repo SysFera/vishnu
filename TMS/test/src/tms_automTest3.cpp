@@ -78,14 +78,14 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call)
       // wait a few seconds and check the success of cancelling job
       Job job;
 
-      getJobInfo(sessionKey, jobInfo.getJobId(), job);
+      getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
 
       // ensure that the job is terminated
 
       while (vishnu::STATE_COMPLETED!=job.getStatus()){
         bpt::seconds sleepTime(5);
         boost::this_thread::sleep(sleepTime);
-        getJobInfo(sessionKey, jobInfo.getJobId(), job);
+        getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
       }
 
       // Check the success of get jobs output function
@@ -151,7 +151,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
       // wait a few seconds and check the success of cancelling job
       Job job;
 
-      getJobInfo(sessionKey, jobInfo.getJobId(), job);
+      getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
 
       // ensure that the job is terminated
 
@@ -160,7 +160,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
         bpt::seconds sleepTime(5);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, jobInfo.getJobId(), job);
+        getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
       }
 
       // Check the success of get jobs output function

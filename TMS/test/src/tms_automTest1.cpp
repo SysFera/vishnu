@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
       Job job;
-      getJobInfo(sessionKey, jobInfo.getJobId(), job);
+      getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
 
       while (vishnu::STATE_COMPLETED!=job.getStatus()){
         BOOST_TEST_MESSAGE("************ The job status is " << job.getStatus() );
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
         bpt::seconds sleepTime(5);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, jobInfo.getJobId(), job);
+        getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
         BOOST_TEST_MESSAGE("************ The job status2 is " << job.getStatus() );
       }
 

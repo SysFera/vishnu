@@ -91,14 +91,14 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
 
       // ensure that the job is terminated
 
-      getJobInfo(sessionKey, jobInfo.getJobId(), job);
+      getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
 
       while (4!=job.getStatus()){
 
         bpt::seconds sleepTime(1);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, jobInfo.getJobId(), job);
+        getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
       }
 
       ListProgression jobRunningProgress;

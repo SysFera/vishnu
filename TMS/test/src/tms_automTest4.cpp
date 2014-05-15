@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE(get_completed_jobs_output_normal_call)
 
       // wait a few seconds and check the success of cancelling job
       Job job;
-      getJobInfo(sessionKey, jobInfo.getJobId(), job);
+      getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
 
       // ensure that the job is terminated
 
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(get_completed_jobs_output_normal_call)
         bpt::seconds sleepTime(5);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, jobInfo.getJobId(), job);
+        getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
       }
 
       // Check the success of get completed jobs output function
