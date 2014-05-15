@@ -1255,7 +1255,6 @@ solveSystemAuthDelete(diet_profile_t* pb) {
     mapperkey = mapper->code("vishnu_delete_auth_system");
     mapper->code(authSystemId, mapperkey);
     cmd = mapper->finalize(mapperkey);
-
     authSystemServer.deleteAuthSystem();
 
     // OUT Parameter
@@ -1270,7 +1269,7 @@ solveSystemAuthDelete(diet_profile_t* pb) {
       ex.appendMsgComp(fe.what());
     }
     // OUT Parameter
-    diet_string_set(pb, 0, "success");
+    diet_string_set(pb, 0, "error");
     diet_string_set(pb, 1, ex.what());
   }
   delete authSystem;

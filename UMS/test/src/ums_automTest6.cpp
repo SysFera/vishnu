@@ -186,17 +186,17 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call_same_login)
     //To check if the userId format is correct
     BOOST_REQUIRE(user.getUserId().find("TestLastname") == 0);
     User user2;
-    user.setFirstname("TestFirstname");
-    user.setLastname ("TestLastname");
-    user.setPrivilege(0) ;
-    user.setEmail    ("toto@test.com");
+    user2.setFirstname("TestFirstname");
+    user2.setLastname ("TestLastname");
+    user2.setPrivilege(0) ;
+    user2.setEmail    ("toto@test.com");
     BOOST_CHECK_EQUAL(addUser(sessionKey, user2), 0);
     BOOST_REQUIRE(user2.getUserId().find("TestLastname") == 0);
     BOOST_REQUIRE(user.getUserId() != user2.getUserId());
 
     //machine
     Machine ma;//  = ecoreUMSFactory->createMachine();
-    ma.setName              ("mana");
+    ma.setName              ("mana3");
     ma.setSite              ("site");
     ma.setMachineDescription("desc");
     ma.setLanguage          ("lang");
@@ -205,11 +205,11 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call_same_login)
     //To check if the m_test_ums_user_vishnu_machineid format is correct
     BOOST_REQUIRE(ma.getMachineId().find("mana") == 0);
     Machine ma2;//  = ecoreUMSFactory->createMachine();
-    ma.setName              ("mana");
-    ma.setSite              ("site");
-    ma.setMachineDescription("desc");
-    ma.setLanguage          ("lang");
-    ma.setSshPublicKey      ("/id_rsa.pub");
+    ma2.setName              ("mana2");
+    ma2.setSite              ("site");
+    ma2.setMachineDescription("desc");
+    ma2.setLanguage          ("lang");
+    ma2.setSshPublicKey      ("/id_rsa.pub");
     BOOST_CHECK_EQUAL(addMachine(sessionKey, ma2), 0);
     //To check if the m_test_ums_user_vishnu_machineid format is correct
     BOOST_REQUIRE(ma2.getMachineId().find("mana") == 0);
