@@ -26,7 +26,6 @@ extern "C" {
 #include "SlurmServer.hpp"
 #include "BatchServer.hpp"
 #include "TMSVishnuException.hpp"
-#include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 #include "constants.hpp"
 #include "tmsUtils.hpp"
@@ -78,13 +77,13 @@ SlurmServer::submit(const std::string& scriptPath,
   std::string errorMsg = checkSLURMOutPutPath(desc.std_out);
   if (! errorMsg.empty()) {
     xfree(desc.script);
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
   }
   //Check the job error path
   errorMsg = checkSLURMOutPutPath(desc.std_err, "job error path");
   if(! errorMsg.empty()) {
     xfree(desc.script);
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
   }
 
   submit_response_msg_t *resp;
