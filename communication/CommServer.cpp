@@ -157,6 +157,11 @@ initSeD(const std::string& sedType,
   std::string dispUri;
   config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, dispUri);
 
+  int nbthreads;
+  if (! config.getConfigValue<int>(vishnu::NBTHREADS, nbthreads)) {
+    nbthreads = 1;
+  }
+
   // Validate the URIs
   vishnu::validateUri(sedUri);
   vishnu::validateUri(dispUri);
@@ -172,7 +177,7 @@ initSeD(const std::string& sedType,
   bool useSsl = false;
   if (! config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) ||
       ! useSsl) { /* TLS dont required */
-    ZMQServerStart(server, sedUri, false, "");
+    ZMQServerStart(server, sedUri, nbthreads, false, "");
   } else {
     pid_t pid = fork();
 
@@ -184,7 +189,7 @@ initSeD(const std::string& sedType,
 
       std::string cafile;
       config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
-      ZMQServerStart(server, IPC_URI, useSsl, cafile);
+      ZMQServerStart(server, IPC_URI, nbthreads, useSsl, cafile);
 
     } else if (pid == 0) { // Child process
 

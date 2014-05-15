@@ -53,6 +53,7 @@ protected:
  * @brief ZMQServerStart
  * @param server
  * @param uri
+ * @param nbthreads
  * @param useSsl
  * @param cafile
  * @return
@@ -60,6 +61,7 @@ protected:
 int
 ZMQServerStart(boost::shared_ptr<SeD> server,
                const std::string& uri,
+               int nbthreads,
                bool useSsl,
                const std::string& cafile);
 

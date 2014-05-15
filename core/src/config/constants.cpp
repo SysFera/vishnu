@@ -30,7 +30,7 @@ namespace vishnu {
     /* [17] */ {URISUPERVISOR, "uriSupervisor", URI_PARAMETER},
     /* [18] */ {DISP_URIADDR, "disp_uriAddr", URI_PARAMETER},
     /* [19] */ {DISP_URISUBS, "disp_uriSubs", URI_PARAMETER},
-    /* [20] */ {DISP_NBTHREAD, "disp_nbthread", INT_PARAMETER},
+    /* [20] */ {NBTHREADS, "nbthreads", INT_PARAMETER},
     /* [21] */ {HOST_URIADDR, "host_uriAddr", URI_PARAMETER},
     /* [22] */ {SED_URIADDR, "sed_uriAddr", URI_PARAMETER},
     /* [23] */ {CLOUDENDPOINT, "cloudEndpoint", STRING_PARAMETER},
