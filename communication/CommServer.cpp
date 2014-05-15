@@ -170,17 +170,14 @@ initSeD(const std::string& sedType,
     std::vector<std::string> services = server.get()->getServices();
     registerSeD(sedUri, dispUri, sedType, config, services);
   } catch (VishnuException& e) {
-    LOG(boost::str(boost::format("[WARNING] Failed registering the service (%1%)")
-                   %e.what()), LogWarning);
+    LOG(boost::str(boost::format("[WARNING] Failed registering the service (%1%)") % e.what()), LogWarning);
   }
 
   bool useSsl = false;
-  if (! config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) ||
-      ! useSsl) { /* TLS dont required */
+  if (! config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) || ! useSsl) { // use ZeroMQ socket
     ZMQServerStart(server, sedUri, nbthreads, false, "");
-  } else {
+  } else { // use ssl socket
     pid_t pid = fork();
-
     if (pid < 0) {  // Fork failed
       LOG("[ERROR]Problem initializing the service", LogErr);
       exit(-1);
@@ -207,8 +204,7 @@ initSeD(const std::string& sedType,
         LOG(boost::str(boost::format("[ERROR] %1%\n")%ex.what()), LogErr);
         retCode = -1;
       } catch(...) {
-        LOG(boost::str(boost::format("[ERROR] %1%\n")
-                       % tlsHandler.getErrorMsg()), LogErr);
+        LOG(boost::str(boost::format("[ERROR] %1%\n") % tlsHandler.getErrorMsg()), LogErr);
         retCode = -1;
       }
       vishnu::exitProcessOnError(retCode);

@@ -526,12 +526,13 @@ vishnu::exitProcessOnError(int code)
  * @param child The pid of the child process
  */
 void
-vishnu::exitProcessOnChildError(pid_t child)
+vishnu::exitProcessIfAnyZombieChild(pid_t child)
 {
-  int retCode;
-  waitpid(child, &retCode, 0);
-  if (! WIFEXITED(retCode) || WEXITSTATUS(retCode) != 0) {
-    kill(-1, SIGKILL);
-    exit(retCode);
+  int childExitCode;
+  pid_t child_pid = waitpid(child, &childExitCode, WNOHANG);
+  if (child_pid > 0) {
+    if (! WIFEXITED(childExitCode) || WEXITSTATUS(childExitCode) != 0) {
+      exit(childExitCode);
+    }
   }
 }

@@ -333,7 +333,7 @@ namespace vishnu {
  * @param child The pid of the child process
  */
   void
-  exitProcessOnChildError(pid_t child);
+  exitProcessIfAnyZombieChild(pid_t child);
 
 }
 

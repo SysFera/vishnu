@@ -46,6 +46,7 @@ public:
     std::string data;
 
     while (true) {
+      //vishnu::exitProcessIfAnyZombieChild(-1);
       data.clear();
       try {
         data = socket.get();
@@ -131,9 +132,8 @@ serverWorkerSockets(const std::string& serverUri,
   } catch (const zmq::error_t& e) {
     std::string logMsg = boost::str(boost::format("[ERROR] zmq socket_server (%1%) binding failed (%2%)")
                                     % serverUri % e.what());
-    std::cerr << logMsg <<"\n";
     LOG(logMsg, LogErr);
-    return 1;
+    exit(1);
   }
 
   try {
@@ -141,9 +141,8 @@ serverWorkerSockets(const std::string& serverUri,
   } catch (const zmq::error_t& e) {
     std::string logMsg = boost::str(boost::format("[ERROR] zmq socket_worker (%1%) binding failed (%2%)")
                                     % workerUri % e.what());
-    std::cerr << logMsg<<"\n";
     LOG(logMsg, LogErr);
-    return 1;
+    exit(1);
   }
 
   // Create our pool of threads
@@ -167,7 +166,7 @@ serverWorkerSockets(const std::string& serverUri,
       } else {
         LOG(boost::str(boost::format("[ERROR] zmq device creation failed (%1%)\n")
                        % e.what()), LogErr);
-        return 1;
+        exit(1);
       }
     }
   } while(true);
