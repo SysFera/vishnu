@@ -111,12 +111,10 @@ SSHJobExec::sshexec(const std::string& actionName,
 
   std::string detailsForSubmit = "" ;
   if (actionName == "SUBMIT") {
-    detailsForSubmit = (boost::format("%1% %2% %3%")
-                        % jobUpdateSerializedPath
-                        % submitOptionsSerializedPath
-                        % script_path
-                        )
-                       .str();
+    detailsForSubmit = boost::str(boost::format("%1% %2% %3%")
+                                  % jobUpdateSerializedPath
+                                  % submitOptionsSerializedPath
+                                  % script_path);
   }
 
   // For traditional batch scheduler we need to submit the job through ssh
@@ -162,40 +160,42 @@ SSHJobExec::sshexec(const std::string& actionName,
   if (bfs::exists(errorPath)) {
     merrorInfo.append(vishnu::get_file_content(errorPath, false));
   }
-
   if (bfs::exists(stderrFilePath)) {
     merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
   }
 
   // THE FOLLOWIND CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
   if (actionName == "SUBMIT") {
-    // treat result
-    TMS_Data::ListJobs_ptr jobStepsPtr;
-    if (! vishnu::parseEmfObject(vishnu::get_file_content(jobUpdateSerializedPath, false),
-                                 jobStepsPtr)) {
-      LOG("sshexec: cannot parse result", LogErr);
-      merrorInfo.clear();
+    if (bfs::exists(jobUpdateSerializedPath)) {
+      TMS_Data::ListJobs_ptr jobStepsPtr;
+      std::string jobResult;
+      jobResult = vishnu::get_file_content(jobUpdateSerializedPath, false);
+      if (! vishnu::parseEmfObject(jobResult, jobStepsPtr)) {
+        LOG("[ERROR] sshexec: cannot parse result", LogErr);
+        merrorInfo.clear();
+      } else {
+        TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+        jobSteps = *(ecoreFactory->createListJobs());
+        merrorInfo.append("stderr: ").append(vishnu::get_file_content(stderrFilePath, false));
+        for (unsigned int j = 0; j < jobStepsPtr->getJobs().size(); j++) {
+          TMS_Data::Job_ptr job = ecoreFactory->createJob();
+          job->setSubmitError(merrorInfo);
+          *job = *jobStepsPtr->getJobs().get(j); //copy the content and not the pointer
+          jobSteps.getJobs().push_back(job);
+        }
+        jobSteps.setNbJobs(jobStepsPtr->getJobs().size());
+        jobSteps.setNbRunningJobs(jobStepsPtr->getNbRunningJobs());
+        jobSteps.setNbWaitingJobs(jobStepsPtr->getNbWaitingJobs());
+      }
+    } else {
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, merrorInfo);
     }
-    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-    jobSteps = *(ecoreFactory->createListJobs());
-    merrorInfo.append("stderr: ").append(vishnu::get_file_content(stderrFilePath, false));
-    for (unsigned int j = 0; j < jobStepsPtr->getJobs().size(); j++) {
-      TMS_Data::Job_ptr job = ecoreFactory->createJob();
-      job->setSubmitError(merrorInfo);
-      //copy the content and not the pointer
-      *job = *jobStepsPtr->getJobs().get(j);
-      jobSteps.getJobs().push_back(job);
-    }
-    jobSteps.setNbJobs(jobStepsPtr->getJobs().size());
-    jobSteps.setNbRunningJobs(jobStepsPtr->getNbRunningJobs());
-    jobSteps.setNbWaitingJobs(jobStepsPtr->getNbWaitingJobs());
 
   } else {
     TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
     JsonObject jobJson(mjobSerialized);
     *jobPtr = jobJson.getJob();
     jobPtr->setStatus(vishnu::STATE_CANCELLED);
-
     jobSteps = TMS_Data::ListJobs();
     jobSteps.getJobs().push_back(jobPtr);
 

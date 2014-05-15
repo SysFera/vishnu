@@ -146,7 +146,7 @@ Dispatcher::configureHandlers() {
       th2.join();
       th3.join();
 
-      vishnu::exitProcessOnChildError(pid);
+      vishnu::exitProcessIfAnyZombieChild(pid);
 
     } else if (pid == 0) {
       pid_t pidTlsHandler = fork();
@@ -176,7 +176,7 @@ Dispatcher::configureHandlers() {
           vishnu::exitProcessOnError(retCode);
         }
 
-        vishnu::exitProcessOnChildError(pid);
+        vishnu::exitProcessIfAnyZombieChild(pid);
 
       } else if (pidTlsHandler ==  0) { // child process
 

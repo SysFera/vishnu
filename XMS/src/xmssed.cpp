@@ -188,6 +188,8 @@ main(int argc, char* argv[], char* envp[]) {
     monitor.run();
   } else {
     std::cerr << "There was a problem initializing the server\n";
-    return 1;
+    exit(1);
   }
+
+  return 0;
 }

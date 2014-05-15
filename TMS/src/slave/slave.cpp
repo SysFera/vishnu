@@ -125,9 +125,7 @@ main(int argc, char* argv[]) {
       }
 
       // store the serialized result
-      std::ofstream os_slaveJobFile(slaveJobFile);
-      os_slaveJobFile << vishnu::emfSerializer<TMS_Data::ListJobs>(&jobSteps);
-      os_slaveJobFile.close();
+      vishnu::saveInFile(slaveJobFile, vishnu::emfSerializer<TMS_Data::ListJobs>(&jobSteps));
     } else if (action == "CANCEL") {
       switch (batchType) {
       case DELTACLOUD:
@@ -140,16 +138,10 @@ main(int argc, char* argv[]) {
       }
     }
   } catch (VishnuException& ve) {
-    std::string errorInfo =  ve.buildExceptionString();
-    std::ofstream os_error(slaveErrorPath);
-    os_error << errorInfo;
-    os_error.close();
+    vishnu::saveInFile(slaveErrorPath, ve.buildExceptionString());
     ret = EXIT_FAILURE;
   } catch (std::exception& e) {
-    std::string errorInfo = e.what();
-    std::ofstream os_error(slaveErrorPath);
-    os_error << errorInfo;
-    os_error.close();
+    vishnu::saveInFile(slaveErrorPath, e.what());
     ret = EXIT_FAILURE;
   }
   delete batchServer;
