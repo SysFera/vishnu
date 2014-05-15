@@ -90,7 +90,7 @@ disp_uriAddr=tcp://127.0.0.1:5560
 #
 disp_uriSubs=tcp://127.0.0.1:5561
 
-# disp_nbthread (OS<Dispatcher>):
+# nbthreads (OS<ALL>):
 # Sets the number of workers threads in the Dispatcher
 #
 # In a platform with a high number of concurrent request, increase
@@ -98,7 +98,7 @@ disp_uriSubs=tcp://127.0.0.1:5561
 # Conversely, if the number of concurrent requests is low, decrease the may
 # preserve useless resource consumption.
 #
-disp_nbthread=5
+nbthreads=2
 
 
 ###############################################################################

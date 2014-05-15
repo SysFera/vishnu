@@ -149,6 +149,7 @@ private:
  * @brief ZMQServerStart
  * @param server
  * @param uri
+ * @param nbthreads
  * @param useSsl
  * @param cafile
  * @return
@@ -156,15 +157,16 @@ private:
 int
 ZMQServerStart(boost::shared_ptr<SeD> server,
                const std::string& uri,
+               int nbthreads,
                bool useSsl,
                const std::string& cafile) {
+
   const std::string WORKER_INPROC_QUEUE = "inproc://vishnu-sedworkers";
-  const int NB_THREADS = 5;
 
   return serverWorkerSockets<SeDWorker,
       boost::shared_ptr<SeD> >(uri,
                                WORKER_INPROC_QUEUE,
-                               NB_THREADS,
+                               nbthreads,
                                server,
                                useSsl,
                                cafile);

@@ -33,7 +33,7 @@ void
 Dispatcher::readConfiguration() {
   config.getConfigValue<std::string>(vishnu::DISP_URIADDR, uriAddr);
   config.getConfigValue<std::string>(vishnu::DISP_URISUBS, uriSubs);
-  config.getConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
+  config.getConfigValue<unsigned int>(vishnu::NBTHREADS, nthread);
   config.getConfigValue<unsigned int>(vishnu::TIMEOUT, timeout);
   printConfiguration();
 }
