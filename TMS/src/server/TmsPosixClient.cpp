@@ -45,6 +45,8 @@ reqSend(const std::string& destination, const struct Request* req, struct Respon
   while (nbCharWrite > 0) {
     nbCharWriten = write(sfd, req, nbCharWrite);
     if (nbCharWriten < 0) {
+      if (errno == EINTR)
+        continue;
       sv_errno = errno;
       close(sfd);
       errno = sv_errno;
@@ -54,9 +56,16 @@ reqSend(const std::string& destination, const struct Request* req, struct Respon
   }
 
   memset(ret, 0, sizeof(struct Response));
-  nbCharReaden = read(sfd, ret, sizeof(struct Response));
+  while ( (nbCharReaden = read(sfd, ret, sizeof(struct Response))) < 0)
+    if (errno != EINTR) {
+      sv_errno = errno;
+      break;
+    }
 
   close(sfd);
+
+  if (nbCharReaden < 0)
+    errno = sv_errno;
 
   return nbCharReaden;
 }
@@ -67,6 +76,7 @@ reqSubmit(const std::string& command, struct trameJob *response, struct trameSub
   struct Response ret;
   char name_sock[255];
   uid_t euid;
+  int status;
 
   euid = geteuid();
   snprintf(name_sock, sizeof(name_sock), "%s/%s%d","/tmp", SV_SOCK, euid);
@@ -82,13 +92,13 @@ reqSubmit(const std::string& command, struct trameJob *response, struct trameSub
   strncpy(req.data.submit.jobName, sub->jobName, sizeof(req.data.submit.jobName)-1);
   req.data.submit.walltime = sub->walltime;
 
-  reqSend(name_sock, &req, &ret);
+  status = reqSend(name_sock, &req, &ret);
 
-  if (ret.status == 0) {
-    *response = ret.data.submit;
-    return 0;
-  }
-  return -1;
+  if (status < 0)
+    return status;
+
+  *response = ret.data.submit;
+  return 0;
 }
 
 int

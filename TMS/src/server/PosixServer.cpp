@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <string.h>
 
 #include "PosixServer.hpp"
 #include "BatchServer.hpp"
@@ -27,6 +28,7 @@ PosixServer::submit(const std::string& scriptPath,
   int ret;
   struct trameJob resultat;
   struct trameSubmit op;
+  std::string errorMsg;
 
   memset(&op, 0, sizeof(op));
   strncpy(op.name, options.getName().c_str(), sizeof(op.name)-1);
@@ -62,13 +64,19 @@ PosixServer::submit(const std::string& scriptPath,
 
   ret = reqSubmit(scriptPath, &resultat, &op);
 
-  jobPtr->setOutputPath(std::string(resultat.outPutPath));
-  jobPtr->setBatchJobId(std::string(resultat.jobId));
+  if (ret == 0) {
+    jobPtr->setOutputPath(std::string(resultat.outPutPath));
+    jobPtr->setBatchJobId(std::string(resultat.jobId));
 
-  jobPtr->setErrorPath(std::string(resultat.errorPath));
-  jobPtr->setWallClockLimit(resultat.maxTime);
+    jobPtr->setErrorPath(std::string(resultat.errorPath));
+    jobPtr->setWallClockLimit(resultat.maxTime);
 
-  jobSteps.getJobs().push_back(jobPtr);
+    jobSteps.getJobs().push_back(jobPtr);
+  }
+  else {
+    errorMsg = "Error submiting job  errno : " + std::string(strerror(errno));
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "POSIX ERROR: "+errorMsg);
+  }
   return ret;
 }
 
