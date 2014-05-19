@@ -14,12 +14,10 @@
 #include <xmlrpc-c/base.hpp>
 #include <xmlrpc-c/girerr.hpp>
 #include <xmlrpc-c/client_simple.hpp>
-#include <xercesc/dom/DOMText.hpp>
-#include <xercesc/dom/DOMElement.hpp>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMException.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <libxml/parser.h>
+#include <libxml/tree.h>
+#include <libxml/xpath.h>
+
 
 struct HostT {
   int id;
@@ -75,6 +73,7 @@ enum VmStateT {
 class OneCloudInstance {
 public:
   OneCloudInstance(const std::string &rpcUrl, const std::string &authChain);
+  ~OneCloudInstance();
   void updatePool(void);
   HostPoolT& getHostPool(void) {return mhostPool;}
   int loadVmInfo(int id, VmT& vm);
@@ -86,14 +85,10 @@ private:
   std::string mauthChain;
   std::string mhostPoolFilename;
 
-  xercesc::DOMNodeList* initializeXmlElts(const std::string& xmlFileName,
-                                          xercesc::XercesDOMParser*& parser,
-                                          const std::string& TAG);
-  void releaseXmlElts(xercesc::XercesDOMParser* parser);
   void parseRpcHostPoolResult(const std::string& content);
   void parseRpcVmInfoResult(const std::string& content, VmT& vm);
-  void parseHostInfo(xercesc::DOMNode* node, HostT& host);
-  void parseVmInfo(xercesc::DOMNode* node, VmT& vm);
+  void parseHostInfo(xmlNodePtr node, HostT& host);
+  void parseVmInfo(xmlNodePtr node, VmT& vm);
   double computeLoad(double load, double maxLoad) {return 100 * load/maxLoad;}
 };
 
