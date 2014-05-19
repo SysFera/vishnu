@@ -4,6 +4,8 @@
 # Description : Class and header to request data from OpenNebula's XML-RPC API #
 */
 
+#include <unistd.h>
+#include <sys/types.h>
 #include "utilServer.hpp"
 #include "OneRPCManager.hpp"
 #include "Logger.hpp"
@@ -253,4 +255,3 @@ OneRPCManager::sha1Digest(const std::string& oneUserPass)
 
   return oss.str();
 }
-
