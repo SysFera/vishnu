@@ -35,11 +35,12 @@ reqSend(const std::string& destination, const struct Request* req, struct Respon
   addr.sun_family = AF_UNIX;
   strncpy(addr.sun_path, destination.c_str(), sizeof(addr.sun_path) -1);
 
-  if ( connect(sfd,(struct sockaddr *)&addr, sizeof(struct sockaddr_un)) == -1) {
-    sv_errno = errno;
-    close(sfd); // a voir
-    errno = sv_errno;
-    return -2;
+  for (int i = 0; i < 3; i++ ) {
+    if ( connect(sfd,(struct sockaddr *)&addr, sizeof(struct sockaddr_un)) == 0)
+      break;
+        if (errno != ENOENT && errno != EINTR)
+          return -2;
+    sleep(1);
   }
 
   while (nbCharWrite > 0) {

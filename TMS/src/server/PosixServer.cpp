@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <string.h>
 
+#include <boost/lexical_cast.hpp>
+
 #include "PosixServer.hpp"
 #include "BatchServer.hpp"
 #include "TMSVishnuException.hpp"
@@ -29,6 +31,7 @@ PosixServer::submit(const std::string& scriptPath,
   struct trameJob resultat;
   struct trameSubmit op;
   std::string errorMsg;
+  std::string strRet;
 
   memset(&op, 0, sizeof(op));
   strncpy(op.name, options.getName().c_str(), sizeof(op.name)-1);
@@ -74,7 +77,8 @@ PosixServer::submit(const std::string& scriptPath,
     jobSteps.getJobs().push_back(jobPtr);
   }
   else {
-    errorMsg = "Error submiting job  errno : " + std::string(strerror(errno));
+    strRet = boost::lexical_cast<std::string>(ret);
+    errorMsg = "Error submiting job  error : "  + strRet + " ernno :" + std::string(strerror(errno));
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "POSIX ERROR: "+errorMsg);
   }
   return ret;
