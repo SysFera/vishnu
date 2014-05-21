@@ -74,10 +74,12 @@ solveSubmitJob(diet_profile_t* pb) {
   diet_profile_reset(pb, 2);
 
   try {
+    JsonObject options(jsonEncodedOptions);
+    std::string scriptPath = options.getStringProperty("scriptpath");
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::TMSMAPPERNAME);
     int mapperkey = mapper->code("vishnu_submit_job");
-    mapper->code(machineId, mapperkey);
+    mapper->code(scriptPath, mapperkey);
     mapper->code(jsonEncodedOptions, mapperkey);
     std::string cmd = mapper->finalize(mapperkey);
 
@@ -87,7 +89,6 @@ solveSubmitJob(diet_profile_t* pb) {
     JobServer jobServer(authKey, machineId, server->getSedConfig());
     jobServer.setDebugLevel(server->getDebugLevel()); // Set the debug level
 
-    JsonObject options(jsonEncodedOptions);
 
     std::string jobId = jobServer.submitJob(scriptContent,
                                             &options,
@@ -510,7 +511,6 @@ solveAddWork(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::TMSMAPPERNAME);
     int mapperkey = mapper->code("vishnu_add_work");
-    mapper->code(workSerialized, mapperkey);
     mapper->code(opSerialized, mapperkey);
     std::string cmd = mapper->finalize(mapperkey);
 

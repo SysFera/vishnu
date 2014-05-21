@@ -186,15 +186,19 @@ TMSMapper::decodeSubmit(vector<unsigned int> separator, const string& msg){
   long l;
   res += (mmap.find(VISHNU_SUBMITJOB))->second;
   res+= " ";
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  res += u;
-  u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1)-2);
+  res +=   msg.substr(separator.at(0)+1, separator.at(1)-2);
+  res+= " ";
+  u    = msg.substr(separator.at(1)+1, msg.size() - separator.at(1));
+//  JsonObject options(u);
   TMS_Data::SubmitOptions_ptr ac = NULL;
 
-  //To parse the object serialized
+//  TMS_Data::SubmitOptions ac = options.getSubmitOptions();
+//To parse the object serialized
   if(!vishnu::parseEmfObject(u, ac)) {
     throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
   }
+
+
   if (ac->isPosix()){
     res += " -p ";
   }
@@ -272,18 +276,6 @@ TMSMapper::decodeSubmit(vector<unsigned int> separator, const string& msg){
     res += convertToString((ac->getCriterion())->getLoadType());
   }
 
-
-  u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
-  TMS_Data::Job_ptr j = NULL;
-  //To parse the object serialized
-  if(!parseEmfObject(u, j)) {
-    throw SystemException(ERRCODE_INVMAPPER, "job: "+u);
-  }
-  u = j->getJobPath();
-  if (u.compare("")){
-    res += " ";
-    res += u;
-  }
 
   u = convertToString<>(ac->getWorkId());
   if (ac->getWorkId() != 0){
@@ -453,7 +445,7 @@ TMSMapper::decodeOutput(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_GETJOBOUTPUT))->second;
-  res+= " ";
+  res+= " -m ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res+= " ";
@@ -467,14 +459,12 @@ TMSMapper::decodeOutput(vector<unsigned int> separator, const string& msg){
   }
   res+= " ";
   if (j->getJobId().compare("")) {
-    res += j->getJobId();
-    res+= " ";
-  }
-  if (separator.at(2)!=(msg.size()-2)) {
-    u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
     res += " -o ";
     res += u;
   }
+  u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
+  res += j->getJobId();
+  res+= " ";
   return res;
 }
 string
@@ -550,8 +540,7 @@ TMSMapper::decodeAddWork(vector<unsigned int> separator, const string& msg){
   string a;
   int tmp;
   res += (mmap.find(VISHNU_ADD_WORK))->second;
-  a    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  a    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1)-2);
+  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0)-2);
 
   TMS_Data::AddWorkOptions_ptr ac = NULL;
 
