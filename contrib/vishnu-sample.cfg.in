@@ -125,17 +125,17 @@ databaseHost=localhost
 
 # databaseName (M<XMS>): Sets the name of the database instance
 #
-databaseName=vishnu
+databaseName=sysferads
 
 # databaseUserName (M<XMS>): Sets the login name for authenticating
 # against the database
 #
-databaseUserName=vishnu_user
+databaseUserName=sysferads_db_user
 
 # databaseUserPassword (M<XMS>): Sets the password associated to
 # the database user
 #
-databaseUserPassword=vishnu_user
+databaseUserPassword=sysferads_db_pass
 
 # databaseConnectionsNb (OS<XMS>): Sets the size of the pool of
 # threads to handle database connexions
