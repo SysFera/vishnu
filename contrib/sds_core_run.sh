@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_PATH=~/SDS/core
 
-nohup ${SCRIPT_PATH}/bin/xmssed ${SCRIPT_PATH}/vishnu.cfg > /tmp/vishnu.log &
+nohup ${SCRIPT_PATH}/bin/xmssed ~/.sds/vishnu.cfg > /tmp/vishnu.log &
 
