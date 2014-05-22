@@ -130,7 +130,7 @@ databaseName=sysferads
 # databaseUserName (M<XMS>): Sets the login name for authenticating
 # against the database
 #
-databaseUserName=sysferads_db_user
+databaseUserName=sysferads_user
 
 # databaseUserPassword (M<XMS>): Sets the password associated to
 # the database user
@@ -174,7 +174,7 @@ vishnuMachineId=machine_1
 # sendmailScriptPath (M<UMS>)
 # Sets the path to the script for sending emails
 #
-sendmailScriptPath=@CMAKE_INSTALL_PREFIX@/sbin/sendmail.py
+#sendmailScriptPath=@CMAKE_INSTALL_PREFIX@/sbin/sendmail.py
 
 # authenticationType (O<XMS>): Defines the underlying authentication mode used by the UMS module
 # VISHNU supports four modes of authentication:
