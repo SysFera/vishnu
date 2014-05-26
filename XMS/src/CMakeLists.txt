@@ -39,7 +39,6 @@ if(NOT COMPILE_ONLY_LIBBATCH)
     ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
     ${TMS_UTILS_DIR}/metasched.cpp)
   
-message ("${sed_SRCS}")
   add_executable(xmssed ${sed_SRCS})
   target_link_libraries(xmssed
     vishnu-core
