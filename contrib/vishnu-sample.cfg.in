@@ -117,7 +117,7 @@ databaseType=mysql
 # database server.
 # Here we assume that the database and VISHNU are hosted on the same server
 #
-databaseHost=localhost
+databaseHost=127.0.0.1
 
 # databasePort (OS<XMS>): Defines the port of the database server.
 #

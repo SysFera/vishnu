@@ -25,6 +25,7 @@
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
 #include "tmsUtils.hpp"
+#include "utils.hpp"
 
 using namespace vishnu;
 using namespace std;
@@ -142,7 +143,6 @@ TMSMapper::decode (const string& msg){
 
   // Convert code to int
   funcCode = convertToInt(func);
-
   switch(funcCode){
   case VISHNU_SUBMITJOB:
     res = decodeSubmit(separatorPos, msg);
@@ -189,101 +189,95 @@ TMSMapper::decodeSubmit(vector<unsigned int> separator, const string& msg){
   res +=   msg.substr(separator.at(0)+1, separator.at(1)-2);
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size() - separator.at(1));
-//  JsonObject options(u);
-  TMS_Data::SubmitOptions_ptr ac = NULL;
-
-//  TMS_Data::SubmitOptions ac = options.getSubmitOptions();
-//To parse the object serialized
-  if(!vishnu::parseEmfObject(u, ac)) {
-    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
-  }
+  JsonObject options(u);
+  TMS_Data::SubmitOptions ac = options.getSubmitOptions();
 
 
-  if (ac->isPosix()){
+  if (ac.isPosix()){
     res += " -p ";
   }
 
-  u = ac->getName();
+  u = ac.getName();
   if (u.compare("")){
     res += " -n ";
     res += u;
   }
-  u = ac->getQueue();
+  u = ac.getQueue();
   if (u.compare("")){
     res += " -q ";
     res += u;
   }
-  l = ac->getWallTime();
+  l = ac.getWallTime();
   if (l>0){
     res += " -t ";
     res += vishnu::convertWallTimeToString(l);
   }
-  l = ac->getMemory();
+  l = ac.getMemory();
   if (l>0){
     res += " -m ";
     res += convertToString(l);
   }
-  l = ac->getNbCpu();
+  l = ac.getNbCpu();
   if (l>0){
     res += " -P ";
     res += convertToString(l);
   }
-  u = ac->getNbNodesAndCpuPerNode();
+  u = ac.getNbNodesAndCpuPerNode();
   if (u.compare("")){
     res += " -N ";
     res += u;
   }
-  u = ac->getOutputPath();
+  u = ac.getOutputPath();
   if (u.compare("")){
     res += " -o ";
     res += u;
   }
-  u = ac->getErrorPath();
+  u = ac.getErrorPath();
   if (u.compare("")){
     res += " -e ";
     res += u;
   }
-  u = ac->getMailNotification();
+  u = ac.getMailNotification();
   if (u.compare("")){
     res += " -M ";
     res += u;
   }
-  u = ac->getMailNotifyUser();
+  u = ac.getMailNotifyUser();
   if (u.compare("")){
     res += " -u ";
     res += u;
   }
-  u = ac->getGroup();
+  u = ac.getGroup();
   if (u.compare("")){
     res += " -g ";
     res += u;
   }
-  u = ac->getWorkingDir();
+  u = ac.getWorkingDir();
   if (u.compare("")){
     res += " -D ";
     res += u;
   }
-  if (ac->isSelectQueueAutom()){
+  if (ac.isSelectQueueAutom()){
     res += " -Q  ";
   }
-  u = ac->getWorkingDir();
+  u = ac.getWorkingDir();
   if (u.compare("")){
     res += " -D ";
     res += u;
   }
-  if(ac->getCriterion()!=NULL) {
+  if(ac.getCriterion()!=NULL) {
     res += " -L ";
-    res += convertToString((ac->getCriterion())->getLoadType());
+    res += convertToString((ac.getCriterion())->getLoadType());
   }
 
 
-  u = convertToString<>(ac->getWorkId());
-  if (ac->getWorkId() != 0){
+  u = convertToString<>(ac.getWorkId());
+  if (ac.getWorkId() != 0){
     res += " -w ";
     res += u;
   }
 
-  u = ac->getTextParams();
+  u = ac.getTextParams();
   if (u.compare("")){
     size_t lastPos = 0;
     size_t pos = u.find(" ", lastPos) ;
@@ -296,7 +290,7 @@ TMSMapper::decodeSubmit(vector<unsigned int> separator, const string& msg){
     res += " -v ";
     res += u.substr(lastPos, pos - lastPos);
   }
-  u = ac->getFileParams();
+  u = ac.getFileParams();
   if (u.compare("")){
     size_t lastPos = 0;
     size_t pos = u.find(" ", lastPos) ;
@@ -309,7 +303,7 @@ TMSMapper::decodeSubmit(vector<unsigned int> separator, const string& msg){
     res += " -f ";
     res += u.substr(lastPos, pos - lastPos);
   }
-  u = ac->getSpecificParams();
+  u = ac.getSpecificParams();
   if (u.compare("")){
     res += " -S '";
     res += u +"'";
@@ -324,9 +318,7 @@ TMSMapper::decodeProg(vector<unsigned int> separator, const string& msg){
   string property;
   res += (mmap.find(VISHNU_GETJOBPROG))->second;
   res += " ";
-  property = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  res += property;
-  property  = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  property  = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
   TMS_Data::ProgressOptions_ptr job = NULL;
 
   //To parse the object serialized
@@ -334,13 +326,18 @@ TMSMapper::decodeProg(vector<unsigned int> separator, const string& msg){
     throw SystemException(ERRCODE_INVMAPPER, "option: "+property);
   }
   property = job->getUser();
-  if (property.empty()){
+  if (!property.empty()){
     res += " -u ";
     res += property;
   }
   property = job->getJobId();
-  if (property.empty()){
+  if (!property.empty()){
     res += " -i ";
+    res += property;
+  }
+  property = job->getMachineId();
+  if (!property.empty()){
+    res += " -m ";
     res += property;
   }
   return res;
@@ -371,15 +368,18 @@ TMSMapper::decodeListJob(vector<unsigned int> separator, const string& msg){
   boost::posix_time::ptime pt;
   res += (mmap.find(VISHNU_LISTJOBS))->second;
   res+= " ";
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  res += u;
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
   TMS_Data::ListJobsOptions_ptr j = NULL;
 
   //To parse the object serialized
   if(!vishnu::parseEmfObject(u, j)) {
     throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
+  }
+  u = j->getMachineId();
+  if (u.compare("")){
+    res += " -m ";
+    res += u;
   }
   u = j->getJobId();
   if (u.compare("")){
@@ -450,20 +450,16 @@ TMSMapper::decodeOutput(vector<unsigned int> separator, const string& msg){
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1)-1);
-
-  TMS_Data::JobResult_ptr j = NULL;
-
-  //To parse the object serialized
-  if(!vishnu::parseEmfObject(u, j)) {
-    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
-  }
+  JsonObject options(u);
+  std::string output = options.getStringProperty("outputdir");
   res+= " ";
-  if (j->getJobId().compare("")) {
+  if (output.compare("")) {
     res += " -o ";
-    res += u;
+    res += output;
   }
+
   u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
-  res += j->getJobId();
+  res += u;
   res+= " ";
   return res;
 }
@@ -472,15 +468,26 @@ TMSMapper::decodeCompletedJob(vector<unsigned int> separator, const string& msg)
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_GETCOMPLETEDJOB))->second;
-  res+= " ";
+  res+= " -m ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-  if (u.compare(" ")){
+  JsonObject options(u);
+  std::string output = options.getStringProperty("outputdir");
+  res+= " ";
+  if (output.compare("")) {
     res += " -o ";
-    res += u;
+    res += output;
   }
+  int days = options.getIntProperty("days");
+  res+= " ";
+  if (days != -1) {
+    res += " -d ";
+    res += days;
+  }
+
+
   return res;
 }
 
@@ -490,20 +497,25 @@ TMSMapper::decodeCancel(vector<unsigned int> separator, const string& msg){
   string u;
   res += (mmap.find(VISHNU_CANCEL))->second;
   res+= " ";
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
-  res += u;
-  res+= " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  JsonObject options(u);
+  std::string jobId = options.getStringProperty("jobid");
+  std::string userId = options.getStringProperty("user");
+  std::string machineId = options.getStringProperty("machineid");
 
-  TMS_Data::Job_ptr j = NULL;
 
-  //To parse the object serialized
-  if(!vishnu::parseEmfObject(u, j)) {
-    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
+
+  if (!jobId.empty()) {
+    res+= " -j ";
+    res += jobId;
   }
-  if (j->getJobId().compare("")) {
-    res += j->getJobId();
-    res+= " ";
+  if (!machineId.empty()) {
+    res+= " -m ";
+    res += machineId;
+  }
+  if (!userId.empty()) {
+    res+= " -u ";
+    res += userId;
   }
 
   return res;
@@ -515,20 +527,12 @@ TMSMapper::decodeJobInfo(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_GETJOBINFO))->second;
   res+= " ";
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
+  res+= " -m ";
   res += u;
   res+= " ";
   u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  res += u;
 
-  TMS_Data::Job_ptr j = NULL;
-
-  //To parse the object serialized
-  if(!vishnu::parseEmfObject(u, j)) {
-    throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
-  }
-  if (j->getJobId().compare("")) {
-    res += j->getJobId();
-    res+= " ";
-  }
   return res;
 }
 

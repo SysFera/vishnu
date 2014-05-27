@@ -3,6 +3,7 @@ if (BUILD_TESTING)
 endif()
 
 include_directories(
+  ${DATA_BASE_INCLUDE_DIR}
   ${CONFIG_SOURCE_DIR}
   ${ZMQ_INCLUDE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
@@ -22,6 +23,15 @@ include_directories(
   )
 
 if(NOT COMPILE_ONLY_LIBBATCH)
+#################### register #################################################
+set(registry_SRCS
+  registry/MapperRegistry.cpp
+  registry/Mapper.cpp
+  registry/UMSMapper.cpp
+  registry/FMSMapper.cpp
+  registry/TMSMapper.cpp)
+
+
   add_library(zmq_helper
     DIET_client.cpp
     Annuary.cpp
@@ -30,6 +40,7 @@ if(NOT COMPILE_ONLY_LIBBATCH)
     utils.cpp
     sslhelpers.cpp
     ${utils_server_SRCS}
+    ${registry_SRCS}
     ${logger_SRCS})
 
   target_link_libraries (zmq_helper

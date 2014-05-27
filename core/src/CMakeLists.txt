@@ -42,13 +42,6 @@ set(utils_SRCS
   utils/fmsUtils.cpp
   utils/cliUtil.cpp)
 
-#################### register #################################################
-set(registry_SRCS
-  registry/MapperRegistry.cpp
-  registry/Mapper.cpp
-  registry/UMSMapper.cpp
-  registry/FMSMapper.cpp
-  registry/TMSMapper.cpp)
 
 #################### emfdata ##################################################
 set(UMS_Data_SRCS
@@ -265,7 +258,6 @@ if(NOT COMPILE_ONLY_LIBBATCH)
   add_library(vishnu-core ${config_SRCS}
     ${exception_SRCS}
     ${utils_SRCS}
-    ${registry_SRCS}
     ${UMS_Data_SRCS}
     ${TMS_Data_SRCS}
     ${FMS_Data_SRCS}

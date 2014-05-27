@@ -48,7 +48,8 @@ namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 #define FINISH_COMMAND(sessionKey, arg1, arg2, arg3, arg4)  SessionServer sessionServer(authKey); \
   sessionServer.finish(arg1, arg2, arg3, arg4)
 #else
-#define FINISH_COMMAND(sessionKey, arg1, arg2, arg3, arg4) (boost::format("Command completed: %1%. status: %2%.")% arg1 % arg2).str()
+#define FINISH_COMMAND(sessionKey, arg1, arg2, arg3, arg4) SessionServer sessionServer(authKey); \
+  sessionServer.finish(arg1, arg2, arg3, arg4)
 #endif
 
 /**
@@ -132,12 +133,10 @@ solveCancelJob(diet_profile_t* pb) {
   // reset the profile to send back result
   diet_profile_reset(pb, 2);
 
-
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::TMSMAPPERNAME);
     int mapperkey = mapper->code("vishnu_cancel_job");
-    mapper->code(machineId, mapperkey);
     mapper->code(optionSerialized, mapperkey);
     std::string cmd = mapper->finalize(mapperkey);
 
@@ -364,7 +363,6 @@ solveGenerique(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::TMSMAPPERNAME);
     int mapperkey = mapper->code(query.getCommandName());
-    mapper->code(machineId, mapperkey);
     mapper->code(optionValueSerialized, mapperkey);
     std::string cmd = mapper->finalize(mapperkey);
 
