@@ -589,17 +589,26 @@ solveScheduling(diet_profile_t* pb)
     }
 
     metasched_task_t task;
-    task.id_cloud_comesFrom = 1;
-    task.task_type = 1;
-    task.id_cloud_owner = 1;
+    //ServerXMS* server = ServerXMS::getInstance();
+    //    const std::string JOB_ID = vishnu::getObjectId(server->getVishnuId(),
+    //                                                   "formatidjob",
+    //                                                   vishnu::JOB,
+    //                                                   "metascheduler");
+    //    JsonObject options(optionsSerialized);
+
+    //    task.task_id = vishnu::convertToInt(JOB_ID.substr(2, std::string::npos));
     task.id_cloud_comesFrom = 1;
     task.task_id = 1;
+    task.task_type = 1;
+    task.id_cloud_owner = 1;
 
     std::vector<server_data_t> allTaks;
     int selectedCloud = choose_cloud(task, clouds, allTaks);
     if (selectedCloud < 0 || selectedCloud >= machines.getMachines().size()) {
-      throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Machine selection failed");
+      throw TMSVishnuException(ERRCODE_INVALID_PARAM,
+                               boost::str(boost::format("Machine selection failed with code %1%") % selectedCloud));
     }
+
     diet_string_set(pb,0, "success");
     diet_string_set(pb,1, machines.getMachines().get(selectedCloud)->getMachineId());
   } catch (VishnuException& ex) {

@@ -134,29 +134,25 @@ choose_cloud(const metasched_task_t& task, std::vector<metasched_cloud_t> clouds
   std::sort(clouds.begin(), clouds.end(), ranking_clouds);
   float value = -1* std::numeric_limits<float>::infinity();
   //Computes all cloud weight
-  for (unsigned int i=0 ; i< clouds.size() ; i++) {
-    metasched_cloud_t c = clouds.at(i);
-    float x = getX(c);
-    float y = getY(c);
-    int z = i;
-    float newValue = x*((float)c.host_number / 2.0)
-                     - y * (float)c.host_number
+  for (unsigned int cloudIndex=0 ; cloudIndex< clouds.size(); ++cloudIndex) {
+    metasched_cloud_t currrentCloud = clouds.at(cloudIndex);
+    float x = getX(currrentCloud);
+    float y = getY(currrentCloud);
+    int z = cloudIndex;
+    float newValue = x*((float)currrentCloud.host_number / 2.0)
+                     - y * (float)currrentCloud.host_number
                      - (float)z;
     printf("%.3f*%.3f - %.3f*%.3f - %d == %f\n", x
-           , (float)c.host_number / 2.0
+           , (float)currrentCloud.host_number / 2.0
            , y
-           , (float)c.host_number
+           , (float)currrentCloud.host_number
            , z
            , newValue);
     std::cout << value << " < " << newValue << std::endl;
     if (newValue >value) {
-      chosen_cloud = c.cloud_id;
+      chosen_cloud = currrentCloud.cloud_id;
       value = newValue;
     }
-  }
-
-  if (chosen_cloud == -1) {
-    std::cerr << "Error: Invalid choice of cloud !" << std::endl;
   }
   return chosen_cloud;
 }
