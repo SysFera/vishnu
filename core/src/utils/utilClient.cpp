@@ -10,7 +10,6 @@
 #include "TMSVishnuException.hpp"       // for TMSVishnuException
 #include "UMSVishnuException.hpp"       // for UMSVishnuException
 #include "utilVishnu.hpp"
-#include "DIET_client.h"
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
