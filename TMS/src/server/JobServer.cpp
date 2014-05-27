@@ -176,10 +176,10 @@ JobServer::handleSshBatchExec(int action,
   switch(action) {
     case SubmitBatchAction:
       sshJobExec.sshexec("SUBMIT", scriptPath, jobSteps);
-      // Submission with deltacloud doesn't make copy of the script
+      // Submission with deltacloud and opennebula doesn't make copy of the script
       // So the script needs to be kept until the end of the execution
       // Clean the temporary script if not deltacloud
-      if (mbatchType != DELTACLOUD && mdebugLevel) {
+      if (mbatchType != DELTACLOUD && mbatchType != OPENNEBULA && mdebugLevel) {
         vishnu::deleteFile(scriptPath.c_str());
       }
       updateAndSaveJobSteps(jobSteps, baseJobInfo);
