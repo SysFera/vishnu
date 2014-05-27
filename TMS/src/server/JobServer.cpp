@@ -968,7 +968,7 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
     std::string query = "UPDATE job set ";
     query+="vsession_numsessionid="+vishnu::convertToString(muserSessionInfo.num_session)+", ";
     query+="job_owner_id="+vishnu::convertToString(muserSessionInfo.num_user)+", ";
-    query+="owner='"+mdatabaseInstance->escapeData(muserSessionInfo.user_aclogin)+"', ";
+    query+="owner='"+mdatabaseInstance->escapeData(job.getOwner())+"', ";
     query+="submitMachineId='"+mdatabaseInstance->escapeData(mmachineId)+"', ";
     query+="submitMachineName='"+mdatabaseInstance->escapeData(muserSessionInfo.machine_name)+"', ";
     query+="batchJobId='"+mdatabaseInstance->escapeData(job.getBatchJobId())+"', ";
