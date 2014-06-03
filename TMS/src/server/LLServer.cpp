@@ -9,9 +9,6 @@
 #include "utilVishnu.hpp"
 #include "tmsUtils.hpp" // For convertStringToWallTime
 
-using namespace vishnu;
-using namespace std;
-
 /**
  * \brief Constructor
  */
@@ -929,7 +926,7 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
           job->setNbNodes(nbNodes);
 
           if(nbNodes!=-1) {
-            job->setNbNodesAndCpuPerNode(vishnu::convertToString(nbNodes)+":"+convertToString(nbCpu));
+            job->setNbNodesAndCpuPerNode(vishnu::convertToString(nbNodes)+":"+vishnu::convertToString(nbCpu));
           }
           //To fill the job working dir
           ll_get_data(step, LL_StepIwd, &value);

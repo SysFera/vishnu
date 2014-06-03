@@ -253,7 +253,7 @@ FMSMapper::decodeRemoveFile(vector<unsigned int> separator, const string& msg){
   res += u;
   res+= " ";
 
-  u  = msg.substr(separator.at(1)+1);
+  u  = msg.substr(separator.at(1)+1, msg.size() - separator.at(1));
   FMS_Data::RmFileOptions_ptr ac = NULL;
 
   //To parse the object serialized
