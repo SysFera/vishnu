@@ -125,7 +125,7 @@ SSHFile::getInfos() const {
   }
 
 
-  if (fileStat.second.length() != 0) {
+  if (fileStat.second.length() == 0) {
 
     exists(false);
     upToDate=true;
