@@ -61,14 +61,14 @@ timeout=120
 # debugLevel=0
 
 
-# host_uriAddr (S<Client>)
+# sed_uriAddr (S<Client>)
 # Sets a list of semi-colon-separated addresses where SeD can be found.
 #     Each item in the list should have the form <sed_addr> <sed_name>
 #     Where <sed_addr> sets the address of the SeD while <sed_name> sets the name of
 #     the SeD. The name MUST match the name of the SeD in vishnu.
 #     E.g. sed_uriAddr=tcp://127.0.0.1:5561 tmssed1;tcp://192.168.1.1:5562 umssed1
 #
-host_uriAddr=tcp://127.0.0.1:5570 sed_name;
+sed_uriAddr=tcp://127.0.0.1:5570 sed_name;
 
 
 ###############################################################################
@@ -142,12 +142,12 @@ databaseUserPassword=sysferads_db_pass
 #
 #databaseConnectionsNb=10
 
-# sed_uriAddr (M<XMS>)
+# host_uriAddr (M<XMS>)
 #   * Sets the address and the port on which the SeD will listen on
 #     E.g. sed_uriAddr=tcp://127.0.0.1:5562, means that the server will listen on
 #     the local loop on the port 5562
 #
-sed_uriAddr=tcp://127.0.0.1:5562
+host_uriAddr=tcp://127.0.0.1:5562
 
 # enableUMS (M<XMS>)
 # Sets whether to enable UMS services within the SeD.
