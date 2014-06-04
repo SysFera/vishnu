@@ -415,7 +415,6 @@ SSHFile::ls(const FMS_Data::LsDirOptions& options) const {
     lsDefaultCmd.append("-a ");
     lsBsdCmd.append("-a ");
   }
-
   lsResult = ssh.exec(lsDefaultCmd+getPath());
   if (lsResult.second.find("illegal option") != std::string::npos) {
     lsResult = ssh.exec(lsBsdCmd+getPath());
@@ -572,9 +571,8 @@ SSHExec::exec(const std::string& cmd) const {
   std::string command = boost::str(boost::format("%1% -l %2% -C -o BatchMode=yes "
                                                  " -o StrictHostKeyChecking=no"
                                                  " -o ForwardAgent=yes"
-                                                 " -p %3% %4% echo %5% && %6%"
+                                                 " -p %3% %4% ' echo %5% && %6% '"
                                                  )% sshCommand % userName % sshPort % server % BEGIN_MARKER % cmd);
-
   std::string output;
   std::pair<std::string, std::string> result;
   if (! vishnu::execSystemCommand(command, output)) { // error
