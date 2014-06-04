@@ -140,6 +140,8 @@ diet_call(diet_profile_t* prof) {
   std::vector<std::string> uriv;
   std::string disp;
   std::vector<std::string> dispv;
+  diet_profile_t save = *prof;
+
 
   // get the service and the related module
   std::string service(prof->name);
@@ -178,15 +180,20 @@ diet_call(diet_profile_t* prof) {
   std::vector<boost::shared_ptr<Server> >::iterator it;
   for (it = allServers.begin() ; it != allServers.end() ; ++it){
     try{
+      *prof = save;
       int tmp = abstract_call_gen(prof, it->get()->getURI());
       if (tmp == 0)
-        return 0;
+        // If is successful or return an error different of not finding the right service
+        if (prof->params[0]=="success" || (prof->params[0]=="error" && prof->params[1].find("Service call failed for the profile") == std::string::npos)){
+          return 0;
+        }
     } catch (...){
     }
   }
   int tmp = 1;
   try{
     if ( !disp.empty() )
+      *prof = save;
       tmp = abstract_call_gen(prof, disp);
   } catch (...){
   }
@@ -208,7 +215,6 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout, i
     std::cerr << "E: request failed, exiting ...\n";
     return -1;
   }
-
   std::string response = lpc.recv();
   boost::shared_ptr<diet_profile_t> result(my_deserialize(response));
   if (! result) {
