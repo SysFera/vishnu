@@ -42,8 +42,10 @@ JobProxy::submitJob(const std::string& scriptPath,
 
   // select a machine if not machine set
   if (mmachineId.empty() || mmachineId == AUTOM_KEYWORD) {
-    mmachineId = requestMachineFromMetacheduler("tchieudjie", options);
+    //FIXME: read config file?
+    throw TMSVishnuException(ERRCODE_INVDATA, "You need to set the metascheduler machine");
   }
+  mmachineId = requestMachineFromMetacheduler(mmachineId, options);
 
   // now create and initialize the service profile
   string serviceName = boost::str(boost::format("%1%@%2%")% SERVICES_TMS[JOBSUBMIT] % mmachineId);
