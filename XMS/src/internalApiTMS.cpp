@@ -571,9 +571,11 @@ solveScheduling(diet_profile_t* pb)
     // retrieve cloud info
     TMS_Data::ListQueues queues;
     for(int index = 0; index < machines.getMachines().size(); ++index) {
+      std::cout << "machine: " << machines.getMachines().get(index)->getMachineId()<<"\n";
       vishnu::listQueues(authKey, machines.getMachines().get(index)->getMachineId(), queues, "no queue name");
     }
 
+    std::cout << "queue size: "<<queues.getQueues().size()<<"\n";
     //Decode clouds
     std::vector<metasched_cloud_t> clouds;
     for (int index = 0; index < queues.getQueues().size(); ++index) {
@@ -602,15 +604,17 @@ solveScheduling(diet_profile_t* pb)
     task.task_type = 1;
     task.id_cloud_owner = 1;
 
+    std::cout <<machines.getMachines().size()<<"\n";
+
     std::vector<server_data_t> allTaks;
-    int selectedCloud = choose_cloud(task, clouds, allTaks);
-    if (selectedCloud < 0 || selectedCloud >= machines.getMachines().size()) {
+    std::string selectedCloud = choose_cloud(task, clouds, allTaks);
+    if (! selectedCloud.empty()) {
       throw TMSVishnuException(ERRCODE_INVALID_PARAM,
                                boost::str(boost::format("Machine selection failed with code %1%") % selectedCloud));
     }
 
     diet_string_set(pb,0, "success");
-    diet_string_set(pb,1, machines.getMachines().get(selectedCloud)->getMachineId());
+    diet_string_set(pb,1, selectedCloud);
   } catch (VishnuException& ex) {
     diet_string_set(pb,0, "error");
     diet_string_set(pb,1, ex.what());

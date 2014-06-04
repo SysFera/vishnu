@@ -61,7 +61,7 @@ json_to_cloud(JsonObject* json) {
 * @return A pair containing if the boolean has been found, and if it is its position in clouds
 */
 std::pair<bool, int>
-cloud_is_present (int cloud_id, const std::vector<metasched_cloud_t>& clouds){
+cloud_is_present(const std::string& cloud_id, const std::vector<metasched_cloud_t>& clouds){
   //task cloud id is present in clouds
   bool isPresent = false;
   int pos = -1;
@@ -84,7 +84,7 @@ cloud_is_present (int cloud_id, const std::vector<metasched_cloud_t>& clouds){
 * @return The position of the data if found, -1 otherwise
 */
 int
-find_element_in_data(int id, std::vector<server_data_t>& data) {
+find_element_in_data(const std::string& id, std::vector<server_data_t>& data) {
   for (unsigned int i = 0 ; i < data.size() ; i++) {
     if (id == data.at(i).task_id)
       return i;
@@ -94,10 +94,10 @@ find_element_in_data(int id, std::vector<server_data_t>& data) {
 /**
 * @brief Choice function for the clouds
 */
-int
+std::string
 choose_cloud(const metasched_task_t& task, std::vector<metasched_cloud_t> clouds, std::vector<server_data_t>& data) {
 
-  int chosen_cloud = -1;
+  std::string chosen_cloud = "";
 
   bool cloudOwnerIsPresent = cloud_is_present(task.id_cloud_owner, clouds).first;
   //Allocate to cloud owner

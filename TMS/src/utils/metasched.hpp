@@ -19,9 +19,9 @@ class JsonObject;
  */
 struct metasched_task_t {
     int task_type;
-    int id_cloud_owner;
-    int id_cloud_comesFrom;
-    int task_id;
+    std::string id_cloud_owner;
+    std::string id_cloud_comesFrom;
+    std::string task_id;
 };
 
 
@@ -38,7 +38,7 @@ struct metasched_task_t {
  * highest_mean_resource_le_50_p:   Highest mean load for hosts that are < 50% (Highest between CPU or MEM)
  */
 struct metasched_cloud_t {
-    int cloud_id;
+    std::string cloud_id;
     int load_cpu;
     int load_memory;
     int vm_number;
@@ -56,7 +56,7 @@ struct metasched_cloud_t {
 * nb_tries:     The number of times we already handled this task
 */
 struct server_data_t {
-    int task_id;
+    std::string task_id;
     time_t timestamp;
     int nb_tries;
 };
@@ -93,7 +93,7 @@ print_cloud(const metasched_cloud_t& cloudInfo);
 * @return A pair containing if the boolean has been found, and if it is its position in clouds
 */
 std::pair<bool, int>
-cloud_is_present (int cloud_id, const std::vector<metasched_cloud_t>& clouds);
+cloud_is_present(const std::string& cloud_id, const std::vector<metasched_cloud_t>& clouds);
 
 
 /**
@@ -102,12 +102,12 @@ cloud_is_present (int cloud_id, const std::vector<metasched_cloud_t>& clouds);
 * @return The position of the data if found, -1 otherwise
 */
 int
-find_element_in_data(int id, std::vector<server_data_t>& data);
+find_element_in_data(const std::string& id, std::vector<server_data_t>& data);
 
 /**
 * @brief Choice function for the clouds
 */
-int
+std::string
 choose_cloud(const metasched_task_t& task, std::vector<metasched_cloud_t> clouds, std::vector<server_data_t>& data);
 
 /**
