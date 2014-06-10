@@ -113,19 +113,21 @@ SSHFile::getInfos() const {
   file_size_t size;
   time_t atime, mtime, ctime;
 
-  fileStat = ssh.exec(STATCMD_DEFAULT + getPath());
-
+  fileStat = ssh.exec(STATCMD_DEFAULT + getPath() + "; echo -n @ $?");
   if (fileStat.second.find("Warning")!= std::string::npos) {
-    fileStat = ssh.exec(STATCMD_DEFAULT + getPath());
+    fileStat = ssh.exec(STATCMD_DEFAULT + getPath() + ";echo -n @ $?");
   } else if (fileStat.second.find("illegal option")!= std::string::npos) {
     fileStat = ssh.exec(STATCMD_BSD + getPath());
     if (fileStat.second.find("Warning")!= std::string::npos) {
-      fileStat = ssh.exec(STATCMD_BSD + getPath());
+      fileStat = ssh.exec(STATCMD_BSD + getPath() + ";echo -n @ $?");
     }
   }
 
 
-  if (fileStat.second.length() == 0) {
+  std::string output = fileStat.first;
+  int status_code = boost::lexical_cast<int>(output.substr(output.find_last_of('@')+2));
+
+  if (status_code != 0) {
 
     exists(false);
     upToDate=true;
