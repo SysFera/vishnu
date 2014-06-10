@@ -63,12 +63,12 @@ timeout=120
 
 # sed_uriAddr (S<Client>)
 # Sets a list of semi-colon-separated addresses where SeD can be found.
-#     Each item in the list should have the form <sed_addr> <sed_name>
-#     Where <sed_addr> sets the address of the SeD while <sed_name> sets the name of
-#     the SeD. The name MUST match the name of the SeD in vishnu.
+#     Each item in the list should have the form <sed_addr> <sed_machineId>
+#     Where <sed_addr> sets the address of the SeD while <sed_name> sets the machine name where
+#     the SeD runs.
 #     E.g. sed_uriAddr=tcp://127.0.0.1:5561 tmssed1;tcp://192.168.1.1:5562 umssed1
 #
-sed_uriAddr=tcp://127.0.0.1:5570 sed_name;
+sed_uriAddr=tcp://127.0.0.1:5562 cluster1;
 
 
 ###############################################################################
@@ -169,7 +169,7 @@ enableTMS=1
 # and TMS, this key corresponds to the identity of the machine in vishnu
 # When set, it MUST correspond to a valid machine identifier.
 #
-vishnuMachineId=machine_1
+vishnuMachineId=cluster1
 
 # sendmailScriptPath (M<UMS>)
 # Sets the path to the script for sending emails
