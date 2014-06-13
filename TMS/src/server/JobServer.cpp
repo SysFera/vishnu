@@ -244,7 +244,7 @@ JobServer::handleNativeBatchExec(int action,
       if (handlerExitCode != 0) {
         // write error message to pipe for the parent
         errorMsg = std::string(strerror(errno));
-        write(ipcPipe[1], strerror(errno), errorMsg.size());
+        write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
         exit(handlerExitCode);
       }
     }
@@ -276,12 +276,7 @@ JobServer::handleNativeBatchExec(int action,
           throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
           break;
       }
-    } catch(const TMSVishnuException & ex) {
-      handlerExitCode = ex.getTypeI();
-      errorMsg = std::string(ex.what());
-      LOG("[ERROR] "+ errorMsg, LogErr);
     } catch (const VishnuException & ex) {
-      handlerExitCode = ex.getTypeI();
       errorMsg = std::string(ex.what());
       LOG("[ERROR] "+ errorMsg, LogErr);
     }
@@ -300,9 +295,7 @@ JobServer::handleNativeBatchExec(int action,
     errorMsg = std::string(ipcMsgBuffer, nbRead);
     if (errorMsg != "SUCCESS") {
       throw TMSVishnuException(ERRCODE_RUNTIME_ERROR,
-                               boost::str(boost::format("Job worker process exited with status %1%, message: %2%")
-                                          % exitCode
-                                          % errorMsg));
+                               boost::str(boost::format("Job worker process exited with error: %1%") % errorMsg));
     }
   }
 }
