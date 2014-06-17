@@ -329,6 +329,13 @@
         <details key="content" value="Sets the target machine"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="Sets the type of the task. Possible values are 0 (batch task, default) or 1 (interactive task)"/>
+        <details key="shortOption" value="P"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListJobsOptions" instanceTypeName="ListJobsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString"

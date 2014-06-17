@@ -47,6 +47,9 @@ JobProxy::submitJob(const std::string& scriptPath,
   }
   mmachineId = requestMachineFromMetacheduler(mmachineId, options);
 
+ // sleep(1);
+//  std::cout << mmachineId<<"\n";
+//  return 0;
   // now create and initialize the service profile
   string serviceName = boost::str(boost::format("%1%@%2%")% SERVICES_TMS[JOBSUBMIT] % mmachineId);
 

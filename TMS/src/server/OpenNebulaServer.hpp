@@ -64,11 +64,11 @@ public:
 
   /**
    * \brief This function get the information about different cloud endpoint
- * \param serializedOptions (optional) Serialied options
+   * \param queueName (optional) queue name
    * \return The list of cloud information
    */
   TMS_Data::ListQueues_ptr
-  listQueues(const std::string& serializedOptions=std::string());
+  listQueues(const std::string& queueName=std::string());
 
   /**
    * \brief Function to get a list of submitted jobs

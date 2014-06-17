@@ -223,7 +223,6 @@ solveListOfQueues(diet_profile_t* pb) {
   std::string authKey;
   std::string machineId;
   std::string optionSerialized;
-  std::string listQueuesSerialized;
 
   diet_string_get(pb,0, authKey);
   diet_string_get(pb,1, machineId);
@@ -571,46 +570,38 @@ solveScheduling(diet_profile_t* pb)
     // retrieve cloud info
     TMS_Data::ListQueues queues;
     for(int index = 0; index < machines.getMachines().size(); ++index) {
-      std::cout << "machine: " << machines.getMachines().get(index)->getMachineId()<<"\n";
-      vishnu::listQueues(authKey, machines.getMachines().get(index)->getMachineId(), queues, "no queue name");
+      std::string queueMachineId = machines.getMachines().get(index)->getMachineId();
+      vishnu::listQueues(authKey, queueMachineId, queues, queueMachineId);
     }
 
-    std::cout << "queue size: "<<queues.getQueues().size()<<"\n";
     //Decode clouds
     std::vector<metasched_cloud_t> clouds;
-    for (int index = 0; index < queues.getQueues().size(); ++index) {
-      std::string cloudInfo = queues.getQueues().get(index)->getDescription();
-      for(int c = 0; c < cloudInfo.size(); ++c) {
-        if (cloudInfo[c] == '\'') cloudInfo[c] = '\"';
+    for (int queueIndex = 0; queueIndex < queues.getQueues().size(); ++queueIndex) {
+      std::string cloudInfo = queues.getQueues().get(queueIndex)->getDescription();
+      for(int cloudIndex = 0; cloudIndex < cloudInfo.size(); ++cloudIndex) {
+        if (cloudInfo[cloudIndex] == '\'') cloudInfo[cloudIndex] = '\"';
       }
       JsonObject jsonCloud(cloudInfo);
       metasched_cloud_t cloud = json_to_cloud(&jsonCloud);
-      cloud.cloud_id = index;
+      cloud.cloud_id = queues.getQueues().get(queueIndex)->getName();
       clouds.push_back(cloud);
-      print_cloud(cloud);
     }
 
+    JsonObject options(optionsSerialized);
+    ServerXMS* serverInstance = ServerXMS::getInstance();
+    JobServer jobServer(authKey, "machineid", serverInstance->getSedConfig());
+    UserSessionInfo userInfo = jobServer.getUserSessionInfo();
+
     metasched_task_t task;
-    //ServerXMS* server = ServerXMS::getInstance();
-    //    const std::string JOB_ID = vishnu::getObjectId(server->getVishnuId(),
-    //                                                   "formatidjob",
-    //                                                   vishnu::JOB,
-    //                                                   "metascheduler");
-    //    JsonObject options(optionsSerialized);
-
-    //    task.task_id = vishnu::convertToInt(JOB_ID.substr(2, std::string::npos));
-    task.id_cloud_comesFrom = 1;
-    task.task_id = 1;
-    task.task_type = 1;
-    task.id_cloud_owner = 1;
-
-    std::cout <<machines.getMachines().size()<<"\n";
+    task.id_cloud_comesFrom = userInfo.num_machine;
+    task.id_cloud_owner = userInfo.userid;
+    task.task_id = vishnu::getObjectId(serverInstance->getVishnuId(), "formatidjob", vishnu::JOB, "metascheduler");
+    task.task_type = options.getIntProperty("type");
 
     std::vector<server_data_t> allTaks;
     std::string selectedCloud = choose_cloud(task, clouds, allTaks);
-    if (! selectedCloud.empty()) {
-      throw TMSVishnuException(ERRCODE_INVALID_PARAM,
-                               boost::str(boost::format("Machine selection failed with code %1%") % selectedCloud));
+    if (selectedCloud.empty()) {
+      throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Failed to select a cloud for execution");
     }
 
     diet_string_set(pb,0, "success");

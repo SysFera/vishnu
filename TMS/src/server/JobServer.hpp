@@ -109,6 +109,13 @@ public:
   void
   setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
 
+  /**
+   * @brief Get logged user info
+   * @return
+   */
+  UserSessionInfo
+  getUserSessionInfo(void) const {return muserSessionInfo;}
+
 private:
   /**
    * \brief Check the machineid is correct

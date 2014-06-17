@@ -290,6 +290,17 @@ namespace TMS_Data
          **/
         void setMachine(::ecore::EString const& _machine);
 
+        /**
+         * \brief To get the type
+         * \return The type attribute value
+         **/
+        ::ecore::EInt getType() const;
+        /**
+         * \brief To set the type
+         * \param _type The type value
+         **/
+        void setType(::ecore::EInt _type);
+
         // References
         /**
          * \brief To get the criterion
@@ -363,6 +374,8 @@ namespace TMS_Data
         ::ecore::EBoolean m_posix;
 
         ::ecore::EString m_machine;
+
+        ::ecore::EInt m_type;
 
         // References
 

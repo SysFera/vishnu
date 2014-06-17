@@ -283,6 +283,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MACHINE);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__machine);
+    m_SubmitOptions__type = new ::ecore::EAttribute();
+    m_SubmitOptions__type->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TYPE);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__type);
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -1528,6 +1533,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__machine->setUnique(true);
     m_SubmitOptions__machine->setDerived(false);
     m_SubmitOptions__machine->setOrdered(true);
+    m_SubmitOptions__type->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+    m_SubmitOptions__type->setName("type");
+    m_SubmitOptions__type->setDefaultValueLiteral("0");
+    m_SubmitOptions__type->setLowerBound(0);
+    m_SubmitOptions__type->setUpperBound(1);
+    m_SubmitOptions__type->setTransient(false);
+    m_SubmitOptions__type->setVolatile(false);
+    m_SubmitOptions__type->setChangeable(true);
+    m_SubmitOptions__type->setUnsettable(false);
+    m_SubmitOptions__type->setID(false);
+    m_SubmitOptions__type->setUnique(true);
+    m_SubmitOptions__type->setDerived(false);
+    m_SubmitOptions__type->setOrdered(true);
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -3305,6 +3324,10 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__machine()
 {
     return m_SubmitOptions__machine;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__type()
+{
+    return m_SubmitOptions__type;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {

@@ -488,7 +488,7 @@ vishnu::getCurrentUserHome(void)
 std::string
 vishnu::copyFileToUserHome(const std::string& path)
 {
-  std::string result;
+  std::string result = "";
   try {
     bfs::path from(path);
     bfs::path to(boost::str(boost::format("%1%/%2%") % getCurrentUserHome() % bfs::basename(from)));

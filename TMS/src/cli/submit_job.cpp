@@ -26,6 +26,7 @@ using namespace vishnu;
 /**
  * \brief To build options for the VISHNU submit job command
  * \param pgName: The name of the command
+ * \param setTypeFct: Function to set the type of the task
  * \param setMachineFct: Function to set the target machine option
  * \param setProgramNameFct: Function to set the job name option
  * \param setQueueFct: Function to set the queue option
@@ -52,6 +53,7 @@ using namespace vishnu;
  */
 boost::shared_ptr<Options>
 makeSubJobOp(string pgName,
+             boost::function1<void, int>& setTypeFct,
              boost::function1<void, string>& setMachineFct,
              boost::function1<void, string>& setProgramNameFct,
              boost::function1<void, string>& setQueueFct,
@@ -84,6 +86,10 @@ makeSubJobOp(string pgName,
            configFile);
 
   // All cli options
+  opt->add("type",
+           "Sets the type of the task.",
+           CONFIG,
+           setTypeFct);
   opt->add("machine,r",
            "The id of the target machine. Default is autom.",
            CONFIG,
@@ -205,6 +211,7 @@ int main (int argc, char* argv[]){
 
   /******** Callback functions ******************/
   boost::function1<void,string> setProgramNameFct(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(submitOptions),_1));
+  boost::function1<void,int> setTypeFct(boost::bind(&TMS_Data::SubmitOptions::setType,boost::ref(submitOptions),_1));
   boost::function1<void,string> setMachineFct(boost::bind(&TMS_Data::SubmitOptions::setMachine,boost::ref(submitOptions),_1));
   boost::function1<void,string> setQueueFct(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(submitOptions),_1));
   boost::function1<void,int> setMemoryFct(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(submitOptions),_1));
@@ -229,6 +236,7 @@ int main (int argc, char* argv[]){
   TMS_Data::Job job;
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeSubJobOp(argv[0],
+      setTypeFct,
       setMachineFct,
       setProgramNameFct,
       setQueueFct,
@@ -287,19 +295,19 @@ int main (int argc, char* argv[]){
     int loadCriterionType = NBWAITINGJOBS;
     if (loadCriterionStr.empty()) {
       switch(loadCriterionStr[0]) {
-      case '2':
-      case 'R':
-        loadCriterionType = NBRUNNINGJOBS;
-        break;
-      case '1':
-      case 'T':
-        loadCriterionType = NBJOBS;
-        break;
-      case '0'://Default
-      case 'W':
-      default:
-        loadCriterionType = NBWAITINGJOBS;
-        break;
+        case '2':
+        case 'R':
+          loadCriterionType = NBRUNNINGJOBS;
+          break;
+        case '1':
+        case 'T':
+          loadCriterionType = NBJOBS;
+          break;
+        case '0'://Default
+        case 'W':
+        default:
+          loadCriterionType = NBWAITINGJOBS;
+          break;
       }
     }
     TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();

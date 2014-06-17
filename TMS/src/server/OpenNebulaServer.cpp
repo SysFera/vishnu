@@ -96,7 +96,6 @@ OpenNebulaServer::submit(const std::string& scriptPath,
   jobPtr->setOwner(mvmUser);
 
   jobSteps.getJobs().push_back(jobPtr);
-
   return 0;
 }
 
@@ -209,11 +208,11 @@ OpenNebulaServer::getJobStartTime(const std::string& jobJsonSerialized) {
 
 /**
  * \brief This function get the information about different cloud endpoint
- * \param serializedOptions (optional) Serialied options
+ * \param queueName (optional) Queue name
  * \return The list of cloud information
  */
 TMS_Data::ListQueues_ptr
-OpenNebulaServer::listQueues(const std::string& serializedOptions) {
+OpenNebulaServer::listQueues(const std::string& queueName) {
 
   OneCloudInstance cloud(mcloudEndpoint, getSessionString());
 
@@ -222,6 +221,7 @@ OpenNebulaServer::listQueues(const std::string& serializedOptions) {
   if (! queue)  {
     TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Null queue info");
   }
+  queue->setName(queueName);
   queues->getQueues().push_back(queue);
   return queues;
 }
