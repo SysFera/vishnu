@@ -392,6 +392,7 @@ extractMachineServersFromLine(const std::vector<std::string>& uriv, std::vector<
         tmp.push_back("heartbeatxmssed@"+tokens2[pos+1]);
       }
       allServers.push_back(boost::make_shared<Server>(module, tmp, uri));
+      tmp.clear();
       tokens2.clear();
     }
     tokens.clear();
