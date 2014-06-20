@@ -589,7 +589,7 @@ solveScheduling(diet_profile_t* pb)
 
     JsonObject options(optionsSerialized);
     ServerXMS* serverInstance = ServerXMS::getInstance();
-    JobServer jobServer(authKey, "machineid", serverInstance->getSedConfig());
+    JobServer jobServer(authKey, options.getStringProperty("machine"), serverInstance->getSedConfig());
     UserSessionInfo userInfo = jobServer.getUserSessionInfo();
 
     metasched_task_t task;
@@ -605,11 +605,19 @@ solveScheduling(diet_profile_t* pb)
       throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Failed to select a cloud for execution");
     }
 
-    diet_string_set(pb,0, "success");
-    diet_string_set(pb,1, selectedCloud);
-  } catch (VishnuException& ex) {
-    diet_string_set(pb,0, "error");
-    diet_string_set(pb,1, ex.what());
-  }
+    
+    options.setProperty("nbretries", task.nb_tries);
+    options.setProperty("timestamp", task.timestamp);
+
+    JsonObject result;
+    result.setProperty("selected_machine", selectedCloud);
+    result.setProperty("submit_options", options.encode());
+
+     diet_string_set(pb,0, "success");
+    diet_string_set(pb,1, result.encode());
+   } catch (VishnuException& ex) {
+     diet_string_set(pb,0, "error");
+     diet_string_set(pb,1, ex.what());
+   }
   return 0;
 }

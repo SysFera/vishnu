@@ -43,7 +43,7 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
   std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, outputDir "
                            "FROM job "
                            "WHERE job.jobId='"+mdatabaseInstance->escapeData(jobId)+"' ";
-  std::string machineTmp = options->getStringProperty("machineid");
+  std::string machineTmp = options->getStringProperty(mmachineId);
   if (! machineTmp.empty()){
     sqlRequest += "  AND job.submitMachineId='"+mdatabaseInstance->escapeData(machineTmp)+"'" ;
   }
