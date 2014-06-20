@@ -301,6 +301,28 @@ namespace TMS_Data
          **/
         void setType(::ecore::EInt _type);
 
+        /**
+         * \brief To get the nbRetries
+         * \return The nbRetries attribute value
+         **/
+        ::ecore::EInt getNbRetries() const;
+        /**
+         * \brief To set the nbRetries
+         * \param _nbRetries The nbRetries value
+         **/
+        void setNbRetries(::ecore::EInt _nbRetries);
+
+        /**
+         * \brief To get the timestamp
+         * \return The timestamp attribute value
+         **/
+        ::ecore::ELong getTimestamp() const;
+        /**
+         * \brief To set the timestamp
+         * \param _timestamp The timestamp value
+         **/
+        void setTimestamp(::ecore::ELong _timestamp);
+
         // References
         /**
          * \brief To get the criterion
@@ -376,6 +398,10 @@ namespace TMS_Data
         ::ecore::EString m_machine;
 
         ::ecore::EInt m_type;
+
+        ::ecore::EInt m_nbRetries;
+
+        ::ecore::ELong m_timestamp;
 
         // References
 

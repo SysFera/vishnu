@@ -288,6 +288,16 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TYPE);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__type);
+    m_SubmitOptions__nbRetries = new ::ecore::EAttribute();
+    m_SubmitOptions__nbRetries->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__NBRETRIES);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__nbRetries);
+    m_SubmitOptions__timestamp = new ::ecore::EAttribute();
+    m_SubmitOptions__timestamp->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TIMESTAMP);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__timestamp);
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -1547,6 +1557,34 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__type->setUnique(true);
     m_SubmitOptions__type->setDerived(false);
     m_SubmitOptions__type->setOrdered(true);
+    m_SubmitOptions__nbRetries->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+    m_SubmitOptions__nbRetries->setName("nbRetries");
+    m_SubmitOptions__nbRetries->setDefaultValueLiteral("0");
+    m_SubmitOptions__nbRetries->setLowerBound(0);
+    m_SubmitOptions__nbRetries->setUpperBound(1);
+    m_SubmitOptions__nbRetries->setTransient(false);
+    m_SubmitOptions__nbRetries->setVolatile(false);
+    m_SubmitOptions__nbRetries->setChangeable(true);
+    m_SubmitOptions__nbRetries->setUnsettable(false);
+    m_SubmitOptions__nbRetries->setID(false);
+    m_SubmitOptions__nbRetries->setUnique(true);
+    m_SubmitOptions__nbRetries->setDerived(false);
+    m_SubmitOptions__nbRetries->setOrdered(true);
+    m_SubmitOptions__timestamp->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_SubmitOptions__timestamp->setName("timestamp");
+    m_SubmitOptions__timestamp->setDefaultValueLiteral("0");
+    m_SubmitOptions__timestamp->setLowerBound(0);
+    m_SubmitOptions__timestamp->setUpperBound(1);
+    m_SubmitOptions__timestamp->setTransient(false);
+    m_SubmitOptions__timestamp->setVolatile(false);
+    m_SubmitOptions__timestamp->setChangeable(true);
+    m_SubmitOptions__timestamp->setUnsettable(false);
+    m_SubmitOptions__timestamp->setID(false);
+    m_SubmitOptions__timestamp->setUnique(true);
+    m_SubmitOptions__timestamp->setDerived(false);
+    m_SubmitOptions__timestamp->setOrdered(true);
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -3328,6 +3366,14 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__type()
 {
     return m_SubmitOptions__type;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__nbRetries()
+{
+    return m_SubmitOptions__nbRetries;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__timestamp()
+{
+    return m_SubmitOptions__timestamp;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {

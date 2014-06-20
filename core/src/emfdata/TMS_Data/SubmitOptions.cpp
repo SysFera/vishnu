@@ -33,8 +33,8 @@ using namespace ::TMS_Data;
 // Default constructor
 SubmitOptions::SubmitOptions() :
     m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_selectQueueAutom(false),
-            m_workId(0), m_posix(false), m_machine(""), m_type(0), m_criterion(
-                    0)
+            m_workId(0), m_posix(false), m_machine(""), m_type(0), m_nbRetries(
+                    0), m_timestamp(0), m_criterion(0)
 {
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__SubmitOptionsImpl) START*/
@@ -600,6 +600,58 @@ void SubmitOptions::setType(::ecore::EInt _type)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__type(),
                 _old_type,
                 m_type
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EInt SubmitOptions::getNbRetries() const
+{
+    return m_nbRetries;
+}
+
+void SubmitOptions::setNbRetries(::ecore::EInt _nbRetries)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EInt _old_nbRetries = m_nbRetries;
+#endif
+    m_nbRetries = _nbRetries;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__nbRetries(),
+                _old_nbRetries,
+                m_nbRetries
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::ELong SubmitOptions::getTimestamp() const
+{
+    return m_timestamp;
+}
+
+void SubmitOptions::setTimestamp(::ecore::ELong _timestamp)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::ELong _old_timestamp = m_timestamp;
+#endif
+    m_timestamp = _timestamp;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__timestamp(),
+                _old_timestamp,
+                m_timestamp
         );
         eNotify(&notification);
     }

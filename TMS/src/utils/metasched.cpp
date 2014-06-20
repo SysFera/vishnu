@@ -95,7 +95,7 @@ find_element_in_data(const std::string& id, std::vector<server_data_t>& data) {
 * @brief Choice function for the clouds
 */
 std::string
-choose_cloud(const metasched_task_t& task, std::vector<metasched_cloud_t> clouds, std::vector<server_data_t>& data) {
+choose_cloud(metasched_task_t& task, std::vector<metasched_cloud_t> clouds) {
 
   std::string chosen_cloud = "";
 
@@ -105,22 +105,17 @@ choose_cloud(const metasched_task_t& task, std::vector<metasched_cloud_t> clouds
     return task.id_cloud_owner;
   }
 
-  int taskIndex = find_element_in_data(task.task_id, data);
   //If first time, we add it
-  if (taskIndex < 0) {
-    std::cout << "New task: creating timestamp" << std::endl;
-    server_data_t serverdata;
-    serverdata.nb_tries = 1;
-    serverdata.task_id = task.task_id;
-    serverdata.timestamp = time(NULL);
-    data.push_back(serverdata);
+  if (task.nb_tries == 0) {
+    ++task.nb_tries;
+    task.timestamp = time(NULL);
   } else {
     //send to DC
-    if (data.at(taskIndex).nb_tries > SERVER_MAX_TRIES) {
+    if (task.nb_tries > SERVER_MAX_TRIES) {
       std::cout << "SENDING TO DATA CENTER" << std::endl;
     } else {
-      std::cout << "Try number " << data.at(taskIndex).nb_tries +1 << std::endl;
-      data.at(taskIndex).nb_tries = data.at(taskIndex).nb_tries + 1;
+      ++task.nb_tries;
+      std::cout << "Try number " << task.nb_tries << std::endl;
     }
   }
 

@@ -73,6 +73,8 @@ void JsonObject::reset(const std::string& data) {
 JsonObject::JsonObject(const TMS_Data::SubmitOptions& submitOptions)
   : m_jsonObject(json_object()) {
   setProperty("name", submitOptions.getName());
+  setProperty("timestamp", submitOptions.getTimestamp());
+  setProperty("nbretries", submitOptions.getNbRetries());
   setProperty("type", submitOptions.getType());
   setProperty("queue", submitOptions.getQueue());
   setProperty("walltime", submitOptions.getWallTime());
@@ -427,6 +429,8 @@ TMS_Data::SubmitOptions JsonObject::getSubmitOptions() {
   TMS_Data::SubmitOptions options;
   options.setName(getStringProperty("name"));
   options.setType(getIntProperty("type"));
+  options.setTimestamp(getIntProperty("timestamp"));
+  options.setNbRetries(getIntProperty("nbretries"));
   options.setQueue(getStringProperty("queue"));
   options.setWallTime(getIntProperty("walltime"));
   options.setMemory(getIntProperty("memory"));

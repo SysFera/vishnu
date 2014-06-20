@@ -18,10 +18,12 @@ class JsonObject;
  * If it is first scheduling, set it to NEW_TASK
  */
 struct metasched_task_t {
-    int task_type;
-    std::string id_cloud_owner;
-    std::string id_cloud_comesFrom;
-    std::string task_id;
+  std::string task_id;
+  int task_type;
+  std::string id_cloud_owner;
+  std::string id_cloud_comesFrom;
+  time_t timestamp;
+  int nb_tries;
 };
 
 
@@ -38,15 +40,15 @@ struct metasched_task_t {
  * highest_mean_resource_le_50_p:   Highest mean load for hosts that are < 50% (Highest between CPU or MEM)
  */
 struct metasched_cloud_t {
-    std::string cloud_id;
-    int load_cpu;
-    int load_memory;
-    int vm_number;
-    int host_number;
-    int host_ready;
-    int cpu_number_hosts_le_50p;
-    int mem_number_hosts_le_50p;
-    int highest_mean_resource_le_50_p;
+  std::string cloud_id;
+  int load_cpu;
+  int load_memory;
+  int vm_number;
+  int host_number;
+  int host_ready;
+  int cpu_number_hosts_le_50p;
+  int mem_number_hosts_le_50p;
+  int highest_mean_resource_le_50_p;
 };
 
 /**
@@ -56,9 +58,9 @@ struct metasched_cloud_t {
 * nb_tries:     The number of times we already handled this task
 */
 struct server_data_t {
-    std::string task_id;
-    time_t timestamp;
-    int nb_tries;
+  std::string task_id;
+  time_t timestamp;
+  int nb_tries;
 };
 
 /**
@@ -108,7 +110,7 @@ find_element_in_data(const std::string& id, std::vector<server_data_t>& data);
 * @brief Choice function for the clouds
 */
 std::string
-choose_cloud(const metasched_task_t& task, std::vector<metasched_cloud_t> clouds, std::vector<server_data_t>& data);
+choose_cloud(metasched_task_t& task, std::vector<metasched_cloud_t> clouds);
 
 /**
 * \brief Mean Load of hosts

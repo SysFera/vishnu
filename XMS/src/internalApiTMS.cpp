@@ -597,9 +597,10 @@ solveScheduling(diet_profile_t* pb)
     task.id_cloud_owner = userInfo.userid;
     task.task_id = vishnu::getObjectId(serverInstance->getVishnuId(), "formatidjob", vishnu::JOB, "metascheduler");
     task.task_type = options.getIntProperty("type");
+    task.timestamp = options.getIntProperty("timestamp");
+    task.nb_tries = options.getIntProperty("nbretries");
 
-    std::vector<server_data_t> allTaks;
-    std::string selectedCloud = choose_cloud(task, clouds, allTaks);
+    std::string selectedCloud = choose_cloud(task, clouds);
     if (selectedCloud.empty()) {
       throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Failed to select a cloud for execution");
     }
