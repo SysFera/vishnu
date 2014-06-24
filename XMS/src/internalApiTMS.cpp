@@ -605,7 +605,6 @@ solveScheduling(diet_profile_t* pb)
       throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Failed to select a cloud for execution");
     }
 
-    
     options.setProperty("nbretries", task.nb_tries);
     options.setProperty("timestamp", task.timestamp);
 
@@ -613,11 +612,11 @@ solveScheduling(diet_profile_t* pb)
     result.setProperty("selected_machine", selectedCloud);
     result.setProperty("submit_options", options.encode());
 
-     diet_string_set(pb,0, "success");
+    diet_string_set(pb,0, "success");
     diet_string_set(pb,1, result.encode());
-   } catch (VishnuException& ex) {
-     diet_string_set(pb,0, "error");
-     diet_string_set(pb,1, ex.what());
-   }
+  } catch (VishnuException& ex) {
+    diet_string_set(pb,0, "error");
+    diet_string_set(pb,1, ex.what());
+  }
   return 0;
 }

@@ -154,6 +154,15 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__submitError->setFeatureID(
             ::TMS_Data::TMS_DataPackage::JOB__SUBMITERROR);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__submitError);
+    m_Job__type = new ::ecore::EAttribute();
+    m_Job__type->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__TYPE);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__type);
+    m_Job__nbRetries = new ::ecore::EAttribute();
+    m_Job__nbRetries->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__NBRETRIES);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__nbRetries);
+    m_Job__timestamp = new ::ecore::EAttribute();
+    m_Job__timestamp->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__TIMESTAMP);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__timestamp);
 
     // ListJobs
     m_ListJobsEClass = new ::ecore::EClass();
@@ -1200,6 +1209,48 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__submitError->setUnique(true);
     m_Job__submitError->setDerived(false);
     m_Job__submitError->setOrdered(true);
+    m_Job__type->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+    m_Job__type->setName("type");
+    m_Job__type->setDefaultValueLiteral("0");
+    m_Job__type->setLowerBound(0);
+    m_Job__type->setUpperBound(1);
+    m_Job__type->setTransient(false);
+    m_Job__type->setVolatile(false);
+    m_Job__type->setChangeable(true);
+    m_Job__type->setUnsettable(false);
+    m_Job__type->setID(false);
+    m_Job__type->setUnique(true);
+    m_Job__type->setDerived(false);
+    m_Job__type->setOrdered(true);
+    m_Job__nbRetries->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+    m_Job__nbRetries->setName("nbRetries");
+    m_Job__nbRetries->setDefaultValueLiteral("0");
+    m_Job__nbRetries->setLowerBound(0);
+    m_Job__nbRetries->setUpperBound(1);
+    m_Job__nbRetries->setTransient(false);
+    m_Job__nbRetries->setVolatile(false);
+    m_Job__nbRetries->setChangeable(true);
+    m_Job__nbRetries->setUnsettable(false);
+    m_Job__nbRetries->setID(false);
+    m_Job__nbRetries->setUnique(true);
+    m_Job__nbRetries->setDerived(false);
+    m_Job__nbRetries->setOrdered(true);
+    m_Job__timestamp->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Job__timestamp->setName("timestamp");
+    m_Job__timestamp->setDefaultValueLiteral("0");
+    m_Job__timestamp->setLowerBound(0);
+    m_Job__timestamp->setUpperBound(1);
+    m_Job__timestamp->setTransient(false);
+    m_Job__timestamp->setVolatile(false);
+    m_Job__timestamp->setChangeable(true);
+    m_Job__timestamp->setUnsettable(false);
+    m_Job__timestamp->setID(false);
+    m_Job__timestamp->setUnique(true);
+    m_Job__timestamp->setDerived(false);
+    m_Job__timestamp->setOrdered(true);
     // ListJobs
     m_ListJobsEClass->setName("ListJobs");
     m_ListJobsEClass->setAbstract(false);
@@ -3262,6 +3313,18 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__submitError()
 {
     return m_Job__submitError;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__type()
+{
+    return m_Job__type;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__nbRetries()
+{
+    return m_Job__nbRetries;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__timestamp()
+{
+    return m_Job__timestamp;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobs__nbJobs()
 {

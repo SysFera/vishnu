@@ -230,6 +230,23 @@ void Job::_initialize()
                 m_submitError);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::JOB__TYPE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_type);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::JOB__NBRETRIES:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any,
+                m_nbRetries);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::JOB__TIMESTAMP:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any,
+                m_timestamp);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -419,6 +436,24 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_submitError);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::JOB__TYPE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
+                m_type);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::JOB__NBRETRIES:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
+                m_nbRetries);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::JOB__TIMESTAMP:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
+                m_timestamp);
+    }
+        return;
 
     }
     throw "Error";
@@ -505,6 +540,12 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::JOB__SUBMITERROR:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_submitError);
+    case ::TMS_Data::TMS_DataPackage::JOB__TYPE:
+        return m_type != 0;
+    case ::TMS_Data::TMS_DataPackage::JOB__NBRETRIES:
+        return m_nbRetries != 0;
+    case ::TMS_Data::TMS_DataPackage::JOB__TIMESTAMP:
+        return m_timestamp != 0;
 
     }
     throw "Error";

@@ -102,6 +102,9 @@ JobServer::submitJob(std::string& scriptContent,
 
     jobInfo.setWorkId(options->getIntProperty("scriptpath", 0));
     jobInfo.setWorkId(options->getIntProperty("workid", 0));
+    jobInfo.setType(options->getIntProperty("type", 0));
+    jobInfo.setNbRetries(options->getIntProperty("nbretries", 0));
+    jobInfo.setTimestamp(options->getIntProperty("timestamp", 0));
     setRealFilePaths(scriptContent, options, jobInfo);
     jobInfo.setSubmitMachineId(mmachineId);
     jobInfo.setStatus(vishnu::STATE_UNDEFINED);
@@ -899,6 +902,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
     for (int step = 0; step < nbSteps; ++step) {
       TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(step);
       setBaseJobInfo(*currentJobPtr, baseJobInfo);
+//      currentJobPtr->setOutputDir(baseJobInfo.getOutputDir());
 
       // create an entry to the database for the step
       mdatabaseInstance->process(boost::str(boost::format("INSERT INTO job (jobid, vsession_numsessionid)"
@@ -978,6 +982,9 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
     query+="vmId='"+mdatabaseInstance->escapeData(job.getVmId())+"', ";
     query+="vmIp='"+mdatabaseInstance->escapeData(job.getVmIp())+"', ";
     query+="relatedSteps='"+mdatabaseInstance->escapeData(job.getRelatedSteps())+"'";
+    query+="nbretries="+vishnu::convertToString(job.getNbRetries())+", ";
+    query+="type="+vishnu::convertToString(job.getType())+", ";
+    query+="timestamp="+vishnu::convertToString(job.getTimestamp())+", ";
     query+=" WHERE jobid='"+mdatabaseInstance->escapeData(job.getJobId())+"';";
 
     mdatabaseInstance->process(query);
@@ -1081,4 +1088,7 @@ JobServer::setBaseJobInfo(TMS_Data::Job& jobInfo, const TMS_Data::Job& baseJobIn
   jobInfo.setJobId(baseJobInfo.getJobId());
   jobInfo.setOutputDir(baseJobInfo.getOutputDir());
   jobInfo.setJobWorkingDir(baseJobInfo.getJobWorkingDir());
+  jobInfo.setType(baseJobInfo.getType());
+  jobInfo.setTimestamp(baseJobInfo.getTimestamp());
+  jobInfo.setNbRetries(baseJobInfo.getNbRetries());
 }

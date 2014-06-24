@@ -137,13 +137,6 @@ choose_cloud(metasched_task_t& task, std::vector<metasched_cloud_t> clouds) {
     float newValue = x*((float)currrentCloud.host_number / 2.0)
                      - y * (float)currrentCloud.host_number
                      - (float)z;
-    printf("%.3f*%.3f - %.3f*%.3f - %d == %f\n", x
-           , (float)currrentCloud.host_number / 2.0
-           , y
-           , (float)currrentCloud.host_number
-           , z
-           , newValue);
-    std::cout << value << " < " << newValue << std::endl;
     if (newValue >value) {
       chosen_cloud = currrentCloud.cloud_id;
       value = newValue;

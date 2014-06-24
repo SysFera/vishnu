@@ -167,6 +167,25 @@
         <details key="content" value="Holds error message when job submission failed"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="Sets the type of the task. Possible values are 0 (batch task, default) or 1 (interactive task)"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbRetries" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="Sets the number of time the task has been rescheduled in the system"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timestamp" eType="ecore:EDataType Ecore.ecore#//ELong"
+        defaultValueLiteral="0">
+      <eAnnotations source="Description">
+        <details key="content" value="Latest time when the task has been marked"/>
+        <details key="shortOption" value="Z"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListJobs" instanceTypeName="ListJobs">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbJobs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"

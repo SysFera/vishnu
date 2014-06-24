@@ -400,6 +400,39 @@ namespace TMS_Data
          **/
         void setSubmitError(::ecore::EString const& _submitError);
 
+        /**
+         * \brief To get the type
+         * \return The type attribute value
+         **/
+        ::ecore::EInt getType() const;
+        /**
+         * \brief To set the type
+         * \param _type The type value
+         **/
+        void setType(::ecore::EInt _type);
+
+        /**
+         * \brief To get the nbRetries
+         * \return The nbRetries attribute value
+         **/
+        ::ecore::EInt getNbRetries() const;
+        /**
+         * \brief To set the nbRetries
+         * \param _nbRetries The nbRetries value
+         **/
+        void setNbRetries(::ecore::EInt _nbRetries);
+
+        /**
+         * \brief To get the timestamp
+         * \return The timestamp attribute value
+         **/
+        ::ecore::ELong getTimestamp() const;
+        /**
+         * \brief To set the timestamp
+         * \param _timestamp The timestamp value
+         **/
+        void setTimestamp(::ecore::ELong _timestamp);
+
         // References
 
 
@@ -484,6 +517,12 @@ namespace TMS_Data
         ::ecore::EString m_relatedSteps;
 
         ::ecore::EString m_submitError;
+
+        ::ecore::EInt m_type;
+
+        ::ecore::EInt m_nbRetries;
+
+        ::ecore::ELong m_timestamp;
 
         // References
 

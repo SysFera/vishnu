@@ -33,7 +33,8 @@ using namespace ::TMS_Data;
 Job::Job() :
     m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_submitDate(-1), m_endDate(-1),
             m_wallClockLimit(-1), m_memLimit(-1), m_nbNodes(-1), m_batchJobId(
-                    ""), m_workId(0), m_userId(""), m_vmId(""), m_vmIp("")
+                    ""), m_workId(0), m_userId(""), m_vmId(""), m_vmIp(""),
+            m_type(0), m_nbRetries(0), m_timestamp(0)
 {
 
     /*PROTECTED REGION ID(JobImpl__JobImpl) START*/
@@ -827,6 +828,84 @@ void Job::setSubmitError(::ecore::EString const& _submitError)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__submitError(),
                 _old_submitError,
                 m_submitError
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EInt Job::getType() const
+{
+    return m_type;
+}
+
+void Job::setType(::ecore::EInt _type)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EInt _old_type = m_type;
+#endif
+    m_type = _type;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__type(),
+                _old_type,
+                m_type
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EInt Job::getNbRetries() const
+{
+    return m_nbRetries;
+}
+
+void Job::setNbRetries(::ecore::EInt _nbRetries)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EInt _old_nbRetries = m_nbRetries;
+#endif
+    m_nbRetries = _nbRetries;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__nbRetries(),
+                _old_nbRetries,
+                m_nbRetries
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::ELong Job::getTimestamp() const
+{
+    return m_timestamp;
+}
+
+void Job::setTimestamp(::ecore::ELong _timestamp)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::ELong _old_timestamp = m_timestamp;
+#endif
+    m_timestamp = _timestamp;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__timestamp(),
+                _old_timestamp,
+                m_timestamp
         );
         eNotify(&notification);
     }
