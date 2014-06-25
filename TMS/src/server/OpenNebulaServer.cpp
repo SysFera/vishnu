@@ -166,8 +166,7 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
     }
     if (jobStatus == vishnu::STATE_CANCELLED
         || jobStatus == vishnu::STATE_COMPLETED
-        || jobStatus == vishnu::STATE_FAILED)
-    {
+        || jobStatus == vishnu::STATE_FAILED) {
       releaseResources(vmId);
     }
   } else {
@@ -243,7 +242,7 @@ void OpenNebulaServer::releaseResources(const std::string& vmId)
   OneRPCManager rpcManager(mcloudEndpoint);
   rpcManager.setMethod("one.vm.action");
   rpcManager.addParam(getSessionString());
-  rpcManager.addParam(std::string("stop"));
+  rpcManager.addParam(std::string("delete"));
   rpcManager.addParam(vishnu::convertToInt(vmId));
   rpcManager.execute();
   if (! rpcManager.lastCallSucceeded()) {
