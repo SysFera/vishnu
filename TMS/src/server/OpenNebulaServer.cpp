@@ -67,7 +67,7 @@ OpenNebulaServer::submit(const std::string& scriptPath,
   OneRPCManager rpcManager(mcloudEndpoint);
   rpcManager.setMethod("one.vm.allocate");
   rpcManager.addParam(getSessionString());
-  rpcManager.addParam(getKvmTemplate(options));
+  rpcManager.addParam(generateKvmTemplate(options));
   rpcManager.addParam(false);   // to create VM on pending state
   rpcManager.execute();
 
@@ -338,7 +338,7 @@ OpenNebulaServer::getSessionString(void)
  * @return
  */
 std::string
-OpenNebulaServer::getKvmTemplate(const TMS_Data::SubmitOptions& options)
+OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
 {
   retrieveUserSpecificParams(options.getSpecificParams());
 
