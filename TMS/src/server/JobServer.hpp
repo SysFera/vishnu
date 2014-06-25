@@ -273,6 +273,14 @@ private:
   void
   exportJobEnvironments(const TMS_Data::Job &defaultJobInfo);
 
+  /**
+   * @brief setBaseJobInfo
+   * @param jobInfo
+   * @param baseJobInfo
+   */
+  void
+  setBaseJobInfo(TMS_Data::Job& jobInfo, const TMS_Data::Job& baseJobInfo);
+
 private:
 
   /**

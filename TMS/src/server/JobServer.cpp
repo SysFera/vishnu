@@ -890,13 +890,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
 {
   if (jobSteps.getJobs().size() == 1) {
     TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(0);
-    currentJobPtr->setSubmitMachineId(baseJobInfo.getSubmitMachineId());
-    currentJobPtr->setWorkId(baseJobInfo.getWorkId());
-    currentJobPtr->setJobPath(baseJobInfo.getJobPath());
-    currentJobPtr->setOwner(baseJobInfo.getOwner());
-    currentJobPtr->setJobId(baseJobInfo.getJobId());
-    currentJobPtr->setOutputDir(baseJobInfo.getOutputDir());
-    currentJobPtr->setJobWorkingDir(baseJobInfo.getJobWorkingDir());
+    setBaseJobInfo(*currentJobPtr, baseJobInfo);
     updateJobRecordIntoDatabase(SubmitBatchAction, *currentJobPtr);
   } else {
     int nbSteps = jobSteps.getJobs().size();
@@ -904,12 +898,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
     // first set steps' id and other default parameters
     for (int step = 0; step < nbSteps; ++step) {
       TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(step);
-      currentJobPtr->setJobId(boost::str(boost::format("%1%.%2%") % baseJobInfo.getJobId() % step));
-      currentJobPtr->setSubmitMachineId(baseJobInfo.getSubmitMachineId());
-      currentJobPtr->setWorkId(baseJobInfo.getWorkId());
-      currentJobPtr->setJobPath(baseJobInfo.getJobPath());
-      currentJobPtr->setOwner(baseJobInfo.getOwner());
-      currentJobPtr->setOutputDir(baseJobInfo.getOutputDir());
+      setBaseJobInfo(*currentJobPtr, baseJobInfo);
 
       // create an entry to the database for the step
       mdatabaseInstance->process(boost::str(boost::format("INSERT INTO job (jobid, vsession_numsessionid)"
@@ -1034,9 +1023,9 @@ JobServer::checkMachineId(std::string machineId) {
                                                   " FROM machine"
                                                   " WHERE machineid='%1%'"
                                                   " AND status<>%2%")%mdatabaseInstance->escapeData(machineId) %vishnu::STATUS_DELETED);
-  boost::scoped_ptr<DatabaseResult> machine(mdatabaseInstance->getResult(sqlMachineRequest.c_str()));
+  boost::scoped_ptr<DatabaseResult> machine(mdatabaseInstance->getResult(sqlMachineRequest));
   if(machine->getNbTuples()==0) {
-    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, machineId);
   }
 }
 
@@ -1075,4 +1064,21 @@ JobServer::exportJobEnvironments(const TMS_Data::Job& defaultJobInfo)
 {
   setenv("VISHNU_JOB_ID", defaultJobInfo.getJobId().c_str(), 1);
   setenv("VISHNU_OUTPUT_DIR", defaultJobInfo.getOutputDir().c_str(), 1);
+}
+
+/**
+ * @brief setBaseJobInfo
+ * @param jobInfo
+ * @param baseJobInfo
+ */
+void
+JobServer::setBaseJobInfo(TMS_Data::Job& jobInfo, const TMS_Data::Job& baseJobInfo)
+{
+  jobInfo.setSubmitMachineId(baseJobInfo.getSubmitMachineId());
+  jobInfo.setWorkId(baseJobInfo.getWorkId());
+  jobInfo.setJobPath(baseJobInfo.getJobPath());
+  jobInfo.setOwner(baseJobInfo.getOwner());
+  jobInfo.setJobId(baseJobInfo.getJobId());
+  jobInfo.setOutputDir(baseJobInfo.getOutputDir());
+  jobInfo.setJobWorkingDir(baseJobInfo.getJobWorkingDir());
 }
