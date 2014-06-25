@@ -364,7 +364,7 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
 
   return boost::str(
         boost::format(
-          "NAME=\"vishnu-vm\"                                                     \n"
+          "NAME=\"vishnu-vm\"                                                    \n"
           "CPU=%1%                                                               \n"
           "VCPU=%1%                                                              \n"
           "MEMORY=%2%                                                            \n"
