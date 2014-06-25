@@ -902,7 +902,6 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
     for (int step = 0; step < nbSteps; ++step) {
       TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(step);
       setBaseJobInfo(*currentJobPtr, baseJobInfo);
-//      currentJobPtr->setOutputDir(baseJobInfo.getOutputDir());
 
       // create an entry to the database for the step
       mdatabaseInstance->process(boost::str(boost::format("INSERT INTO job (jobid, vsession_numsessionid)"
