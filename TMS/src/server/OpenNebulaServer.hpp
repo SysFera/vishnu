@@ -242,6 +242,14 @@ private:
                      const std::string& pid,
                      const std::string& vmIp,
                      const std::string& uid);
+
+  /**
+   * @brief Gives the equivalent string of a VM state
+   * @param state The state
+   * @return a string
+   */
+  std::string
+  vmState2String(int state);
 };
 
 #endif /* OpenNebulaServer_HPP_ */

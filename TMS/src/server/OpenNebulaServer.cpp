@@ -145,6 +145,7 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
     // retrive vm info
     VmT vmInfo;
     OneCloudInstance cloudInstance(mcloudEndpoint, getSessionString());
+
     if (cloudInstance.loadVmInfo(vishnu::convertToInt(vmId), vmInfo) == 0) {
       switch (vmInfo.state) {
         case VM_ACTIVE:
@@ -167,6 +168,13 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
     if (jobStatus == vishnu::STATE_CANCELLED
         || jobStatus == vishnu::STATE_COMPLETED
         || jobStatus == vishnu::STATE_FAILED) {
+
+      LOG(boost::str(boost::format("[WARN] Cleaning job %1%; VM ID: %2%; VM State: %3%; Script Status: %4%.")
+                     % jobId
+                     % vmId
+                     % vmState2String(vmInfo.state)
+                     % vishnu::statusToString(jobStatus)), LogWarning);
+
       releaseResources(vmId);
     }
   } else {
@@ -464,19 +472,44 @@ OpenNebulaServer::monitorScriptState(const std::string& jobId,
   return jobStatus;
 }
 
-
 /**
- * @brief create job data directory containing script and misc files
- * @param jobId The job id.
- * @param scriptPath The script path
- * @return: Nothing. The base datadir is stored in the mbaseDataDir variable
+ * @brief Gives the equivalent string of a VM state
+ * @param state The state
+ * @return a string
  */
-void
-OpenNebulaServer::setupJobDataDir(const std::string& jobId, const std::string& scriptPath)
+std::string
+OpenNebulaServer::vmState2String(int state)
 {
-  mbaseDataDir = boost::str(boost::format("%1%/%2%") % mnfsMountPoint % jobId);
-  std::string targetScriptPath = boost::str(boost::format("%1%/script.sh") % jobDataDir);
-  vishnu::createDir(jobDataDir);
-  vishnu::saveInFile(targetScriptPath, vishnu::get_file_content(scriptPath));
-  vishnu::makeFileExecutable(targetScriptPath);
+  std::string value = "UNDEFINED";
+  switch (state) {
+    case VM_ACTIVE:
+      value= "RUNNING";
+      break;
+    case VM_POWEROFF:
+      value= "POWEROFF";
+      break;
+    case VM_FAILED:
+      value= "FAILED";
+      break;
+    case VM_STOPPED:
+      value= "STOPPED";
+      break;
+    case VM_DONE:
+      value= "DONE";
+      break;
+    case VM_INIT:
+      value= "INIT";
+      break;
+    case VM_HOLD:
+      value= "HOLD";
+      break;
+    case VM_UNDEPLOYED:
+      value= "UNDEPLOYED";
+      break;
+    default:
+      value= "UNDEFINED";
+      break;
+  }
+
+  return value;
 }
