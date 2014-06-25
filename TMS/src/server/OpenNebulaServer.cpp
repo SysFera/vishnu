@@ -83,7 +83,7 @@ OpenNebulaServer::submit(const std::string& scriptPath,
   }
 
   LOG(boost::str(boost::format("[INFO] Virtual machine created. ID: %1%, IP: %2%"
-                    ) %  jobPtr->getVmId() % jobPtr->getVmIp()), LogInfo);
+                               ) %  jobPtr->getVmId() % jobPtr->getVmIp()), LogInfo);
 
   //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
@@ -143,33 +143,41 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
     // retrive vm info
     VmT vmInfo;
     OneCloudInstance cloudInstance(mcloudEndpoint, getSessionString());
+
     if (cloudInstance.loadVmInfo(vishnu::convertToInt(vmId), vmInfo) == 0) {
       switch (vmInfo.state) {
-      case VM_ACTIVE:
-        jobStatus = monitorScriptState(jobId, pid, vmIp, owner);
-        break;
-      case VM_POWEROFF:
-      case VM_FAILED:
-      case VM_STOPPED:
-      case VM_DONE:
-        jobStatus = vishnu::STATE_FAILED;
-        break;
-      case VM_INIT:
-      case VM_HOLD:
-      case VM_UNDEPLOYED:
-        jobStatus = vishnu::STATE_SUBMITTED;
-      default:
-        break;
+        case VM_ACTIVE:
+          jobStatus = monitorScriptState(jobId, pid, vmIp, owner);
+          break;
+        case VM_POWEROFF:
+        case VM_FAILED:
+        case VM_STOPPED:
+        case VM_DONE:
+          jobStatus = vishnu::STATE_FAILED;
+          break;
+        case VM_INIT:
+        case VM_HOLD:
+        case VM_UNDEPLOYED:
+          jobStatus = vishnu::STATE_SUBMITTED;
+        default:
+          break;
       }
     }
     if (jobStatus == vishnu::STATE_CANCELLED
         || jobStatus == vishnu::STATE_COMPLETED
         || jobStatus == vishnu::STATE_FAILED) {
+
+      LOG(boost::str(boost::format("[WARN] Cleaning job %1%; VM ID: %2%; VM State: %3%; Script Status: %4%.")
+                     % jobId
+                     % vmId
+                     % vmState2String(vmInfo.state)
+                     % vishnu::statusToString(jobStatus)), LogWarning);
+
       releaseResources(vmId);
     }
   } else {
     LOG(boost::str(boost::format("[WARN] Unable to monitor job: %1%, VMID: %2%."
-                      " Empty vm address") % jobId % vmId), LogWarning);
+                                 " Empty vm address") % jobId % vmId), LogWarning);
     jobStatus = vishnu::STATE_UNDEFINED;
   }
   return jobStatus;
@@ -460,4 +468,46 @@ OpenNebulaServer::monitorScriptState(const std::string& jobId,
     }
   }
   return jobStatus;
+}
+
+/**
+ * @brief Gives the equivalent string of a VM state
+ * @param state The state
+ * @return a string
+ */
+std::string
+OpenNebulaServer::vmState2String(int state)
+{
+  std::string value = "UNDEFINED";
+  switch (state) {
+    case VM_ACTIVE:
+      value= "RUNNING";
+      break;
+    case VM_POWEROFF:
+      value= "POWEROFF";
+      break;
+    case VM_FAILED:
+      value= "FAILED";
+      break;
+    case VM_STOPPED:
+      value= "STOPPED";
+      break;
+    case VM_DONE:
+      value= "DONE";
+      break;
+    case VM_INIT:
+      value= "INIT";
+      break;
+    case VM_HOLD:
+      value= "HOLD";
+      break;
+    case VM_UNDEPLOYED:
+      value= "UNDEPLOYED";
+      break;
+    default:
+      value= "UNDEFINED";
+      break;
+  }
+
+  return value;
 }
