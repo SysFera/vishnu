@@ -362,7 +362,7 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
 
   return boost::str(
         boost::format(
-          "NAME=\"vishnu-vm\"                                                     \n"
+          "NAME=\"vishnu-vm\"                                                    \n"
           "CPU=%1%                                                               \n"
           "VCPU=%1%                                                              \n"
           "MEMORY=%2%                                                            \n"
@@ -386,7 +386,7 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
           "  ETH0_GATEWAY=\"%6%\",                                               \n"
           "  ETH0_DNS=\"%7%\",                                                   \n"
           "  FILES=\"%8%\",                                                      \n"
-          "  SSH_PUBLIC_KEY=\"%9%\",                                            \n"
+          "  SSH_PUBLIC_KEY=\"%9%\",                                             \n"
           "  TARGET=\"hdb\"                                                      \n"
           "]")
         % returnInputOrDefaultIfNegativeNull(options.getNbCpu(), 1)
