@@ -87,7 +87,7 @@ private:
    * @return The id of the selected machine, throw exception on error
    */
   std::string
-  requestMachineFromMetacheduler(const std::string& metaschedMachineId,
+  requestSchedulingInfo(const std::string& metaschedMachineId,
                                  const TMS_Data::SubmitOptions& options);
 
 };

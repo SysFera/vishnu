@@ -981,10 +981,10 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
     query+= job.getWorkId()? "workId="+vishnu::convertToString(job.getWorkId())+", " : "";
     query+="vmId='"+mdatabaseInstance->escapeData(job.getVmId())+"', ";
     query+="vmIp='"+mdatabaseInstance->escapeData(job.getVmIp())+"', ";
-    query+="relatedSteps='"+mdatabaseInstance->escapeData(job.getRelatedSteps())+"'";
+    query+="relatedSteps='"+mdatabaseInstance->escapeData(job.getRelatedSteps())+"', ";
     query+="nbretries="+vishnu::convertToString(job.getNbRetries())+", ";
     query+="type="+vishnu::convertToString(job.getType())+", ";
-    query+="timestamp="+vishnu::convertToString(job.getTimestamp())+", ";
+    query+="timestamp="+vishnu::convertToString(job.getTimestamp());
     query+=" WHERE jobid='"+mdatabaseInstance->escapeData(job.getJobId())+"';";
 
     mdatabaseInstance->process(query);

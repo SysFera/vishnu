@@ -38,23 +38,26 @@ JobProxy::submitJob(const std::string& scriptPath,
                     const std::string& scriptContent,
                     const TMS_Data::SubmitOptions& options) {
 
-  JsonObject optionsData(options);
 
   // select a machine if not machine set
   if (mmachineId.empty() || mmachineId == AUTOM_KEYWORD) {
     //FIXME: read config file?
     throw TMSVishnuException(ERRCODE_INVDATA, "You need to set the metascheduler machine");
   }
-  mmachineId = requestMachineFromMetacheduler(mmachineId, options);
+  std::string result = requestSchedulingInfo(mmachineId, options);
+  JsonObject jsonResult(result);
+  std::string selectedMachine = jsonResult.getStringProperty("selected_machine");
+  JsonObject optionsData  = JsonObject( jsonResult.getStringProperty("submit_options") );
+
   // now create and initialize the service profile
-  string serviceName = boost::str(boost::format("%1%@%2%")% SERVICES_TMS[JOBSUBMIT] % mmachineId);
+  string serviceName = boost::str(boost::format("%1%@%2%")% SERVICES_TMS[JOBSUBMIT] % selectedMachine);
 
   // Send input files
   FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true) ;
   copts.setTrCommand(0);
   string inputFiles = vishnu::sendInputFiles(msessionKey,
-                                             options.getFileParams(),
+                                             optionsData.getStringProperty("fileparams"),
                                              mmachineId,
                                              copts);
   optionsData.setProperty("fileparams", inputFiles);
@@ -174,8 +177,8 @@ JobProxy::~JobProxy() {
  * @return The id of the selected machine, throw exception on error
  */
 std::string
-JobProxy::requestMachineFromMetacheduler(const std::string& metaschedMachineId,
-                                         const TMS_Data::SubmitOptions& options)
+JobProxy::requestSchedulingInfo(const std::string& metaschedMachineId,
+                                const TMS_Data::SubmitOptions& options)
 {
   // Set RPC pameters
   string serviceName = boost::str(boost::format("%1%@%2%")% SERVICES_TMS[HANDLE_SCHEDULING] % metaschedMachineId);
