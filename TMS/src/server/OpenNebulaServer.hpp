@@ -185,7 +185,7 @@ private:
    * @return
    */
   std::string
-  getKvmTemplate(const TMS_Data::SubmitOptions& options);
+  generateKvmTemplate(const TMS_Data::SubmitOptions& options);
 
   /**
    * @brief Return a string as expected by OpenNebula API (username:password)
