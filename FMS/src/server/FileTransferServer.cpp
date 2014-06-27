@@ -186,6 +186,13 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
   if (vishnu::ifLocalTransferInvolved(srcMachineName, destMachineName, direction)) {
     mfileTransfer.setStatus(vishnu::TRANSFER_WAITING_CLIENT_RESPONSE);
     updateDatabaseRecord();
+    if (destUser.empty()) {
+      std::string tmp = mfileTransfer.getSourceFilePath();
+      mfileTransfer.setSourceFilePath(srcUser+"@"+srcMachineName+":"+tmp);
+    } else {
+      std::string tmp = mfileTransfer.getDestinationFilePath();
+      mfileTransfer.setDestinationFilePath(destUser+"@"+destMachineName+":"+tmp);
+    }
     LOG("[INFO] request transfer from client size", 1);
     return 0;
   }
