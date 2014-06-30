@@ -128,6 +128,7 @@ MYSQLDatabase::connectPoolIndex(const int& poolIdx) {
                          CLIENT_MULTI_STATEMENTS|ssl_flag) ==NULL) {
     throw SystemException(ERRCODE_DBERR, "Cannot connect to the DB" + dbErrorMsg(&(mpool[poolIdx].mmysql)));
   }
+  mysql_set_character_set(&(mpool[poolIdx].mmysql), "utf8");
 }
 
 /**
