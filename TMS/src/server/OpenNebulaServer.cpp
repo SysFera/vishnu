@@ -369,6 +369,7 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
     mnfsMountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
   }
 
+  std::string pubkey = vishnu::get_file_content(vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false));
   return boost::str(
         boost::format(
           "NAME=\"vishnu-vm\"                                                    \n"
@@ -395,11 +396,11 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
           "  ETH0_GATEWAY=\"%6%\",                                               \n"
           "  ETH0_DNS=\"%7%\",                                                   \n"
           "  FILES=\"%8%\",                                                      \n"
-          "  SSH_PUBLIC_KEY=\"%9%\",                                             \n"
+          "  USERNAME=\"%9%\",                                                   \n"
           "  SSH_PUBLIC_KEY=\"%10%\",                                            \n"
-          "  USER_PUBKEY=\"%10%\",                                               \n"
-          "  DATA_SERVER=\"%11%\",                                               \n"
-          "  DATA_MOUNT_POINT=\"%12%\",                                          \n"
+          "  USER_PUBKEY=\"%11%\",                                               \n"
+          "  DATA_SERVER=\"%12%\",                                               \n"
+          "  DATA_MOUNT_POINT=\"%13%\",                                          \n"
           "  TARGET=\"hdb\"                                                      \n"
           "]")
         % returnInputOrDefaultIfNegativeNull(options.getNbCpu(), 1)
@@ -411,7 +412,8 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
         % mvirtualNetworkDns
         % mcontextInitScript
         % mvmUser
-        % vishnu::get_file_content(vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false))
+        % pubkey
+        % pubkey
         % mnfsServer
         % mnfsMountPoint);
 }

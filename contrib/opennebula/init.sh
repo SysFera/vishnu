@@ -52,7 +52,7 @@ if [ -n "$USERNAME" ]; then
 fi
 
 
-if [ -n "$DATA_SERVER" && -n "$DATA_MOUNT_POINT" ]; then
+if [ -n "$DATA_SERVER" ] && [ -n "$DATA_MOUNT_POINT" ]; then
    mkdir -p ${DATA_MOUNT_POINT}
    mount -t nfs -o rw,nolock,vers=3 ${DATA_SERVER}:${DATA_MOUNT_POINT} ${DATA_MOUNT_POINT}
 fi
