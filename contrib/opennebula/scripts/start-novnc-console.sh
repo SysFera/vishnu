@@ -4,6 +4,11 @@
 set -e
 set -u
 
+if [ $# -ne 2 ]; then
+  echo "usage: `basename $0` <one_server> <vmid>"
+  exit 1
+fi
+
 ONE_SERVER=$1
 ONE_VM_ID=$2
 ONE_NOVNC_PROXY_PORT=29876

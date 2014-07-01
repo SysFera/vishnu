@@ -14,7 +14,7 @@ import sys
 import socket
 
 if len(sys.argv) != 2 :
-  print 'Wrong number of arguments'
+  print 'usage: {0} <vmid>'.format(sys.argv[0])
   exit(-1)
 
 vmId = str(sys.argv[1])
