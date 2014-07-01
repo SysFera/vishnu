@@ -60,7 +60,7 @@ OpenNebulaServer::submit(const std::string& scriptPath,
 {
   mjobId = vishnu::getVar("VISHNU_JOB_ID", false);
   mjobOutputDir = vishnu::getVar("VISHNU_OUTPUT_DIR", false);
-
+  handleCloudInfo(options);
   setupJobDataDir(mjobId, scriptPath);
 
   replaceEnvVariables(scriptPath);
@@ -347,28 +347,6 @@ OpenNebulaServer::getSessionString(void)
 std::string
 OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
 {
-  retrieveUserSpecificParams(options.getSpecificParams());
-
-  // Get configuration parameters
-  if (mvmImageId.empty()) {
-    mvmImageId = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
-  }
-  if (mvmFlavor.empty()) {
-    mvmFlavor = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
-  }
-  if (mvmUser.empty()) {
-    mvmUser = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
-  }
-  if (mvmUserKey.empty()) {
-    mvmUserKey = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
-  }
-  if (mnfsServer.empty()) {
-    mnfsServer = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], true);
-  }
-  if(mnfsMountPoint.empty()) {
-    mnfsMountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
-  }
-
   std::string pubkey = vishnu::get_file_content(vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false));
   return boost::str(
         boost::format(
@@ -415,7 +393,7 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
         % pubkey
         % pubkey
         % mnfsServer
-        % mnfsMountPoint);
+        % mbaseDataDir);
 }
 
 
@@ -529,3 +507,51 @@ OpenNebulaServer::vmState2String(int state)
 
   return value;
 }
+
+/**
+ * @brief handleCloudInfo
+ * @param options
+ */
+void
+OpenNebulaServer::handleCloudInfo(const TMS_Data::SubmitOptions& options)
+{
+  retrieveUserSpecificParams(options.getSpecificParams());
+
+  // Get configuration parameters
+  if (mvmImageId.empty()) {
+    mvmImageId = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
+  }
+  if (mvmFlavor.empty()) {
+    mvmFlavor = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
+  }
+  if (mvmUser.empty()) {
+    mvmUser = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
+  }
+  if (mvmUserKey.empty()) {
+    mvmUserKey = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
+  }
+  if (mnfsServer.empty()) {
+    mnfsServer = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], true);
+  }
+  if(mnfsMountPoint.empty()) {
+    mnfsMountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
+  }
+
+}
+/**
+ * @brief create job data directory containing script and misc files
+ * @param jobId The job id.
+ * @param scriptPath The script path
+ * @return: Nothing. The base datadir is stored in the mbaseDataDir variable
+ */
+void
+OpenNebulaServer::setupJobDataDir(const std::string& jobId, const std::string& scriptPath)
+{
+  mbaseDataDir = boost::str(boost::format("%1%/%2%") % mnfsMountPoint % jobId);
+  std::string targetScriptPath = boost::str(boost::format("%1%/script.sh") % mbaseDataDir);
+  vishnu::createDir(mbaseDataDir);
+  vishnu::saveInFile(targetScriptPath, vishnu::get_file_content(scriptPath));
+  vishnu::makeFileExecutable(targetScriptPath);
+}
+
+

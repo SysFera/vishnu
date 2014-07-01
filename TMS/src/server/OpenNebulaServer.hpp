@@ -250,6 +250,13 @@ private:
    */
   std::string
   vmState2String(int state);
+
+  /**
+   * @brief handleCloudInfo
+   * @param options
+   */
+  void
+  handleCloudInfo(const TMS_Data::SubmitOptions& options);
 };
 
 #endif /* OpenNebulaServer_HPP_ */
