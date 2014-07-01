@@ -70,4 +70,7 @@ void
 vishnu::log(const std::string& msg, int level)
 {
   std::clog << static_cast<LogPriority>(level) << msg << std::endl;
+  if (level <= LogErr){
+      std::cerr << msg << std::endl;
+  }
 }
