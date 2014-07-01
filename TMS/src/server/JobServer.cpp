@@ -1056,19 +1056,12 @@ JobServer::createJobScriptExecutaleFile(std::string& content,
   std::string path = options->getStringProperty("scriptpath");
 
   // Create the file on the file system
-  vishnu::saveInFile(path,
-                     processScript(content,
-                                   options,
-                                   defaultBatchOption,
-                                   muserSessionInfo.machine_name));
+  vishnu::saveInFile(path, processScript(content,
+                                         options,
+                                         defaultBatchOption,
+                                         muserSessionInfo.machine_name));
 
-  // Make the file executable
-  if(0 != chmod(path.c_str(),
-                S_IWUSR|S_IRUSR|S_IXUSR|
-                S_IRGRP|S_IXGRP|
-                S_IROTH|S_IXOTH)) {
-    throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + path) ;
-  }
+  vishnu::makeFileExecutable(path);
 
   return path;
 }

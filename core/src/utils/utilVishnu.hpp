@@ -311,5 +311,14 @@ validatePath(const std::string& path);
 bool
 execSystemCommand(const std::string& command, std::string& msg);
 
+
+/**
+ * @brief Make a given file executable
+ * @param path The path of the file
+ * @return Throw exception on error
+ */
+void
+makeFileExecutable(const std::string& path);
+
 } //END NAMESPACE
 #endif // _UTILVISHNU_H_
