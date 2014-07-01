@@ -61,6 +61,8 @@ OpenNebulaServer::submit(const std::string& scriptPath,
   mjobId = vishnu::getVar("VISHNU_JOB_ID", false);
   mjobOutputDir = vishnu::getVar("VISHNU_OUTPUT_DIR", false);
 
+  setupJobDataDir(mjobId, scriptPath);
+
   replaceEnvVariables(scriptPath);
   OneRPCManager rpcManager(mcloudEndpoint);
   rpcManager.setMethod("one.vm.allocate");
@@ -83,7 +85,7 @@ OpenNebulaServer::submit(const std::string& scriptPath,
   }
 
   LOG(boost::str(boost::format("[INFO] Virtual machine created. ID: %1%, IP: %2%"
-                    ) %  jobPtr->getVmId() % jobPtr->getVmIp()), LogInfo);
+                               ) %  jobPtr->getVmId() % jobPtr->getVmIp()), LogInfo);
 
   //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
@@ -145,21 +147,21 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
     OneCloudInstance cloudInstance(mcloudEndpoint, getSessionString());
     if (cloudInstance.loadVmInfo(vishnu::convertToInt(vmId), vmInfo) == 0) {
       switch (vmInfo.state) {
-      case VM_ACTIVE:
-        jobStatus = monitorScriptState(jobId, pid, vmIp, owner);
-        break;
-      case VM_POWEROFF:
-      case VM_FAILED:
-      case VM_STOPPED:
-      case VM_DONE:
-        jobStatus = vishnu::STATE_FAILED;
-        break;
-      case VM_INIT:
-      case VM_HOLD:
-      case VM_UNDEPLOYED:
-        jobStatus = vishnu::STATE_SUBMITTED;
-      default:
-        break;
+        case VM_ACTIVE:
+          jobStatus = monitorScriptState(jobId, pid, vmIp, owner);
+          break;
+        case VM_POWEROFF:
+        case VM_FAILED:
+        case VM_STOPPED:
+        case VM_DONE:
+          jobStatus = vishnu::STATE_FAILED;
+          break;
+        case VM_INIT:
+        case VM_HOLD:
+        case VM_UNDEPLOYED:
+          jobStatus = vishnu::STATE_SUBMITTED;
+        default:
+          break;
       }
     }
     if (jobStatus == vishnu::STATE_CANCELLED
@@ -170,7 +172,7 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
     }
   } else {
     LOG(boost::str(boost::format("[WARN] Unable to monitor job: %1%, VMID: %2%."
-                      " Empty vm address") % jobId % vmId), LogWarning);
+                                 " Empty vm address") % jobId % vmId), LogWarning);
     jobStatus = vishnu::STATE_UNDEFINED;
   }
   return jobStatus;
@@ -381,7 +383,7 @@ OpenNebulaServer::getKvmTemplate(const TMS_Data::SubmitOptions& options)
           "  ETH0_GATEWAY=\"%6%\",                                               \n"
           "  ETH0_DNS=\"%7%\",                                                   \n"
           "  FILES=\"%8%\",                                                      \n"
-          "  SSH_PUBLIC_KEY=\"%9%\",                                            \n"
+          "  SSH_PUBLIC_KEY=\"%9%\",                                             \n"
           "  TARGET=\"hdb\"                                                      \n"
           "]")
         % returnInputOrDefaultIfNegativeNull(options.getNbCpu(), 1)
@@ -463,4 +465,21 @@ OpenNebulaServer::monitorScriptState(const std::string& jobId,
     }
   }
   return jobStatus;
+}
+
+
+/**
+ * @brief create job data directory containing script and misc files
+ * @param jobId The job id.
+ * @param scriptPath The script path
+ * @return: Nothing. The base datadir is stored in the mbaseDataDir variable
+ */
+void
+OpenNebulaServer::setupJobDataDir(const std::string& jobId, const std::string& scriptPath)
+{
+  mbaseDataDir = boost::str(boost::format("%1%/%2%") % mnfsMountPoint % jobId);
+  std::string targetScriptPath = boost::str(boost::format("%1%/script.sh") % jobDataDir);
+  vishnu::createDir(jobDataDir);
+  vishnu::saveInFile(targetScriptPath, vishnu::get_file_content(scriptPath));
+  vishnu::makeFileExecutable(targetScriptPath);
 }

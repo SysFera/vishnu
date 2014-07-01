@@ -672,3 +672,20 @@ vishnu::execSystemCommand(const std::string& command, std::string& msg)
   pclose(pipe);
   return result;
 }
+
+
+/**
+ * @brief Make a given file executable
+ * @param path The path of the file
+ * @return Throw exception on error
+ */
+void
+vishnu::makeFileExecutable(const std::string& path)
+{
+  if(0 != chmod(path.c_str(),
+                S_IWUSR|S_IRUSR|S_IXUSR|
+                S_IRGRP|S_IXGRP|
+                S_IROTH|S_IXOTH)) {
+    throw SystemException(ERRCODE_INVDATA, boost::str(boost::format("Unable to make the script executable: %1%") % path)) ;
+  }
+}
