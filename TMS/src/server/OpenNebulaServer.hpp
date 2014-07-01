@@ -78,6 +78,16 @@ public:
   void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
                       const std::vector<std::string>& ignoredIds=std::vector<std::string>());
 
+
+  /**
+   * @brief create job data directory containing script and misc files
+   * @param jobId The job id.
+   * @param scriptPath The script path
+   * @return: Nothing. The base datadir is stored in the mbaseDataDir variable
+   */
+  void
+  setupJobDataDir(const std::string& jobId, const std::string& scriptPath);
+
 private:
   /**
    * @brief Holds the job id
@@ -88,6 +98,11 @@ private:
    * @brief Holds job output dir
    */
   std::string mjobOutputDir;
+
+  /**
+   * @brief Holds the job base data dir
+   */
+  std::string mbaseDataDir;
 
   /**
    * \brief Holds the endpoint of the cloud infrastructure
