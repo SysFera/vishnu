@@ -963,6 +963,7 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
     query+="job_owner_id="+vishnu::convertToString(muserSessionInfo.num_user)+", ";
     query+="owner='"+mdatabaseInstance->escapeData(job.getOwner())+"', ";
     query+="submitMachineId='"+mdatabaseInstance->escapeData(mmachineId)+"', ";
+    query+="machine_id='"+mdatabaseInstance->escapeData(muserSessionInfo.num_machine)+"', ";
     query+="submitMachineName='"+mdatabaseInstance->escapeData(muserSessionInfo.machine_name)+"', ";
     query+="batchJobId='"+mdatabaseInstance->escapeData(job.getBatchJobId())+"', ";
     query+="batchType="+vishnu::convertToString(mbatchType)+", ";
