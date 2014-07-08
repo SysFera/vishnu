@@ -190,19 +190,19 @@ diet_call(diet_profile_t* prof) {
     } catch (...){
     }
   }
-  int tmp = 1;
+  int retCode = 1;
   try{
-    if ( !disp.empty() )
+    if (! disp.empty() )
       *prof = save;
-      tmp = abstract_call_gen(prof, disp);
+      retCode = abstract_call_gen(prof, disp);
   } catch (...){
   }
 
-  if (tmp != 0)
-    std::cerr << boost::format("No corresponding %1% server found") % service;
+  if (retCode != 0)
+    std::cerr << boost::format("No corresponding %1% server found\n") % service;
 
 
-  return tmp;//abstract_call_gen(prof, uri);
+  return retCode;//abstract_call_gen(prof, uri);
 }
 
 int
