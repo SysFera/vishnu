@@ -57,16 +57,14 @@ public:
   /**
      * \brief Function to execute a script remotely
      * \param scriptPath the path to script to submit
-     * \param nfsServer the NFS server
-     * \param nfsMountPoint the mount point on the NFS server
      * \param workDir The wordking directory of the job
+     * \param scriptPid OUT script pid
      * \return raises an exception on error
      */
   int
   execRemoteScript(const std::string& scriptPath,
-                   const std::string & nfsServer="",
-                   const std::string nfsMountPoint="",
-                   const std::string & workDir="");
+                   const std::string& workDir,
+                   int& scriptPid);
 
   /**
      * \brief Function to copy files from remote machine

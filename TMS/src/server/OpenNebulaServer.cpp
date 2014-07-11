@@ -149,7 +149,7 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
     if (cloudInstance.loadVmInfo(vishnu::convertToInt(vmId), vmInfo) == 0) {
       switch (vmInfo.state) {
         case VM_ACTIVE:
-          jobStatus = monitorScriptState(jobId, pid, vmIp, owner);
+          monitorScriptState(jobId, vmIp, owner, pid, jobStatus);
           break;
         case VM_POWEROFF:
         case VM_FAILED:
@@ -431,23 +431,25 @@ OpenNebulaServer::returnInputOrDefaultIfNegativeNull(int value, int defaultValue
 /**
  * @brief OpenNebulaServer::monitorScriptState
  * @param jobId
- * @param pid
  * @param vmIp
- * @param uid
+ * @param vmUser
+ * @param scriptPid
+ * @param jobStatus
  * @return
  */
 int
 OpenNebulaServer::monitorScriptState(const std::string& jobId,
-                                     const std::string& pid,
                                      const std::string& vmIp,
-                                     const std::string& uid)
+                                     const std::string& vmUser,
+                                     std::string& scriptPid,
+                                     int& jobStatus)
 {
-  int jobStatus = vishnu::STATE_UNDEFINED;
-  SSHJobExec sshEngine(uid, vmIp);
+  jobStatus = vishnu::STATE_UNDEFINED;
+  SSHJobExec sshEngine(vmUser, vmIp);
   if (sshEngine.isReadyConnection()) {
-    if (! pid.empty()) {
-      std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % pid % vmIp);
-      std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % pid % statusFile);
+    if (! scriptPid.empty()) {
+      std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % scriptPid % vmIp);
+      std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % scriptPid % statusFile);
 
       sshEngine.execCmd(cmd, false);
 
@@ -458,9 +460,34 @@ OpenNebulaServer::monitorScriptState(const std::string& jobId,
       }
       vishnu::deleteFile(statusFile.c_str());
     } else {
-      //FIXME: think mechanism to retrieve the PID of the process.
-      // Should be think with the contextualization
-      LOG(boost::str(boost::format("[WARN] Empty PID, Job ID: %1%") %jobId), LogWarning);
+      LOG("[INFO] Checking ssh state...", LogInfo);
+      if (sshIsReady(sshEngine, vmUser)) {
+        std::string script = boost::str(boost::format("%1%/script.sh") % mbaseDataDir);
+        try {
+          // Mount the NFS repository
+          if (! mnfsServer.empty() && ! mnfsMountPoint.empty() && ! mbaseDataDir.empty()) {
+            LOG("[INFO] Mounting the nfs directory...", LogInfo);
+            sshEngine.mountNfsDir(mnfsServer, mnfsMountPoint);
+
+            LOG("[INFO] Executing the script...", LogInfo);
+            int pid;
+            sshEngine.execRemoteScript(script, mbaseDataDir, pid);
+            scriptPid = pid > 0 ? vishnu::convertToString(pid) : "";
+          } else {
+            LOG(boost::str(boost::format("[ERROR] Invalid parameters when executing job script."
+                                         "  mnfsServer=%1%, "
+                                         "  mnfsMountPoint=%2%, "
+                                         "  mbaseDataDir=%3%") % mnfsServer % mnfsMountPoint % mbaseDataDir), LogErr);
+          }
+
+        } catch (VishnuException& ex) {
+          LOG(boost::str(boost::format("[ERROR] %1%") % ex.what()), LogErr);
+        }
+      } else {
+        //FIXME: think mechanism to retrieve the PID of the process.
+        // Should be think with the contextualization
+        LOG(boost::str(boost::format("[WARN] Empty PID, Job ID: %1%") %jobId), LogWarning);
+      }
     }
   }
   return jobStatus;
@@ -508,9 +535,11 @@ OpenNebulaServer::vmState2String(int state)
   return value;
 }
 
+
 /**
  * @brief handleCloudInfo
- * @param options
+ * @param vmIp
+ * @param vmUser
  */
 void
 OpenNebulaServer::handleCloudInfo(const TMS_Data::SubmitOptions& options)
@@ -552,6 +581,30 @@ OpenNebulaServer::setupJobDataDir(const std::string& jobId, const std::string& s
   vishnu::createDir(mbaseDataDir);
   vishnu::saveInFile(targetScriptPath, vishnu::get_file_content(scriptPath));
   vishnu::makeFileExecutable(targetScriptPath);
+}
+
+
+/**
+ * @brief OpenNebulaServer::sshIsReady
+ * @param sshEngine
+ * @param vmIp
+ * @return
+ */
+bool
+OpenNebulaServer::sshIsReady(SSHJobExec sshEngine, const std::string& vmIp)
+{
+  bool isReady =  false;
+  const std::string statusFile = boost::str(boost::format("/tmp/%1%.sshstatus") % vmIp);
+  const std::string remoteCmd = boost::str(boost::format("exit; echo $? > %1% ") % statusFile);
+
+  sshEngine.execCmd(remoteCmd);
+  int ret =  vishnu::getStatusValue(statusFile);
+  if(ret == 0) {
+    isReady = true;
+  }
+  vishnu::deleteFile(statusFile.c_str());
+
+  return isReady;
 }
 
 

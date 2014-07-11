@@ -232,16 +232,18 @@ private:
   /**
    * @brief monitorScriptState
    * @param jobId
-   * @param pid
    * @param vmIp
-   * @param uid
+   * @param vmUser
+   * @param scriptPid
+   * @param jobStatus
    * @return
    */
   int
   monitorScriptState(const std::string& jobId,
-                     const std::string& pid,
                      const std::string& vmIp,
-                     const std::string& uid);
+                     const std::string& vmUser,
+                     std::string& scriptPid,
+                     int& jobStatus);
 
   /**
    * @brief Gives the equivalent string of a VM state
@@ -257,6 +259,16 @@ private:
    */
   void
   handleCloudInfo(const TMS_Data::SubmitOptions& options);
+
+
+  /**
+   * @brief OpenNebulaServer::sshIsReady
+   * @param sshEngine
+   * @param vmIp
+   * @return
+   */
+  bool
+  sshIsReady(SSHJobExec sshEngine, const std::string& vmIp);
 };
 
 #endif /* OpenNebulaServer_HPP_ */
