@@ -280,10 +280,10 @@ parseVersion(const std::string& version);
 
 /**
  * \brief Source an configuration file
- * \param filePath: the path to the file
+ * \param
  */
 void
-sourceFile(const std::string& filePath);
+sourceRcFile(void);
 
 /**
  * \brief  function to convert a status (locked, active...) to string

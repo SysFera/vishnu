@@ -136,15 +136,11 @@ main(int argc, char* argv[], char* envp[]) {
     return usage(argv[0]);
   }
 
-  if ((0 == strcmp(argv[1], "-v")) ||
-      (0 == strcmp(argv[1], "--v"))) {
+  if ((0 == strcmp(argv[1], "-v")) || (0 == strcmp(argv[1], "--v"))) {
     return vishnu::showVersion();
   }
 
-  std::string vishnuRcFile = boost::str(boost::format("%1%/.vishnurc") % getenv("HOME"));
-  if (boost::filesystem::exists(vishnuRcFile)) {
-    vishnu::sourceFile(vishnuRcFile);
-  }
+  vishnu::sourceRcFile();
 
   SedConfig cfg;
   readConfiguration(argv[1], cfg);
