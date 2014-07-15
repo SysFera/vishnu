@@ -1,6 +1,6 @@
 /**
  * \file stat.cpp
- * This file defines the VISHNU  get file infos  command 
+ * This file defines the VISHNU  get file infos  command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -31,9 +31,9 @@ struct GetFileInfoFunc {
   GetFileInfoFunc(const std::string& path):mpath(path){}
 
   int operator()(const std::string& sessionKey) {
-  
+
     FileStat fileStat;
-  
+
     int res = stat(sessionKey,mpath,fileStat);
       //To dispaly the file information
       std::cout << fileStat << std::endl;
@@ -44,15 +44,16 @@ struct GetFileInfoFunc {
 
 
 int main (int ac, char* av[]){
-  
-  /******* Parsed value containers ****************/
-  string configFile;
-  string path;
 
-  //buid options and parse 
-  
-  ParseRemoteCommandOptions (ac,av,configFile,path);
+  /******* Parsed value containers ****************/
+  std::string configFile;
+  std::string sessionKey;
+  std::string path;
+
+  //buid options and parse
+
+  ParseRemoteCommandOptions (ac,av,configFile, sessionKey, path);
   GetFileInfoFunc apiFunc(path);
-  return GenericCli().run(apiFunc, configFile, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av, sessionKey);
 }
 

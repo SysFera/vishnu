@@ -41,9 +41,11 @@ int main (int argc, char* argv[]){
 
 
   /******* Parsed value containers ****************/
-  string configFile;
-  string path;
+  std::string configFile;
+  std::string path;
   mode_t  mode;
+  std::string sessionKey;
+
 
   /**************** Describe options *************/
 
@@ -61,9 +63,14 @@ int main (int argc, char* argv[]){
       path,1);
   opt->setPosition("path",1);
 
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
+
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,argc,argv);
   ChangeFileModeFunc apiFunc(path,mode);
-  return GenericCli().run(apiFunc, configFile, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv, sessionKey);
 
 }

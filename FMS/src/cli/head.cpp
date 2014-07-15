@@ -44,8 +44,9 @@ struct HeadOfFileFunc {
 int
 main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
-  string configFile;
-  string path;
+  std::string sessionKey;
+  std::string configFile;
+  std::string path;
 
   /********** EMF data ************/
   HeadOfFileOptions hofOptions;
@@ -53,7 +54,7 @@ main (int ac, char* av[]) {
   /******** Callback functions ******************/
   boost::function1<void,int> fNline(boost::bind(&FMS_Data::HeadOfFileOptions::setNline,boost::ref(hofOptions),_1));
 
-  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],configFile,path));
+  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],configFile, sessionKey, path));
 
   opt->add("nline,n",
       "The first line to display",
@@ -64,5 +65,5 @@ main (int ac, char* av[]) {
   GenericCli().processListOpt( opt, isEmpty,ac,av);
   HeadOfFileFunc apiFunc(path,hofOptions);
 
-  return GenericCli().run(apiFunc, configFile, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av, sessionKey);
 }

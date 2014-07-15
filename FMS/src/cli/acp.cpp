@@ -29,9 +29,10 @@ int main (int argc, char* argv[]){
 
 
   /******* Parsed value containers ****************/
-  string configFile;
-  string src;
-  string dest;
+  std::string configFile;
+  std::string src;
+  std::string dest;
+  std::string sessionKey;
 
   /************* Output value *********************/
   FMS_Data::FileTransfer transferInfo;
@@ -40,9 +41,9 @@ int main (int argc, char* argv[]){
   FMS_Data::CpFileOptions cpFileOptions;
 
 
-  copyParseOptions ( argc, argv,configFile,src,dest,cpFileOptions,CP);
+  copyParseOptions ( argc, argv,configFile,src,dest, sessionKey, cpFileOptions,CP);
 
   TransferAsyncFunc<CP> apiFunc(src, dest, transferInfo, cpFileOptions);
 
-  return GenericCli().run(apiFunc, configFile, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv, sessionKey);
 }

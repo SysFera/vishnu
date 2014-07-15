@@ -44,7 +44,7 @@ public:
 
 
   template <class ApiFunc>
-  int run(ApiFunc function, std::string configFile, int ac, char*  av[]) {
+  int run(ApiFunc function, std::string configFile, int ac, char*  av[], std::string sessionKey = "") {
 
     try {
       if (vishnu::vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
@@ -52,7 +52,9 @@ public:
         return  ERRCODE_CLI_ERROR_COMMUNICATION ;
       }
 
-      std::string sessionKey = getLastSessionKey(getppid());
+      if(sessionKey.empty()){
+        sessionKey = getLastSessionKey(getppid());
+      }
 
       // VISHNU call
       if(! sessionKey.empty()){

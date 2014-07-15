@@ -1,6 +1,6 @@
 /**
  * \file rmdir.cpp
- * This file defines the VISHNU remove file command 
+ * This file defines the VISHNU remove file command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -24,13 +24,14 @@ using namespace vishnu;
 
 int main (int argc, char* argv[]){
     /******* Parsed value containers ****************/
-  string configFile;
-  string path;
-  
-  //buid options and parse 
-  ParseRemoteCommandOptions (argc,argv,configFile,path);
-  
+  std::string configFile;
+  std::string sessionKey;
+  std::string path;
+
+  //buid options and parse
+  ParseRemoteCommandOptions (argc,argv,configFile, sessionKey, path);
+
   FileActionFunc<REMOVEDIR> apiFunc(path);
-  return GenericCli().run(apiFunc, configFile, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv, sessionKey);
 
 }
