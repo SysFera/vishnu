@@ -31,6 +31,7 @@ OpenNebulaServer::OpenNebulaServer()
     mnfsServer(""),
     mnfsMountPoint("")
 {
+  vishnu::sourceRcFile();
   mcloudEndpoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
   mcloudUser= vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
   mcloudUserPassword = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
@@ -39,6 +40,8 @@ OpenNebulaServer::OpenNebulaServer()
   mvirtualNetworkMask = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VIRTUAL_NET_MASK], true);
   mvirtualNetworkGateway = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VIRTUAL_NET_GATEWAY], true);
   mvirtualNetworkDns = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VIRTUAL_NET_DNS], true);
+  mnfsServer = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+  mnfsMountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
 }
 
 OpenNebulaServer::~OpenNebulaServer() {
@@ -444,14 +447,18 @@ OpenNebulaServer::monitorScriptState(const std::string& jobId,
                                      std::string& scriptPid,
                                      int& jobStatus)
 {
+  mbaseDataDir = boost::str(boost::format("%1%/%2%") % mnfsMountPoint % jobId);
+
   jobStatus = vishnu::STATE_UNDEFINED;
-  SSHJobExec sshEngine(vmUser, vmIp);
-  if (sshEngine.isReadyConnection()) {
+  SSHJobExec userSshEngine(vmUser, vmIp);
+  SSHJobExec rootSshEngine("root", vmIp);
+  int pid;
+  if (userSshEngine.isReadyConnection()) {
     if (! scriptPid.empty()) {
       std::string statusFile = boost::str(boost::format("/tmp/%1%-%2%@%3%") % jobId % scriptPid % vmIp);
       std::string cmd = boost::str(boost::format("ps -o pid= -p %1% | wc -l > %2%") % scriptPid % statusFile);
 
-      sshEngine.execCmd(cmd, false);
+      userSshEngine.execCmd(cmd, mbaseDataDir, false, pid);
 
       if (vishnu::getStatusValue(statusFile) == 0) {
         jobStatus = vishnu::STATE_COMPLETED;
@@ -461,32 +468,43 @@ OpenNebulaServer::monitorScriptState(const std::string& jobId,
       vishnu::deleteFile(statusFile.c_str());
     } else {
       LOG("[INFO] Checking ssh state...", LogInfo);
-      if (sshIsReady(sshEngine, vmUser)) {
+      if (sshIsReady(userSshEngine, vmUser)) {
         std::string script = boost::str(boost::format("%1%/script.sh") % mbaseDataDir);
         try {
           // Mount the NFS repository
           if (! mnfsServer.empty() && ! mnfsMountPoint.empty() && ! mbaseDataDir.empty()) {
             LOG("[INFO] Mounting the nfs directory...", LogInfo);
-            sshEngine.mountNfsDir(mnfsServer, mnfsMountPoint);
+            rootSshEngine.mountNfsDir(mnfsServer, mnfsMountPoint);
 
             LOG("[INFO] Executing the script...", LogInfo);
-            int pid;
-            sshEngine.execRemoteScript(script, mbaseDataDir, pid);
-            scriptPid = pid > 0 ? vishnu::convertToString(pid) : "";
-          } else {
-            LOG(boost::str(boost::format("[ERROR] Invalid parameters when executing job script."
-                                         "  mnfsServer=%1%, "
-                                         "  mnfsMountPoint=%2%, "
-                                         "  mbaseDataDir=%3%") % mnfsServer % mnfsMountPoint % mbaseDataDir), LogErr);
-          }
+            userSshEngine.execRemoteScript(script, mbaseDataDir, pid);
+            if (pid > 0) {
+              scriptPid = vishnu::convertToString(pid);
+              setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT].c_str(), scriptPid.c_str(), 1);
 
+              std::cout << vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT])<<" pid env\n";
+            }
+          } else {
+            jobStatus = vishnu::STATE_FAILED;
+            std::string errorMsg = boost::str(boost::format("[WARN] Invalid parameters when executing job script."
+                                                            "  mnfsServer=%1%, "
+                                                            "  mnfsMountPoint=%2%, "
+                                                            "  mbaseDataDir=%3%") % mnfsServer % mnfsMountPoint % mbaseDataDir);
+            setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT].c_str(), errorMsg.c_str(), 1);
+            LOG(errorMsg, LogWarning);
+          }
         } catch (VishnuException& ex) {
-          LOG(boost::str(boost::format("[ERROR] %1%") % ex.what()), LogErr);
+          jobStatus = vishnu::STATE_FAILED;
+          std::string errorMsg = boost::str(boost::format("[WARN] %1%") % ex.what());
+          LOG(errorMsg, LogWarning);
         }
       } else {
         //FIXME: think mechanism to retrieve the PID of the process.
         // Should be think with the contextualization
-        LOG(boost::str(boost::format("[WARN] Empty PID, Job ID: %1%") %jobId), LogWarning);
+        jobStatus = vishnu::STATE_FAILED;
+        std::string errorMsg = boost::str(boost::format("[WARN] Empty PID, Job ID: %1%") %jobId);
+        setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT].c_str(), errorMsg.c_str(), 1);
+        LOG(errorMsg, LogWarning);
       }
     }
   }
@@ -578,7 +596,7 @@ OpenNebulaServer::setupJobDataDir(const std::string& jobId, const std::string& s
 {
   mbaseDataDir = boost::str(boost::format("%1%/%2%") % mnfsMountPoint % jobId);
   std::string targetScriptPath = boost::str(boost::format("%1%/script.sh") % mbaseDataDir);
-  vishnu::createDir(mbaseDataDir);
+  vishnu::createDir(mbaseDataDir, true);
   vishnu::saveInFile(targetScriptPath, vishnu::get_file_content(scriptPath));
   vishnu::makeFileExecutable(targetScriptPath);
 }
@@ -597,7 +615,8 @@ OpenNebulaServer::sshIsReady(SSHJobExec sshEngine, const std::string& vmIp)
   const std::string statusFile = boost::str(boost::format("/tmp/%1%.sshstatus") % vmIp);
   const std::string remoteCmd = boost::str(boost::format("exit; echo $? > %1% ") % statusFile);
 
-  sshEngine.execCmd(remoteCmd);
+  int pid;
+  sshEngine.execCmd(remoteCmd, "/tmp", false, pid);
   int ret =  vishnu::getStatusValue(statusFile);
   if(ret == 0) {
     isReady = true;

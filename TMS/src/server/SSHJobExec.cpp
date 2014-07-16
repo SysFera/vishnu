@@ -217,18 +217,14 @@ SSHJobExec::sshexec(const std::string& actionName,
      */
 int
 SSHJobExec::execRemoteScript(const std::string& scriptPath,
-                             const std::string& workDir,
+                             const std::string& workingDir,
                              int& scriptPid) {
 
   scriptPid = -1;
+  //  const std::string logfile = workingDir+"/"+mhostname+".vishnu.log";
+  //  std::string cmd = boost::str(boost::format("%1% &>> %2%") % scriptPath % logfile);
 
-  const std::string logfile = workDir+"/"+mhostname+".vishnu.log";
-
-  std::string cmdCreateMountPoint = boost::str(boost::format("'mkdir -p %1% &>> %2%'") % workDir % logfile);
-
-  execCmd(cmdCreateMountPoint);
-
-  if (execCmd(scriptPath + " & >>"+logfile, true, workDir, &scriptPid) ) {
+  if (execCmd(scriptPath, workingDir, true, scriptPid) ) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "execRemoteScript:: failed when executing the script "
                              + scriptPath + " in the virtual machine "+mhostname);
@@ -289,38 +285,42 @@ SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
 /**
      * \brief Function to execute a command via ssh
      * \param cmd the command to execute
+     * \param workingDir The working directory
      * \param background: Tell whether launch the script is background
-     * \param outDir the directory when the output will be stored
      * \param pid: return value containing the pid of the of the running background process
      */
 int
 SSHJobExec::execCmd(const std::string& cmd,
+                    const std::string& workingDir,
                     const bool & background,
-                    const std::string& outDir,
-                    int* pid) {
+                    int& pid) {
 
-  std::string pidFile = "$HOME/vishnu.pid";
-  std::ostringstream sshCmd;
-  sshCmd << "ssh " << DEFAULT_SSH_OPTIONS << " "
-         << muser << "@" << mhostname << " ";
-
-  if( ! background) {
-    sshCmd << cmd;
+  std::string pidFile = boost::str(boost::format("%1%/PID") % workingDir);
+  std::string sshCmd;
+  if (background) {
+    sshCmd =  boost::str(boost::format("ssh %1% %2%@%3% '%4% 1> %5%/stdout 2> %5%/stderr echo $!' > %6%")
+                         % DEFAULT_SSH_OPTIONS
+                         % muser
+                         % mhostname
+                         % cmd
+                         % workingDir
+                         % pidFile);
   } else {
-    try {
-      pidFile =  bfs::unique_path("/tmp/vishnu.pid%%%%%%").string();
-    } catch(...) {} // The pid file will be created in $HOME/vishnu.pid
-
-    sshCmd << "'" << cmd << " 1>"+outDir+"/stdout 2>"+outDir+"/stderr & echo $!' >" << pidFile;
+    sshCmd =  boost::str(boost::format("ssh %1% %2%@%3% %4%")
+                         % DEFAULT_SSH_OPTIONS
+                         % muser
+                         % mhostname
+                         % cmd);
   }
-  LOG(sshCmd.str(), mdebugLevel);
-  if(system((sshCmd.str()).c_str())) {
+
+  LOG(sshCmd, mdebugLevel);
+
+  if(system(sshCmd.c_str())) {
     return -1;
   }
 
-  // Retrieve the pid if the process was launched in background
-  if(background && pid != NULL) {
-    *pid = vishnu::getStatusValue (pidFile);
+  if (background) {
+    pid = vishnu::getStatusValue (pidFile);
     vishnu::deleteFile(pidFile.c_str());
   }
 
@@ -334,8 +334,9 @@ SSHJobExec::execCmd(const std::string& cmd,
      */
 void
 SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
-  std::string remoteCmd = boost::str(boost::format("mkdir %1% && mount -t nfs -o rw,nolock,vers=3 %2%:%1% %1%") % point % host);
-  if(execCmd(remoteCmd, false)) { // run in foreground
+  std::string remoteCmd = boost::str(boost::format("'mkdir -p %1% && mount -t nfs -o rw,nolock,vers=3 %2%:%1% %1%'") % point % host);
+  int pid;
+  if(execCmd(remoteCmd, point, false, pid)) { // run in foreground
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "mountNfsDir:: failed to mount the directory "+point);
   }
@@ -353,7 +354,8 @@ SSHJobExec::isReadyConnection(void)
   const std::string statusFile = boost::str(boost::format("/tmp/%1%.sshstatus") % mhostname);
   const std::string remoteCmd = boost::str(boost::format("exit; echo $? > %1% ") % statusFile);
 
-  execCmd(remoteCmd);
+  int pid;
+  execCmd(remoteCmd, "", false, pid);
   int ret =  vishnu::getStatusValue(statusFile);
   if(ret == 0) {
     isReady = true;

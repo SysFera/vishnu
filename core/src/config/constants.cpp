@@ -65,7 +65,8 @@ namespace vishnu {
                                                             (CLOUD_VIRTUAL_NET_DNS, "VISHNU_CLOUD_VIRTUAL_NET_DNS")
                                                             (CLOUD_DEFAULT_FLAVOR, "VISHNU_CLOUD_DEFAULT_FLAVOR")
                                                             (CLOUD_NFS_SERVER, "VISHNU_CLOUD_NFS_SERVER")
-                                                            (CLOUD_NFS_MOUNT_POINT, "VISHNU_CLOUD_NFS_MOUNT_POINT");
+                                                            (CLOUD_NFS_MOUNT_POINT, "VISHNU_CLOUD_NFS_MOUNT_POINT")
+                                                            (CLOUD_SCRIPT_SUBMISSION_OUTPUT, "CLOUD_JOB_PID");
 
 
   //}}RELAX<MISRA_0_1_3>

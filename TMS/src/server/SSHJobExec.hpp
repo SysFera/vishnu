@@ -92,16 +92,16 @@ public:
   /**
      * \brief Function to execute a command via ssh
      * \param cmd the command to execute
+     * \param workingDir The working directory
      * \param background: Tell whether launch the script is background
-     * \param outDir the directory when the output will be stored
      * \param pid: return value containing the pid of the of the running background process
      * \return 0 on success
      */
   int
   execCmd(const std::string& cmd,
-          const bool & background=false,
-          const std::string& outDir="$HOME",
-          int* pid=NULL);
+          const std::string& workingDir,
+          const bool & background,
+          int& pid);
 
   /**
      * \brief Function to return the job serialized content

@@ -111,7 +111,6 @@ vishnu::createDir(const std::string& path, const bool& isWorkingdir) {
 int
 vishnu::showVersion() {
   using boost::format;
-  std::string batchInfo;
   std::cout << format("vishnu %1%\n%2% %3%\n") % VISHNU_VERSION
     % VISHNU_BATCH_SCHEDULER
     % VISHNU_BATCH_SCHEDULER_VERSION;
