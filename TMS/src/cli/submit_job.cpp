@@ -73,6 +73,7 @@ makeSubJobOp(string pgName,
              boost::function1<void, long long>& setWorkIdFct,
              string& loadCriterionStr,
              string& walltime,
+             string& sessionKey,
              string& configFile)
 {
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -82,6 +83,10 @@ makeSubJobOp(string pgName,
            "VISHNU configuration file",
            ENV,
            configFile);
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   // All cli options
   opt->add("machine,r",
@@ -195,10 +200,10 @@ makeSubJobOp(string pgName,
 
 int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
-  string configFile;
-  string sessionKey;
-  string scriptPath;
-  string walltime;
+  std::string configFile;
+  std::string sessionKey;
+  std::string scriptPath;
+  std::string walltime;
 
   /********** EMF data ************/
   TMS_Data::SubmitOptions submitOptions;
@@ -229,28 +234,29 @@ int main (int argc, char* argv[]){
   TMS_Data::Job job;
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeSubJobOp(argv[0],
-      setMachineFct,
-      setProgramNameFct,
-      setQueueFct,
-      setMemoryFct,
-      setNbCpuFct,
-      setNbNodeAndCpuFct,
-      setStdoutPatchFct,
-      setStderrPathFct,
-      setMailNoticicationFct,
-      setNotificationUserFct,
-      setUserGroupFct,
-      setWorkingGroupFct,
-      serCpuTimeFct,
-      setTextParamsFct,
-      setFileParamsFct,
-      setSpecificParamsFct,
-      textParamsVector,
-      fileParamsVector,
-      setWorkIdFct,
-      loadCriterionStr,
-      walltime,
-      configFile);
+                                                setMachineFct,
+                                                setProgramNameFct,
+                                                setQueueFct,
+                                                setMemoryFct,
+                                                setNbCpuFct,
+                                                setNbNodeAndCpuFct,
+                                                setStdoutPatchFct,
+                                                setStderrPathFct,
+                                                setMailNoticicationFct,
+                                                setNotificationUserFct,
+                                                setUserGroupFct,
+                                                setWorkingGroupFct,
+                                                serCpuTimeFct,
+                                                setTextParamsFct,
+                                                setFileParamsFct,
+                                                setSpecificParamsFct,
+                                                textParamsVector,
+                                                fileParamsVector,
+                                                setWorkIdFct,
+                                                loadCriterionStr,
+                                                walltime,
+                                                sessionKey,
+                                                configFile);
 
   opt->add("selectQueueAutom,Q",
            "allows to select automatically a queue which has the number of nodes requested by the user.",
@@ -336,7 +342,9 @@ int main (int argc, char* argv[]){
     }
 
     // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
+    if(sessionKey.empty()){
+      sessionKey=getLastSessionKey(getppid());
+    }
 
     // vishnu call: submit
     if(! sessionKey.empty()){

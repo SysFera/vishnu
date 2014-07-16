@@ -56,11 +56,12 @@ struct JobProgressFunc {
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
-makeGetJobProgOp(string pgName,
+makeGetJobProgOp(std::string pgName,
                  boost::function1<void, string>& setJobIdFct,
                  boost::function1<void, string>& setUser,
                  boost::function1<void, string>& setMachineIdFct,
-                 string& configFile) {
+                 std::string& sessionKey,
+                 std::string& configFile) {
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -68,6 +69,11 @@ makeGetJobProgOp(string pgName,
            "VISHNU configuration file",
            ENV,
            configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   // All cli options
   opt->add("jobId,i",
@@ -89,7 +95,8 @@ makeGetJobProgOp(string pgName,
 
 int main (int argc, char* argv[]){
 
-  string configFile;
+  std::string configFile;
+  std::string sessionKey;
 
   // Declare the obtions object, the related callbacks
   TMS_Data::ProgressOptions progOp;
@@ -97,7 +104,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,string> setUserFct(boost::bind(&TMS_Data::ProgressOptions::setUser,boost::ref(progOp),_1));
   boost::function1<void,string> setMachineIdFct(boost::bind(&TMS_Data::ProgressOptions::setMachineId,boost::ref(progOp),_1));
 
-  boost::shared_ptr<Options> opt = makeGetJobProgOp(argv[0], setJobIdFct, setUserFct, setMachineIdFct, configFile);
+  boost::shared_ptr<Options> opt = makeGetJobProgOp(argv[0], setJobIdFct, setUserFct, setMachineIdFct, sessionKey, configFile);
 
   //To process list optionss
   bool isEmpty;
@@ -105,5 +112,5 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   JobProgressFunc jobProgressFunc(progOp);
-  return GenericCli().run(jobProgressFunc, configFile, argc, argv);
+  return GenericCli().run(jobProgressFunc, configFile, argc, argv, sessionKey);
 }
