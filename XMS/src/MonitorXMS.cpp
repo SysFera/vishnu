@@ -120,7 +120,6 @@ MonitorXMS::checkJobs(int batchtype){
 
           if (batchtype == OPENNEBULA) {
             std::string executionOutput = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT], true, "");
-
             if (job.getBatchJobId().empty()) {
               switch (state) {
                 case vishnu::STATE_RUNNING:
@@ -130,7 +129,7 @@ MonitorXMS::checkJobs(int batchtype){
                   break;
                 case vishnu::STATE_FAILED:
                 case vishnu::STATE_CANCELLED:
-                  query.append( boost::str(boost::format("UPDATE job SET submitError='%1%' WHERE jobId='%2%';")
+                  query.append( boost::str(boost::format("UPDATE job SET jobdescription='%1%' WHERE jobId='%2%';")
                                            % executionOutput
                                            % job.getJobId()) );
                   break;

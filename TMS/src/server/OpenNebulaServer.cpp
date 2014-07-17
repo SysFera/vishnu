@@ -172,11 +172,9 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
         || jobStatus == vishnu::STATE_COMPLETED
         || jobStatus == vishnu::STATE_FAILED) {
 
-      LOG(boost::str(boost::format("[WARN] Cleaning job %1%; VM ID: %2%; VM State: %3%; Script Status: %4%.")
-                     % jobId
-                     % vmId
-                     % vmState2String(vmInfo.state)
-                     % vishnu::statusToString(jobStatus)), LogWarning);
+      LOG(boost::str(boost::format("[WARN] Cleaning job %1%; Status: %2%; VM ID: %3%; VM State: %4%.")
+                     % jobId % vishnu::statusToString(jobStatus) % vmId % vmState2String(vmInfo.state)),
+          LogWarning);
 
       releaseResources(vmId);
     }
@@ -353,16 +351,16 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
   std::string pubkey = vishnu::get_file_content(vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false));
   return boost::str(
         boost::format(
-          "NAME=\"vishnu-vm\"                                                    \n"
-          "CPU=%1%                                                               \n"
-          "VCPU=%1%                                                              \n"
-          "MEMORY=%2%                                                            \n"
-          "DISK = [ IMAGE = \"%3%\", DRIVER=\"qcow2\"]                           \n"
+          "NAME=\"vishnu.%1%\"                                                \n"
+          "CPU=%2%                                                               \n"
+          "VCPU=%2%                                                              \n"
+          "MEMORY=%3%                                                            \n"
+          "DISK = [ IMAGE = \"%4%\", DRIVER=\"qcow2\"]                           \n"
           "OS=[                                                                  \n"
           "  ARCH=\"i686\",                                                      \n"
           "  ROOT=\"sda1\",                                                      \n"
           "  BOOT=\"hd,fd,cdrom,network\" ]                                      \n"
-          "NIC = [NETWORK=\"%4%\"]                                               \n"
+          "NIC = [NETWORK=\"%5%\"]                                               \n"
           "GRAPHICS = [TYPE=\"vnc\", LISTEN=\"0.0.0.0\",KEYMAP=\"fr\"]           \n"
           "RAW=[                                                                 \n"
           "  TYPE=\"kvm\",                                                       \n"
@@ -373,17 +371,18 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
           "  HOSTNAME=\"vm-$VMID\",                                              \n"
           "  NETWORK=\"YES\",                                                    \n"
           "  ETH0_IP=\"$NIC[IP, NETWORK=\\\"%4%\\\"]\",                          \n"
-          "  ETH0_NETMASK=\"%5%\",                                               \n"
-          "  ETH0_GATEWAY=\"%6%\",                                               \n"
-          "  ETH0_DNS=\"%7%\",                                                   \n"
-          "  FILES=\"%8%\",                                                      \n"
-          "  USERNAME=\"%9%\",                                                   \n"
-          "  SSH_PUBLIC_KEY=\"%10%\",                                            \n"
-          "  USER_PUBKEY=\"%11%\",                                               \n"
-          "  DATA_SERVER=\"%12%\",                                               \n"
-          "  DATA_MOUNT_POINT=\"%13%\",                                          \n"
+          "  ETH0_NETMASK=\"%6%\",                                               \n"
+          "  ETH0_GATEWAY=\"%7%\",                                               \n"
+          "  ETH0_DNS=\"%8%\",                                                   \n"
+          "  FILES=\"%9%\",                                                      \n"
+          "  USERNAME=\"%10%\",                                                  \n"
+          "  SSH_PUBLIC_KEY=\"%11%\",                                            \n"
+          "  USER_PUBKEY=\"%12%\",                                               \n"
+          "  DATA_SERVER=\"%13%\",                                               \n"
+          "  DATA_MOUNT_POINT=\"%14%\",                                          \n"
           "  TARGET=\"hdb\"                                                      \n"
           "]")
+        % mjobId
         % returnInputOrDefaultIfNegativeNull(options.getNbCpu(), 1)
         % returnInputOrDefaultIfNegativeNull(options.getMemory(), 512)
         % mvmImageId
@@ -479,24 +478,24 @@ OpenNebulaServer::monitorScriptState(const std::string& jobId,
             LOG("[INFO] Executing the script...", LogInfo);
             userSshEngine.execRemoteScript(script, mbaseDataDir, pid);
             if (pid > 0) {
+              jobStatus = vishnu::STATE_RUNNING;
               scriptPid = vishnu::convertToString(pid);
               setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT].c_str(), scriptPid.c_str(), 1);
-
-              std::cout << vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT])<<" pid env\n";
             }
           } else {
             jobStatus = vishnu::STATE_FAILED;
-            std::string errorMsg = boost::str(boost::format("[WARN] Invalid parameters when executing job script."
+            std::string errorMsg = boost::str(boost::format("Invalid parameters when executing job script."
                                                             "  mnfsServer=%1%, "
                                                             "  mnfsMountPoint=%2%, "
                                                             "  mbaseDataDir=%3%") % mnfsServer % mnfsMountPoint % mbaseDataDir);
             setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT].c_str(), errorMsg.c_str(), 1);
-            LOG(errorMsg, LogWarning);
+            LOG(boost::str(boost::format("[WARN] %1%") % errorMsg), LogWarning);
           }
         } catch (VishnuException& ex) {
           jobStatus = vishnu::STATE_FAILED;
-          std::string errorMsg = boost::str(boost::format("[WARN] %1%") % ex.what());
-          LOG(errorMsg, LogWarning);
+          std::string errorMsg(ex.what());
+          setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT].c_str(), errorMsg.c_str(), 1);
+          LOG(boost::str(boost::format("[WARN] %1%") % errorMsg), LogWarning);
         }
       } else {
         //FIXME: think mechanism to retrieve the PID of the process.

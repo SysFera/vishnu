@@ -220,16 +220,14 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
                              const std::string& workingDir,
                              int& scriptPid) {
 
-  scriptPid = -1;
-  //  const std::string logfile = workingDir+"/"+mhostname+".vishnu.log";
-  //  std::string cmd = boost::str(boost::format("%1% &>> %2%") % scriptPath % logfile);
-
-  if (execCmd(scriptPath, workingDir, true, scriptPid) ) {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                             "execRemoteScript:: failed when executing the script "
-                             + scriptPath + " in the virtual machine "+mhostname);
+  if (execCmd(scriptPath, workingDir, true, scriptPid) != 0) {
+    scriptPid = -1;
+    LOG(boost::str(boost::format("[WARN] execRemoteScript:: failed executing %1% on VM %2%")
+                   % scriptPath
+                   % mhostname), LogWarning);
+  } else {
+    LOG("[INFO] Submission completed. PID:"+scriptPid, LogInfo);
   }
-  LOG("[INFO] Submission completed. PID:"+scriptPid, LogInfo);
   return scriptPid;
 }
 
@@ -298,7 +296,7 @@ SSHJobExec::execCmd(const std::string& cmd,
   std::string pidFile = boost::str(boost::format("%1%/PID") % workingDir);
   std::string sshCmd;
   if (background) {
-    sshCmd =  boost::str(boost::format("ssh %1% %2%@%3% '%4% 1> %5%/stdout 2> %5%/stderr echo $!' > %6%")
+    sshCmd =  boost::str(boost::format("ssh %1% %2%@%3% '%4% 1> %5%/stdout 2> %5%/stderr & echo $!' > %6%")
                          % DEFAULT_SSH_OPTIONS
                          % muser
                          % mhostname
@@ -313,18 +311,19 @@ SSHJobExec::execCmd(const std::string& cmd,
                          % cmd);
   }
 
-  LOG(sshCmd, mdebugLevel);
+  LOG(boost::str(boost::format("[INFO][CMD] %1%") % sshCmd), LogInfo);
 
-  if(system(sshCmd.c_str())) {
-    return -1;
+  int ret = 0;
+  if (system(sshCmd.c_str())) {
+    ret = -1;
   }
 
   if (background) {
-    pid = vishnu::getStatusValue (pidFile);
+    pid = vishnu::getStatusValue(pidFile);
     vishnu::deleteFile(pidFile.c_str());
+    ret = 0;
   }
-
-  return 0;
+  return ret;
 }
 
 /**
