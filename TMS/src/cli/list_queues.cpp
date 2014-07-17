@@ -47,9 +47,10 @@ int
 main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string configFile;
-  string machineId;
-  string queueName;
+  std::string configFile;
+  std::string sessionKey;
+  std::string machineId;
+  std::string queueName;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
@@ -60,6 +61,11 @@ main (int argc, char* argv[]){
       "VISHNU configuration file",
       ENV,
       configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   opt->add("queueName,q",
           "An option for listing all information of the given\n"
@@ -80,5 +86,5 @@ main (int argc, char* argv[]){
 
   //call of the api function
   ListQueuesFunc listQueueFunc(machineId, queueName);
-  return GenericCli().run(listQueueFunc, configFile, argc, argv);
+  return GenericCli().run(listQueueFunc, configFile, argc, argv, sessionKey);
 }

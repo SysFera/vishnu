@@ -21,7 +21,9 @@ namespace po = boost::program_options;
 using namespace std;
 using namespace vishnu;
 
-boost::shared_ptr<Options> makeWorkOptions(std::string pgName, std::string & configFile,
+boost::shared_ptr<Options> makeWorkOptions(std::string pgName,
+                                           std::string & configFile,
+                                           std::string & sessionKey,
                                            boost::function1<void, string> & fapp, boost::function1<void, string>& fsub,
                                            boost::function1<void, int>& fpri,  boost::function1<void, string>& fown, boost::function1<void, int>& fest,
 
@@ -36,6 +38,11 @@ boost::shared_ptr<Options> makeWorkOptions(std::string pgName, std::string & con
            "VISHNU configuration file",
            ENV,
            configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
 
   Group_type group=CONFIG;
@@ -167,7 +174,8 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string configFile;
+  std::string configFile;
+  std::string sessionKey;
 
 
   /********** EMF data ************/
@@ -186,12 +194,12 @@ int main (int ac, char* av[]){
   boost::function1<void,std::string> fmac( boost::bind(&TMS_Data::AddWorkOptions::setMachineId,boost::ref(newWorkop),_1));
   boost::function1<void,int> fcpu( boost::bind(&TMS_Data::AddWorkOptions::setNbCPU,boost::ref(newWorkop),_1));
 
-  boost::shared_ptr<Options> opt= makeWorkOptions(av[0], configFile, fapp, fsub, fpri, fown, fest, fdesc, fpro, fmac, fcpu,0);
+  boost::shared_ptr<Options> opt= makeWorkOptions(av[0], configFile, sessionKey, fapp, fsub, fpri, fown, fest, fdesc, fpro, fmac, fcpu,0);
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
 
 
   AddWorkFunc apiFunc(newWork, newWorkop);
-  return GenericCli().run(apiFunc, configFile, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av, sessionKey);
 }// end of main

@@ -42,6 +42,7 @@ makeTransferCommandOptions(std::string pgName,
                            std::string& configFile,
                            std::string& trCmdStr,
                            std::string& src,
+                           std::string& sessionKey,
                            std::string& dest){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -51,6 +52,12 @@ makeTransferCommandOptions(std::string pgName,
            "VISHNU configuration file",
            ENV,
            configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
+
 
   opt->add("trCommand,t",
            "The command to use to perform file transfer. The different values  are:\n"
@@ -97,7 +104,7 @@ typedef enum{
 
 void
 copyParseOptions (int argc, char* argv[],std::string& configFile,
-                  std::string& src, std::string& dest,
+                  std::string& src, std::string& dest, std::string& sessionKey,
                   FMS_Data::CpFileOptions& cpFileOptions,
                   TransferType transferType) {
   std::string trCmdStr;
@@ -106,7 +113,7 @@ copyParseOptions (int argc, char* argv[],std::string& configFile,
   boost::shared_ptr<Options> opt(makeTransferCommandOptions(argv[0],
                                                             configFile,
                                                             trCmdStr,
-                                                            src, dest));
+                                                            src, sessionKey, dest));
 
   if (transferType == CP) {
     opt->add("isRecursive,r",

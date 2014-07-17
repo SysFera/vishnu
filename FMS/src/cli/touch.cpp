@@ -1,6 +1,6 @@
 /**
  * \file touch.cpp
- * This file defines the VISHNU submit job command 
+ * This file defines the VISHNU submit job command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -22,15 +22,16 @@ using namespace std;
 using namespace vishnu;
 
 int main (int argc, char* argv[]){
-  
-  /******* Parsed value containers ****************/
-  string configFile;
-  string path;
 
-  //buid options and parse 
-  ParseRemoteCommandOptions (argc,argv,configFile,path);
+  /******* Parsed value containers ****************/
+  std::string configFile;
+  std::string sessionKey;
+  std::string path;
+
+  //buid options and parse
+  ParseRemoteCommandOptions (argc,argv,configFile, sessionKey, path);
 
   FileActionFunc<CREATEFILE> apiFunc(path);
-  return GenericCli().run(apiFunc, configFile, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv, sessionKey);
 
 }

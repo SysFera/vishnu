@@ -33,12 +33,13 @@ using namespace FMS_Data;
  * \param fstatus: The file transfer status
  */
 boost::shared_ptr<Options>
-makeListFileTransferTrOpt(string pgName,
-    string& configFile,
-    boost::function1<void, string>& ftransferId,
-    boost::function1<void, string>& ffromMachineId,
-    boost::function1<void, string>& fuserId,
-    string& statusStr){
+makeListFileTransferTrOpt(std::string pgName,
+                          std::string& configFile,
+                          std::string& sessionKey,
+                          boost::function1<void, string>& ftransferId,
+                          boost::function1<void, string>& ffromMachineId,
+                          boost::function1<void, string>& fuserId,
+                          std::string& statusStr){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -47,6 +48,11 @@ makeListFileTransferTrOpt(string pgName,
       "VISHNU configuration file",
       ENV,
       configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   opt->add("transferId,t",
       "A given transfer id",
@@ -105,8 +111,9 @@ struct ListFileTransferFunc {
 int main (int ac, char* av[]) {
 
   /******* Parsed value containers ****************/
-  string configFile;
-  string statusStr;
+  std::string configFile;
+  std::string sessionKey;
+  std::string statusStr;
 
    /********** EMF data ************/
   FMS_Data::LsTransferOptions lsFileTransferOptions;
@@ -117,7 +124,7 @@ int main (int ac, char* av[]) {
   boost::function1<void, string> fuserId(boost::bind(&FMS_Data::LsTransferOptions::setUserId, boost::ref(lsFileTransferOptions),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(av[0], configFile, ftranferId, ffromMachineId, fuserId, statusStr);
+  boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(av[0], configFile, sessionKey, ftranferId, ffromMachineId, fuserId, statusStr);
 
 
   bool isEmpty;
@@ -161,5 +168,5 @@ int main (int ac, char* av[]) {
 
   // Process command
  ListFileTransferFunc apiFunc( lsFileTransferOptions);
- return GenericCli().run(apiFunc, configFile, ac, av);
+ return GenericCli().run(apiFunc, configFile, ac, av, sessionKey);
 }

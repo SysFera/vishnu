@@ -44,6 +44,7 @@ main(int ac, char* av[]) {
   std::string configFile;
   std::string userId;
   std::string password;
+  std::string key;
 
   /********** EMF Data ****************************/
   UMS_Data::ConnectOptions connectOpt;
@@ -66,6 +67,10 @@ main(int ac, char* av[]) {
            CONFIG, fSubstituteUserId);
   opt->add("closePolicy,p", "for closing session automatically", ENV, fClosePolicy);
   opt->add("password,w", "To give the password ", CONFIG, password);
+
+  opt->add("showKey,k",
+           "An option for listing all VISHNU machines",
+           CONFIG);
 
   try {
     /**************  Parse to retrieve option values  ********************/
@@ -102,6 +107,9 @@ main(int ac, char* av[]) {
 
     storeLastSession(session,getppid()); // store sessionKey into $HOME/.vishnu/sessions
     std::cout << "sessionId: " << session.getSessionId() << "\n";
+    if (opt->count("showKey")){
+      std::cout << "sessionKey: " << session.getSessionKey() << "\n";
+    }
   }  // End of try bloc
 
 

@@ -44,9 +44,10 @@ struct JobOutputJobFunc {
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string configFile;
-  string jobId;
-  string machineId;
+  std::string configFile;
+  std::string sessionKey;
+  std::string jobId;
+  std::string machineId;
   std::string outputDir;
 
   /**************** Describe options *************/
@@ -55,10 +56,17 @@ int main (int argc, char* argv[]){
            "VISHNU configuration file",
            ENV,
            configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
+
   opt->add("jobId,j",
            "The id of the job",
            HIDDEN,
            jobId,1);
+
   opt->setPosition("jobId",1);
 
   opt->add("outDir,o",
@@ -80,6 +88,6 @@ int main (int argc, char* argv[]){
 
   // process the request
   JobOutputJobFunc jobOutputFunc(jobId, options);
-  return GenericCli().run(jobOutputFunc, configFile, argc, argv);
+  return GenericCli().run(jobOutputFunc, configFile, argc, argv, sessionKey);
 
 }
