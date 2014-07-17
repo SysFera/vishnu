@@ -43,6 +43,7 @@ main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   std::string configFile;
+  std::string sessionKey;
   std::string jobId;
   std::string machineId;
 
@@ -54,6 +55,11 @@ main (int argc, char* argv[]){
            "VISHNU configuration file",
            ENV,
            configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   opt->add("jobId,j",
            "The id of the job",
@@ -73,5 +79,5 @@ main (int argc, char* argv[]){
 
   //call of the api function
   InfoJobFunc infoJobFunc(jobId, machineId);
-  return GenericCli().run(infoJobFunc, configFile, argc, argv);
+  return GenericCli().run(infoJobFunc, configFile, argc, argv, sessionKey);
 }

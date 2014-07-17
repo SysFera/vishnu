@@ -42,8 +42,9 @@ struct JobResultsFunc {
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string configFile;
-  string machineId;
+  std::string configFile;
+  std::string sessionKey;
+  std::string machineId;
   std::string outputDir;
   int forceDownloadDays = -1;
 
@@ -55,6 +56,11 @@ int main (int argc, char* argv[]){
            "VISHNU configuration file",
            ENV,
            configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   // Other options
   opt->add("machineId,m",
@@ -81,5 +87,5 @@ int main (int argc, char* argv[]){
 
   // Process the command
   JobResultsFunc jobResultsFunc(options);
-  return GenericCli().run(jobResultsFunc, configFile, argc, argv);
+  return GenericCli().run(jobResultsFunc, configFile, argc, argv, sessionKey);
 }

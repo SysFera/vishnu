@@ -53,6 +53,7 @@ makeCancelJobOption(std::string pgName,
                     boost::function1<void, std::string>& setJobIdFct,
                     boost::function1<void, std::string>& setMachineIdFct,
                     boost::function1<void, std::string>& setUserFct,
+                    std::string& sessionKey,
                     std::string& configFile) {
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -61,6 +62,11 @@ makeCancelJobOption(std::string pgName,
            "VISHNU configuration file",
            ENV,
            configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   // All cli options
   opt->add("job,j",
@@ -83,6 +89,7 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   std::string configFile;
+  std::string sessionKey;
 
   TMS_Data::CancelOptions options;
   boost::function1<void,std::string> setJobIdFct(boost::bind(&TMS_Data::CancelOptions::setJobId,boost::ref(options),_1));
@@ -90,11 +97,11 @@ int main (int argc, char* argv[]){
   boost::function1<void,std::string> setUserFct(boost::bind(&TMS_Data::CancelOptions::setUser,boost::ref(options),_1));
 
   // get options and process the request
-  boost::shared_ptr<Options> opt = makeCancelJobOption(basename(argv[0]), setJobIdFct, setMachineIdFct, setUserFct, configFile);
+  boost::shared_ptr<Options> opt = makeCancelJobOption(basename(argv[0]), setJobIdFct, setMachineIdFct, setUserFct, sessionKey, configFile);
   bool isEmpty;
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   CancelJobFunc cancelJobFunc(options);
-  return GenericCli().run(cancelJobFunc, configFile, argc, argv);
+  return GenericCli().run(cancelJobFunc, configFile, argc, argv, sessionKey);
 }

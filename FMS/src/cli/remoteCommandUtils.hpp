@@ -37,8 +37,9 @@ class Options;
  */
 boost::shared_ptr<Options>
 makeRemoteCommandOpt(std::string pgName,
-           std::string& configFile,
-           std::string& path){
+                     std::string& configFile,
+                     std::string& sessionKey,
+                     std::string& path){
 
 
   boost::shared_ptr<Options> opt=processOpt(pgName, configFile);
@@ -47,6 +48,11 @@ makeRemoteCommandOpt(std::string pgName,
       "represents the path of the file",
       HIDDEN,
       path,1);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   opt->setPosition("path",1);
 
@@ -62,7 +68,7 @@ makeRemoteCommandOpt(std::string pgName,
  * \param configFile the VISHNU configuration file
  * \param path the path of the file
  */
-void ParseRemoteCommandOptions (int argc, char* argv[],std::string& configFile, std::string& path){
+void ParseRemoteCommandOptions (int argc, char* argv[],std::string& configFile, std::string sessionKey, std::string& path){
 
 // build remote command options
 
@@ -73,6 +79,10 @@ opt->add("path,p",
       HIDDEN,
       path,1);
   opt->setPosition("path",1);
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
 bool isEmpty;
 GenericCli().processListOpt( opt, isEmpty,argc,argv);

@@ -52,6 +52,7 @@ makeListJobOp(string pgName,
               boost::function1<void, string>& setQueueFct,
               boost::function1<void, string>& setMutipleStatusesFct,
               boost::function1<void, long long>& setWorkIdFct,
+              string& sessionKey,
               string& configFile) {
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -60,6 +61,11 @@ makeListJobOp(string pgName,
            "VISHNU configuration file",
            ENV,
            configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   // All cli obligatory parameters
   opt->add("machineId,m",
@@ -127,8 +133,9 @@ makeListJobOp(string pgName,
 int
 main (int argc, char* argv[]) {
   /******* Parsed value containers ****************/
-  string configFile;
-  string stateStr = "";
+  std::string configFile;
+  std::string sessionKey;
+  std::string stateStr = "";
   int state;
   std::string fromDate;
   std::string toDate;
@@ -152,18 +159,19 @@ main (int argc, char* argv[]) {
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeListJobOp(argv[0],
-      setMachineIdFct,
-      setJobIdFct,
-      setNbCpuFct,
-      fromDate,
-      toDate,
-      setOwnerFct,
-      stateStr,
-      setPriorityFct,
-      setQueueFct,
-      setMultipleStatusesFct,
-      setWorkIdFct,
-      configFile);
+                                                 setMachineIdFct,
+                                                 setJobIdFct,
+                                                 setNbCpuFct,
+                                                 fromDate,
+                                                 toDate,
+                                                 setOwnerFct,
+                                                 stateStr,
+                                                 setPriorityFct,
+                                                 setQueueFct,
+                                                 setMultipleStatusesFct,
+                                                 setWorkIdFct,
+                                                 sessionKey,
+                                                 configFile);
 
   opt->add("isListAll,l",
            "allows to list all information",
@@ -237,7 +245,16 @@ main (int argc, char* argv[]) {
     }
 
     // Process list job
-    listJobs(getLastSessionKey(getppid()), jobs, jobOp);
+    // get the sessionKey
+    if(sessionKey.empty()){
+      sessionKey=getLastSessionKey(getppid());
+    }
+
+    // vishnu call: submit
+    if(! sessionKey.empty()){
+      listJobs(sessionKey, jobs, jobOp);
+    }
+
     if (jobOp.getJobId().empty()
         && jobOp.getNbCpu() <= 0
         && jobOp.getFromSubmitDate() <= 0
