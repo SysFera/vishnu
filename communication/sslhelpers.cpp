@@ -18,7 +18,7 @@
  * @brief TlsServer::run
  */
 void
-TlsServer::run()
+TlsServer::run(int zmqTimeout)
 {
   /* Initialize the OpenSSL Library */
   SSL_library_init();
@@ -80,7 +80,7 @@ TlsServer::run()
 
   /* Initialize a ZMQ LPC client */
   zmq::context_t zctx(1);
-  LazyPirateClient zlpc(zctx, internalServiceUri, getTimeout());
+  LazyPirateClient zlpc(zctx, internalServiceUri, zmqTimeout);
 
   /* Now wait for incoming connections */
   while (1) {
@@ -98,12 +98,33 @@ TlsServer::run()
       continue;
     }
 
+    // receive request
     recvMsg();
 
     if (!data.empty()) {
-      zlpc.send(data); /* Forward the message to the service handler */
       std::vector<std::string> msgs;
-      msgs.push_back(zlpc.recv());
+      try{
+        if (zlpc.send(data)) { /* Forward the message to the service handler */
+          msgs.push_back(zlpc.recv());
+        } else {
+          zlpc.reset();
+          std::string resultMsg = buildResultProfileMsg("error", "failed to contact the service");
+          msgs.push_back(resultMsg);
+        }
+      } catch(const std::exception &ex){
+        zlpc.reset();
+        std::string error(ex.what());
+        std::cerr << boost::format("[ERROR] %1%\n")%error;
+        std::string resultMsg = buildResultProfileMsg("error", error);
+        msgs.push_back(resultMsg);
+      } catch(...) {
+        zlpc.reset();
+        std::cerr << boost::format("[ERROR] unknown exception\n");
+        std::string resultMsg = buildResultProfileMsg("error", "unknow exception when connecting the service");
+        msgs.push_back(resultMsg);
+      }
+
+      // send back result
       sendMsgs(msgs);
     } else {
       std::cerr << boost::format("[WARNING] Empty message reveived.\n%1%\n"
@@ -147,6 +168,22 @@ TlsServer::sendMsgs(std::vector<std::string>& msgs)
   }
 }
 
+
+/**
+ * @brief buildResultProfileMsg
+ * @param resultType
+ * @param resultMsg
+ * @return
+ */
+std::string
+TlsServer::buildResultProfileMsg(const std::string& resultType, const std::string& resultMsg)
+{
+  boost::scoped_ptr<diet_profile_t> profile(diet_profile_alloc("result", 2));
+  diet_string_set(profile.get(), 0, resultType);
+  diet_string_set(profile.get(), 1, resultMsg);
+
+  return JsonObject::serialize(profile.get());
+}
 
 
 

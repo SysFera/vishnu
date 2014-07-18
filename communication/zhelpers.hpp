@@ -241,7 +241,6 @@ public:
   }
 
 
-private:
   /**
    * \brief Reset the connection
    */
@@ -251,6 +250,8 @@ private:
     sock_->connect(addr_);
     sock_->setLinger(0);
   }
+
+private:
 
   /**
    * \brief The address
