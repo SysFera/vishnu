@@ -125,11 +125,6 @@ private:
   std::string mvmImageId;
 
   /**
-   * \brief Holds the instances' flavor
-   */
-  std::string mvmFlavor;
-
-  /**
    * @brief The path to the contextualization init script
    */
   std::string mcontextInitScript;

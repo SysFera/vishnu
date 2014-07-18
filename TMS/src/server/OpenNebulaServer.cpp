@@ -25,7 +25,6 @@ OpenNebulaServer::OpenNebulaServer()
   : mcloudUser(""),
     mcloudUserPassword(""),
     mvmImageId(""),
-    mvmFlavor(""),
     mvmUser(""),
     mvmUserKey(""),
     mnfsServer(""),
@@ -292,8 +291,6 @@ void OpenNebulaServer::retrieveUserSpecificParams(const std::string& specificPar
         mvmUser = value;
       } else if (param == "vm-key") {
         mvmUserKey = value;
-      } else if (param == "vm-flavor") {
-        mvmFlavor = value;
       } else if (param == "nfs-server") {
         mnfsServer = value;
       } else if (param == "nfs-mountpoint") {
@@ -566,9 +563,6 @@ OpenNebulaServer::handleCloudInfo(const TMS_Data::SubmitOptions& options)
   // Get configuration parameters
   if (mvmImageId.empty()) {
     mvmImageId = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
-  }
-  if (mvmFlavor.empty()) {
-    mvmFlavor = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
   }
   if (mvmUser.empty()) {
     mvmUser = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
