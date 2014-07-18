@@ -173,7 +173,7 @@ OpenNebulaServer::getJobState(const std::string& jobSerialized) {
         || jobStatus == vishnu::STATE_FAILED) {
 
       LOG(boost::str(boost::format("[WARN] Cleaning job %1%; Status: %2%; VM ID: %3%; VM State: %4%.")
-                     % jobId % vishnu::statusToString(jobStatus) % vmId % vmState2String(vmInfo.state)),
+                     % jobId % vishnu::convertJobStateToString(jobStatus) % vmId % vmState2String(vmInfo.state)),
           LogWarning);
 
       releaseResources(vmId);
