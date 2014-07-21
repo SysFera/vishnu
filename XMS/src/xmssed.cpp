@@ -141,10 +141,7 @@ main(int argc, char* argv[], char* envp[]) {
     return vishnu::showVersion();
   }
 
-  std::string vishnuRcFile = boost::str(boost::format("%1%/.vishnurc") % getenv("HOME"));
-  if (boost::filesystem::exists(vishnuRcFile)) {
-    vishnu::sourceFile(vishnuRcFile);
-  }
+  vishnu::sourceRcFile();
 
   SedConfig cfg;
   readConfiguration(argv[1], cfg);
