@@ -13,8 +13,6 @@
 #include "TMSVishnuException.hpp"
 
 namespace bfs = boost::filesystem;
-using namespace vishnu;
-using namespace std;
 
 /**
  * \param session The object which encapsulates the session information
@@ -38,7 +36,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
   std::string serviceName = boost::str(boost::format("%1%@%2%") % SERVICES_TMS[JOBOUTPUTGETRESULT]  %mmachineId);
 
   diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
-  string sessionKey = msessionProxy.getSessionKey();
+  std::string sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
   TMS_Data::JobResult jobResult; jobResult.setJobId(jobId);
@@ -66,6 +64,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
   if (! boost::starts_with(remoteOutputInfo, "/") ) {
     raiseExceptionIfNotEmptyMsg(remoteOutputInfo);
   }
+
   if (outputDir.empty()) {
     outputDir = boost::str(boost::format("%1%/VISHNU_DOWNLOAD_%2%")
                            % bfs::path(bfs::current_path()).string()
@@ -83,8 +82,8 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
                                               % outputDir
                                               % boost::filesystem::unique_path("vishnu-%%%%%%.dinfo").string());
     vishnu::genericFileCopier(sessionKey, mmachineId, remoteOutputInfo, "", downloadInfoFile, copts);
-    istringstream fdescStream(vishnu::get_file_content(downloadInfoFile, false));
-    string line;
+    std::istringstream fdescStream(vishnu::get_file_content(downloadInfoFile, false));
+    std::string line;
     if(! getline(fdescStream, line)) {
       line = "";
     }
@@ -96,11 +95,20 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
     std::string missingFileContent = "";
     if (! line.empty() && nbFiles > 0) {
       vishnu::copyFiles(sessionKey, mmachineId, lineVec, outputDir, copts, missingFileContent, 0);
-      std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
-      jobResult.setOutputPath(outputDir+"/"+fileName);
-      std::string fileName2 = bfs::basename(lineVec[1]) + bfs::extension(lineVec[1]);
-      jobResult.setErrorPath(outputDir+"/"+fileName2);
+      std::string outputPath = "";
+      std::string errorPath = "";
+      if (nbFiles >= 1) {
+        outputPath = boost::str(boost::format("%1%/%2%%3%")
+                                % outputDir % bfs::basename(lineVec[0]) % bfs::extension(lineVec[0]));
+      }
+      if (nbFiles >= 2) {
+        errorPath = boost::str(boost::format("%1%/%2%%3%")
+                               % outputDir % bfs::basename(lineVec[1]) % bfs::extension(lineVec[0]));
+      }
+      jobResult.setOutputPath(outputPath);
+      jobResult.setErrorPath(errorPath);
     }
+
     if (! missingFileContent.empty()) {
       std::string missingFileName = (boost::format("%1%/MISSINGFILES_%2%") % outputDir % jobId).str();
       vishnu::saveInFile(missingFileName, missingFileContent);
@@ -175,11 +183,11 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
                                               % boost::filesystem::temp_directory_path().string()
                                               % boost::filesystem::unique_path("vishnu-%%%%%%.dinfo").string());
     vishnu::genericFileCopier(sessionKey, mmachineId, remoteOutputInfo, "", downloadInfoFile, copts);
-    istringstream downloadInfoStream (vishnu::get_file_content(downloadInfoFile, false));
+    std::istringstream downloadInfoStream (vishnu::get_file_content(downloadInfoFile, false));
     int numJob = 0;
-    string line;
+    std::string line;
     ListStrings lineVec;
-    string missingFiles;
+    std::string missingFiles;
     while (getline(downloadInfoStream, line)) {
       if (line.empty()) continue;
       boost::trim(line);
@@ -191,7 +199,7 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
       vishnu::createOutputDir(targetDir);
       vishnu::copyFiles(sessionKey, mmachineId, lineVec, targetDir, copts, missingFiles, 1);
       listJobResults_ptr->getResults().get(numJob++)->setOutputDir(targetDir);
-      if (!missingFiles.empty()) {
+      if (! missingFiles.empty()) {
         vishnu::saveInFile(targetDir+"/MISSINGFILES", missingFiles);
       }
     }

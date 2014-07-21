@@ -43,7 +43,7 @@ public:
    * \return raises an exception on error
    */
   int
-  cancel(const std::string& vmId) ;
+  cancel(const std::string& vmId);
 
   /**
    * \brief Function to get the status of the job
@@ -63,12 +63,12 @@ public:
 
 
   /**
-   * \brief Function to request the status of queues
-   * \param optQueueName (optional) the name of the queue to request
-   * \return The requested status in to ListQueues data structure
+   * \brief This function get the information about different cloud endpoint
+   * \param queueName (optional) queue name
+   * \return The list of cloud information
    */
-  TMS_Data::ListQueues*
-  listQueues(const std::string& optQueueName=std::string());
+  TMS_Data::ListQueues_ptr
+  listQueues(const std::string& queueName=std::string());
 
   /**
    * \brief Function to get a list of submitted jobs
@@ -77,6 +77,16 @@ public:
    */
   void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
                       const std::vector<std::string>& ignoredIds=std::vector<std::string>());
+
+
+  /**
+   * @brief create job data directory containing script and misc files
+   * @param jobId The job id.
+   * @param scriptPath The script path
+   * @return: Nothing. The base datadir is stored in the mbaseDataDir variable
+   */
+  void
+  setupJobDataDir(const std::string& jobId, const std::string& scriptPath);
 
 private:
   /**
@@ -88,6 +98,11 @@ private:
    * @brief Holds job output dir
    */
   std::string mjobOutputDir;
+
+  /**
+   * @brief Holds the job base data dir
+   */
+  std::string mbaseDataDir;
 
   /**
    * \brief Holds the endpoint of the cloud infrastructure
@@ -108,11 +123,6 @@ private:
    * \brief Holds the image id
    */
   std::string mvmImageId;
-
-  /**
-   * \brief Holds the instances' flavor
-   */
-  std::string mvmFlavor;
 
   /**
    * @brief The path to the contextualization init script
@@ -185,7 +195,7 @@ private:
    * @return
    */
   std::string
-  getKvmTemplate(const TMS_Data::SubmitOptions& options);
+  generateKvmTemplate(const TMS_Data::SubmitOptions& options);
 
   /**
    * @brief Return a string as expected by OpenNebula API (username:password)
@@ -217,16 +227,43 @@ private:
   /**
    * @brief monitorScriptState
    * @param jobId
-   * @param pid
    * @param vmIp
-   * @param uid
+   * @param vmUser
+   * @param scriptPid
+   * @param jobStatus
    * @return
    */
   int
   monitorScriptState(const std::string& jobId,
-                     const std::string& pid,
                      const std::string& vmIp,
-                     const std::string& uid);
+                     const std::string& vmUser,
+                     std::string& scriptPid,
+                     int& jobStatus);
+
+  /**
+   * @brief Gives the equivalent string of a VM state
+   * @param state The state
+   * @return a string
+   */
+  std::string
+  vmState2String(int state);
+
+  /**
+   * @brief handleCloudInfo
+   * @param options
+   */
+  void
+  handleCloudInfo(const TMS_Data::SubmitOptions& options);
+
+
+  /**
+   * @brief OpenNebulaServer::sshIsReady
+   * @param sshEngine
+   * @param vmIp
+   * @return
+   */
+  bool
+  sshIsReady(SSHJobExec sshEngine, const std::string& vmIp);
 };
 
 #endif /* OpenNebulaServer_HPP_ */

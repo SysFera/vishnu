@@ -147,7 +147,7 @@ SSHJobExec::sshexec(const std::string& actionName,
   // Execute the command and treat the possibly errors and check output
   if (! vishnu::execSystemCommand(cmd, msgError)) {
     if (merrorInfo.find("password") != std::string::npos) {
-      merrorInfo.append(" You must copy the publickey in your authorized_keys file.");
+      merrorInfo.append("\nYou must copy the publickey in your authorized_keys file.");
     }
     if (merrorInfo.empty()) {
       merrorInfo = boost::str(boost::format("Unknown error while executing the command: %1%") % cmd);
@@ -176,7 +176,7 @@ SSHJobExec::sshexec(const std::string& actionName,
       } else {
         TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
         jobSteps = *(ecoreFactory->createListJobs());
-        merrorInfo.append("stderr: ").append(vishnu::get_file_content(stderrFilePath, false));
+        merrorInfo.append("\n").append(vishnu::get_file_content(stderrFilePath, false));
         for (unsigned int j = 0; j < jobStepsPtr->getJobs().size(); j++) {
           TMS_Data::Job_ptr job = ecoreFactory->createJob();
           job->setSubmitError(merrorInfo);
@@ -202,7 +202,7 @@ SSHJobExec::sshexec(const std::string& actionName,
   }
 
   if (! merrorInfo.empty()) {
-    LOG(merrorInfo, LogErr);
+    LOG(merrorInfo, LogInfo);
     merrorInfo.clear();
   }
   CLEANUP_SUBMITTING_DATA(mdebugLevel);
@@ -211,52 +211,24 @@ SSHJobExec::sshexec(const std::string& actionName,
 /**
      * \brief Function to execute a script remotely
      * \param scriptPath the path to script to submit
-     * \param nfsServer: The NFS server
-     * \param nfsMountPointthe mount point on the NFS server
      * \param workDir The wordking directory of the job
+     * \param scriptPid OUT script pid
      * \return raises an exception on error
      */
 int
 SSHJobExec::execRemoteScript(const std::string& scriptPath,
-                             const std::string & nfsServer,
-                             const std::string nfsMountPoint,
-                             const std::string & workDir) {
+                             const std::string& workingDir,
+                             int& scriptPid) {
 
-  const std::string logfile = workDir+"/"+mhostname+".vishnu.log";
-
-  int attempt = 1;
-  LOG("[INFO] Checking ssh connection...", LogInfo);
-  while(attempt <= SSH_CONNECT_MAX_RETRY
-        && ! isReadyConnection()) {
-    sleep(SSH_CONNECT_RETRY_INTERVAL);
-    attempt++;
+  if (execCmd(scriptPath, workingDir, true, scriptPid) != 0) {
+    scriptPid = -1;
+    LOG(boost::str(boost::format("[WARN] execRemoteScript:: failed executing %1% on VM %2%")
+                   % scriptPath
+                   % mhostname), LogWarning);
+  } else {
+    LOG("[INFO] Submission completed. PID:"+scriptPid, LogInfo);
   }
-
-  // If not succeed throw exception
-  if(attempt > SSH_CONNECT_MAX_RETRY) {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                             "execRemoteScript:: can't log into the machine "+mhostname+" after "
-                             + vishnu::convertToString(SSH_CONNECT_MAX_RETRY*SSH_CONNECT_RETRY_INTERVAL)+" seconds");
-  }
-
-  // Mount the NFS repository
-  LOG("[INFO] Mounting the nfs directory...", LogInfo);
-  if (! nfsServer.empty() && ! nfsMountPoint.empty()) {
-    mountNfsDir(nfsServer, nfsMountPoint);
-  }
-
-  // If succeed execute the script to the virtual machine
-  // This assumes that the script is located on a shared DFS
-  LOG("[INFO] Executing the script...", LogInfo);
-  execCmd("'mkdir -p "+workDir+" & >>"+logfile+"'"); // First create the output directory if it not exist
-  int pid = -1;
-  if ( execCmd(scriptPath + " & >>"+logfile, true, workDir, &pid) ) {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                             "execRemoteScript:: failed when executing the script "
-                             + scriptPath + " in the virtual machine "+mhostname);
-  }
-  LOG("[INFO] Submission completed. PID:"+pid, LogInfo);
-  return pid;
+  return scriptPid;
 }
 
 /**
@@ -311,42 +283,47 @@ SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
 /**
      * \brief Function to execute a command via ssh
      * \param cmd the command to execute
+     * \param workingDir The working directory
      * \param background: Tell whether launch the script is background
-     * \param outDir the directory when the output will be stored
      * \param pid: return value containing the pid of the of the running background process
      */
 int
 SSHJobExec::execCmd(const std::string& cmd,
+                    const std::string& workingDir,
                     const bool & background,
-                    const std::string& outDir,
-                    int* pid) {
+                    int& pid) {
 
-  std::string pidFile = "$HOME/vishnu.pid";
-  std::ostringstream sshCmd;
-  sshCmd << "ssh " << DEFAULT_SSH_OPTIONS << " "
-         << muser << "@" << mhostname << " ";
-
-  if( ! background) {
-    sshCmd << cmd;
+  std::string pidFile = boost::str(boost::format("%1%/PID") % workingDir);
+  std::string sshCmd;
+  if (background) {
+    sshCmd =  boost::str(boost::format("ssh %1% %2%@%3% '%4% 1> %5%/stdout 2> %5%/stderr & echo $!' > %6%")
+                         % DEFAULT_SSH_OPTIONS
+                         % muser
+                         % mhostname
+                         % cmd
+                         % workingDir
+                         % pidFile);
   } else {
-    try {
-      pidFile =  bfs::unique_path("/tmp/vishnu.pid%%%%%%").string();
-    } catch(...) {} // The pid file will be created in $HOME/vishnu.pid
-
-    sshCmd << "'" << cmd << " 1>"+outDir+"/stdout 2>"+outDir+"/stderr & echo $!' >" << pidFile;
-  }
-  LOG(sshCmd.str(), mdebugLevel);
-  if(system((sshCmd.str()).c_str())) {
-    return -1;
+    sshCmd =  boost::str(boost::format("ssh %1% %2%@%3% %4%")
+                         % DEFAULT_SSH_OPTIONS
+                         % muser
+                         % mhostname
+                         % cmd);
   }
 
-  // Retrieve the pid if the process was launched in background
-  if(background && pid != NULL) {
-    *pid = vishnu::getStatusValue (pidFile);
+  LOG(boost::str(boost::format("[INFO][CMD] %1%") % sshCmd), LogInfo);
+
+  int ret = 0;
+  if (system(sshCmd.c_str())) {
+    ret = -1;
+  }
+
+  if (background) {
+    pid = vishnu::getStatusValue(pidFile);
     vishnu::deleteFile(pidFile.c_str());
+    ret = 0;
   }
-
-  return 0;
+  return ret;
 }
 
 /**
@@ -356,12 +333,9 @@ SSHJobExec::execCmd(const std::string& cmd,
      */
 void
 SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
-
-  // Create the command mkdir + mount
-  std::ostringstream cmd;
-  cmd << "'mkdir "+point+" && "
-      << "mount -t nfs -o rw,nolock,vers=3 "+host+":"+point+" "+point+"'";
-  if(execCmd(cmd.str(), false)) { // run in foreground
+  std::string remoteCmd = boost::str(boost::format("'mkdir -p %1% && mount -t nfs -o rw,nolock,vers=3 %2%:%1% %1%'") % point % host);
+  int pid;
+  if(execCmd(remoteCmd, point, false, pid)) { // run in foreground
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "mountNfsDir:: failed to mount the directory "+point);
   }
@@ -379,7 +353,8 @@ SSHJobExec::isReadyConnection(void)
   const std::string statusFile = boost::str(boost::format("/tmp/%1%.sshstatus") % mhostname);
   const std::string remoteCmd = boost::str(boost::format("exit; echo $? > %1% ") % statusFile);
 
-  execCmd(remoteCmd);
+  int pid;
+  execCmd(remoteCmd, "", false, pid);
   int ret =  vishnu::getStatusValue(statusFile);
   if(ret == 0) {
     isReady = true;

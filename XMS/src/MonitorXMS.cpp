@@ -89,7 +89,7 @@ MonitorXMS::checkJobs(int batchtype){
       job.setBatchJobId( *item++ );
       job.setVmIp( *item++ );
       job.setVmId( *item++ );
-      job.setOwner( *item );
+      job.setOwner( "root"); // job.setOwner( *item );
 
       try {
         int state;
@@ -102,13 +102,46 @@ MonitorXMS::checkJobs(int batchtype){
             state = batchServer->getJobState(job.getBatchJobId());
             break;
         }
-        std::string query = boost::str(boost::format("UPDATE job SET status=%1%"
-                                                     " WHERE jobId='%2%';")
-                                       % vishnu::convertToString(state) % job.getJobId());
+        std::string query = "";
+
         if (state == vishnu::STATE_COMPLETED) {
           query.append(boost::str(boost::format("UPDATE job SET endDate=CURRENT_TIMESTAMP"
                                                 " WHERE jobId='%1%';") % job.getJobId()));
         }
+
+
+        query = boost::str(boost::format("UPDATE job SET status=%1% WHERE jobId='%2%';")
+                           % vishnu::convertToString(state) % job.getJobId());
+
+        if (state == vishnu::STATE_COMPLETED) {
+          query.append( boost::str(boost::format("UPDATE job SET endDate=CURRENT_TIMESTAMP WHERE jobId='%1%';")
+                                   % job.getJobId()) );
+        } else {
+
+          if (batchtype == OPENNEBULA) {
+            std::string executionOutput = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_SCRIPT_SUBMISSION_OUTPUT], true, "");
+            if (job.getBatchJobId().empty()) {
+              switch (state) {
+                case vishnu::STATE_RUNNING:
+                  query.append( boost::str(boost::format("UPDATE job SET batchJobId='%1%' WHERE jobId='%2%';")
+                                           % executionOutput
+                                           % job.getJobId()) );
+                  break;
+                case vishnu::STATE_FAILED:
+                case vishnu::STATE_CANCELLED:
+                  query.append( boost::str(boost::format("UPDATE job SET jobdescription='%1%' WHERE jobId='%2%';")
+                                           % executionOutput
+                                           % job.getJobId()) );
+                  break;
+                default:
+                  break;
+              }
+            }
+          } // if opennebula
+
+        }
+
+
         mdatabaseVishnu->process(query);
       } catch (VishnuException& ex) {
         LOG(boost::str(boost::format("[TMSMONITOR][ERROR] %1%") % ex.what()), LogErr);

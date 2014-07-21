@@ -130,7 +130,7 @@ void vishnu::copyFiles(const std::string& sessionKey,
                         localDestinationDir,
                         copts);
     } catch (...) {
-      missingFiles+=remoteFileList[index]+"\n";
+      missingFiles.append(remoteFileList[index]).append("\n");
     }
   }
 }

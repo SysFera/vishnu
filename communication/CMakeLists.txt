@@ -38,6 +38,7 @@ set(registry_SRCS
     Server.cpp
     SeD.cpp
     utils.cpp
+    zhelpers.cpp
     sslhelpers.cpp
     ${utils_server_SRCS}
     ${registry_SRCS}

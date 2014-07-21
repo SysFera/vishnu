@@ -1,0 +1,238 @@
+/**
+ * \file zhelpers.hpp
+ * \brief This file contains a set of helpers for zmq
+ * \author Haikel Guemar (haikel.guemar@sysfera.com)
+ * \date January 2013
+ */
+
+#include <iostream>
+#include <cstring>
+#include <cerrno>
+#include <zmq.hpp>
+#include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/noncopyable.hpp>
+#include <boost/scoped_ptr.hpp>
+#include "zhelpers.hpp"
+#include "utils.hpp"
+
+
+/**
+   * \brief Constructor
+   * \param ctx the zmq context
+   * \param type The type of the socket
+   */
+Socket::Socket(zmq::context_t& ctx, int type)
+  : zmq::socket_t(ctx, type) {}
+
+/**
+   * \brief set linger period for socket shutdown
+   * \param linger linger time (default: -1 means infinite)
+   * \returns true if it succeeded
+   */
+bool
+Socket::setLinger(int linger) {
+  try {
+    setsockopt(ZMQ_LINGER, &linger, sizeof(linger));
+    return true;
+  } catch (const zmq::error_t& e) {
+    return false;
+  }
+}
+
+/**
+   * \brief wraps zmq::socket_t connect
+   * \param addr connection uri
+   * \return void
+   * \throw error_t if it fails
+   */
+void
+Socket::connect(const std::string& addr)
+{
+  connect(addr.c_str());
+}
+
+/**
+   * \brief wraps zmq::socket_t connect
+   * \param addr connection uri
+   * \return void
+   * \throw error_t if it fails
+   */
+void
+Socket::connect(const char* addr)
+{
+  /* we explicitely call base class method to avoid
+       looping method calls */
+  socket_t::connect(addr);
+}
+
+/**
+   * \brief send data
+   * \param data string to be sent
+   * \param flags zmq flags
+   * \return true if it succeeded
+   */
+bool
+Socket::send(const std::string& data, int flags)
+{
+  return send(data.c_str(), data.length()+1, flags);
+}
+
+/**
+   * \brief send data
+   * \param data buffer to be sent
+   * \param flags zmq flags
+   * \return true if it succeeded
+   */
+bool
+Socket::send(const char* data, int flags)
+{
+  return send(data, strlen(data)+1, flags);
+}
+
+/**
+   * \brief get response for server
+   * \param flags zmq flags
+   * \return message
+   */
+std::string
+Socket::get(int flags)
+{
+  zmq::message_t message;
+  bool rv = false;
+
+  do {
+    try {
+      rv = recv(&message, flags);
+      break;
+    } catch (const zmq::error_t& e) {
+      if (EINTR == e.num()) {
+        continue;
+      } else {
+        throw;
+      }
+    }
+  } while(true);
+
+  if (!rv) {
+    throw zmq::error_t();
+  }
+
+  char* decData;
+  int decDataLength = message.size();
+  //    if (cipher != NULL) {
+  //      decDataLength = cipher->aesDecrypt(reinterpret_cast<unsigned char*>(message.data()), decDataLength, &decData);
+  //    } else {
+  decData = static_cast<char*>(message.data());
+  //   }
+  const char* pos = decData + decDataLength;
+  std::string ret = std::string(static_cast<const char*>(decData), pos);
+  ret.erase(std::remove(ret.begin(), ret.end(), '\0'), ret.end());
+  return ret;
+}
+
+/**
+   * \brief internal method that sends message
+   * \param data buffer to be sent
+   * \param len size of the buffer
+   * \param flags zmq flags
+   * \return true if it succeeded
+   */
+bool
+Socket::send(const char* data, size_t len, int flags) {
+
+  unsigned char* encData;
+  int encDataLength = len;
+  //    if (cipher != NULL) {
+  //      encDataLength = cipher->aesEncrypt(data, len, &encData);
+  //    } else {
+  char* tmp = const_cast<char*>(data);
+  encData = reinterpret_cast<unsigned char*>(tmp);
+  //    }
+
+  zmq::message_t msg(encDataLength);
+  memcpy(msg.data(), encData, encDataLength);
+
+  return socket_t::send(msg, flags);
+}
+
+
+
+/**
+   * \brief Constructor
+   * \param ctx the zmq context
+   * \param addr the address to bind
+   * \param timeout the timeout before retrying to send the message
+   */
+LazyPirateClient::LazyPirateClient(zmq::context_t& ctx,
+                                   const std::string& addr,
+                                   const int& timeout,
+                                   int verbosity)
+  : addr_(addr), ctx_(ctx), timeout_(timeout * 1000000), _verbosity(verbosity)
+{
+  reset();
+}
+
+/**
+   * \brief most of the pattern is implemented here
+   * \param data message to be sent
+   * \param retries number of retries
+   * \return true if it succeeded
+   */
+bool
+LazyPirateClient::send(const std::string& data, int retries) {
+  while (retries) {
+    sock_->send(data);
+    bool expect_reply(true);
+
+    while (expect_reply) {
+      zmq::pollitem_t items[] = { {*sock_, 0, ZMQ_POLLIN, 0} };
+      zmq::poll(&items[0], 1, timeout_);
+
+      if (items[0].revents & ZMQ_POLLIN) {
+        buff_ = sock_->get();
+        if (buff_.length()) {
+          return true;
+        } else {
+          if (_verbosity) {
+            std::cerr << "E: received weird reply from server\n";
+          }
+        }
+      } else {
+        if (--retries == 0 || _verbosity == 0) {
+          retries = 0;
+          if (_verbosity) {
+            std::cerr << "E: server seems offline, abandonning\n";
+          }
+          expect_reply = false;
+          break;
+        } else {
+          if (_verbosity) {
+            std::cerr << boost::format("W: no response from %1%, retrying ...\n") % addr_;
+          }
+          reset();
+          sock_->send(data);
+        }
+      }
+    }
+  }
+  return false;
+}
+
+/**
+   * \brief Get the message received
+   */
+std::string
+LazyPirateClient::recv() const {
+  return buff_;
+}
+/**
+ * \brief Reset the connection
+ */
+void
+LazyPirateClient::reset() {
+  sock_.reset(new Socket(ctx_, ZMQ_REQ));
+  sock_->connect(addr_);
+  sock_->setLinger(0);
+}
+

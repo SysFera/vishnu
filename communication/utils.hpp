@@ -42,7 +42,7 @@ namespace threadsafe {
   template<typename T>
   class queue {
   public:
-    queue() {};
+    queue() {}
 
     void
     push(T value) {

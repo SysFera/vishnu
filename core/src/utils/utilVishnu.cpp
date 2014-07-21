@@ -578,25 +578,27 @@ vishnu::parseVersion(const std::string& version) {
 
 /**
  * \brief Source an configuration file
- * \param filePath: the path to the file
+ * \param
  */
 void
-vishnu::sourceFile(const std::string& filePath) {
+vishnu::sourceRcFile(void) {
+  std::string rcFile = boost::str(boost::format("%1%/.vishnurc") % getenv("HOME"));
+  if (boost::filesystem::exists(rcFile)) {
+    std::istringstream fstream (vishnu::get_file_content(rcFile, false));
+    std::string line;
+    if( fstream.good()) {
+      while(getline(fstream, line)) {
 
-  std::istringstream fstream (vishnu::get_file_content(filePath, false));
-  std::string line;
-  if( fstream.good()) {
-    while(getline(fstream, line)) {
+        if(line.size() == 0 ||
+           ! ::isalpha(line[0])) {
+          continue;
+        }
 
-      if(line.size() == 0 ||
-         ! ::isalpha(line[0])) {
-        continue;
+        size_t pos = line.find("=");
+        std::string variable = line.substr(0, pos);
+        std::string value = line.substr(pos+1, std::string::npos);
+        setenv(variable.c_str(), value.c_str(), 0);
       }
-
-      size_t pos = line.find("=");
-      std::string variable = line.substr(0, pos);
-      std::string value = line.substr(pos+1, std::string::npos);
-      setenv(variable.c_str(), value.c_str(), 0);
     }
   }
 }
@@ -611,18 +613,18 @@ vishnu::statusToString(const int& status) {
 
   std::string str;
   switch(status) {
-  case vishnu::STATUS_ACTIVE:
-    str = "ACTIVE";
-    break;
-  case vishnu::STATUS_LOCKED:
-    str = "LOCKED";
-    break;
-  case vishnu::STATUS_DELETED:
-    str = "DELETED";
-    break;
-  default:
-    str = "UNDEFINED";
-    break;
+    case vishnu::STATUS_ACTIVE:
+      str = "ACTIVE";
+      break;
+    case vishnu::STATUS_LOCKED:
+      str = "LOCKED";
+      break;
+    case vishnu::STATUS_DELETED:
+      str = "DELETED";
+      break;
+    default:
+      str = "UNDEFINED";
+      break;
   }
   return str;
 }
@@ -670,4 +672,21 @@ vishnu::execSystemCommand(const std::string& command, std::string& msg)
   pclose(pipe);
 
   return result;
+}
+
+
+/**
+ * @brief Make a given file executable
+ * @param path The path of the file
+ * @return Throw exception on error
+ */
+void
+vishnu::makeFileExecutable(const std::string& path)
+{
+  if(0 != chmod(path.c_str(),
+                S_IWUSR|S_IRUSR|S_IXUSR|
+                S_IRGRP|S_IXGRP|
+                S_IROTH|S_IXOTH)) {
+    throw SystemException(ERRCODE_INVDATA, boost::str(boost::format("Unable to make the script executable: %1%") % path)) ;
+  }
 }
