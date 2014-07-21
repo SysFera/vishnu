@@ -7,21 +7,13 @@
 #ifndef _ZHELPERS_HPP_
 #define _ZHELPERS_HPP_
 
-#include <iostream>
-#include <cstring>
-#include <cerrno>
-
 #include <zmq.hpp>
-#include <boost/format.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/noncopyable.hpp>
-#include <boost/scoped_ptr.hpp>
 #include "utils.hpp"
 
-/**
- * \brief The default timeout value used to comunicate
- */
-const int DEFAULT_TIMEOUT = 120; // seconds
+
+namespace {
+  const int DEFAULT_TIMEOUT = 120; // seconds
+}
 
 /**
  * \class Socket
@@ -35,7 +27,7 @@ public:
    * \param ctx the zmq context
    * \param type The type of the socket
    */
-  Socket(zmq::context_t& ctx, int type) : zmq::socket_t(ctx, type) {}
+  Socket(zmq::context_t& ctx, int type);
 
   /**
    * \brief set linger period for socket shutdown
@@ -43,14 +35,7 @@ public:
    * \returns true if it succeeded
    */
   bool
-  setLinger(int linger = -1) {
-    try {
-      setsockopt(ZMQ_LINGER, &linger, sizeof(linger));
-      return true;
-    } catch (const zmq::error_t& e) {
-      return false;
-    }
-  }
+  setLinger(int linger = -1);
 
   /**
    * \brief wraps zmq::socket_t connect
@@ -59,10 +44,7 @@ public:
    * \throw error_t if it fails
    */
   void
-  connect(const std::string& addr) {
-    connect(addr.c_str());
-  }
-
+  connect(const std::string& addr);
   /**
    * \brief wraps zmq::socket_t connect
    * \param addr connection uri
@@ -70,11 +52,7 @@ public:
    * \throw error_t if it fails
    */
   void
-  connect(const char* addr) {
-    /* we explicitely call base class method to avoid
-       looping method calls */
-    socket_t::connect(addr);
-  }
+  connect(const char* addr);
 
   /**
    * \brief send data
@@ -83,9 +61,7 @@ public:
    * \return true if it succeeded
    */
   bool
-  send(const std::string& data, int flags = 0) {
-    return send(data.c_str(), data.length()+1, flags);
-  }
+  send(const std::string& data, int flags = 0);
 
   /**
    * \brief send data
@@ -94,9 +70,7 @@ public:
    * \return true if it succeeded
    */
   bool
-  send(const char* data, int flags = 0) {
-    return send(data, strlen(data)+1, flags);
-  }
+  send(const char* data, int flags = 0);
 
   /**
    * \brief get response for server
@@ -104,39 +78,7 @@ public:
    * \return message
    */
   std::string
-  get(int flags = 0) {
-    zmq::message_t message;
-    bool rv = false;
-
-    do {
-      try {
-        rv = recv(&message, flags);
-        break;
-      } catch (const zmq::error_t& e) {
-        if (EINTR == e.num()) {
-          continue;
-        } else {
-          throw;
-        }
-      }
-    } while(true);
-
-    if (!rv) {
-      throw zmq::error_t();
-    }
-
-    char* decData;
-    int decDataLength = message.size();
-    //    if (cipher != NULL) {
-    //      decDataLength = cipher->aesDecrypt(reinterpret_cast<unsigned char*>(message.data()), decDataLength, &decData);
-    //    } else {
-    decData = static_cast<char*>(message.data());
-    //   }
-    const char* pos = decData + decDataLength;
-    std::string ret = std::string(static_cast<const char*>(decData), pos);
-    ret.erase(std::remove(ret.begin(), ret.end(), '\0'), ret.end());
-    return ret;
-  }
+  get(int flags = 0);
 
 private:
   /**
@@ -147,22 +89,7 @@ private:
    * \return true if it succeeded
    */
   bool
-  send(const char* data, size_t len, int flags = 0) {
-
-    unsigned char* encData;
-    int encDataLength = len;
-    //    if (cipher != NULL) {
-    //      encDataLength = cipher->aesEncrypt(data, len, &encData);
-    //    } else {
-    char* tmp = const_cast<char*>(data);
-    encData = reinterpret_cast<unsigned char*>(tmp);
-    //    }
-
-    zmq::message_t msg(encDataLength);
-    memcpy(msg.data(), encData, encDataLength);
-
-    return socket_t::send(msg, flags);
-  }
+  send(const char* data, size_t len, int flags = 0);
 };
 
 
@@ -181,10 +108,7 @@ public:
   LazyPirateClient(zmq::context_t& ctx,
                    const std::string& addr,
                    const int& timeout = DEFAULT_TIMEOUT,
-                   int verbosity = 1)
-    : addr_(addr), ctx_(ctx), timeout_(timeout * 1000000), _verbosity(verbosity) {
-    reset();
-  }
+                   int verbosity = 1);
 
   /**
    * \brief most of the pattern is implemented here
@@ -193,63 +117,20 @@ public:
    * \return true if it succeeded
    */
   bool
-  send(const std::string& data, int retries = 3) {
-    while (retries) {
-      sock_->send(data);
-      bool expect_reply(true);
-
-      while (expect_reply) {
-        zmq::pollitem_t items[] = { {*sock_, 0, ZMQ_POLLIN, 0} };
-        zmq::poll(&items[0], 1, timeout_);
-
-        if (items[0].revents & ZMQ_POLLIN) {
-          buff_ = sock_->get();
-          if (buff_.length()) {
-            return true;
-          } else {
-            if (_verbosity) {
-              std::cerr << "E: received weird reply from server\n";
-            }
-          }
-        } else {
-          if (--retries == 0 || _verbosity == 0) {
-            retries = 0;
-            if (_verbosity) {
-              std::cerr << "E: server seems offline, abandonning\n";
-            }
-            expect_reply = false;
-            break;
-          } else {
-            if (_verbosity) {
-              std::cerr << boost::format("W: no response from %1%, retrying ...\n") % addr_;
-            }
-            reset();
-            sock_->send(data);
-          }
-        }
-      }
-    }
-    return false;
-  }
+  send(const std::string& data, int retries = 3);
 
   /**
    * \brief Get the message received
    */
   std::string
-  recv() const {
-    return buff_;
-  }
+  recv() const;
 
 
   /**
    * \brief Reset the connection
    */
   void
-  reset() {
-    sock_.reset(new Socket(ctx_, ZMQ_REQ));
-    sock_->connect(addr_);
-    sock_->setLinger(0);
-  }
+  reset();
 
 private:
 
@@ -278,7 +159,5 @@ private:
    */
   int _verbosity;
 };
-
-
 
 #endif /* _ZHELPERS_HPP_ */
