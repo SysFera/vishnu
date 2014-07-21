@@ -350,8 +350,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   // Now process the request
   SessionProxy sessionProxy(sessionKey);
   JobOutputProxy jobOutputProxy(sessionProxy, machineId);
-  outputInfo = jobOutputProxy.getJobOutPut(jobId, options);
 
+  outputInfo = jobOutputProxy.getJobOutPut(jobId, options);
   return 0;
 }
 

@@ -64,6 +64,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
   if (! boost::starts_with(remoteOutputInfo, "/") ) {
     raiseExceptionIfNotEmptyMsg(remoteOutputInfo);
   }
+
   if (outputDir.empty()) {
     outputDir = boost::str(boost::format("%1%/VISHNU_DOWNLOAD_%2%")
                            % bfs::path(bfs::current_path()).string()
@@ -94,11 +95,20 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
     std::string missingFileContent = "";
     if (! line.empty() && nbFiles > 0) {
       vishnu::copyFiles(sessionKey, mmachineId, lineVec, outputDir, copts, missingFileContent, 0);
-      std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
-      jobResult.setOutputPath(outputDir+"/"+fileName);
-      std::string fileName2 = bfs::basename(lineVec[1]) + bfs::extension(lineVec[1]);
-      jobResult.setErrorPath(outputDir+"/"+fileName2);
+      std::string outputPath = "";
+      std::string errorPath = "";
+      if (nbFiles >= 1) {
+        outputPath = boost::str(boost::format("%1%/%2%%3%")
+                                % outputDir % bfs::basename(lineVec[0]) % bfs::extension(lineVec[0]));
+      }
+      if (nbFiles >= 2) {
+        errorPath = boost::str(boost::format("%1%/%2%%3%")
+                               % outputDir % bfs::basename(lineVec[1]) % bfs::extension(lineVec[0]));
+      }
+      jobResult.setOutputPath(outputPath);
+      jobResult.setErrorPath(errorPath);
     }
+
     if (! missingFileContent.empty()) {
       std::string missingFileName = (boost::format("%1%/MISSINGFILES_%2%") % outputDir % jobId).str();
       vishnu::saveInFile(missingFileName, missingFileContent);
@@ -189,7 +199,7 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
       vishnu::createOutputDir(targetDir);
       vishnu::copyFiles(sessionKey, mmachineId, lineVec, targetDir, copts, missingFiles, 1);
       listJobResults_ptr->getResults().get(numJob++)->setOutputDir(targetDir);
-      if (!missingFiles.empty()) {
+      if (! missingFiles.empty()) {
         vishnu::saveInFile(targetDir+"/MISSINGFILES", missingFiles);
       }
     }
