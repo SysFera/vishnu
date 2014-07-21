@@ -20,6 +20,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMException.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
+#include "TMS_Data/Queue.hpp"
 
 struct HostT {
   int id;
@@ -78,6 +79,8 @@ public:
   void updatePool(void);
   HostPoolT& getHostPool(void) {return mhostPool;}
   int loadVmInfo(int id, VmT& vm);
+  TMS_Data::Queue_ptr
+  getQueueInfo(void);
 
 private:
 
