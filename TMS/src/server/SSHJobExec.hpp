@@ -57,16 +57,14 @@ public:
   /**
      * \brief Function to execute a script remotely
      * \param scriptPath the path to script to submit
-     * \param nfsServer the NFS server
-     * \param nfsMountPoint the mount point on the NFS server
      * \param workDir The wordking directory of the job
+     * \param scriptPid OUT script pid
      * \return raises an exception on error
      */
   int
   execRemoteScript(const std::string& scriptPath,
-                   const std::string & nfsServer="",
-                   const std::string nfsMountPoint="",
-                   const std::string & workDir="");
+                   const std::string& workDir,
+                   int& scriptPid);
 
   /**
      * \brief Function to copy files from remote machine
@@ -94,16 +92,16 @@ public:
   /**
      * \brief Function to execute a command via ssh
      * \param cmd the command to execute
+     * \param workingDir The working directory
      * \param background: Tell whether launch the script is background
-     * \param outDir the directory when the output will be stored
      * \param pid: return value containing the pid of the of the running background process
      * \return 0 on success
      */
   int
   execCmd(const std::string& cmd,
-          const bool & background=false,
-          const std::string& outDir="$HOME",
-          int* pid=NULL);
+          const std::string& workingDir,
+          const bool & background,
+          int& pid);
 
   /**
      * \brief Function to return the job serialized content
