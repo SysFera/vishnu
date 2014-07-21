@@ -36,13 +36,15 @@ xercesc::DOMNodeList* OneCloudInstance::initializeXmlElts(const std::string& xml
   return xmlDoc->getElementsByTagName(xercesc::XMLString::transcode(TAG.c_str()));
 }
 
-void OneCloudInstance::releaseXmlElts(xercesc::XercesDOMParser* parser)
+void
+OneCloudInstance::releaseXmlElts(xercesc::XercesDOMParser* parser)
 {
   delete parser;
   xercesc::XMLPlatformUtils::Terminate();
 }
 
-void OneCloudInstance::updatePool(void)
+void
+OneCloudInstance::updatePool(void)
 {
   OneRPCManager rpcManager(mrpcUrl);
   rpcManager.setMethod("one.hostpool.info");
@@ -58,7 +60,8 @@ void OneCloudInstance::updatePool(void)
 }
 
 
-int OneCloudInstance::loadVmInfo(int id, VmT& vm)
+int
+OneCloudInstance::loadVmInfo(int id, VmT& vm)
 {
 
   int retCode = -1;
@@ -78,7 +81,8 @@ int OneCloudInstance::loadVmInfo(int id, VmT& vm)
   return retCode;
 }
 
-void OneCloudInstance::parseRpcHostPoolResult(const std::string& content)
+void
+OneCloudInstance::parseRpcHostPoolResult(const std::string& content)
 {
   vishnu::saveInFile(mhostPoolFilename, content);
 
@@ -115,7 +119,8 @@ void OneCloudInstance::parseRpcHostPoolResult(const std::string& content)
 }
 
 
-void OneCloudInstance::parseRpcVmInfoResult(const std::string& content, VmT& vm)
+void
+OneCloudInstance::parseRpcVmInfoResult(const std::string& content, VmT& vm)
 {
   vishnu::saveInFile(mhostPoolFilename, content);
 
@@ -143,7 +148,8 @@ void OneCloudInstance::parseRpcVmInfoResult(const std::string& content, VmT& vm)
   vishnu::deleteFile(mhostPoolFilename.c_str());
 }
 
-void OneCloudInstance::parseHostInfo(xercesc::DOMNode* node, HostT& host)
+void
+OneCloudInstance::parseHostInfo(xercesc::DOMNode* node, HostT& host)
 {
   xercesc::DOMNodeList*  hostNodes = node->getChildNodes();
   size_t hostEltCount =   hostNodes->getLength();
@@ -203,7 +209,9 @@ void OneCloudInstance::parseHostInfo(xercesc::DOMNode* node, HostT& host)
   }
 }
 
-void OneCloudInstance::parseVmInfo(xercesc::DOMNode* node, VmT& vm)
+
+void
+OneCloudInstance::parseVmInfo(xercesc::DOMNode* node, VmT& vm)
 {
   xercesc::DOMNodeList*  vmNodes = node->getChildNodes();
   for (size_t eltIndex = 0, eltCount = vmNodes->getLength();
@@ -256,4 +264,13 @@ void OneCloudInstance::parseVmInfo(xercesc::DOMNode* node, VmT& vm)
       }
     }  // HOST_SHARE
   }
+}
+
+TMS_Data::Queue_ptr
+OneCloudInstance::getQueueInfo(void)
+{
+  updatePool();
+  TMS_Data::Queue_ptr queue = new TMS_Data::Queue();
+  //FIXE: use pool info to update queue
+  return queue;
 }
