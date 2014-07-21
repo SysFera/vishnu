@@ -162,7 +162,9 @@ Dispatcher::configureHandlers() {
         config.getRequiredConfigValue<std::string>(vishnu::SERVER_SSL_CERTICATE, sslCertificate);
         TlsServer tlsFrontHandler(rsaPrivkey, sslCertificate, sslPort, FRONTEND_IPC_URI);
         try {
-          tlsFrontHandler.run();
+          int timeout  = vishnu::DEFAUT_TIMEOUT;
+          config.getConfigValue<int>(vishnu::TIMEOUT, timeout);
+          tlsFrontHandler.run(timeout);
         } catch(VishnuException& ex) {
           LOG(boost::str(boost::format("[ERROR] %1%\n") % ex.what()), LogErr);
           retCode = -1;
@@ -185,7 +187,9 @@ Dispatcher::configureHandlers() {
         int port = vishnu::getPortFromUri(uriSubs);
         TlsServer tlsBackHandler(rsaPrivkey, sslCertificate, port, BACKEND_IPC_URI);
         try {
-          tlsBackHandler.run();
+          int timeout  = vishnu::DEFAUT_TIMEOUT;
+          config.getConfigValue<int>(vishnu::TIMEOUT, timeout);
+          tlsBackHandler.run(timeout);
         } catch(VishnuException& ex) {
           LOG(boost::str(boost::format("[ERROR] %1%") % ex.what()), LogErr);
           retCode = -1;

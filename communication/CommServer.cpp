@@ -199,7 +199,9 @@ initSeD(const std::string& sedType,
       TlsServer tlsHandler(rsaPrivkey, sslCertificate, sslPort, IPC_URI);
       int retCode = 0;
       try {
-        tlsHandler.run();
+        int timeout  = vishnu::DEFAUT_TIMEOUT;
+        config.getConfigValue<int>(vishnu::TIMEOUT, timeout);
+        tlsHandler.run(timeout);
       } catch(VishnuException& ex) {
         LOG(boost::str(boost::format("[ERROR] %1%\n")%ex.what()), LogErr);
         retCode = -1;

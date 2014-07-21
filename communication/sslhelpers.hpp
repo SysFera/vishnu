@@ -51,7 +51,7 @@ public:
    * @brief run
    */
   void
-  run(void);
+  run(int zmqTimeout);
 
   /**
    * @brief getErrorMsg
@@ -113,6 +113,15 @@ private:
    */
   void
   sendMsgs(std::vector<std::string>& msgs);
+
+  /**
+   * @brief buildResultProfileMsg
+   * @param resultType
+   * @param resultMsg
+   * @return
+   */
+  std::string
+  buildResultProfileMsg(const std::string& resultType, const std::string& resultMsg);
 };
 
 class TlsClient {
