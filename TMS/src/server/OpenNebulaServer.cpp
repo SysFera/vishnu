@@ -62,6 +62,7 @@ OpenNebulaServer::submit(const std::string& scriptPath,
 {
   mjobId = vishnu::getVar("VISHNU_JOB_ID", false);
   mjobOutputDir = vishnu::getVar("VISHNU_OUTPUT_DIR", false);
+
   handleCloudInfo(options);
   setupJobDataDir(mjobId, scriptPath);
 
@@ -92,8 +93,9 @@ OpenNebulaServer::submit(const std::string& scriptPath,
   //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
   jobPtr->setJobName(returnInputOrDefaultIfEmpty(options.getName(), "PID_"+jobPtr->getBatchJobId()));
-  jobPtr->setOutputPath(jobPtr->getOutputDir()+"/stdout");
-  jobPtr->setErrorPath(jobPtr->getOutputDir()+"/stderr");
+
+  jobPtr->setOutputPath(mbaseDataDir+"/stdout");
+  jobPtr->setErrorPath(mbaseDataDir+"/stderr");
   jobPtr->setNbNodes(1);
   jobPtr->setOwner(mvmUser);
 
