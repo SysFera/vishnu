@@ -9,6 +9,7 @@
 
 
 #include <boost/algorithm/string/join.hpp>
+#include <boost/lexical_cast.hpp>
 #include "Worker.hpp"
 #include "DIET_client.h"
 #include "UserException.hpp"
