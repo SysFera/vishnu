@@ -13,8 +13,6 @@
 #include "TMSVishnuException.hpp"
 
 namespace bfs = boost::filesystem;
-using namespace vishnu;
-using namespace std;
 
 /**
  * \param session The object which encapsulates the session information
@@ -38,7 +36,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
   std::string serviceName = boost::str(boost::format("%1%@%2%") % SERVICES_TMS[JOBOUTPUTGETRESULT]  %mmachineId);
 
   diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
-  string sessionKey = msessionProxy.getSessionKey();
+  std::string sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
   TMS_Data::JobResult jobResult; jobResult.setJobId(jobId);
@@ -83,8 +81,8 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
                                               % outputDir
                                               % boost::filesystem::unique_path("vishnu-%%%%%%.dinfo").string());
     vishnu::genericFileCopier(sessionKey, mmachineId, remoteOutputInfo, "", downloadInfoFile, copts);
-    istringstream fdescStream(vishnu::get_file_content(downloadInfoFile, false));
-    string line;
+    std::istringstream fdescStream(vishnu::get_file_content(downloadInfoFile, false));
+    std::string line;
     if(! getline(fdescStream, line)) {
       line = "";
     }
@@ -175,11 +173,11 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
                                               % boost::filesystem::temp_directory_path().string()
                                               % boost::filesystem::unique_path("vishnu-%%%%%%.dinfo").string());
     vishnu::genericFileCopier(sessionKey, mmachineId, remoteOutputInfo, "", downloadInfoFile, copts);
-    istringstream downloadInfoStream (vishnu::get_file_content(downloadInfoFile, false));
+    std::istringstream downloadInfoStream (vishnu::get_file_content(downloadInfoFile, false));
     int numJob = 0;
-    string line;
+    std::string line;
     ListStrings lineVec;
-    string missingFiles;
+    std::string missingFiles;
     while (getline(downloadInfoStream, line)) {
       if (line.empty()) continue;
       boost::trim(line);
