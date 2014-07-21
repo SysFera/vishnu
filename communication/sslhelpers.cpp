@@ -13,6 +13,16 @@
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
 
+TlsServer::TlsServer(const std::string& privKey,
+          const std::string& cert,
+          int port,
+          const std::string& internalSrvUri)
+  : listeningPort(port),
+    privateKey(privKey),
+    certificate(cert),
+    internalServiceUri(internalSrvUri),
+    clientBioHandler(0) {
+}
 
 /**
  * @brief TlsServer::run
