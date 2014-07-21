@@ -13,7 +13,6 @@
 #include "DIET_client.h"
 #include "TMSVishnuException.hpp"
 
-using namespace std;
 namespace bfs=boost::filesystem;
 /**
  * \param sessionKey The object which encapsulates the session information
@@ -53,13 +52,13 @@ JobProxy::submitJob(const std::string& scriptPath,
   }
 
   // now create and initialize the service profile
-  string serviceName = boost::str(boost::format("%1%@%2%")% SERVICES_TMS[JOBSUBMIT] % mmachineId);
+  std::string serviceName = boost::str(boost::format("%1%@%2%")% SERVICES_TMS[JOBSUBMIT] % mmachineId);
 
   // Send input files
   FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true) ;
   copts.setTrCommand(0);
-  string inputFiles = vishnu::sendInputFiles(msessionKey,
+  std::string inputFiles = vishnu::sendInputFiles(msessionKey,
                                              options.getFileParams(),
                                              mmachineId,
                                              copts);
