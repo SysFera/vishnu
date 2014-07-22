@@ -29,11 +29,12 @@ using namespace vishnu;
  * \param fuserId: The user identifier
  */
 boost::shared_ptr<Options>
-makeStopFileTrOpt(string pgName,
-    string& configFile,
-    boost::function1<void, string>& ftransferId,
-    boost::function1<void, string>& ffromMachineId,
-    boost::function1<void, string>& fuserId){
+makeStopFileTrOpt(std::string pgName,
+                  std::string& configFile,
+                  std::string& sessionKey,
+                  boost::function1<void, string>& ftransferId,
+                  boost::function1<void, string>& ffromMachineId,
+                  boost::function1<void, string>& fuserId){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -42,6 +43,11 @@ makeStopFileTrOpt(string pgName,
       "VISHNU configuration file",
       ENV,
       configFile);
+
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
 
   opt->add("transferId,i",
       "A given transfer id",
@@ -64,8 +70,8 @@ makeStopFileTrOpt(string pgName,
 
 int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
-  string configFile;
-  string sessionKey;
+  std::string configFile;
+  std::string sessionKey;
 
    /********** EMF data ************/
   FMS_Data::StopTransferOptions stopFileTransferOptions;
@@ -76,7 +82,7 @@ int main (int argc, char* argv[]){
   boost::function1<void, string> fuserId(boost::bind(&FMS_Data::StopTransferOptions::setUserId, boost::ref(stopFileTransferOptions),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeStopFileTrOpt(argv[0], configFile, ftranferId, ffromMachineId, fuserId);
+  boost::shared_ptr<Options> opt= makeStopFileTrOpt(argv[0], configFile, sessionKey, ftranferId, ffromMachineId, fuserId);
 
   bool isEmpty;
   //To process list options
@@ -91,7 +97,9 @@ int main (int argc, char* argv[]){
     }
 
     // get the sessionKey
-    sessionKey=getLastSessionKey(getppid());
+    if (sessionKey.empty()) {
+      sessionKey=getLastSessionKey(getppid());
+    }
 
     // VISHNU call
     if(false==sessionKey.empty()){
