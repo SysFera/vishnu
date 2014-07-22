@@ -35,7 +35,7 @@ vishnu::isNew(const std::string& urlsup, const std::string& mid, const std::stri
                                    " AND dietname='%3%'"
                                    " AND pstatus<>%4%")%mdatabase->escapeData(mid) %mdatabase->escapeData(type) %mdatabase->escapeData(urlsup) %vishnu::STATUS_DELETED).str();
   try {
-    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req));
     if (result->getNbTuples() != 0) {
       return false;
     }
@@ -100,9 +100,9 @@ vishnu::isCpt (const char * s) {
  * \return 0 on success and -1 when an error occurs
  */
 int
-vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, IdType type,
-                     const std::string& name, const std::string& site) {
-  unsigned int i;
+vishnu::getKeywords(int* size, Format_t* array, const std::string& format, int cpt, IdType type,
+                    const std::string& name, const std::string& site) {
+  unsigned int charIndex;
   *size = 0;
 
   char buf[500];
@@ -111,87 +111,83 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
   //the current time
   boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
   boost::gregorian::date::ymd_type ymd = now.date().year_month_day();
-
-  std::ostringstream osY, osM, osD;
-  osY << ymd.year;
-  std::string year = osY.str();
-  osM << ymd.month;
-  std::string month = osM.str();
-  osD << ymd.day;
-  std::string day = osD.str();
+  std::string year = boost::str(boost::format("%1%") % ymd.year);
+  std::string month = boost::str(boost::format("%1%") % ymd.month);
+  std::string day = boost::str(boost::format("%1%") % ymd.day);
 
   // Loop parsing for the variables, setting their position and their value
   /* >RELAX<MISRA_6_3_1> avoid using too many brackets */
   /* >RELAX<MISRA_6_4_1> avoid using too many brackets */
-  for (i=0;i<strlen (format);i++) {
-    if (format[i]=='$') {
-      if (isDay (format+i+1)) {
-        array[*size].start = i;
-        array[*size].end = i+3;
+  for (charIndex=0; charIndex< format.size(); ++charIndex) {
+    if (format[charIndex]=='$') {
+      std::string rightSubStr = format.substr(charIndex+1, std::string::npos);
+      if (isDay(rightSubStr.c_str())) {
+        array[*size].start = charIndex;
+        array[*size].end = charIndex+3;
         array[*size].value = day;
         (*size) ++;
-      } else if (isMonth (format+i+1)) {
+      } else if (isMonth(rightSubStr.c_str())) {
         array[*size].value = month;
-        array[*size].start = i;
-        array[*size].end = i+5;
+        array[*size].start = charIndex;
+        array[*size].end = charIndex+5;
         (*size) ++;
-      } else if (isYear (format+i+1)) {
-        array[*size].start = i;
-        array[*size].end = i+4;
+      } else if (isYear(rightSubStr.c_str())) {
+        array[*size].start = charIndex;
+        array[*size].end = charIndex+4;
         array[*size].value = year;
         (*size) ++;
-      } else if (isCpt (format+i+1)) {
+      } else if (isCpt (rightSubStr.c_str())) {
         char tmp[10];
         sprintf (tmp, "%d", cpt);
         array[*size].value = std::string (tmp);
-        array[*size].start = i;
-        array[*size].end = i+3;
+        array[*size].start = charIndex;
+        array[*size].end = charIndex+3;
         (*size) ++;
-      } else if (isSite (format+i+1)) {
+      } else if (isSite (rightSubStr.c_str())) {
         array[*size].value = site;
-        array[*size].start = i;
-        array[*size].end = i+4;
+        array[*size].start = charIndex;
+        array[*size].end = charIndex+4;
         (*size) ++;
-      } else if (isMaName (format+i+1)) {
+      } else if (isMaName (rightSubStr.c_str())) {
         array[*size].value = name;
-        array[*size].start = i;
-        array[*size].end = i+6;
+        array[*size].start = charIndex;
+        array[*size].end = charIndex+6;
         (*size) ++;
-      } else if (isUName (format+i+1)) {
+      } else if (isUName (rightSubStr.c_str())) {
         array[*size].value = name;
-        array[*size].start = i;
-        array[*size].end = i+5;
+        array[*size].start = charIndex;
+        array[*size].end = charIndex+5;
         (*size) ++;
-      } else if (isName (format+i+1)) {
+      } else if (isName (rightSubStr.c_str())) {
         array[*size].value = name;
-        array[*size].start = i;
-        array[*size].end = i+4;
+        array[*size].start = charIndex;
+        array[*size].end = charIndex+4;
         (*size) ++;
-      } else if (isType (format+i+1)) {
+      } else if (isType (rightSubStr.c_str())) {
         switch (type) {
-        case 0 :
-          array[*size].value = "M";
-          break;
-        case 1 :
-          array[*size].value = "U";
-          break;
-        case 2 :
-          array[*size].value = "J";
-          break;
-        case 3 :
-          array[*size].value = "F";
-          break;
-        case 4 :
-          array[*size].value = "A";
-          break;
-        case 5 :
-          array[*size].value = "W";
-          break;
-        default :
-          break;
+          case 0 :
+            array[*size].value = "M";
+            break;
+          case 1 :
+            array[*size].value = "U";
+            break;
+          case 2 :
+            array[*size].value = "J";
+            break;
+          case 3 :
+            array[*size].value = "F";
+            break;
+          case 4 :
+            array[*size].value = "A";
+            break;
+          case 5 :
+            array[*size].value = "W";
+            break;
+          default :
+            break;
         }
-        array[*size].start = i;
-        array[*size].end = i+4;
+        array[*size].start = charIndex;
+        array[*size].end = charIndex+4;
         (*size) ++;
       } else {
         return -1;
@@ -211,42 +207,38 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
  * \param site Site of the machine (optionnal)
  */
 std::string
-vishnu::getGeneratedName (const char* format,
-                          int cpt,
-                          IdType type,
-                          const std::string& name,
-                          const std::string& site) {
-  std::string res;
-  res.clear ();
-  res = std::string ("");
-  int  size;
-  Format_t *keywords;
-
-  keywords = new Format_t[strlen(format)+1];
-  int ret = getKeywords (&size, keywords, format, cpt, type, name, site); // Getting var and their value
+vishnu::getGeneratedName(const std::string& format,
+                         int cpt,
+                         IdType type,
+                         const std::string& name,
+                         const std::string& site) {
+  std::string resultName;
+  int  keywordCount;
+  Format_t keywords[format.size()+1];
+  int ret = getKeywords(&keywordCount, keywords, format, cpt, type, name, site); // Getting var and their value
 
   // if there is no error with the getKeywords function
   if (ret != -1) {
-    // Building the id using the format and the values of the var
-    if (size > 0) {
-      res.append(format, keywords[0].start);
+    if (keywordCount > 0) {
+      resultName.append(format.substr(0, keywords[0].start));
     } else {
-      res = std::string (format);
+      resultName = format;
     }
 
-    for (int i = 0; i < size; i++) {
-      res.append (keywords[i].value);
-      // If other variables
-      if (*(format+keywords[i].end + 1) != '\0' && i!=size-1) {
-        res.append (format+keywords[i].end+1, keywords[i+1].start-keywords[i].end-1);
-        // If text after the variable
-      } else if (*(format+keywords[i].end + 1) != '\0' ) {
-        res.append (format+keywords[i].end+1, strlen (format)-keywords[i].end-1);
+    for (int keywordIndex = 0; keywordIndex < keywordCount; ++keywordIndex) {
+      resultName.append (keywords[keywordIndex].value);
+      if (keywords[keywordIndex].end != format.size() && keywordIndex != keywordCount - 1) { // If other variables
+        size_t minSubstringBound = keywords[keywordIndex].end+1;
+        size_t maxSubstringBound = keywords[keywordIndex+1].start - keywords[keywordIndex].end - 1;
+        resultName.append(format.substr(minSubstringBound, maxSubstringBound));
+      } else if (keywords[keywordIndex].end + 1 != format.size()) { // If text after the variable
+        size_t minSubstringBound = keywords[keywordIndex].end+1;
+        size_t maxSubstringBound = format.size() - keywords[keywordIndex].end - 1;
+        resultName.append(format.substr(minSubstringBound, maxSubstringBound));
       }
     }
   }
-  delete [] keywords;
-  return res;
+  return resultName;
 }
 
 int
@@ -263,59 +255,59 @@ vishnu::getVishnuCounter(const std::string& vishnuIdString, IdType type) {
 
   bool insert=true;
   switch(type) {
-  case MACHINE:
-    table="machine";
-    fields=" (vishnu_vishnuid) ";
-    val = " ("+vishnuIdString+") ";
-    primary="nummachineid";
-    break;
-  case USER:
-    table="users";
-    fields=" (vishnu_vishnuid,pwd,userid) ";
-    val = " ("+vishnuIdString+",'','') ";
-    primary="numuserid";
-    break;
-  case JOB:
-    table="job";
-    fields=" (job_owner_id, machine_id, workId, vsession_numsessionid) ";
-    val= " ((select max(numuserid) from users), (select max(nummachineid) from machine),"
-         "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
-    primary="numjobid";
-    break;
-  case FILETRANSFERT:
-    table="filetransfer";
-    fields=" (vsession_numsessionid) ";
-    val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
-    primary="numfiletransferid";
-    break;
-  case AUTH:
-    table="authsystem";
-    fields=" (vishnu_vishnuid) ";
-    val = " ("+vishnuIdString+") ";
-    primary="numauthsystemid";
-    break;
-  case WORK:
-    //FIXME : no auto-increment field in work
-    fields = " (application_id"
-             ",date_created,done_ratio, identifier,"
-             "nbcpus, owner_id, "
-             "project_id, "
-             "status, subject, consolidated) ";
-    val = " ((select min(id) from application_version),"
-          " CURRENT_TIMESTAMP, 1, 't',"
-          " 1, (select min(numuserid) from users), "
-          "(select min(id) from project), "
-          "1,'toto', false) ";
-    table = "work";
-    primary="id";
-    break;
-  default:
-    fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
-    val = " (1, 't', 't', 't', 't', 't') ";
-    table = "vishnu";
-    insert=false;
-    primary="vishnu_vishnuid";
-    break;
+    case MACHINE:
+      table="machine";
+      fields=" (vishnu_vishnuid) ";
+      val = " ("+vishnuIdString+") ";
+      primary="nummachineid";
+      break;
+    case USER:
+      table="users";
+      fields=" (vishnu_vishnuid,pwd,userid) ";
+      val = " ("+vishnuIdString+",'','') ";
+      primary="numuserid";
+      break;
+    case JOB:
+      table="job";
+      fields=" (job_owner_id, machine_id, workId, vsession_numsessionid) ";
+      val= " ((select max(numuserid) from users), (select max(nummachineid) from machine),"
+           "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+      primary="numjobid";
+      break;
+    case FILETRANSFERT:
+      table="filetransfer";
+      fields=" (vsession_numsessionid) ";
+      val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+      primary="numfiletransferid";
+      break;
+    case AUTH:
+      table="authsystem";
+      fields=" (vishnu_vishnuid) ";
+      val = " ("+vishnuIdString+") ";
+      primary="numauthsystemid";
+      break;
+    case WORK:
+      //FIXME : no auto-increment field in work
+      fields = " (application_id"
+               ",date_created,done_ratio, identifier,"
+               "nbcpus, owner_id, "
+               "project_id, "
+               "status, subject, consolidated) ";
+      val = " ((select min(id) from application_version),"
+            " CURRENT_TIMESTAMP, 1, 't',"
+            " 1, (select min(numuserid) from users), "
+            "(select min(id) from project), "
+            "1,'toto', false) ";
+      table = "work";
+      primary="id";
+      break;
+    default:
+      fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
+      val = " (1, 't', 't', 't', 't', 't') ";
+      table = "vishnu";
+      insert=false;
+      primary="vishnu_vishnuid";
+      break;
   }
 
   databaseVishnu = factory.getDatabaseInstance();
@@ -349,39 +341,39 @@ vishnu::reserveObjectId(int key, std::string &objectId, IdType type) {
   bool uniq = false;
 
   switch(type) {
-  case MACHINE:
-    table="machine";
-    keyname="nummachineid";
-    idname="machineid";
-    break;
-  case USER:
-    table="users";
-    keyname="numuserid";
-    idname="userid";
-    break;
-  case JOB:
-    table="job";
-    keyname="numjobid";
-    idname="jobid";
-    break;
-  case FILETRANSFERT:
-    table="filetransfer";
-    keyname="numfiletransferid";
-    idname="transferid";
-    break;
-  case AUTH:
-    table="authsystem";
-    keyname="numauthsystemid";
-    idname="authsystemid";
-    break;
-  case WORK:
-    table="work";
-    keyname="id";
-    idname="identifier";
-    break;
-  default:
-    throw SystemException(ERRCODE_SYSTEM,"Cannot reserve Object id, type in unrecognized");
-    break;
+    case MACHINE:
+      table="machine";
+      keyname="nummachineid";
+      idname="machineid";
+      break;
+    case USER:
+      table="users";
+      keyname="numuserid";
+      idname="userid";
+      break;
+    case JOB:
+      table="job";
+      keyname="numjobid";
+      idname="jobid";
+      break;
+    case FILETRANSFERT:
+      table="filetransfer";
+      keyname="numfiletransferid";
+      idname="transferid";
+      break;
+    case AUTH:
+      table="authsystem";
+      keyname="numauthsystemid";
+      idname="authsystemid";
+      break;
+    case WORK:
+      table="work";
+      keyname="id";
+      idname="identifier";
+      break;
+    default:
+      throw SystemException(ERRCODE_SYSTEM,"Cannot reserve Object id, type in unrecognized");
+      break;
   }
   while (!uniq){
     uniq = checkObjectId(table, idname, objectId);
@@ -413,7 +405,7 @@ vishnu::checkObjectId(const std::string& table,
   mdatabase = factory.getDatabaseInstance();
   std::string request = "SELECT "+ idname + " FROM " + table + " WHERE " + idname + "='" + mdatabase->escapeData(objectId) +"';";
   try {
-    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(request.c_str()));
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(request));
     if (result->getNbTuples() != 0) {
       return false;
     }
@@ -439,10 +431,11 @@ vishnu::getAttrVishnu(const std::string& attrname, const std::string& vishnuid, 
   std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
 
   databaseVishnu = factory.getDatabaseInstance();
-  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str(), transacId));
+  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand, transacId));
   return result->getFirstElement();
 
 }
+
 /**
  * \brief Function to increment a counter of the table vishnu
  * \param cptName the name of the counter to increment
@@ -459,7 +452,7 @@ vishnu::incrementCpt(const std::string& cptName, int cpt, int transacId) {
 
   std::string sqlCommand("UPDATE vishnu set "+cptName+"="+databaseVishnu->escapeData(cptName)+"+1");
 
-  databaseVishnu->process(sqlCommand.c_str(), transacId);
+  databaseVishnu->process(sqlCommand, transacId);
 
 }
 
@@ -485,10 +478,10 @@ vishnu::getObjectId(int vishnuId,
   //To get the counter
   int counter = getVishnuCounter(vishnuIdString,type);
   //To get the formatiduser
-  std::string format = getAttrVishnu(formatName, vishnuIdString).c_str();
+  std::string format = getAttrVishnu(formatName, vishnuIdString);
 
   if (! format.empty()) {
-    idGenerated = getGeneratedName(format.c_str(), counter, type, stringforgeneration);
+    idGenerated = getGeneratedName(format, counter, type, stringforgeneration);
     if (! idGenerated.empty()) {
     } else {
       SystemException e (ERRCODE_SYSTEM, "There is a problem during the id generation with the format:"+ formatName);

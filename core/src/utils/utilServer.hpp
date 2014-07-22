@@ -213,7 +213,7 @@ namespace vishnu {
    */
   int
   getKeywords (int* size, Format_t* array,
-               const char* format,
+               const std::string& format,
                int cpt, IdType type,
                const std::string& name,
                const std::string& site);
@@ -228,7 +228,7 @@ namespace vishnu {
    * \return the genarated ID
    */
   std::string
-  getGeneratedName (const char* format,
+  getGeneratedName(const std::string&,
                     int cpt,
                     IdType type,
                     const std::string& name = "",
