@@ -23,7 +23,7 @@
 #include "TMSVishnuException.hpp"
 
 bool
-vishnu::isNew(std::string urlsup, std::string mid, std::string type) {
+vishnu::isNew(const std::string& urlsup, const std::string& mid, const std::string& type) {
 
   DbFactory factory;
   Database *mdatabase;
@@ -101,7 +101,7 @@ vishnu::isCpt (const char * s) {
  */
 int
 vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, IdType type,
-                     std::string name, std::string site) {
+                     const std::string& name, const std::string& site) {
   unsigned int i;
   *size = 0;
 
@@ -211,8 +211,11 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
  * \param site Site of the machine (optionnal)
  */
 std::string
-vishnu::getGeneratedName (const char* format, int cpt, IdType type,
-                          std::string name , std::string site ) {
+vishnu::getGeneratedName (const char* format,
+                          int cpt,
+                          IdType type,
+                          const std::string& name,
+                          const std::string& site) {
   std::string res;
   res.clear ();
   res = std::string ("");
@@ -247,7 +250,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
 }
 
 int
-vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
+vishnu::getVishnuCounter(const std::string& vishnuIdString, IdType type) {
   DbFactory factory;
   Database *databaseVishnu;
   int ret;
@@ -402,9 +405,9 @@ vishnu::reserveObjectId(int key, std::string &objectId, IdType type) {
 }
 
 bool
-vishnu::checkObjectId(std::string table,
-                      std::string idname,
-                      std::string objectId){
+vishnu::checkObjectId(const std::string& table,
+                      const std::string& idname,
+                      const std::string& objectId){
   DbFactory factory;
   Database *mdatabase;
   mdatabase = factory.getDatabaseInstance();
@@ -429,7 +432,7 @@ vishnu::checkObjectId(std::string table,
  * \return the corresponding attribut
  */
 std::string
-vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId) {
+vishnu::getAttrVishnu(const std::string& attrname, const std::string& vishnuid, int transacId) {
   DbFactory factory;
   Database *databaseVishnu;
 
@@ -447,7 +450,7 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId)
  * \return raises an exception
  */
 void
-vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
+vishnu::incrementCpt(const std::string& cptName, int cpt, int transacId) {
   DbFactory factory;
   Database *databaseVishnu;
   databaseVishnu = factory.getDatabaseInstance();
@@ -468,7 +471,7 @@ vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
  */
 std::string
 vishnu::getObjectId(int vishnuId,
-                    std::string formatName,
+                    const std::string& formatName,
                     IdType type,
                     std::string stringforgeneration) {
   std::string idGenerated;

@@ -92,7 +92,7 @@ vishnu::moveFileData(const std::string& fileparam, std::string dir) {
  *  \param isWorkingdir tell whether the directory will be a working directory
  */
 void
-vishnu::createDir(const std::string& path, const bool& isWorkingdir) {
+vishnu::createDir(const std::string& path, bool isWorkingdir) {
   try {
     bfs::create_directories(path);
     if (isWorkingdir && chmod(path.c_str(),  // a working directory has the permissions rwxt
