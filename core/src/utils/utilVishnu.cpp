@@ -51,6 +51,8 @@
 #include <netinet/in.h>
 #include <net/if.h>
 
+#include <errno.h>
+
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 namespace bs=boost::system;
 
@@ -657,7 +659,7 @@ vishnu::execSystemCommand(const std::string& command, std::string& msg)
   FILE* pipe = popen(command.c_str(), "r");
   if (! pipe) {
     result = false;
-    msg = boost::str(boost::format("ERROR running command: ")% command);
+    msg = boost::str(boost::format("ERROR running command: %1%")% command);
   }
 
   char buffer[255];
@@ -668,6 +670,5 @@ vishnu::execSystemCommand(const std::string& command, std::string& msg)
     }
   }
   pclose(pipe);
-
   return result;
 }

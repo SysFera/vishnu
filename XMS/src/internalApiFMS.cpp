@@ -217,7 +217,6 @@ int solveChangeMode (diet_profile_t* profile) {
 
     // get the acLogin
     acLogin = UserServer(sessionServer).getUserAccountLogin(host);
-
     FileFactory ff;
     ff.setSSHServer(machineName);
 

@@ -123,7 +123,6 @@ SSHFile::getInfos() const {
     }
   }
 
-
   std::string output = fileStat.first;
   int status_code = boost::lexical_cast<int>(output.substr(output.find_last_of('@')+2));
 
@@ -196,6 +195,10 @@ SSHFile::chgrp(const std::string& group) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,
                              "Error changing file group: " + chgrpResult.second);
   }
+  if (chgrpResult.first.find("chgrp") != std::string::npos) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
+                             "Error changing file group: " + chgrpResult.first);
+  }
   setGroup(group);
 
   return 0;
@@ -219,6 +222,11 @@ SSHFile::chmod(const mode_t mode) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,
                              "Error changing file mode: " + chmodResult.second);
   }
+  if (chmodResult.first.find("help") != std::string::npos) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
+                             "Error changing file mode: " + chmodResult.first);
+  }
+
   setPerms(mode);
 
   return 0;
@@ -573,7 +581,7 @@ SSHExec::exec(const std::string& cmd) const {
   std::string command = boost::str(boost::format("%1% -l %2% -C -o BatchMode=yes "
                                                  " -o StrictHostKeyChecking=no"
                                                  " -o ForwardAgent=yes"
-                                                 " -p %3% %4% ' echo %5% && %6% '"
+                                                 " -p %3% %4% ' echo %5% && %6% 2>&1 '"
                                                  )% sshCommand % userName % sshPort % server % BEGIN_MARKER % cmd);
   std::string output;
   std::pair<std::string, std::string> result;
@@ -585,5 +593,6 @@ SSHExec::exec(const std::string& cmd) const {
       result.first=output.substr(pos+BEGIN_MARKER.size()+1);
     }
   }
+
   return result;
 }
