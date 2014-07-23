@@ -4,28 +4,15 @@
  * \date MAY 2011
  */
 
-// C Headers
 #include <cstring>
-
-// C++ Headers
 #include <string>
 #include <stdexcept>
 #include <pthread.h>
-
-
-//Boost Headers
 #include <boost/thread.hpp>
 #include <boost/scoped_ptr.hpp>
-
-//UMS Data Headers
 #include <UMS_Data.hpp>
-
-//Vishnu Headers
 #include "QueryProxy.hpp"
 #include "utilVishnu.hpp"
-
-
-// FMS API Headers
 #include <api_fms.hpp>
 
 
@@ -35,10 +22,6 @@
 #include "FileTransferProxy.hpp"
 #include "FMSServices.hpp"
 
-using namespace FMS_Data;
-using namespace UMS_Data;
-using namespace std;
-
 /**
  * \brief create a new remote file
  * \param sessionKey the session key
@@ -46,7 +29,7 @@ using namespace std;
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::touch(const string& sessionKey,const string& path)
+vishnu::touch(const std::string& sessionKey,const std::string& path)
 throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
 
   // Check that the file path doesn't contain characters subject to security issues
@@ -68,8 +51,8 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::mkdir(const string& sessionKey, const string& path,
-              const CreateDirOptions& options)
+vishnu::mkdir(const std::string& sessionKey, const std::string& path,
+              const FMS_Data::CreateDirOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
@@ -94,8 +77,8 @@ throw (UMSVishnuException, FMSVishnuException,
  \return 0 if everything is OK, another value otherwise
 */
 int
-vishnu::rm(const string& sessionKey, const string& path,
-           const RmFileOptions& options)
+vishnu::rm(const std::string& sessionKey, const std::string& path,
+           const FMS_Data::RmFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
@@ -120,7 +103,7 @@ throw (UMSVishnuException, FMSVishnuException,
  * \param path    the directory path using host:path format
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::rmdir(const string& sessionKey,const string& path)
+int vishnu::rmdir(const std::string& sessionKey,const std::string& path)
 throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
 
   // Check that the file path doesn't contain characters subject to security issues
@@ -147,8 +130,9 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::chgrp(const string& sessionKey, const string& group,
-              const string& path)
+vishnu::chgrp(const std::string& sessionKey,
+              const std::string& group,
+              const std::string& path)
 throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
 
   // Check that the file path doesn't contain characters subject to security issues
@@ -173,8 +157,8 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::chmod(const string& sessionKey, const mode_t& mode,
-              const string& path)
+vishnu::chmod(const std::string& sessionKey, const mode_t& mode,
+              const std::string& path)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
@@ -200,8 +184,8 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::cp(const string& sessionKey, const string& src,
-           const string& dest, const CpFileOptions& options)
+vishnu::cp(const std::string& sessionKey, const std::string& src,
+           const std::string& dest, const FMS_Data::CpFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
   int result = 0;
@@ -238,8 +222,11 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::acp(const string& sessionKey, const string& src, const string& dest,
-            FileTransfer& transferInfo, const CpFileOptions& options)
+vishnu::acp(const std::string& sessionKey,
+            const std::string& src,
+            const std::string& dest,
+            FMS_Data::FileTransfer& transferInfo,
+            const FMS_Data::CpFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
@@ -264,8 +251,10 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::head(const string& sessionKey, const string& path,
-             string& contentOfFile, const HeadOfFileOptions& options)
+vishnu::head(const std::string& sessionKey,
+             const std::string& path,
+             std::string& contentOfFile,
+             const FMS_Data::HeadOfFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
   //To check the remote path
@@ -290,10 +279,8 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::cat(const string& sessionKey, const string& path,
-             string& contentOfFile)
-throw (UMSVishnuException, FMSVishnuException,
-       UserException, SystemException) {
+vishnu::cat(const std::string& sessionKey, const std::string& path, std::string& contentOfFile)
+throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
 
   // Check that the file path doesn't contain characters subject to security issues
   vishnu::validatePath(path);
@@ -318,8 +305,10 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::ls(const string& sessionKey, const string& path,
-           DirEntryList& dirContent, const LsDirOptions& options)
+vishnu::ls(const std::string& sessionKey,
+           const std::string& path,
+           FMS_Data::DirEntryList& dirContent,
+           const FMS_Data::LsDirOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
@@ -375,8 +364,10 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::mv(const string& sessionKey, const string& src,
-           const string& dest,const CpFileOptions& options)
+vishnu::mv(const std::string& sessionKey,
+           const std::string& src,
+           const std::string& dest,
+           const FMS_Data::CpFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
@@ -409,9 +400,11 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::amv(const string& sessionKey, const string& src,
-            const string& dest, FileTransfer& transferInfo,
-            const CpFileOptions& options)
+vishnu::amv(const std::string& sessionKey,
+            const std::string& src,
+            const std::string& dest,
+            FMS_Data::FileTransfer& transferInfo,
+            const FMS_Data::CpFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
@@ -437,8 +430,10 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::tail(const string& sessionKey, const string& path,
-             string& contentOfFile,const TailOfFileOptions& options)
+vishnu::tail(const std::string& sessionKey,
+             const std::string& path,
+             std::string& contentOfFile,
+             const FMS_Data::TailOfFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
@@ -465,8 +460,9 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::stat(const string& sessionKey, const string& path,
-             FileStat& fileInfos)
+vishnu::stat(const std::string& sessionKey,
+             const std::string& path,
+             FMS_Data::FileStat& fileInfos)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
@@ -496,16 +492,14 @@ throw (UMSVishnuException, FMSVishnuException,
  \return 0 if everything is OK, another value otherwise
 */
 int
-vishnu::stopFileTransfer(const string& sessionKey,
-                         const StopTransferOptions& options)
-throw (UMSVishnuException, FMSVishnuException,
-       UserException, SystemException) {
-  StopTransferOptions optionsCompleted(options);
+vishnu::stopFileTransfer(const std::string& sessionKey,
+                         const FMS_Data::StopTransferOptions& options)
+throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+
+  FMS_Data::StopTransferOptions optionsCompleted(options);
   FileTransferProxy fileTransferProxy(sessionKey);
 
-  int result = fileTransferProxy.stopThread(optionsCompleted);
-
-  return result;
+  return fileTransferProxy.stopThread(optionsCompleted);
 }
 
 
@@ -518,9 +512,9 @@ throw (UMSVishnuException, FMSVishnuException,
  \return 0 if everything is OK, another value otherwise
 */
 int
-vishnu::listFileTransfers(const string& sessionKey,
-                          FileTransferList& fileTransferList,
-                          const LsTransferOptions& options)
+vishnu::listFileTransfers(const std::string& sessionKey,
+                          FMS_Data::FileTransferList& fileTransferList,
+                          const FMS_Data::LsTransferOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
   // initialize the list of file transfers

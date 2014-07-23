@@ -15,7 +15,7 @@ class Authenticator;
 class Database;
 
 struct SedConfig {
-  SedConfig() : dbConfig(config), authenticatorConfig(config), vishnuId(0), sub(false), hasUMS(false), hasTMS(false) {}
+  SedConfig() : dbConfig(config), authenticatorConfig(config), sub(false), hasUMS(false), hasTMS(false) {}
 
   ExecConfiguration config;
   DbConfiguration dbConfig;
@@ -27,7 +27,6 @@ struct SedConfig {
   std::string defaultBatchConfig;
   std::string sendmailScriptPath;
   std::string ipcUriBase;
-  int vishnuId;
   bool sub;
   bool hasUMS;
   bool hasTMS;
@@ -38,9 +37,6 @@ class ServerXMS : public SeD {
 public:
   static ServerXMS*
   getInstance();
-
-  int
-  getVishnuId() const;
 
   std::string
   getSendmailScriptPath() const;
@@ -84,7 +80,6 @@ private:
 
   static ServerXMS *minstance;
   std::string msendmailScriptPath;
-  int mvishnuId;
   static Database *mdatabaseVishnu;
   static UMSMapper *mmapperUMS;
   static TMSMapper *mmapperTMS;

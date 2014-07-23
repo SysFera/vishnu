@@ -27,7 +27,6 @@ ums_test(ums_automTest2)
 ums_test(ums_automTest3)
 ums_test(ums_automTest4)
 ums_test(ums_automTest5)
-ums_test(ums_automTest6)
 ums_test(comm_automTest)
 
 

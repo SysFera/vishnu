@@ -185,9 +185,8 @@ public:
   /**
    * \brief A constructor by value
    * \param sessionServer a session server object
-   * \param vishnuId The vishnu instance identifier
    */
-  FileTransferServer(const SessionServer& sessionServer, const int& vishnuId);
+  FileTransferServer(const SessionServer& sessionServer);
 
   /**
    * \brief Another constructor by value
@@ -196,14 +195,12 @@ public:
    * \param destHost the destination host
    * \param srcFilePath the source file path
    * \param destFilePath the destination file path
-   * \param vishnuId the vishnu identifier
    */
   FileTransferServer(const SessionServer& sessionServer,
                      const std::string& srcHost,
                      const std::string& destHost,
                      const std::string& srcFilePath,
-                     const std::string& destFilePath,
-                     const int& vishnuId);
+                     const std::string& destFilePath);
 
   /**
    * \brief To add a new copy thread
@@ -323,13 +320,9 @@ public:
    * \param fileTransfer The new file transfer information
    */
   void
-  setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const {mfileTransfer=fileTransfer;}
+  setFileTransfer(const FMS_Data::FileTransfer& fileTransfer) const {mfileTransfer=fileTransfer;}
 
 private:
-  /**
-   * \brief The vishnu instance identifier
-   */
-  int mvishnuId;
   /**
    * \brief The file transfer type  (copy or move)
    */

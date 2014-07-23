@@ -37,11 +37,10 @@ public:
   AuthSystemServer(UMS_Data::AuthSystem*& authSystem, SessionServer& session);
   /**
   * \brief Function to add a new VISHNU localAccount
-  * \param vishnuId The identifier of the vishnu instance
   * \return raises an exception on error
   */
   int
-  add(int vishnuId);
+  add(void);
   /**
   * \brief Function to update a VISHNU localAccount
   * \return raises an exception on error

@@ -39,12 +39,11 @@ public:
              TMS_Data::Work* work);
   /**
   * \brief Function to add a new VISHNU work
-  * \param vishnuId The identifier of the vishnu instance
   * \param op the options of the work
   * \return raises an exception on error
   */
   int
-  add(int vishnuId, TMS_Data::AddWorkOptions*& op);
+  add(TMS_Data::AddWorkOptions*& op);
   /**
   * \brief Function to update a VISHNU work
   * \return raises an exception on error

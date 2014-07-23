@@ -28,7 +28,7 @@ void File::setGroup(const string& group) const {
 }
 
 void File::setPerms(const mode_t perms) const {
-mfileStat.setPerms(perms);
+  mfileStat.setPerms(perms);
 }
 
 void File::setUid(const uid_t uid) const {
@@ -63,11 +63,12 @@ void File::exists(const bool exist) const {
   this->exist = exist;
 }
 
-File::File(): exist("false") {
+File::File()
+  : exist("false")
+{
 }
 
-File::File(const SessionServer& sessionServer,
-           const string& path):
+File::File(const SessionServer& sessionServer, const string& path):
   msessionServer(sessionServer), exist(false) {
 
   size_t pos = path.find(':');
@@ -208,7 +209,7 @@ bool File::operator==(const File& file) {
 
 bool File::operator<(const File& file) {
   return getPath()<file.getPath() ||
-         (getPath()==file.getPath() && getHost()<file.getHost());
+      (getPath()==file.getPath() && getHost()<file.getHost());
 }
 
 string File::extHost(const string& path) {

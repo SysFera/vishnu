@@ -48,15 +48,13 @@ public:
   /**
    * \brief Function to submit job
    * \param scriptContent the content of the script
- * \param options a json object describing options
-   * \param vishnuId The VISHNU identifier
+   * \param options a json object describing options
    * \param defaultBatchOption the default options on the batch scheduler
    * \return The resulting job ID. Raises an exception on error
    */
   std::string
   submitJob(std::string& scriptContent,
             JsonObject* options,
-            int vishnuId,
             const std::vector<std::string>& defaultBatchOption);
 
   /**

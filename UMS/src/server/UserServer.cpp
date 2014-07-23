@@ -55,12 +55,11 @@ UserServer::UserServer(SessionServer sessionServer): msessionServer(&sessionServ
 /**
  * \brief Function to add a new VISHNU user
  * \param user The user data structure
- * \param vishnuId The identifier of the vishnu instance
  * \param sendmailScriptPath The path to the script for sending emails
  * \return raises an exception on error
  */
 int
-UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptPath) {
+UserServer::add(UMS_Data::User*& user, std::string sendmailScriptPath) {
   std::string pwd;
   std::string sqlUpdate = "update users set ";
 
@@ -75,9 +74,7 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
 
       //Generation of userid
-      idUserGenerated = vishnu::getObjectId(vishnuId,
-                                            "formatiduser",
-                                            USER,
+      idUserGenerated = vishnu::getObjectId(USER,
                                             user->getLastname());
 
       user->setUserId(idUserGenerated);
@@ -92,7 +89,6 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       if (getAttribut(sqlcond, "count(numuserid)") == "0") {
         //To active the user status
         user->setStatus(vishnu::STATUS_ACTIVE);
-        sqlUpdate+="vishnu_vishnuid="+convertToString(vishnuId)+", ";
         sqlUpdate+="pwd='"+mdatabaseVishnu->escapeData(passwordCrypted)+"', ";
         sqlUpdate+="firstname='"+mdatabaseVishnu->escapeData(user->getFirstname())+"', ";
         sqlUpdate+="lastname='"+mdatabaseVishnu->escapeData(user->getLastname())+"', ";

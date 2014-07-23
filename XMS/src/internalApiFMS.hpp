@@ -233,15 +233,12 @@ solveTransferFile(diet_profile_t* profile){
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    int vishnuId = ServerXMS::getInstance()->getVishnuId();
-
     boost::shared_ptr<FileTransferServer> fileTransferServer = \
       boost::make_shared<FileTransferServer>(sessionServer,
                                              srcHost,
                                              destHost,
                                              srcPath,
-                                             destPath,
-                                             vishnuId);
+                                             destPath);
 
     // Perfor the transfer now
     if (transferMode == File::sync) {
@@ -472,8 +469,7 @@ solveTransferRemoteFile(diet_profile_t* profile){
                                              srcHost,
                                              destHost,
                                              srcPath,
-                                             destPath,
-                                             ServerXMS::getInstance()->getVishnuId());
+                                             destPath);
     // Perfor the transfer now
     if (transferMode==File::sync) {
 

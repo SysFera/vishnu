@@ -526,7 +526,5 @@ RemoteFileProxy::finalizeTransfer(FMS_Data::FileTransfer& transfer, int directio
   }
   raiseExceptionOnErrorResult(profile);
 
-  std::clog << boost::format("transfer completed\n") ;
-
   diet_profile_free(profile);
 }

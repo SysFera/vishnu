@@ -10,7 +10,6 @@ namespace vishnu {
   // !!! None of these keywords can be a prefix for another !!!
   param_t params[] =
   {
-    /* [0]  */ {VISHNUID, "vishnuId", INT_PARAMETER},
     /* [1]  */ {DBTYPE, "databaseType", STRING_PARAMETER},
     /* [2]  */ {DBHOST, "databaseHost", STRING_PARAMETER},
     /* [3]  */ {DBPORT, "databasePort", INT_PARAMETER},
@@ -47,7 +46,11 @@ namespace vishnu {
     /* [34] */ {HAS_UMS, "enableUMS", BOOL_PARAMETER},
     /* [35] */ {HAS_TMS, "enableTMS", BOOL_PARAMETER},
     /* [36] */ {HAS_FMS, "enableFMS", BOOL_PARAMETER},
-    /* [37] */ {IPC_URI_BASE, "ipcUriBase", URI_PARAMETER}
+    /* [37] */ {IPC_URI_BASE, "ipcUriBase", URI_PARAMETER},
+    /* [38] */ {OPTION_SESSION_TIMEOUT, "sessionTimeout", INT_PARAMETER},
+    /* [39] */ {OPTION_TRANSFER_TIMEOUT, "transferTimeout", INT_PARAMETER},
+    /* [40] */ {OPTION_DEFAULT_TRANSFER_CMD, "defaultTransferCommand", INT_PARAMETER},
+    /* [41] */ {OPTION_DEFAULT_CONNECTION_CLOSE_POLICY, "defaultConnectionClosePolicy", INT_PARAMETER}
   };
 
   std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS =  boost::assign::map_list_of

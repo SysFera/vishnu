@@ -22,10 +22,8 @@ set(client_SRCS client/SessionProxy.cpp
   client/UserProxy.cpp
   client/MachineProxy.cpp
   client/LocalAccountProxy.cpp
-  client/OptionValueProxy.cpp
   client/utilsClient.cpp
   client/UtilsProxy.cpp
-  client/ObjectIdProxy.cpp
   client/PingerProxy.cpp
   client/ExporterProxy.cpp
   client/VersionProxy.cpp
@@ -33,7 +31,6 @@ set(client_SRCS client/SessionProxy.cpp
 
 set(cli_SRCS cli/utils.cpp
   cli/daemon_cleaner.cpp
-  cli/configureOptionUtils.cpp
   cli/localAccountUtils.cpp
   cli/userUtils.cpp
   cli/machineUtils.cpp
@@ -74,7 +71,6 @@ if(COMPILE_SERVER_UMS)
   set(server_SRCS server/SessionServer.cpp
     server/UserServer.cpp
     server/MachineClientServer.cpp
-    server/OptionValueServer.cpp
     server/MachineServer.cpp
     server/LocalAccountServer.cpp
     server/CommandServer.cpp

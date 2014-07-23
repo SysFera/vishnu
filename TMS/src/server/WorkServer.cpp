@@ -30,11 +30,10 @@ WorkServer::WorkServer(const std::string& sessionKey,
 
 /**
 * \brief Function to add a new VISHNU work
-* \param vishnuId The identifier of the vishnu instance
 * \return raises an exception on error
 */
 int
-WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
+WorkServer::add(TMS_Data::AddWorkOptions*& mworkop) {
 
   std::string sqlUpdate = "update work set ";
   std::string idWorkGenerated;
@@ -54,10 +53,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
   if (muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN) {
 
     //Generation of workid
-    idWorkGenerated = vishnu::getObjectId(vishnuId,
-                                          "formatidwork",
-                                          vishnu::WORK,
-                                          mwork->getSubject());
+    idWorkGenerated = vishnu::getObjectId(vishnu::WORK, mwork->getSubject());
 
     //if the work id is generated
     if (idWorkGenerated.size() != 0) {

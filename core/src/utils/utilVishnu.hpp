@@ -20,11 +20,6 @@
 
 namespace bfs = boost::filesystem;
 
-/**
- * \brief Define a type for lists of strings (used in TMS)
- */
-typedef std::vector<std::string> ListStrings;
-
 static const int LDAPTYPE=0;
 static const int SSHA_METHOD=0;
 

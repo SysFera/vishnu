@@ -23,8 +23,10 @@ add_library(test_zmq_helper
   ../Server.cpp
   ../SeD.cpp
   ../utils.cpp
+  ../zhelpers.cpp
   ../sslhelpers.cpp
-  ${logger_SRCS})
+  ${logger_SRCS}
+  )
 
 add_library(fake_zmq
   zmq.hpp
@@ -32,6 +34,7 @@ add_library(fake_zmq
   )
 
 target_link_libraries (test_zmq_helper
+  zmq_helper
   fake_zmq
   ${Boost_LIBRARIES}
   vishnu-core
@@ -40,9 +43,9 @@ target_link_libraries (test_zmq_helper
   )
 
 # register tests
-unit_test(LazyPirateUnitTests test_zmq_helper zmq_helper)
-unit_test(AnnuaryUnitTests test_zmq_helper zmq_helper)
+unit_test(LazyPirateUnitTests zmq_helper test_zmq_helper)
+unit_test(AnnuaryUnitTests zmq_helper test_zmq_helper )
 unit_test(ZMQServerUnitTests test_zmq_helper zmq_helper)
-unit_test(DIET_clientUnitTests test_zmq_helper zmq_helper)
-unit_test(utilsUnitTests test_zmq_helper)
+unit_test(DIET_clientUnitTests zmq_helper test_zmq_helper)
+unit_test(utilsUnitTests zmq_helper test_zmq_helper)
 

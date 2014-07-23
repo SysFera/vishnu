@@ -11,14 +11,30 @@ include_directories(${Boost_INCLUDE_DIRS}
 
 #declare all command lines provided
 
-set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
-  add_user update_user delete_user
-  change_password reset_password
-  add_local_account update_local_account delete_local_account
-  add_machine update_machine delete_machine
-  configure_default_option configure_option
-  list_local_accounts list_machines list_history_cmd list_options
-  list_users list_sessions
+set(ALLCLI
+  current_session_id
+  connect
+  connect_m
+  reconnect
+  reconnect_m
+  close
+  add_user
+  update_user
+  delete_user
+  change_password
+  reset_password
+  add_local_account
+  update_local_account
+  delete_local_account
+  add_machine
+  update_machine
+  delete_machine
+  list_local_accounts
+  list_machines
+  list_history_cmd
+  list_options
+  list_users
+  list_sessions
   add_auth_system
   update_auth_system
   delete_auth_system
@@ -26,13 +42,7 @@ set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
   add_auth_account
   update_auth_account
   delete_auth_account
-  list_auth_accounts 
-  define_user_identifier
-  define_machine_identifier
-  define_transfer_identifier
-  define_job_identifier
-  define_auth_identifier
-  define_work_identifier
+  list_auth_accounts
   ping
   get_server_version
   list_servers

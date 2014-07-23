@@ -207,42 +207,51 @@ vishnu::getKeywords(int* size, Format_t* array, const std::string& format, int c
  * \param site Site of the machine (optionnal)
  */
 std::string
-vishnu::getGeneratedName(const std::string& format,
-                         int cpt,
-                         IdType type,
-                         const std::string& name,
-                         const std::string& site) {
-  std::string resultName;
-  int  keywordCount;
-  Format_t keywords[format.size()+1];
-  int ret = getKeywords(&keywordCount, keywords, format, cpt, type, name, site); // Getting var and their value
+vishnu::getGeneratedName(const char* format,
+                          int cpt,
+                          IdType type,
+                          const std::string& name ,
+                          const std::string& site) {
+  std::string res;
+  res.clear ();
+  res = std::string ("");
+  int  size;
+  Format_t *keywords;
+
+  keywords = new Format_t[strlen(format)+1];
+  int ret = getKeywords (&size, keywords, format, cpt, type, name, site); // Getting var and their value
 
   // if there is no error with the getKeywords function
   if (ret != -1) {
-    if (keywordCount > 0) {
-      resultName.append(format.substr(0, keywords[0].start));
+    // Building the id using the format and the values of the var
+    if (size > 0) {
+      res.append(format, keywords[0].start);
     } else {
-      resultName = format;
+      res = std::string (format);
     }
 
-    for (int keywordIndex = 0; keywordIndex < keywordCount; ++keywordIndex) {
-      resultName.append (keywords[keywordIndex].value);
-      if (keywords[keywordIndex].end != format.size() && keywordIndex != keywordCount - 1) { // If other variables
-        size_t minSubstringBound = keywords[keywordIndex].end+1;
-        size_t maxSubstringBound = keywords[keywordIndex+1].start - keywords[keywordIndex].end - 1;
-        resultName.append(format.substr(minSubstringBound, maxSubstringBound));
-      } else if (keywords[keywordIndex].end + 1 != format.size()) { // If text after the variable
-        size_t minSubstringBound = keywords[keywordIndex].end+1;
-        size_t maxSubstringBound = format.size() - keywords[keywordIndex].end - 1;
-        resultName.append(format.substr(minSubstringBound, maxSubstringBound));
+    for (int i = 0; i < size; i++) {
+      res.append (keywords[i].value);
+      // If other variables
+      if (*(format+keywords[i].end + 1) != '\0' && i!=size-1) {
+        res.append (format+keywords[i].end+1, keywords[i+1].start-keywords[i].end-1);
+        // If text after the variable
+      } else if (*(format+keywords[i].end + 1) != '\0' ) {
+        res.append (format+keywords[i].end+1, strlen (format)-keywords[i].end-1);
       }
     }
   }
-  return resultName;
+  delete [] keywords;
+  return res;
 }
 
+/**
+ * \brief Function to get a specific vishnu counter
+ * \param type : the type of id generated
+ * \return The int counter value
+ */
 int
-vishnu::getVishnuCounter(const std::string& vishnuIdString, IdType type) {
+vishnu::getVishnuCounter(IdType type) {
   DbFactory factory;
   Database *databaseVishnu;
   int ret;
@@ -257,14 +266,14 @@ vishnu::getVishnuCounter(const std::string& vishnuIdString, IdType type) {
   switch(type) {
     case MACHINE:
       table="machine";
-      fields=" (vishnu_vishnuid) ";
-      val = " ("+vishnuIdString+") ";
+      fields=" (status) ";
+      val = " (0) ";
       primary="nummachineid";
       break;
     case USER:
       table="users";
-      fields=" (vishnu_vishnuid,pwd,userid) ";
-      val = " ("+vishnuIdString+",'','') ";
+      fields=" (pwd,userid) ";
+      val = " ('','') ";
       primary="numuserid";
       break;
     case JOB:
@@ -282,8 +291,8 @@ vishnu::getVishnuCounter(const std::string& vishnuIdString, IdType type) {
       break;
     case AUTH:
       table="authsystem";
-      fields=" (vishnu_vishnuid) ";
-      val = " ("+vishnuIdString+") ";
+      fields=" (status) ";
+      val = " (0) ";
       primary="numauthsystemid";
       break;
     case WORK:
@@ -416,26 +425,6 @@ vishnu::checkObjectId(const std::string& table,
 }
 
 
-
-/**
- * \brief Function to get information from the table vishnu
- * \param attrname the name of the attribut
- * \param vishnuid the id of the vishnu configuration
- * \return the corresponding attribut
- */
-std::string
-vishnu::getAttrVishnu(const std::string& attrname, const std::string& vishnuid, int transacId) {
-  DbFactory factory;
-  Database *databaseVishnu;
-
-  std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
-
-  databaseVishnu = factory.getDatabaseInstance();
-  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand, transacId));
-  return result->getFirstElement();
-
-}
-
 /**
  * \brief Function to increment a counter of the table vishnu
  * \param cptName the name of the counter to increment
@@ -457,45 +446,35 @@ vishnu::incrementCpt(const std::string& cptName, int cpt, int transacId) {
 }
 
 /**
- * \brief Function to get an Id generated by VISHNU
- * \param vishnuId the vishnu Id
- * \param formatName the name of the format
- * \return the corresponding conversion
- */
+* \brief Function to get an Id generated by VISHNU
+* \param type the type of the Id generated
+* \param stringforgeneration the string used for generation
+* \return the corresponding conversion
+*/
 std::string
-vishnu::getObjectId(int vishnuId,
-                    const std::string& formatName,
-                    IdType type,
-                    std::string stringforgeneration) {
-  std::string idGenerated;
+vishnu::getObjectId(IdType type, std::string stringforgeneration) {
 
-  std::string vishnuIdString = convertToString(vishnuId);
+
+  std::string errorString = "";
 
   pthread_mutex_t mutex;
   pthread_mutex_init(&(mutex), NULL);
   pthread_mutex_lock(&(mutex));
 
-  //To get the counter
-  int counter = getVishnuCounter(vishnuIdString,type);
-  //To get the formatiduser
-  std::string format = getAttrVishnu(formatName, vishnuIdString);
+  int counter = getVishnuCounter(type);
+  std::string format = getIdFormatTemplate(type);
+  std::string idGenerated = getGeneratedName(format.c_str(), counter, type, stringforgeneration);
 
-  if (! format.empty()) {
-    idGenerated = getGeneratedName(format, counter, type, stringforgeneration);
-    if (! idGenerated.empty()) {
-    } else {
-      SystemException e (ERRCODE_SYSTEM, "There is a problem during the id generation with the format:"+ formatName);
-      pthread_mutex_unlock(&(mutex));
-      throw e;
-    }
-    // To set the idGenerated in the related row
-    reserveObjectId(counter,idGenerated,type);
+  if (! idGenerated.empty()) {
   } else {
-    pthread_mutex_unlock(&(mutex));
-    SystemException e (ERRCODE_SYSTEM, "The format "+ formatName +" is undefined");
-    throw e;
+    errorString = boost::str(boost::format("Failed to generate ID for object type %1%") % type);
   }
+  reserveObjectId(counter,idGenerated,type); // set the idGenerated in the related row
   pthread_mutex_unlock(&(mutex));
+
+  if (! errorString.empty()) {
+    throw SystemException(ERRCODE_SYSTEM, errorString);
+  }
   return idGenerated;
 }
 
@@ -592,4 +571,40 @@ vishnu::validateAuthKey(const std::string& authKey,
   info.user_privilege = vishnu::convertToInt(*rowResultIter++);
   info.user_aclogin = *rowResultIter++;
   info.user_achome = *rowResultIter++;
+}
+
+
+/**
+ * @brief Get the template to build object identifier
+ * @param objectType The object type
+ * @return The template string
+ */
+std::string
+vishnu::getIdFormatTemplate(IdType objectType)
+{
+  std::string format = "$CPT";
+  switch(objectType) {
+    case MACHINE:
+      format = "machine_$CPT";
+      break;
+    case USER:
+      format = "user_$CPT";
+      break;
+    case JOB:
+      format = "J_$CPT";
+      break;
+    case FILETRANSFERT:
+      format = "TR_$CPT";
+      break;
+    case AUTH:
+      format = "AUTH_$CPT";
+      break;
+    case WORK:
+      format = "$CPT";
+      break;
+    default:
+      break;
+  }
+
+  return format;
 }

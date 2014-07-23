@@ -18,7 +18,6 @@ if (COMPILE_SERVERS)
   set(server_SRCS_mock ${VISHNU_SOURCE_DIR}/UMS/src/server/SessionServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/UserServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/MachineClientServer.cpp
-    ${VISHNU_SOURCE_DIR}/UMS/src/server/OptionValueServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/MachineServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/LocalAccountServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/CommandServer.cpp

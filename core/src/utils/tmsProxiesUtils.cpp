@@ -35,25 +35,25 @@ int
 vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
                            std::string & paramsStr,
                            const std::string & paramOptName,
-                           const ListStrings & paramsVector) {
+                           const std::vector<std::string> & paramsVector) {
 
   if (opt->count(paramOptName)) {
     paramsStr = opt->get<std::string>(paramOptName);
   }
 
   // Append other parameters in paramStr
-  for(ListStrings::const_iterator it = paramsVector.begin();
+  for(std::vector<std::string>::const_iterator it = paramsVector.begin();
       it != paramsVector.end(); ++it) {
     paramsStr += " " + *it;
   }
 
   //Now check the syntax of parameters and set them suitable for VISHNU
-  ListStrings paramsVecBuffer;
+  std::vector<std::string> paramsVecBuffer;
   boost::trim(paramsStr);
   boost::split(paramsVecBuffer, paramsStr, boost::is_space(), boost::token_compress_on);
 
   paramsStr = ""; // Reinitialization for outpout
-  for(ListStrings::iterator it = paramsVecBuffer.begin();
+  for(std::vector<std::string>::iterator it = paramsVecBuffer.begin();
       it != paramsVecBuffer.end(); ++it) {
     size_t pos = (*it).find("=");
     if (pos == 0 || pos == std::string::npos || pos == (*it).size() - 1) {
@@ -182,7 +182,7 @@ vishnu::sendInputFiles(const std::string& sessionKey,
                        const std::string& destMachineId,
                        const FMS_Data::CpFileOptions& copts) {
 
-  ListStrings listFiles ;
+  std::vector<std::string> listFiles ;
   boost::split(listFiles, srcFiles, boost::is_space()) ;
   string remoteDestinationDir = vishnu::generatedUniquePatternFromCurTime("VISHNU_INPUT")+bfs::unique_path("%%").string();
   if (listFiles.size() > 0 && srcFiles.size() != 0) {
@@ -192,7 +192,7 @@ vishnu::sendInputFiles(const std::string& sessionKey,
     }
   }
   std::ostringstream paramsBuf ;
-  for (ListStrings::const_iterator it = listFiles.begin(); it != listFiles.end(); ++it) {
+  for (std::vector<std::string>::const_iterator it = listFiles.begin(); it != listFiles.end(); ++it) {
     size_t pos = (*it).find("=") ; if(pos == std::string::npos) continue ; //*it would be in the form of param=path
     string param = (*it).substr(0, pos) ;
     string path = (*it).substr(pos+1, std::string::npos);

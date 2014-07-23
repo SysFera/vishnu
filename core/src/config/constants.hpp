@@ -23,7 +23,6 @@ namespace vishnu {
  */
 
   enum param_type_t {
-    VISHNUID=0,
     DBTYPE,
     DBHOST,
     DBPORT,
@@ -60,7 +59,11 @@ namespace vishnu {
     HAS_UMS,
     HAS_TMS,
     HAS_FMS,
-    IPC_URI_BASE
+    IPC_URI_BASE,
+    OPTION_SESSION_TIMEOUT,
+    OPTION_TRANSFER_TIMEOUT,
+    OPTION_DEFAULT_TRANSFER_CMD,
+    OPTION_DEFAULT_CONNECTION_CLOSE_POLICY
   };
 
   /**
@@ -160,10 +163,23 @@ namespace vishnu {
   };
 
   /**
- * \brief An array to store all parameters
- */
+   * \brief An array to store all parameters
+  */
   extern param_t params[];  //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp
   extern std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS;
+
+  enum option_t {
+    VISHNU_CLOSE_POLICY,
+    VISHNU_TIMEOUT,
+    VISHNU_TRANSFER_CMD,
+    VISHNU_TRANSFER_TIMEOUT
+  };
+
+  enum close_policy_t {
+    DEFAULT_CONNECTION_CLOSE_POLICY = 0,
+    CLOSE_ON_TIMEOUT = 1,
+    CLOSE_ON_DISCONNECT = 2
+  };
 }
 
 #endif /* _CONSTANTS_HPP_ */

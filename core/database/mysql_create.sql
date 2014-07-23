@@ -265,10 +265,7 @@ CREATE TABLE `authsystem` (
   `status` int(11) DEFAULT NULL,
   `uri` varchar(255) DEFAULT NULL,
   `userpwdencryption` int(11) DEFAULT NULL,
-  `vishnu_vishnuid` bigint(20) NOT NULL,
-  PRIMARY KEY (`numauthsystemid`),
-  KEY `FKADC771D7C2584CA8` (`vishnu_vishnuid`),
-  CONSTRAINT `FKADC771D7C2584CA8` FOREIGN KEY (`vishnu_vishnuid`) REFERENCES `vishnu` (`vishnuid`) ON DELETE CASCADE
+  PRIMARY KEY (`numauthsystemid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -479,10 +476,7 @@ CREATE TABLE `machine` (
   `site` varchar(255) DEFAULT NULL,
   `sshpublickey` TEXT,
   `status` int(11) DEFAULT NULL,
-  `vishnu_vishnuid` bigint(20) NOT NULL,
-  PRIMARY KEY (`nummachineid`),
-  KEY `FK31314447C2584CA8` (`vishnu_vishnuid`),
-  CONSTRAINT `FK31314447C2584CA8` FOREIGN KEY (`vishnu_vishnuid`) REFERENCES `vishnu` (`vishnuid`) ON DELETE CASCADE
+  PRIMARY KEY (`nummachineid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=467 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -888,10 +882,7 @@ CREATE TABLE `users` (
   `privilege` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `userid` varchar(255) NOT NULL,
-  `vishnu_vishnuid` bigint(20) NOT NULL,
-  PRIMARY KEY (`numuserid`),
-  KEY `FK6A68E08C2584CA8` (`vishnu_vishnuid`),
-  CONSTRAINT `FK6A68E08C2584CA8` FOREIGN KEY (`vishnu_vishnuid`) REFERENCES `vishnu` (`vishnuid`) ON DELETE CASCADE
+  PRIMARY KEY (`numuserid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=887 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -903,15 +894,13 @@ DROP TABLE IF EXISTS `vishnu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vishnu` (
-  `vishnuid` bigint(20) NOT NULL AUTO_INCREMENT,
   `formatidauth` varchar(255) DEFAULT NULL,
   `formatidfiletransfer` varchar(255) DEFAULT NULL,
   `formatidjob` varchar(255) DEFAULT NULL,
   `formatidmachine` varchar(255) DEFAULT NULL,
   `formatiduser` varchar(255) DEFAULT NULL,
   `formatidwork` varchar(255) DEFAULT NULL,
-  `updatefreq` int(11) DEFAULT NULL,
-  PRIMARY KEY (`vishnuid`)
+  `updatefreq` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=378 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

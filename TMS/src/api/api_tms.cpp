@@ -13,24 +13,17 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/regex.hpp>
 #include <boost/algorithm/string.hpp>
-
-//UMS include
 #include "SessionProxy.hpp"
 #include "MachineProxy.hpp"
 #include "LocalAccountProxy.hpp"
-#include "OptionValueProxy.hpp"
 #include "QueryProxy.hpp"
 #include "utilVishnu.hpp"
-
-//TMS include
 #include "JobProxy.hpp"
 #include "JobOutputProxy.hpp"
 #include "WorkProxy.hpp"
 #include "tmsUtils.hpp"
 #include "TMSServices.hpp"
 
-
-using namespace TMS_Data;
 
 
 /**
@@ -44,12 +37,12 @@ using namespace TMS_Data;
 int
 vishnu::submitJob(const std::string& sessionKey,
                   const std::string& scriptFilePath,
-                  Job& jobInfo,
-                  const SubmitOptions& options)
+                  TMS_Data::Job& jobInfo,
+                  const TMS_Data::SubmitOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 // Dirty cast to modify a const object because the loadcriterion field may not be allocated -> allocating him
-  const void * tmp = &options;
-  SubmitOptions* optionstmp = (SubmitOptions*)tmp;
+  const void *optionPtr = &options;
+  TMS_Data::SubmitOptions* optionstmp = (TMS_Data::SubmitOptions*)optionPtr;
   TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();
 
   checkEmptyString(sessionKey, "The session key");
@@ -66,7 +59,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   JobProxy jobProxy(sessionKey, optionstmp->getMachine());
 
-  ListStrings fileParamsVec;
+  std::vector<std::string> fileParamsVec;
   std::string fileParamsStr = optionstmp->getFileParams() ;
   boost::trim(fileParamsStr) ; //TODO BUG when empty list
   boost::split(fileParamsVec, fileParamsStr, boost::is_any_of(" "), boost::token_compress_on) ;
@@ -138,7 +131,7 @@ int
 vishnu::getJobInfo(const std::string& sessionKey,
                    const std::string& jobId,
                    const std::string& machineId,
-                   Job& job)
+                   TMS_Data::Job& job)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
@@ -160,8 +153,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
  */
 int
 vishnu::listJobs(const std::string& sessionKey,
-                 ListJobs& listOfJobs,
-                 const ListJobsOptions& options)
+                 TMS_Data::ListJobs& listOfJobs,
+                 const TMS_Data::ListJobsOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
@@ -217,8 +210,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
  */
 int
 vishnu::getJobProgress(const std::string& sessionKey,
-                       ListProgression& listOfProgress,
-                       const ProgressOptions& options)
+                       TMS_Data::ListProgression& listOfProgress,
+                       const TMS_Data::ProgressOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
@@ -284,7 +277,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 int
 vishnu::listQueues(const std::string& sessionKey,
                    const std::string& machineId,
-                   ListQueues& listofQueues,
+                   TMS_Data::ListQueues& listofQueues,
                    const std::string& queueName)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   checkEmptyString(sessionKey, "The session key");
@@ -328,8 +321,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 int
 vishnu::getJobOutput(const std::string& sessionKey,
                      const std::string& jobId,
-                     JobResult& outputInfo,
-                     const JobOutputOptions& options)
+                     TMS_Data::JobResult& outputInfo,
+                     const TMS_Data::JobOutputOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
@@ -365,7 +358,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
  */
 int
 vishnu::getCompletedJobsOutput(const std::string& sessionKey,
-                               ListJobResults& listOfResults,
+                               TMS_Data::ListJobResults& listOfResults,
                                const TMS_Data::JobOutputOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
@@ -409,8 +402,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 int
 vishnu::addWork(const std::string& sessionKey,
-                Work& newWork,
-                const AddWorkOptions& options)
+                TMS_Data::Work& newWork,
+                const TMS_Data::AddWorkOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException){
   checkEmptyString(sessionKey, "The session key");
   SessionProxy sessionProxy(sessionKey);

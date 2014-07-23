@@ -40,11 +40,10 @@ MachineServer::MachineServer(UMS_Data::Machine*& machine, SessionServer& session
 
 /**
 * \brief Function to add a new VISHNU machine
-* \param vishnuId The identifier of the vishnu instance
 * \return raises an exception on error
 */
 int
-MachineServer::add(int vishnuId) {
+MachineServer::add(void) {
   std::string sqlUpdate = "update machine set ";
   std::string idMachineGenerated;
 
@@ -56,10 +55,7 @@ MachineServer::add(int vishnuId) {
     //if the user is an admin
     if (userServer.isAdmin()) {
       //Generation of machineid
-      idMachineGenerated = vishnu::getObjectId(vishnuId,
-                                               "formatidmachine",
-                                               MACHINE,
-                                               mmachine->getName());
+      idMachineGenerated = vishnu::getObjectId(MACHINE, mmachine->getName());
 
       //if the machine id is generated
       if (idMachineGenerated.size() != 0) {

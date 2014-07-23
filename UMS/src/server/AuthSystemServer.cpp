@@ -36,11 +36,10 @@ AuthSystemServer::AuthSystemServer(UMS_Data::AuthSystem*& authsystem, SessionSer
 
 /**
 * \brief Function to add a new VISHNU authsystem
-* \param vishnuId The identifier of the vishnu instance
 * \return raises an exception on error
 */
 int
-AuthSystemServer::add(int vishnuId) {
+AuthSystemServer::add(void) {
 
   std::string numAuth;
   std::string sqlUpdate = "UPDATE authsystem set ";
@@ -53,7 +52,7 @@ AuthSystemServer::add(int vishnuId) {
     //if the user is an admin
     if (userServer.isAdmin()) {
       checkValues();
-      mauthsystem->setAuthSystemId(vishnu::getObjectId(vishnuId, "formatidauth", AUTH, mauthsystem->getName()));
+      mauthsystem->setAuthSystemId(vishnu::getObjectId(AUTH, mauthsystem->getName()));
       // To check if the authentication id generated and the name to save do not exist,
       // except the authentication reserved by getObjectId
       std::string sqlcond = (boost::format("WHERE authsystemid='%1%'"
@@ -77,7 +76,7 @@ AuthSystemServer::add(int vishnuId) {
           numAuth = getAttribut("where authsystemid='"+mdatabaseVishnu->escapeData(mauthsystem->getAuthSystemId())+"'");
           std::string sql = (boost::format("INSERT INTO ldapauthsystem (authsystem_authsystemid, ldapbase)"
                                            " VALUES (%1%, '%2%')"
-                               )%numAuth %mdatabaseVishnu->escapeData(mauthsystem->getLdapBase())).str();
+                               ) % numAuth %mdatabaseVishnu->escapeData(mauthsystem->getLdapBase())).str();
           mdatabaseVishnu->process(sql);
         }
       } else {

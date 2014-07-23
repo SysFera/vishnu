@@ -17,7 +17,6 @@
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 #include "ListFileTransfers.hpp"
-#include "OptionValueServer.hpp"
 #include "fmsUtils.hpp"
 #include "utilServer.hpp"
 #include "Logger.hpp"
@@ -77,11 +76,9 @@ FileTransferServer::checkUserId(std::string userId) {
 }
 
 // A constructor with parameters
-FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
-                                       const int& vishnuId):
-  mvishnuId(vishnuId),
-  mtransferType(File::undefined),
-  msessionServer(sessionServer) {
+FileTransferServer::FileTransferServer(const SessionServer& sessionServer)
+  : mtransferType(File::undefined),
+    msessionServer(sessionServer) {
 
 }
 
@@ -90,11 +87,9 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
                                        const std::string& srcHost,
                                        const std::string& destHost,
                                        const std::string& srcFilePath,
-                                       const std::string& destFilePath,
-                                       const int& vishnuId):
-  mvishnuId(vishnuId),
-  mtransferType(File::undefined),
-  msessionServer(sessionServer) {
+                                       const std::string& destFilePath)
+  : mtransferType(File::undefined),
+    msessionServer(sessionServer) {
   mfileTransfer.setSourceMachineId(srcHost);
   mfileTransfer.setDestinationMachineId(destHost);
   mfileTransfer.setSourceFilePath(srcFilePath);
@@ -158,18 +153,15 @@ FileTransferServer::updateDatabaseRecord()
 // update file transfer data
 void
 FileTransferServer::updateData() {
+
   std::string clientMachineName;
   std::string userId;
+
   getUserInfo(clientMachineName, userId);
 
-  std::string vishnuFileTransferId = vishnu::getObjectId(mvishnuId,
-                                                         "formatidfiletransfer",
-                                                         vishnu::FILETRANSFERT,
-                                                         clientMachineName);
-
+  mfileTransfer.setTransferId( vishnu::getObjectId(vishnu::FILETRANSFERT, clientMachineName) );
   mfileTransfer.setClientMachineId(clientMachineName);
   mfileTransfer.setUserId(userId);
-  mfileTransfer.setTransferId(vishnuFileTransferId);
 }
 
 // To add a new file transfer thread
@@ -198,23 +190,24 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
   }
 
   FMS_Data::CpFileOptions optionsCopy(options);
-  int timeout(0);
-  if (options.getTrCommand() == vishnu::UNDEFINED_TRANSFER_MANAGER) {
-    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
+  int timeout (0); //FIXE: get timeout from config
+//  if (options.getTrCommand() == vishnu::UNDEFINED_TRANSFER_MANAGER) {
+//    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
 
-    std::string query="SELECT users.numuserid,users_numuserid,vsessionid from users,vsession "
-                      " WHERE vsession.users_numuserid=users.numuserid "
-                      "  AND vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
+//    std::string query="SELECT users.numuserid,users_numuserid,vsessionid from users,vsession "
+//                      " WHERE vsession.users_numuserid=users.numuserid "
+//                      "  AND vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
 
-    boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(query));
+//    boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(query));
 
-    if (dbResult->getNbTuples() != 0) {
-      std::string numuserId= dbResult->getFirstElement();
-      OptionValueServer optionValueServer;
-      optionsCopy.setTrCommand(optionValueServer.getOptionValueForUser(numuserId, TRANSFERCMD_OPT));
-      timeout = optionValueServer.getOptionValueForUser(numuserId, TRANSFER_TIMEOUT_OPT);
-    }
-  }
+//    if (dbResult->getNbTuples() != 0) {
+
+//      std::string numuserId= dbResult->getFirstElement();
+//      OptionValueServer optionValueServer;
+//      optionsCopy.setTrCommand(optionValueServer.getOptionValueForUser(numuserId, TRANSFERCMD_OPT));
+//      timeout = optionValueServer.getOptionValueForUser(numuserId, TRANSFER_TIMEOUT_OPT);
+//    }
+//  }
 
   boost::scoped_ptr<FileTransferCommand> transferManager(
         FileTransferCommand::getTransferManager(optionsCopy, timeout));

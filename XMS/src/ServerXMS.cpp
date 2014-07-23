@@ -27,11 +27,6 @@ ServerXMS::getInstance() {
   return minstance;
 }
 
-int
-ServerXMS::getVishnuId() const {
-  return mvishnuId;
-}
-
 std::string
 ServerXMS::getSendmailScriptPath() const {
   return msendmailScriptPath;
@@ -138,10 +133,6 @@ ServerXMS::init(SedConfig& cfg) {
     mdatabaseVishnu = factory.createDatabaseInstance(cfg.dbConfig);
     mauthenticator = authfactory.createAuthenticatorInstance(cfg.authenticatorConfig);
 
-    mvishnuId = cfg.vishnuId;
-
-    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
-
     /*connection to the database*/
     mdatabaseVishnu->connect();
     mmapperTMS = new TMSMapper(MapperRegistry::getInstance(), TMSMAPPERNAME);
@@ -150,13 +141,6 @@ ServerXMS::init(SedConfig& cfg) {
     mmapperFMS->registerMapper();
     mmapperUMS = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
     mmapperUMS->registerMapper();
-
-    /* Checking of vishnuid on the database */
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
-    if (result->getResults().size() == 0) {
-      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
-      throw e;
-    }
 
   } catch (VishnuException& e) {
     std::cout << e.what() << "\n";
@@ -211,10 +195,6 @@ ServerXMS::initMap(const std::string& mid) {
       mcb[SERVICES_UMS[LOCALACCOUNTUPDATE]] = functionPtr;
       functionPtr = solveLocalAccountDelete;
       mcb[SERVICES_UMS[LOCALACCOUNTDELETE]] = functionPtr;
-      functionPtr = solveOptionValueSet;
-      mcb[SERVICES_UMS[OPTIONVALUESET]] = functionPtr;
-      functionPtr = solveOptionValueSetDefault;
-      mcb[SERVICES_UMS[OPTIONVALUESETDEFAULT]] = functionPtr;
       functionPtr = solveListSessions;
       mcb[SERVICES_UMS[SESSIONLIST]] = functionPtr;
       functionPtr = solveListLocalAccount;
@@ -245,12 +225,6 @@ ServerXMS::initMap(const std::string& mid) {
       mcb[SERVICES_UMS[AUTHACCOUNTDELETE]] = functionPtr;
       functionPtr = solveAccountAuthList;
       mcb[SERVICES_UMS[AUTHACCOUNTLIST]] = functionPtr;
-      mcb[SERVICES_UMS[INT_DEFINEUSERIDENTIFIER]] = solveSetUID;
-      mcb[SERVICES_UMS[INT_DEFINEJOBIDENTIFIER]] = solveSetJID;
-      mcb[SERVICES_UMS[INT_DEFINETRANSFERIDENTIFIER]] = solveSetTID;
-      mcb[SERVICES_UMS[INT_DEFINEMACHINEIDENTIFIER]] = solveSetMID;
-      mcb[SERVICES_UMS[INT_DEFINEAUTHIDENTIFIER]] = solveSetAID;
-      mcb[SERVICES_UMS[INT_DEFINEWORKIDENTIFIER]] = solveSetWID;
       mcb[SERVICES_UMS[EXPORT]] = solveExport;
   }
   // TMS services

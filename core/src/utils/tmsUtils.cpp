@@ -309,7 +309,7 @@ vishnu::recordMissingFiles(const std::string & fileName,
   std::ofstream file;
   file.open(fileName.c_str());
   if (file.good()) {
-    ListStrings missingFiles;
+    std::vector<std::string> missingFiles;
     boost::split(missingFiles, missingDesc, boost::is_space());
     int count = missingFiles.size();
     for(int i = 1; i < count; i++) {
@@ -396,12 +396,12 @@ vishnu::setParams(std::string& scriptContent,
   std::string paramName;
   std::string paramValue;
   size_t pos;
-  ListStrings paramsVec;
+  std::vector<std::string> paramsVec;
 
   std::string& refParams = const_cast<std::string&>(params);
   boost::trim(refParams);
   boost::split(paramsVec, refParams, boost::is_any_of(" "));
-  for (ListStrings::iterator it = paramsVec.begin(); it != paramsVec.end(); ++it) {
+  for (std::vector<std::string>::iterator it = paramsVec.begin(); it != paramsVec.end(); ++it) {
     pos = it->find("=");
     if (pos != std::string::npos) {
       paramName = it->substr(0, pos);

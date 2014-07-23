@@ -88,7 +88,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
       line = "";
     }
     boost::trim(line);
-    ListStrings lineVec;
+    std::vector<std::string> lineVec;
     boost::split(lineVec, line, boost::is_any_of(" "));
     int nbFiles = lineVec.size();
 
@@ -186,7 +186,7 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
     std::istringstream downloadInfoStream (vishnu::get_file_content(downloadInfoFile, false));
     int numJob = 0;
     std::string line;
-    ListStrings lineVec;
+    std::vector<std::string> lineVec;
     std::string missingFiles;
     while (getline(downloadInfoStream, line)) {
       if (line.empty()) continue;

@@ -19,7 +19,6 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
-
 #include "VishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "SystemException.hpp"
@@ -27,13 +26,13 @@
 #include "UMS_Data_forward.hpp"
 #include "UserServer.hpp"
 #include "MachineClientServer.hpp"
-#include "OptionValueServer.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
 
 
 class UserServer;
 
+const int DEFAULT_CONNECTION_TIMEOUT = 3600;
 
 /**
 * \class SessionServer
@@ -41,20 +40,24 @@ class UserServer;
 */
 class SessionServer {
 public:
+
   /**
    * \brief Constructor
    */
   SessionServer();
+
   /**
    * \brief Constructor
    * \param sessionKey The session key of the session
+   * \param timeout Lenght of the connection before timeout
    */
-  SessionServer(std::string sessionKey);
+  SessionServer(std::string sessionKey, int timeout = DEFAULT_CONNECTION_TIMEOUT);
   /**
    * \brief Constructor
    * \param session The session data structure
+   * \param timeout Lenght of the connection before timeout
    */
-  SessionServer(const UMS_Data::Session& session);
+  SessionServer(const UMS_Data::Session& session, int timeout = DEFAULT_CONNECTION_TIMEOUT);
   /**
    * \brief Function to connect the session
    * \param user The object which manipulates user information
@@ -143,6 +146,11 @@ public:
   */
   Database* mdatabaseVishnu;
 
+  /**
+   * @brief Hold connection timeout
+   */
+  int mtimeout;
+
   /////////////////////////////////
   // Functions
   /////////////////////////////////
@@ -194,17 +202,15 @@ public:
   /**
    * \brief Function to solve the session connection parameters
    * \param connectOpt the connection parameters
-   * \param numuserId the database number id of the user to connect
    * \return the connection parameters are registered on the session data structure
    */
   int
-  solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::string numuserId);
+  solveConnectionMode(UMS_Data::ConnectOptions* connectOpt);
   /**
    * \brief Function to change the closure connection mode disconnet to timeout
-   * \param user The object which manipulates user information
    * \return the new connection parameters are registered on the session data structure
    */
   int
-  disconnetToTimeout(UserServer user);
+  disconnetToTimeout();
 };
 #endif

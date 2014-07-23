@@ -46,12 +46,11 @@ public:
   /**
    * \brief Function to add a new VISHNU user
    * \param user The user data structure
-   * \param vishnuId The identifier of the vishnu instance
    * \param sendmailScriptPath The path to the script for sending emails
    * \return raises an exception on error
    */
   int
-  add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptPath);
+  add(UMS_Data::User*& user, std::string sendmailScriptPath);
   /**
    * \brief Function to update user information
    * \param user The user data structure

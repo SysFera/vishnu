@@ -29,11 +29,6 @@ public:
    * \brief Destructor
    */
   ~ObjectIdServer();
-  /**
-   * \brief To set the format of an entry
-   */
-  void
-  setformat(std::string fmt, std::string entry);
 
 protected:
 private:
@@ -44,10 +39,6 @@ private:
    */
   bool
   containCpt(std::string fmt);
-  /**
-   * \brief The id of vishnu
-   */
-  int mvishnuId;
   /**
   * \brief An instance of vishnu database
   */

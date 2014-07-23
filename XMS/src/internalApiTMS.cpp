@@ -93,7 +93,6 @@ solveSubmitJob(diet_profile_t* pb) {
 
     std::string jobId = jobServer.submitJob(scriptContent,
                                             &options,
-                                            server->getVishnuId(),
                                             server->getDefaultBatchOption());
 
     diet_string_set(pb,0, "success");
@@ -522,7 +521,7 @@ solveAddWork(diet_profile_t* pb) {
     }
 
     WorkServer workServer = WorkServer(authKey, workop->getMachineId(), work);
-    workServer.add(ServerXMS::getInstance()->getVishnuId(), workop);
+    workServer.add(workop);
 
     //To serialize the user object
     ::ecorecpp::serializer::serializer _ser;

@@ -11,7 +11,6 @@
 #include <exception>
 #include <iostream>
 #include <cstdlib>
-
 #include "constants.hpp"
 #include "CommonParser.hpp"
 #include "UserException.hpp"
@@ -138,8 +137,10 @@ protected:
   ConfigMap mconfig;
 };
 
+
 /**
  * \brief Define the exec configuration pointer type
  */
 typedef ExecConfiguration* ExecConfiguration_Ptr;
+
 #endif /* _EXECCONFIGURATION_HPP_ */

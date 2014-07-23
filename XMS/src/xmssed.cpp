@@ -71,7 +71,6 @@ void
 readConfiguration(const std::string& initFile, SedConfig& cfg) {
   try {
     cfg.config.initFromFile(initFile);
-    cfg.config.getRequiredConfigValue<int>(vishnu::VISHNUID, cfg.vishnuId);
     cfg.dbConfig.check();
     cfg.config.getRequiredConfigValue<std::string>(vishnu::HOST_URIADDR, cfg.uri);
     cfg.config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, cfg.sub);

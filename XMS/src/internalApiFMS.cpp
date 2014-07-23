@@ -7,6 +7,7 @@
 #include "internalApiFMS.hpp"
 #include "SessionServer.hpp"
 #include "ListFileTransfers.hpp"
+#include "FileTransferServer.hpp"
 #include <istream>
 
 
@@ -994,7 +995,7 @@ solveFileTransferStop(diet_profile_t* profile) {
     if(! vishnu::parseEmfObject(optionsSerialized, options_ptr)) {
       SystemException(ERRCODE_INVDATA, "solveFileTransferStop: options object is not well built");
     }
-    FileTransferServer fileTransferServer(sessionServer, ServerXMS::getInstance()->getVishnuId());
+    FileTransferServer fileTransferServer(sessionServer);
     fileTransferServer.stopThread(*options_ptr);
     delete options_ptr;
 
@@ -1036,8 +1037,8 @@ solveUpdateClientSideTransfer(diet_profile_t* profile)
       SystemException(ERRCODE_INVDATA, "solveUpdateClientSideTransfer: invalid transfer object");
     }
 
-    FileTransferServer transferServer(SessionServer(sessionKey),
-                                      ServerXMS::getInstance()->getVishnuId());
+    SessionServer sessionServer(sessionKey);
+    FileTransferServer transferServer(sessionServer);
     transferServer.setFileTransfer(*transfer);
     transferServer.updateDatabaseRecord();
     delete transfer;

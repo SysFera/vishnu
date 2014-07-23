@@ -33,13 +33,13 @@ set(registry_SRCS
 
 
   add_library(zmq_helper
+    zhelpers.cpp
+    sslhelpers.cpp
     DIET_client.cpp
     Annuary.cpp
     Server.cpp
     SeD.cpp
     utils.cpp
-    zhelpers.cpp
-    sslhelpers.cpp
     ${utils_server_SRCS}
     ${registry_SRCS}
     ${logger_SRCS})

@@ -72,19 +72,17 @@ JobServer::~JobServer() { }
  * \brief Function to submit job
  * \param scriptContent the content of the script
  * \param options a json object describing options
- * \param vishnuId The VISHNU identifier
  * \param defaultBatchOption The default batch options
  * \return The resulting job ID. Raises an exception on error
  */
 std::string
 JobServer::submitJob(std::string& scriptContent,
                      JsonObject* options,
-                     int vishnuId,
                      const std::vector<std::string>& defaultBatchOption)
 {
 
   LOG("[INFO] Request to submit job", LogInfo);
-  const std::string JOB_ID = vishnu::getObjectId(vishnuId, "formatidjob", vishnu::JOB, mmachineId);
+  const std::string JOB_ID = vishnu::getObjectId(vishnu::JOB, mmachineId);
   TMS_Data::Job jobInfo;
   jobInfo.setJobId(JOB_ID);
 

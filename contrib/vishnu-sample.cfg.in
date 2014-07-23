@@ -104,10 +104,6 @@ nbthreads=2
 ###############################################################################
 #                Server Parameters                                            #
 ###############################################################################
-# vishnuId (M<XMS>): Sets the identifier of the VISHNU instance
-#
-vishnuId=1
-
 # databaseType (M<XMS>): Defines the type of the database.
 # Possible values are 'mysql' or 'postgresql'
 #

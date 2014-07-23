@@ -23,7 +23,6 @@ MonitorXMS::init(const SedConfig& cfg) {
   using boost::format;
   using boost::str;
 
-  int vishnuId = cfg.vishnuId;
   DbConfiguration dbConfig = cfg.dbConfig;
   AuthenticatorConfiguration authenticatorConfig = cfg.authenticatorConfig;
   mhasUMS = cfg.hasUMS;
@@ -39,20 +38,9 @@ MonitorXMS::init(const SedConfig& cfg) {
 
   AuthenticatorFactory authfactory;
   mauthenticator = authfactory.createAuthenticatorInstance(authenticatorConfig);
-
-  std::string sqlCommand =
-      str(format("SELECT * FROM vishnu where vishnuid=%1%")
-          % vishnu::convertToString(vishnuId));
-
   try {
-    /*connection to the database*/
+    /*initialized the connection to the database*/
     mdatabaseVishnu->connect();
-
-    /* Checking of vishnuid on the database */
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
-    if (result->getResults().size() == 0) {
-      throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
-    }
   } catch (VishnuException& e) {
     exit(0);
   }
