@@ -171,7 +171,13 @@ main(int argc, char* argv[], char* envp[]) {
 
     // Initialize the Vishnu SeD
     if (!res) {
-      initSeD(XMSTYPE, cfg.config, cfg.uri, serverXMS);
+      try {
+        initSeD(XMSTYPE, cfg.config, cfg.uri, serverXMS);
+      } catch (VishnuException& e){
+        std::cerr << "[Error]: " << e.what() << std::endl;
+        kill(pid, SIGTERM);
+      }
+
       exit(0);
     } else {
       std::cerr << "There was a problem during services initialization\n";
