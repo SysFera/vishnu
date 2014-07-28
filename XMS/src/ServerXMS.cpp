@@ -203,8 +203,6 @@ ServerXMS::initMap(const std::string& mid) {
       mcb[SERVICES_UMS[MACHINELIST]] = functionPtr;
       functionPtr = solveListHistoryCmd;
       mcb[SERVICES_UMS[COMMANDLIST]] = functionPtr;
-      functionPtr = solveListOptions;
-      mcb[SERVICES_UMS[OPTIONVALUELIST]] = functionPtr;
       functionPtr = solveListUsers;
       mcb[SERVICES_UMS[USERLIST]] = functionPtr;
       functionPtr = solveRestore;

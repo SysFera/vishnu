@@ -15,155 +15,47 @@
 
 class MapperRegistry;
 
-/**
- * \brief Connection key
- */
-const int VISHNU_CONNECT                  = 1 ;
-/**
- * \brief Reconnection key
- */
-const int VISHNU_RECONNECT 	     	  = 2 ;
-/**
- * \brief Closure key
- */
-const int VISHNU_CLOSE 	     	          = 3 ;
-/**
- * \brief Add user key
- */
-const int VISHNU_ADD_VISHNU_USER   	  = 4 ;
-/**
- * \brief Update user key
- */
-const int VISHNU_UPDATE_VISHNU_USER 	  = 5 ;
-/**
- * \brief Delete user key
- */
-const int VISHNU_DELETE_VISHNU_USER 	  = 6 ;
-/**
- * \brief Change password key
- */
-const int VISHNU_CHANGE_PASSWORD   	  = 7 ;
-/**
- * \brief Reset password key
- */
-const int VISHNU_RESET_PASSWORD    	  = 8 ;
-/**
- * \brief Add account key
- */
-const int VISHNU_ADD_LOCAL_ACCOUNT        = 9 ;
-/**
- * \brief Update account key
- */
-const int VISHNU_UPDATE_LOCAL_ACCOUNT     = 10;
-/**
- * \brief Delete account key
- */
-const int VISHNU_DELETE_LOCAL_ACCOUNT     = 11;
-/**
- * \brief Add machine key
- */
-const int VISHNU_ADD_MACHINE 	          = 14;
-/**
- * \brief Update machine key
- */
-const int VISHNU_UPDATE_MACHINE           = 15;
-/**
- * \brief Delete machine key
- */
-const int VISHNU_DELETE_MACHINE           = 16;
-/**
- * \brief List account key
- */
-const int VISHNU_LIST_LOCAL_ACCOUNT       = 17;
-/**
- * \brief List machine key
- */
-const int VISHNU_LIST_MACHINE 	          = 18;
-/**
- * \brief List history key
- */
-const int VISHNU_LIST_HISTORY_CMD         = 19;
-/**
- * \brief List option key
- */
-const int VISHNU_LIST_OPTIONS 	          = 20;
-/**
- * \brief List user key
- */
-const int VISHNU_LIST_USERS 	          = 21;
-/**
- * \brief List session key
- */
-const int VISHNU_LIST_SESSIONS 	          = 22;
-/**
- * \brief Configure default option key
- */
-const int VISHNU_CONFIGURE_DEFAULT_OPTION = 23;
-/**
- * \brief Configure option key
- */
-const int VISHNU_CONFIGURE_OPTION	  = 24;
-/**
- * \brief Add authentication system
- */
-const int VISHNU_ADD_AUTHSYS 	          = 25;
-/**
- * \brief Update authentication system
- */
-const int VISHNU_UPDATE_AUTHSYS          = 26;
-/**
- * \brief Delete authentication system
- */
-const int VISHNU_DELETE_AUTHSYS           = 27;
-/**
- * \brief List authentication system
- */
-const int VISHNU_LIST_AUTHSYS             = 28;
-/**
- * \brief Add authentification account
- */
-const int VISHNU_ADD_AUTHACC 	          = 29;
-/**
- * \brief Update authentication account
- */
-const int VISHNU_UPDATE_AUTHACC           = 30;
-/**
- * \brief Delete authentication account
- */
-const int VISHNU_DELETE_AUTHACC           = 31;
-/**
- * \brief List authentication account
- */
-const int VISHNU_LIST_AUTHACC       = 32;
+enum MapperService {
+  VISHNU_CONNECT = 1,
+  VISHNU_RECONNECT,
+  VISHNU_CLOSE,
+  VISHNU_ADD_VISHNU_USER,
+  VISHNU_UPDATE_VISHNU_USER,
+  VISHNU_DELETE_VISHNU_USER,
+  VISHNU_CHANGE_PASSWORD,
+  VISHNU_RESET_PASSWORD,
+  VISHNU_ADD_LOCAL_ACCOUNT,
+  VISHNU_UPDATE_LOCAL_ACCOUNT,
+  VISHNU_DELETE_LOCAL_ACCOUNT,
+  VISHNU_ADD_MACHINE,
+  VISHNU_UPDATE_MACHINE,
+  VISHNU_DELETE_MACHINE,
+  VISHNU_LIST_LOCAL_ACCOUNT,
+  VISHNU_LIST_MACHINE,
+  VISHNU_LIST_HISTORY_CMD,
+  VISHNU_LIST_USERS,
+  VISHNU_LIST_SESSIONS,
+  VISHNU_ADD_AUTHSYS,
+  VISHNU_UPDATE_AUTHSYS,
+  VISHNU_DELETE_AUTHSYS,
+  VISHNU_LIST_AUTHSYS,
+  VISHNU_ADD_AUTHACC,
+  VISHNU_UPDATE_AUTHACC,
+  VISHNU_DELETE_AUTHACC,
+  VISHNU_LIST_AUTHACC,
+  VISHNU_DEFINE_UID,
+  VISHNU_DEFINE_MID,
+  VISHNU_DEFINE_TID,
+  VISHNU_DEFINE_FID,
+  VISHNU_DEFINE_AID,
+  VISHNU_DEFINE_WID,
+  /**
+   * \brief To export commands
+   */
+  VISHNU_EXPORT
+};
 
-/**
- * \brief Define user id format
- */
-const int VISHNU_DEFINE_UID = 33;
-/**
- * \brief Define machine id format
- */
-const int VISHNU_DEFINE_MID = 34;
-/**
- * \brief Define task id format
- */
-const int VISHNU_DEFINE_TID = 35;
-/**
- * \brief Define file transfer id format
- */
-const int VISHNU_DEFINE_FID = 36;
-/**
- * \brief Define authentication system id
- */
-const int VISHNU_DEFINE_AID = 37;
-/**
- * \brief Define work system id
- */
-const int VISHNU_DEFINE_WID = 38;
-/**
- * \brief To export commands
- */
-const int VISHNU_EXPORT     = 39;
+
 
 
 /**
@@ -449,15 +341,6 @@ protected:
    * \brief To decode the add user call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
-   * \return The cli like list option command
-   */
-  virtual std::string
-  decodeListOp(std::vector<unsigned int> separator, const std::string& msg);
-
-  /**
-   * \brief To decode the add user call sequence of the string returned by finalize
-   * \param separator A vector containing the position of the separator in the message msg
-   * \param msg The message to decode
    * \return The cli like list user command
    */
   virtual std::string
@@ -471,24 +354,6 @@ protected:
    */
   virtual std::string
   decodeListSession(std::vector<unsigned int> separator, const std::string& msg);
-
-  /**
-   * \brief To decode the add user call sequence of the string returned by finalize
-   * \param separator A vector containing the position of the separator in the message msg
-   * \param msg The message to decode
-   * \return The cli like configure default option command
-   */
-  virtual std::string
-  decodeConfDefaultOp(std::vector<unsigned int> separator, const std::string& msg);
-
-  /**
-   * \brief To decode the add user call sequence of the string returned by finalize
-   * \param separator A vector containing the position of the separator in the message msg
-   * \param msg The message to decode
-   * \return The cli like configure option command
-   */
-  virtual std::string
-  decodeConfOp(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the close call sequence of the string returned by finalize

@@ -24,12 +24,10 @@
 #include "ListCommands.hpp"             // for ListCommands
 #include "ListLocalAccounts.hpp"        // for ListLocalAccounts
 #include "ListMachines.hpp"             // for ListMachines
-#include "ListOptionsValues.hpp"        // for ListOptionsValues
 #include "ListSessions.hpp"             // for ListSessions
 #include "ListUsers.hpp"                // for ListUsers
 #include "LocalAccount.hpp"             // for LocalAccount
 #include "Machine.hpp"                  // for Machine
-#include "OptionValue.hpp"              // for OptionValue
 #include "Session.hpp"                  // for Session
 #include "User.hpp"                     // for User
 #include "ecorecpp/mapping/EList.hpp"   // for EList
@@ -763,72 +761,6 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
  return os;
 }
 
-/**
- * \brief Helper function to display an option value
- * \param os: The output stream in which the option value will be printed
- * \param command: The option value to display
- * \return The output stream in which the option value has been printed
- */
-
-
-std::ostream&
-operator<<(std::ostream& os, const UMS_Data::OptionValue_ptr& optionValue) {
-
-  std::string name = optionValue->getOptionName();
-  std::string value = optionValue->getValue();
-
-  os << "============ Option Value for " << name << "===========" << std::endl;
-  os << setw(25) << right << "Name: " << name << endl;
-  os << setw(25) << right << "Value: " << value << endl;
-
-  return os;
-}
-
-
-/**
- * \brief Helper function to display a list of options
- * \param os: The output stream in which the list will be printed
- * \param lsOptions: The list to display
- * \return The output stream in which the list of options has been printed
- */
-
-
-std::ostream&
-operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOptions) {
-
-  std::string name;
-  std::string value;
-  size_t maxNameSize = std::string("Name").size();
-  size_t maxValueSize = std::string("Value").size();
-
-  for(unsigned int i = 0; i < lsOptions.getOptionValues().size(); i++) {
-
-     name = (lsOptions.getOptionValues().get(i))->getOptionName();
-     maxNameSize = max(maxNameSize, name.size());
-
-     value = (lsOptions.getOptionValues().get(i))->getValue();
-     maxValueSize = max(maxValueSize, value.size());
-
-  }
-
-  os << setw(maxNameSize+2) << left << "Name" << setw(maxValueSize+2) << left << "Value";
-  os << endl;
-  setFill(maxNameSize, os);
-  setFill(maxValueSize, os);
-  os << endl;
-
-  for(unsigned int i = 0; i < lsOptions.getOptionValues().size(); i++) {
-
-     name = (lsOptions.getOptionValues().get(i))->getOptionName();
-     value = (lsOptions.getOptionValues().get(i))->getValue();
-
-     os << setw(maxNameSize+2) << left <<  name;
-     os << setw(maxValueSize+2) << left << value;
-     os << endl;
-  }
-
-  return os;
-}
 
 /**
  * \brief Helper function to display a user

@@ -61,11 +61,8 @@ UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg) {
   mmap.insert(pair<int, string>(VISHNU_LIST_LOCAL_ACCOUNT      , "vishnu_list_local_accounts"));
   mmap.insert(pair<int, string>(VISHNU_LIST_MACHINE            , "vishnu_list_machines"));
   mmap.insert(pair<int, string>(VISHNU_LIST_HISTORY_CMD        , "vishnu_list_history_cmd"));
-  mmap.insert(pair<int, string>(VISHNU_LIST_OPTIONS            , "vishnu_list_options"));
   mmap.insert(pair<int, string>(VISHNU_LIST_USERS              , "vishnu_list_users"));
   mmap.insert(pair<int, string>(VISHNU_LIST_SESSIONS           , "vishnu_list_sessions"));
-  mmap.insert(pair<int, string>(VISHNU_CONFIGURE_DEFAULT_OPTION, "vishnu_configure_default_option"));
-  mmap.insert(pair<int, string>(VISHNU_CONFIGURE_OPTION        , "vishnu_configure_option"));
   mmap.insert(pair<int, string>(VISHNU_ADD_AUTHSYS             , "vishnu_add_auth_system"));
   mmap.insert(pair<int, string>(VISHNU_UPDATE_AUTHSYS          , "vishnu_update_auth_system"));
   mmap.insert(pair<int, string>(VISHNU_DELETE_AUTHSYS          , "vishnu_delete_auth_system"));
@@ -226,20 +223,11 @@ UMSMapper::decode(const string& msg) {
   case VISHNU_LIST_HISTORY_CMD        :
     res = decodeListH(separatorPos, msg);
     break;
-  case VISHNU_LIST_OPTIONS 	       :
-    res = decodeListOp(separatorPos, msg);
-    break;
   case VISHNU_LIST_USERS 	        :
     res = decodeListUser(separatorPos, msg);
     break;
   case VISHNU_LIST_SESSIONS 	        :
     res = decodeListSession(separatorPos, msg);
-    break;
-  case VISHNU_CONFIGURE_DEFAULT_OPTION:
-    res = decodeConfDefaultOp(separatorPos, msg);
-    break;
-  case VISHNU_CONFIGURE_OPTION	:
-    res = decodeConfOp(separatorPos, msg);
     break;
   case VISHNU_ADD_AUTHSYS 	:
     res = decodeAddAuthSys(separatorPos, msg);
@@ -928,41 +916,6 @@ UMSMapper::decodeListH(vector<unsigned int> separator, const string& msg) {
 }
 
 string
-UMSMapper::decodeListOp(vector<unsigned int> separator, const string& msg) {
-  string res = string("");
-  string a;
-  res += (mmap.find(VISHNU_LIST_OPTIONS))->second;
-  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-
-  UMS_Data::ListOptOptions_ptr ac = NULL;
-
-  // To parse the object serialized
-  if (!parseEmfObject(std::string(std::string(a)), ac)) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
-  }
-
-  if (ac->isListAllDeftValue()) {
-    res+=" -a ";
-  }
-  a = ac->getUserId();
-  if (a.compare("")) {
-    res+=" -u ";
-    res+=a;
-  }
-  a = ac->getOptionName();
-  if (a.compare("")) {
-    res+=" -n ";
-    res+=a;
-  }
-
-  if (ac != NULL) {
-    delete ac;
-  }
-
-  return res;
-}
-
-string
 UMSMapper::decodeListUser(vector<unsigned int> separator, const string& msg) {
   string a;
   string res = string("");
@@ -1068,72 +1021,6 @@ UMSMapper::decodeListSession(vector<unsigned int> separator, const string& msg) 
 }
 
 string
-UMSMapper::decodeConfDefaultOp(vector<unsigned int> separator, const string& msg) {
-  string res = string("");
-  string u;
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-
-  UMS_Data::OptionValue_ptr opt = NULL;
-
-  // To parse the object serialized
-  if (!parseEmfObject(std::string(std::string(u)), opt)) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
-  }
-
-  res += (mmap.find(VISHNU_CONFIGURE_DEFAULT_OPTION))->second;
-
-  u = opt->getOptionName();
-  if (u.compare("") != 0) {
-    res += " ";
-    res += u;
-  }
-  u = opt->getValue();
-  if (u.compare("") != 0) {
-    res += " ";
-    res += u;
-  }
-
-  if (opt != NULL) {
-    delete opt;
-  }
-
-  return res;
-}
-
-string
-UMSMapper::decodeConfOp(vector<unsigned int> separator, const string& msg) {
-  string res = string("");
-  string u;
-  res += (mmap.find(VISHNU_CONFIGURE_OPTION))->second;
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-
-  UMS_Data::OptionValue_ptr opt = NULL;
-
-  // To parse the object serialized
-  if (!parseEmfObject(std::string(std::string(u)), opt)) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
-  }
-
-  u = opt->getOptionName();
-  if (u.compare("") != 0) {
-    res += " ";
-    res += u;
-  }
-  u = opt->getValue();
-  if (u.compare("") != 0) {
-    res += " ";
-    res += u;
-  }
-
-  if (opt != NULL) {
-    delete opt;
-  }
-
-  return res;
-}
-
-
-string
 UMSMapper::getU(string serial) {
   string res = string("");
   string tmp;
@@ -1141,7 +1028,7 @@ UMSMapper::getU(string serial) {
   UMS_Data::User_ptr user = NULL;
 
   // To parse the object serialized
-  if (!parseEmfObject(std::string(std::string(serial)), user)) {
+  if (! parseEmfObject(std::string(std::string(serial)), user)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 

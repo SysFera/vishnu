@@ -438,69 +438,6 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListMachineOptionsEClass->getEStructuralFeatures().push_back(
             m_ListMachineOptions__machineId);
 
-    // Configuration
-    m_ConfigurationEClass = new ::ecore::EClass();
-    m_ConfigurationEClass->setClassifierID(CONFIGURATION);
-    m_ConfigurationEClass->setEPackage(this);
-    getEClassifiers().push_back(m_ConfigurationEClass);
-    m_Configuration__filePath = new ::ecore::EAttribute();
-    m_Configuration__filePath->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::CONFIGURATION__FILEPATH);
-    m_ConfigurationEClass->getEStructuralFeatures().push_back(
-            m_Configuration__filePath);
-    m_Configuration__listConfUsers = new ::ecore::EReference();
-    m_Configuration__listConfUsers->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFUSERS);
-    m_ConfigurationEClass->getEStructuralFeatures().push_back(
-            m_Configuration__listConfUsers);
-    m_Configuration__listConfMachines = new ::ecore::EReference();
-    m_Configuration__listConfMachines->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFMACHINES);
-    m_ConfigurationEClass->getEStructuralFeatures().push_back(
-            m_Configuration__listConfMachines);
-    m_Configuration__listConfLocalAccounts = new ::ecore::EReference();
-    m_Configuration__listConfLocalAccounts->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFLOCALACCOUNTS);
-    m_ConfigurationEClass->getEStructuralFeatures().push_back(
-            m_Configuration__listConfLocalAccounts);
-    m_Configuration__ListConfAuthSystems = new ::ecore::EReference();
-    m_Configuration__ListConfAuthSystems->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHSYSTEMS);
-    m_ConfigurationEClass->getEStructuralFeatures().push_back(
-            m_Configuration__ListConfAuthSystems);
-    m_Configuration__ListConfAuthAccounts = new ::ecore::EReference();
-    m_Configuration__ListConfAuthAccounts->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::CONFIGURATION__LISTCONFAUTHACCOUNTS);
-    m_ConfigurationEClass->getEStructuralFeatures().push_back(
-            m_Configuration__ListConfAuthAccounts);
-
-    // OptionValue
-    m_OptionValueEClass = new ::ecore::EClass();
-    m_OptionValueEClass->setClassifierID(OPTIONVALUE);
-    m_OptionValueEClass->setEPackage(this);
-    getEClassifiers().push_back(m_OptionValueEClass);
-    m_OptionValue__optionName = new ::ecore::EAttribute();
-    m_OptionValue__optionName->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::OPTIONVALUE__OPTIONNAME);
-    m_OptionValueEClass->getEStructuralFeatures().push_back(
-            m_OptionValue__optionName);
-    m_OptionValue__value = new ::ecore::EAttribute();
-    m_OptionValue__value->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::OPTIONVALUE__VALUE);
-    m_OptionValueEClass->getEStructuralFeatures().push_back(
-            m_OptionValue__value);
-
-    // ListOptionsValues
-    m_ListOptionsValuesEClass = new ::ecore::EClass();
-    m_ListOptionsValuesEClass->setClassifierID(LISTOPTIONSVALUES);
-    m_ListOptionsValuesEClass->setEPackage(this);
-    getEClassifiers().push_back(m_ListOptionsValuesEClass);
-    m_ListOptionsValues__optionValues = new ::ecore::EReference();
-    m_ListOptionsValues__optionValues->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::LISTOPTIONSVALUES__OPTIONVALUES);
-    m_ListOptionsValuesEClass->getEStructuralFeatures().push_back(
-            m_ListOptionsValues__optionValues);
-
     // ListOptOptions
     m_ListOptOptionsEClass = new ::ecore::EClass();
     m_ListOptOptionsEClass->setClassifierID(LISTOPTOPTIONS);
@@ -1119,7 +1056,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_User__lastname->setOrdered(true);
     m_User__privilege->setEType(m_PrivilegeTypeEEnum);
     m_User__privilege->setName("privilege");
-    m_User__privilege->setDefaultValueLiteral("0");
+    m_User__privilege->setDefaultValueLiteral("-1");
     m_User__privilege->setLowerBound(0);
     m_User__privilege->setUpperBound(1);
     m_User__privilege->setTransient(false);
@@ -1699,138 +1636,6 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListMachineOptions__machineId->setUnique(true);
     m_ListMachineOptions__machineId->setDerived(false);
     m_ListMachineOptions__machineId->setOrdered(true);
-    // Configuration
-    m_ConfigurationEClass->setName("Configuration");
-    m_ConfigurationEClass->setAbstract(false);
-    m_ConfigurationEClass->setInterface(false);
-    m_Configuration__filePath->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Configuration__filePath->setName("filePath");
-    m_Configuration__filePath->setDefaultValueLiteral("");
-    m_Configuration__filePath->setLowerBound(0);
-    m_Configuration__filePath->setUpperBound(1);
-    m_Configuration__filePath->setTransient(false);
-    m_Configuration__filePath->setVolatile(false);
-    m_Configuration__filePath->setChangeable(true);
-    m_Configuration__filePath->setUnsettable(false);
-    m_Configuration__filePath->setID(false);
-    m_Configuration__filePath->setUnique(true);
-    m_Configuration__filePath->setDerived(false);
-    m_Configuration__filePath->setOrdered(true);
-    m_Configuration__listConfUsers->setEType(m_UserEClass);
-    m_Configuration__listConfUsers->setName("listConfUsers");
-    m_Configuration__listConfUsers->setDefaultValueLiteral("");
-    m_Configuration__listConfUsers->setLowerBound(0);
-    m_Configuration__listConfUsers->setUpperBound(-1);
-    m_Configuration__listConfUsers->setTransient(false);
-    m_Configuration__listConfUsers->setVolatile(false);
-    m_Configuration__listConfUsers->setChangeable(true);
-    m_Configuration__listConfUsers->setContainment(true);
-    m_Configuration__listConfUsers->setResolveProxies(true);
-    m_Configuration__listConfUsers->setUnique(true);
-    m_Configuration__listConfUsers->setDerived(false);
-    m_Configuration__listConfUsers->setOrdered(true);
-    m_Configuration__listConfMachines->setEType(m_MachineEClass);
-    m_Configuration__listConfMachines->setName("listConfMachines");
-    m_Configuration__listConfMachines->setDefaultValueLiteral("");
-    m_Configuration__listConfMachines->setLowerBound(0);
-    m_Configuration__listConfMachines->setUpperBound(-1);
-    m_Configuration__listConfMachines->setTransient(false);
-    m_Configuration__listConfMachines->setVolatile(false);
-    m_Configuration__listConfMachines->setChangeable(true);
-    m_Configuration__listConfMachines->setContainment(true);
-    m_Configuration__listConfMachines->setResolveProxies(true);
-    m_Configuration__listConfMachines->setUnique(true);
-    m_Configuration__listConfMachines->setDerived(false);
-    m_Configuration__listConfMachines->setOrdered(true);
-    m_Configuration__listConfLocalAccounts->setEType(m_LocalAccountEClass);
-    m_Configuration__listConfLocalAccounts->setName("listConfLocalAccounts");
-    m_Configuration__listConfLocalAccounts->setDefaultValueLiteral("");
-    m_Configuration__listConfLocalAccounts->setLowerBound(0);
-    m_Configuration__listConfLocalAccounts->setUpperBound(-1);
-    m_Configuration__listConfLocalAccounts->setTransient(false);
-    m_Configuration__listConfLocalAccounts->setVolatile(false);
-    m_Configuration__listConfLocalAccounts->setChangeable(true);
-    m_Configuration__listConfLocalAccounts->setContainment(true);
-    m_Configuration__listConfLocalAccounts->setResolveProxies(true);
-    m_Configuration__listConfLocalAccounts->setUnique(true);
-    m_Configuration__listConfLocalAccounts->setDerived(false);
-    m_Configuration__listConfLocalAccounts->setOrdered(true);
-    m_Configuration__ListConfAuthSystems->setEType(m_AuthSystemEClass);
-    m_Configuration__ListConfAuthSystems->setName("ListConfAuthSystems");
-    m_Configuration__ListConfAuthSystems->setDefaultValueLiteral("");
-    m_Configuration__ListConfAuthSystems->setLowerBound(0);
-    m_Configuration__ListConfAuthSystems->setUpperBound(-1);
-    m_Configuration__ListConfAuthSystems->setTransient(false);
-    m_Configuration__ListConfAuthSystems->setVolatile(false);
-    m_Configuration__ListConfAuthSystems->setChangeable(true);
-    m_Configuration__ListConfAuthSystems->setContainment(true);
-    m_Configuration__ListConfAuthSystems->setResolveProxies(true);
-    m_Configuration__ListConfAuthSystems->setUnique(true);
-    m_Configuration__ListConfAuthSystems->setDerived(false);
-    m_Configuration__ListConfAuthSystems->setOrdered(true);
-    m_Configuration__ListConfAuthAccounts->setEType(m_AuthAccountEClass);
-    m_Configuration__ListConfAuthAccounts->setName("ListConfAuthAccounts");
-    m_Configuration__ListConfAuthAccounts->setDefaultValueLiteral("");
-    m_Configuration__ListConfAuthAccounts->setLowerBound(0);
-    m_Configuration__ListConfAuthAccounts->setUpperBound(-1);
-    m_Configuration__ListConfAuthAccounts->setTransient(false);
-    m_Configuration__ListConfAuthAccounts->setVolatile(false);
-    m_Configuration__ListConfAuthAccounts->setChangeable(true);
-    m_Configuration__ListConfAuthAccounts->setContainment(true);
-    m_Configuration__ListConfAuthAccounts->setResolveProxies(true);
-    m_Configuration__ListConfAuthAccounts->setUnique(true);
-    m_Configuration__ListConfAuthAccounts->setDerived(false);
-    m_Configuration__ListConfAuthAccounts->setOrdered(true);
-    // OptionValue
-    m_OptionValueEClass->setName("OptionValue");
-    m_OptionValueEClass->setAbstract(false);
-    m_OptionValueEClass->setInterface(false);
-    m_OptionValue__optionName->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_OptionValue__optionName->setName("optionName");
-    m_OptionValue__optionName->setDefaultValueLiteral("" "");
-    m_OptionValue__optionName->setLowerBound(1);
-    m_OptionValue__optionName->setUpperBound(1);
-    m_OptionValue__optionName->setTransient(false);
-    m_OptionValue__optionName->setVolatile(false);
-    m_OptionValue__optionName->setChangeable(true);
-    m_OptionValue__optionName->setUnsettable(false);
-    m_OptionValue__optionName->setID(false);
-    m_OptionValue__optionName->setUnique(true);
-    m_OptionValue__optionName->setDerived(false);
-    m_OptionValue__optionName->setOrdered(true);
-    m_OptionValue__value->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_OptionValue__value->setName("value");
-    m_OptionValue__value->setDefaultValueLiteral("");
-    m_OptionValue__value->setLowerBound(1);
-    m_OptionValue__value->setUpperBound(1);
-    m_OptionValue__value->setTransient(false);
-    m_OptionValue__value->setVolatile(false);
-    m_OptionValue__value->setChangeable(true);
-    m_OptionValue__value->setUnsettable(false);
-    m_OptionValue__value->setID(false);
-    m_OptionValue__value->setUnique(true);
-    m_OptionValue__value->setDerived(false);
-    m_OptionValue__value->setOrdered(true);
-    // ListOptionsValues
-    m_ListOptionsValuesEClass->setName("ListOptionsValues");
-    m_ListOptionsValuesEClass->setAbstract(false);
-    m_ListOptionsValuesEClass->setInterface(false);
-    m_ListOptionsValues__optionValues->setEType(m_OptionValueEClass);
-    m_ListOptionsValues__optionValues->setName("optionValues");
-    m_ListOptionsValues__optionValues->setDefaultValueLiteral("");
-    m_ListOptionsValues__optionValues->setLowerBound(0);
-    m_ListOptionsValues__optionValues->setUpperBound(-1);
-    m_ListOptionsValues__optionValues->setTransient(false);
-    m_ListOptionsValues__optionValues->setVolatile(false);
-    m_ListOptionsValues__optionValues->setChangeable(true);
-    m_ListOptionsValues__optionValues->setContainment(true);
-    m_ListOptionsValues__optionValues->setResolveProxies(true);
-    m_ListOptionsValues__optionValues->setUnique(true);
-    m_ListOptionsValues__optionValues->setDerived(false);
-    m_ListOptionsValues__optionValues->setOrdered(true);
     // ListOptOptions
     m_ListOptOptionsEClass->setName("ListOptOptions");
     m_ListOptOptionsEClass->setAbstract(false);
@@ -2495,18 +2300,6 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_ListMachineOptionsEClass;
 }
-::ecore::EClass_ptr UMS_DataPackage::getConfiguration()
-{
-    return m_ConfigurationEClass;
-}
-::ecore::EClass_ptr UMS_DataPackage::getOptionValue()
-{
-    return m_OptionValueEClass;
-}
-::ecore::EClass_ptr UMS_DataPackage::getListOptionsValues()
-{
-    return m_ListOptionsValuesEClass;
-}
 ::ecore::EClass_ptr UMS_DataPackage::getListOptOptions()
 {
     return m_ListOptOptionsEClass;
@@ -2827,42 +2620,6 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EAttribute_ptr UMS_DataPackage::getListMachineOptions__machineId()
 {
     return m_ListMachineOptions__machineId;
-}
-::ecore::EReference_ptr UMS_DataPackage::getConfiguration__listConfUsers()
-{
-    return m_Configuration__listConfUsers;
-}
-::ecore::EReference_ptr UMS_DataPackage::getConfiguration__listConfMachines()
-{
-    return m_Configuration__listConfMachines;
-}
-::ecore::EReference_ptr UMS_DataPackage::getConfiguration__listConfLocalAccounts()
-{
-    return m_Configuration__listConfLocalAccounts;
-}
-::ecore::EReference_ptr UMS_DataPackage::getConfiguration__ListConfAuthSystems()
-{
-    return m_Configuration__ListConfAuthSystems;
-}
-::ecore::EReference_ptr UMS_DataPackage::getConfiguration__ListConfAuthAccounts()
-{
-    return m_Configuration__ListConfAuthAccounts;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getConfiguration__filePath()
-{
-    return m_Configuration__filePath;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getOptionValue__optionName()
-{
-    return m_OptionValue__optionName;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getOptionValue__value()
-{
-    return m_OptionValue__value;
-}
-::ecore::EReference_ptr UMS_DataPackage::getListOptionsValues__optionValues()
-{
-    return m_ListOptionsValues__optionValues;
 }
 ::ecore::EAttribute_ptr UMS_DataPackage::getListOptOptions__listAllDeftValue()
 {

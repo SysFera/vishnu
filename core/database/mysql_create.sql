@@ -5,7 +5,7 @@
 -- Last update          : 24/07/12
 
 
-USE vishnu;
+USE sysferads;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -897,10 +897,10 @@ CREATE TABLE `work` (
 CREATE USER vishnu_user@'%' IDENTIFIED BY 'vishnu_user';
 CREATE USER vishnu_db_admin@localhost IDENTIFIED BY 'vishnu_db_admin';
 
-GRANT ALL ON vishnu TO vishnu_user;
-GRANT ALL ON vishnu TO vishnu_db_admin;
+GRANT ALL ON sysferads TO vishnu_user;
+GRANT ALL ON sysferads TO vishnu_db_admin;
+GRANT SELECT ON sysferads TO "vishnu_db_admin";
 
-GRANT SELECT ON vishnu TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_db_admin";

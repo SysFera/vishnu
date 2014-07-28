@@ -32,7 +32,6 @@ set(ALLCLI
   list_local_accounts
   list_machines
   list_history_cmd
-  list_options
   list_users
   list_sessions
   add_auth_system

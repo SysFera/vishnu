@@ -153,21 +153,6 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand);
  */
 
 
-
-std::ostream&
-operator<<(std::ostream& os,const UMS_Data::OptionValue_ptr& optionValue);
-
-/**
- * \brief Helper function to display a list of options
- * \param os: The output stream in which the list will be printed
- * \param lsOptions: The list to display
- * \return The output stream in which the list of options has been printed
- */
-
-
-std::ostream&
-operator<<(std::ostream& os, UMS_Data::ListOptionsValues& lsOptions);
-
 /**
  * \brief Helper function to display a user
  * \param os: The output stream in which the user will be printed

@@ -35,8 +35,6 @@
 #include <UMS_Data/Machine.hpp>
 #include <UMS_Data/ListMachines.hpp>
 #include <UMS_Data/ListMachineOptions.hpp>
-#include <UMS_Data/OptionValue.hpp>
-#include <UMS_Data/ListOptionsValues.hpp>
 #include <UMS_Data/ListOptOptions.hpp>
 #include <UMS_Data/AuthSystem.hpp>
 #include <UMS_Data/ListAuthSystems.hpp>
@@ -92,10 +90,6 @@ UMS_DataFactory::UMS_DataFactory()
         return createListMachines();
     case UMS_DataPackage::LISTMACHINEOPTIONS:
         return createListMachineOptions();
-    case UMS_DataPackage::OPTIONVALUE:
-        return createOptionValue();
-    case UMS_DataPackage::LISTOPTIONSVALUES:
-        return createListOptionsValues();
     case UMS_DataPackage::LISTOPTOPTIONS:
         return createListOptOptions();
     case UMS_DataPackage::AUTHSYSTEM:
@@ -296,14 +290,6 @@ ListMachines_ptr UMS_DataFactory::createListMachines()
 ListMachineOptions_ptr UMS_DataFactory::createListMachineOptions()
 {
     return new ListMachineOptions();
-}
-OptionValue_ptr UMS_DataFactory::createOptionValue()
-{
-    return new OptionValue();
-}
-ListOptionsValues_ptr UMS_DataFactory::createListOptionsValues()
-{
-    return new ListOptionsValues();
 }
 ListOptOptions_ptr UMS_DataFactory::createListOptOptions()
 {

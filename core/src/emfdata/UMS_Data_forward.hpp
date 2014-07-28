@@ -133,18 +133,6 @@ namespace UMS_Data
     class ListMachineOptions;
     typedef ListMachineOptions* ListMachineOptions_ptr;
 
-    // Configuration
-    class Configuration;
-    typedef Configuration* Configuration_ptr;
-
-    // OptionValue
-    class OptionValue;
-    typedef OptionValue* OptionValue_ptr;
-
-    // ListOptionsValues
-    class ListOptionsValues;
-    typedef ListOptionsValues* ListOptionsValues_ptr;
-
     // ListOptOptions
     class ListOptOptions;
     typedef ListOptOptions* ListOptOptions_ptr;

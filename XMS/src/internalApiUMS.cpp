@@ -932,16 +932,6 @@ solveListLocalAccount(diet_profile_t* pb) {
 }
 
 /**
-* \brief Function to solve the service solveListOptions
-* \param pb is a structure which corresponds to the descriptor of a profile
-* \return raises an exception on error
-*/
-int
-solveListOptions(diet_profile_t* pb) {
-  return solveGenerique<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues, ListOptionsValuesServer>(pb);
-}
-
-/**
 * \brief Function to solve the service solveListHistoryCmd
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error

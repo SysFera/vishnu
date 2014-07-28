@@ -31,7 +31,6 @@ typedef enum {
   LOCALACCOUNTLIST,
   MACHINELIST,
   COMMANDLIST,
-  OPTIONVALUELIST,
   USERLIST,
   RESTORE,
   AUTHSYSTEMCREATE,
@@ -47,36 +46,35 @@ typedef enum {
 } ums_service_t;
 
 static const char* SERVICES_UMS[NB_SRV_UMS] = {
-  "sessionConnect",  // 0
-  "sessionReconnect",  // 1
-  "sessionClose",  // 2
-  "userCreate",  // 3
-  "userUpdate",  // 4
-  "userDelete",  // 5
-  "userPasswordChange",  // 6
-  "userPasswordReset",  // 7
-  "machineCreate",  // 8
-  "machineUpdate",  // 9
-  "machineDelete",  // 10
-  "localAccountCreate",  // 11
-  "localAccountUpdate",  // 12
-  "localAccountDelete",  // 13
-  "sessionList",  // 14
-  "localAccountList",  // 15
-  "machineList",  // 16
-  "commandList",  // 17
-  "optionValueList",  // 18
-  "userList",  // 19
-  "restore",  // 20
-  "authSystemCreate",  // 21
-  "authSystemUpdate",  // 22
-  "authSystemDelete",  // 23
-  "authSystemList",  // 24
-  "authAccountCreate",  // 25
-  "authAccountUpdate",  // 26
-  "authAccountDelete",  // 27
-  "authAccountList",  // 28
-  "exportCommands" // 29
+  "sessionConnect",
+  "sessionReconnect",
+  "sessionClose",
+  "userCreate",
+  "userUpdate",
+  "userDelete",
+  "userPasswordChange",
+  "userPasswordReset",
+  "machineCreate",
+  "machineUpdate",
+  "machineDelete",
+  "localAccountCreate",
+  "localAccountUpdate",
+  "localAccountDelete",
+  "sessionList",
+  "localAccountList",
+  "machineList",
+  "commandList",
+  "userList",
+  "restore",
+  "authSystemCreate",
+  "authSystemUpdate",
+  "authSystemDelete",
+  "authSystemList",
+  "authAccountCreate",
+  "authAccountUpdate",
+  "authAccountDelete",
+  "authAccountList",
+  "exportCommands"
 };
 
 // FIXME: compilation fails without inlining

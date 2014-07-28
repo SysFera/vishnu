@@ -126,16 +126,6 @@ namespace UMS_Data
          */
         virtual ListMachineOptions_ptr createListMachineOptions();
         /**
-         * \brief Creates a new object of class OptionValue
-         * \return Pointer to the object
-         */
-        virtual OptionValue_ptr createOptionValue();
-        /**
-         * \brief Creates a new object of class ListOptionsValues
-         * \return Pointer to the object
-         */
-        virtual ListOptionsValues_ptr createListOptionsValues();
-        /**
          * \brief Creates a new object of class ListOptOptions
          * \return Pointer to the object
          */
