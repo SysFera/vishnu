@@ -438,27 +438,6 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListMachineOptionsEClass->getEStructuralFeatures().push_back(
             m_ListMachineOptions__machineId);
 
-    // ListOptOptions
-    m_ListOptOptionsEClass = new ::ecore::EClass();
-    m_ListOptOptionsEClass->setClassifierID(LISTOPTOPTIONS);
-    m_ListOptOptionsEClass->setEPackage(this);
-    getEClassifiers().push_back(m_ListOptOptionsEClass);
-    m_ListOptOptions__listAllDeftValue = new ::ecore::EAttribute();
-    m_ListOptOptions__listAllDeftValue->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::LISTOPTOPTIONS__LISTALLDEFTVALUE);
-    m_ListOptOptionsEClass->getEStructuralFeatures().push_back(
-            m_ListOptOptions__listAllDeftValue);
-    m_ListOptOptions__userId = new ::ecore::EAttribute();
-    m_ListOptOptions__userId->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::LISTOPTOPTIONS__USERID);
-    m_ListOptOptionsEClass->getEStructuralFeatures().push_back(
-            m_ListOptOptions__userId);
-    m_ListOptOptions__optionName = new ::ecore::EAttribute();
-    m_ListOptOptions__optionName->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::LISTOPTOPTIONS__OPTIONNAME);
-    m_ListOptOptionsEClass->getEStructuralFeatures().push_back(
-            m_ListOptOptions__optionName);
-
     // AuthSystem
     m_AuthSystemEClass = new ::ecore::EClass();
     m_AuthSystemEClass->setClassifierID(AUTHSYSTEM);
@@ -1636,52 +1615,6 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListMachineOptions__machineId->setUnique(true);
     m_ListMachineOptions__machineId->setDerived(false);
     m_ListMachineOptions__machineId->setOrdered(true);
-    // ListOptOptions
-    m_ListOptOptionsEClass->setName("ListOptOptions");
-    m_ListOptOptionsEClass->setAbstract(false);
-    m_ListOptOptionsEClass->setInterface(false);
-    m_ListOptOptions__listAllDeftValue->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
-    m_ListOptOptions__listAllDeftValue->setName("listAllDeftValue");
-    m_ListOptOptions__listAllDeftValue->setDefaultValueLiteral("false");
-    m_ListOptOptions__listAllDeftValue->setLowerBound(0);
-    m_ListOptOptions__listAllDeftValue->setUpperBound(1);
-    m_ListOptOptions__listAllDeftValue->setTransient(false);
-    m_ListOptOptions__listAllDeftValue->setVolatile(false);
-    m_ListOptOptions__listAllDeftValue->setChangeable(true);
-    m_ListOptOptions__listAllDeftValue->setUnsettable(false);
-    m_ListOptOptions__listAllDeftValue->setID(false);
-    m_ListOptOptions__listAllDeftValue->setUnique(true);
-    m_ListOptOptions__listAllDeftValue->setDerived(false);
-    m_ListOptOptions__listAllDeftValue->setOrdered(true);
-    m_ListOptOptions__userId->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_ListOptOptions__userId->setName("userId");
-    m_ListOptOptions__userId->setDefaultValueLiteral("");
-    m_ListOptOptions__userId->setLowerBound(0);
-    m_ListOptOptions__userId->setUpperBound(1);
-    m_ListOptOptions__userId->setTransient(false);
-    m_ListOptOptions__userId->setVolatile(false);
-    m_ListOptOptions__userId->setChangeable(true);
-    m_ListOptOptions__userId->setUnsettable(false);
-    m_ListOptOptions__userId->setID(false);
-    m_ListOptOptions__userId->setUnique(true);
-    m_ListOptOptions__userId->setDerived(false);
-    m_ListOptOptions__userId->setOrdered(true);
-    m_ListOptOptions__optionName->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_ListOptOptions__optionName->setName("optionName");
-    m_ListOptOptions__optionName->setDefaultValueLiteral("" "");
-    m_ListOptOptions__optionName->setLowerBound(0);
-    m_ListOptOptions__optionName->setUpperBound(1);
-    m_ListOptOptions__optionName->setTransient(false);
-    m_ListOptOptions__optionName->setVolatile(false);
-    m_ListOptOptions__optionName->setChangeable(true);
-    m_ListOptOptions__optionName->setUnsettable(false);
-    m_ListOptOptions__optionName->setID(false);
-    m_ListOptOptions__optionName->setUnique(true);
-    m_ListOptOptions__optionName->setDerived(false);
-    m_ListOptOptions__optionName->setOrdered(true);
     // AuthSystem
     m_AuthSystemEClass->setName("AuthSystem");
     m_AuthSystemEClass->setAbstract(false);
@@ -2300,10 +2233,6 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_ListMachineOptionsEClass;
 }
-::ecore::EClass_ptr UMS_DataPackage::getListOptOptions()
-{
-    return m_ListOptOptionsEClass;
-}
 ::ecore::EEnum_ptr UMS_DataPackage::getSessionCloseType()
 {
     return m_SessionCloseTypeEEnum;
@@ -2620,18 +2549,6 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EAttribute_ptr UMS_DataPackage::getListMachineOptions__machineId()
 {
     return m_ListMachineOptions__machineId;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getListOptOptions__listAllDeftValue()
-{
-    return m_ListOptOptions__listAllDeftValue;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getListOptOptions__userId()
-{
-    return m_ListOptOptions__userId;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getListOptOptions__optionName()
-{
-    return m_ListOptOptions__optionName;
 }
 ::ecore::EAttribute_ptr UMS_DataPackage::getAuthSystem__authSystemId()
 {

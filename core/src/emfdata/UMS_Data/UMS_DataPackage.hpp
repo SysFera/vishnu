@@ -134,69 +134,64 @@ namespace UMS_Data
         static const int LISTMACHINES = 16;
 
         /**
-         * \brief Constant for ListOptOptions class
-         */
-        static const int LISTOPTOPTIONS = 17;
-
-        /**
          * \brief Constant for ListSessionOptions class
          */
-        static const int LISTSESSIONOPTIONS = 18;
+        static const int LISTSESSIONOPTIONS = 17;
 
         /**
          * \brief Constant for ListSessions class
          */
-        static const int LISTSESSIONS = 19;
+        static const int LISTSESSIONS = 18;
 
         /**
          * \brief Constant for ListUsers class
          */
-        static const int LISTUSERS = 20;
+        static const int LISTUSERS = 19;
 
         /**
          * \brief Constant for ListUsersOptions class
          */
-        static const int LISTUSERSOPTIONS = 21;
+        static const int LISTUSERSOPTIONS = 20;
 
         /**
          * \brief Constant for LocalAccount class
          */
-        static const int LOCALACCOUNT = 22;
+        static const int LOCALACCOUNT = 21;
 
         /**
          * \brief Constant for Machine class
          */
-        static const int MACHINE = 23;
+        static const int MACHINE = 22;
 
         /**
          * \brief Constant for PrivilegeType class
          */
-        static const int PRIVILEGETYPE = 24;
+        static const int PRIVILEGETYPE = 23;
 
         /**
          * \brief Constant for Session class
          */
-        static const int SESSION = 25;
+        static const int SESSION = 24;
 
         /**
          * \brief Constant for SessionCloseType class
          */
-        static const int SESSIONCLOSETYPE = 26;
+        static const int SESSIONCLOSETYPE = 25;
 
         /**
          * \brief Constant for StatusType class
          */
-        static const int STATUSTYPE = 27;
+        static const int STATUSTYPE = 26;
 
         /**
          * \brief Constant for User class
          */
-        static const int USER = 28;
+        static const int USER = 27;
 
         /**
          * \brief Constant for Version class
          */
-        static const int VERSION = 29;
+        static const int VERSION = 28;
 
         /**
          * \brief Constant for CONNECTOPTIONS__CLOSEPOLICY feature
@@ -529,144 +524,129 @@ namespace UMS_Data
         static const int LISTMACHINEOPTIONS__MACHINEID = 65;
 
         /**
-         * \brief Constant for LISTOPTOPTIONS__LISTALLDEFTVALUE feature
-         */
-        static const int LISTOPTOPTIONS__LISTALLDEFTVALUE = 66;
-
-        /**
-         * \brief Constant for LISTOPTOPTIONS__USERID feature
-         */
-        static const int LISTOPTOPTIONS__USERID = 67;
-
-        /**
-         * \brief Constant for LISTOPTOPTIONS__OPTIONNAME feature
-         */
-        static const int LISTOPTOPTIONS__OPTIONNAME = 68;
-
-        /**
          * \brief Constant for AUTHSYSTEM__AUTHSYSTEMID feature
          */
-        static const int AUTHSYSTEM__AUTHSYSTEMID = 69;
+        static const int AUTHSYSTEM__AUTHSYSTEMID = 66;
 
         /**
          * \brief Constant for AUTHSYSTEM__NAME feature
          */
-        static const int AUTHSYSTEM__NAME = 70;
+        static const int AUTHSYSTEM__NAME = 67;
 
         /**
          * \brief Constant for AUTHSYSTEM__URI feature
          */
-        static const int AUTHSYSTEM__URI = 71;
+        static const int AUTHSYSTEM__URI = 68;
 
         /**
          * \brief Constant for AUTHSYSTEM__AUTHLOGIN feature
          */
-        static const int AUTHSYSTEM__AUTHLOGIN = 72;
+        static const int AUTHSYSTEM__AUTHLOGIN = 69;
 
         /**
          * \brief Constant for AUTHSYSTEM__AUTHPASSWORD feature
          */
-        static const int AUTHSYSTEM__AUTHPASSWORD = 73;
+        static const int AUTHSYSTEM__AUTHPASSWORD = 70;
 
         /**
          * \brief Constant for AUTHSYSTEM__USERPASSWORDENCRYPTION feature
          */
-        static const int AUTHSYSTEM__USERPASSWORDENCRYPTION = 74;
+        static const int AUTHSYSTEM__USERPASSWORDENCRYPTION = 71;
 
         /**
          * \brief Constant for AUTHSYSTEM__TYPE feature
          */
-        static const int AUTHSYSTEM__TYPE = 75;
+        static const int AUTHSYSTEM__TYPE = 72;
 
         /**
          * \brief Constant for AUTHSYSTEM__STATUS feature
          */
-        static const int AUTHSYSTEM__STATUS = 76;
+        static const int AUTHSYSTEM__STATUS = 73;
 
         /**
          * \brief Constant for AUTHSYSTEM__LDAPBASE feature
          */
-        static const int AUTHSYSTEM__LDAPBASE = 77;
+        static const int AUTHSYSTEM__LDAPBASE = 74;
 
         /**
          * \brief Constant for LISTAUTHSYSTEMS__AUTHSYSTEMS feature
          */
-        static const int LISTAUTHSYSTEMS__AUTHSYSTEMS = 78;
+        static const int LISTAUTHSYSTEMS__AUTHSYSTEMS = 75;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS feature
          */
-        static const int LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS = 79;
+        static const int LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS = 76;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__LISTFULLINFO feature
          */
-        static const int LISTAUTHSYSOPTIONS__LISTFULLINFO = 80;
+        static const int LISTAUTHSYSOPTIONS__LISTFULLINFO = 77;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__USERID feature
          */
-        static const int LISTAUTHSYSOPTIONS__USERID = 81;
+        static const int LISTAUTHSYSOPTIONS__USERID = 78;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__AUTHSYSTEMID feature
          */
-        static const int LISTAUTHSYSOPTIONS__AUTHSYSTEMID = 82;
+        static const int LISTAUTHSYSOPTIONS__AUTHSYSTEMID = 79;
 
         /**
          * \brief Constant for AUTHACCOUNT__AUTHSYSTEMID feature
          */
-        static const int AUTHACCOUNT__AUTHSYSTEMID = 83;
+        static const int AUTHACCOUNT__AUTHSYSTEMID = 80;
 
         /**
          * \brief Constant for AUTHACCOUNT__USERID feature
          */
-        static const int AUTHACCOUNT__USERID = 84;
+        static const int AUTHACCOUNT__USERID = 81;
 
         /**
          * \brief Constant for AUTHACCOUNT__ACLOGIN feature
          */
-        static const int AUTHACCOUNT__ACLOGIN = 85;
+        static const int AUTHACCOUNT__ACLOGIN = 82;
 
         /**
          * \brief Constant for LISTAUTHACCOUNTS__AUTHACCOUNTS feature
          */
-        static const int LISTAUTHACCOUNTS__AUTHACCOUNTS = 86;
+        static const int LISTAUTHACCOUNTS__AUTHACCOUNTS = 83;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__LISTALL feature
          */
-        static const int LISTAUTHACCOPTIONS__LISTALL = 87;
+        static const int LISTAUTHACCOPTIONS__LISTALL = 84;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__USERID feature
          */
-        static const int LISTAUTHACCOPTIONS__USERID = 88;
+        static const int LISTAUTHACCOPTIONS__USERID = 85;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__AUTHSYSTEMID feature
          */
-        static const int LISTAUTHACCOPTIONS__AUTHSYSTEMID = 89;
+        static const int LISTAUTHACCOPTIONS__AUTHSYSTEMID = 86;
 
         /**
          * \brief Constant for VERSION__MAJOR feature
          */
-        static const int VERSION__MAJOR = 90;
+        static const int VERSION__MAJOR = 87;
 
         /**
          * \brief Constant for VERSION__MINOR feature
          */
-        static const int VERSION__MINOR = 91;
+        static const int VERSION__MINOR = 88;
 
         /**
          * \brief Constant for VERSION__PATCH feature
          */
-        static const int VERSION__PATCH = 92;
+        static const int VERSION__PATCH = 89;
 
         /**
          * \brief Constant for VERSION__STRINGFORMAT feature
          */
-        static const int VERSION__STRINGFORMAT = 93;
+        static const int VERSION__STRINGFORMAT = 90;
 
         // EClassifiers methods
 
@@ -765,12 +745,6 @@ namespace UMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getListMachineOptions();
-
-        /**
-         * \brief Returns the reflective object for class ListOptOptions
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EClass_ptr getListOptOptions();
 
         /**
          * \brief Returns the reflective object for class SessionCloseType
@@ -1255,24 +1229,6 @@ namespace UMS_Data
         virtual ::ecore::EAttribute_ptr getListMachineOptions__machineId();
 
         /**
-         * \brief Returns the reflective object for feature listAllDeftValue of class ListOptOptions
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getListOptOptions__listAllDeftValue();
-
-        /**
-         * \brief Returns the reflective object for feature userId of class ListOptOptions
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getListOptOptions__userId();
-
-        /**
-         * \brief Returns the reflective object for feature optionName of class ListOptOptions
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getListOptOptions__optionName();
-
-        /**
          * \brief Returns the reflective object for feature authSystemId of class AuthSystem
          * \return A pointer to the reflective object
          */
@@ -1513,11 +1469,6 @@ namespace UMS_Data
          * \brief The instance for the class ListMachineOptions
          */
         ::ecore::EClass_ptr m_ListMachineOptionsEClass;
-
-        /**
-         * \brief The instance for the class ListOptOptions
-         */
-        ::ecore::EClass_ptr m_ListOptOptionsEClass;
 
         /**
          * \brief The instance for the class AuthSystem
@@ -1920,21 +1871,6 @@ namespace UMS_Data
          * \brief The instance for the feature machineId of class ListMachineOptions
          */
         ::ecore::EAttribute_ptr m_ListMachineOptions__machineId;
-
-        /**
-         * \brief The instance for the feature listAllDeftValue of class ListOptOptions
-         */
-        ::ecore::EAttribute_ptr m_ListOptOptions__listAllDeftValue;
-
-        /**
-         * \brief The instance for the feature userId of class ListOptOptions
-         */
-        ::ecore::EAttribute_ptr m_ListOptOptions__userId;
-
-        /**
-         * \brief The instance for the feature optionName of class ListOptOptions
-         */
-        ::ecore::EAttribute_ptr m_ListOptOptions__optionName;
 
         /**
          * \brief The instance for the feature authSystemId of class AuthSystem

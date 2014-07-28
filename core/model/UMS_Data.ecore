@@ -460,28 +460,6 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListOptOptions" instanceTypeName="ListOptOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAllDeftValue" eType="ecore:EDataType Ecore.ecore#//EBoolean"
-        defaultValueLiteral="false">
-      <eAnnotations source="Description">
-        <details key="content" value="is an option for listing all default option values defined by VISHNU administrator"/>
-        <details key="shortOption" value="a"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="is an admin option for listing the options of a specific user"/>
-        <details key="shortOption" value="u"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description">
-        <details key="content" value=" allows the user to get the value of a specific option identified by its name  "/>
-        <details key="shortOption" value="n"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SessionCloseType" instanceTypeName="SessionCloseType">
     <eAnnotations source="Description">
       <details key="content" value="The SessionCloseType is an option for closing session automatically"/>

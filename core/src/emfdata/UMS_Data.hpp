@@ -43,7 +43,6 @@
 #include "UMS_Data/Machine.hpp"
 #include "UMS_Data/ListMachines.hpp"
 #include "UMS_Data/ListMachineOptions.hpp"
-#include "UMS_Data/ListOptOptions.hpp"
 #include "UMS_Data/AuthSystem.hpp"
 #include "UMS_Data/ListAuthSystems.hpp"
 #include "UMS_Data/ListAuthSysOptions.hpp"
