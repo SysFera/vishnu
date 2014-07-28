@@ -292,7 +292,7 @@ vishnu::getVishnuCounter(IdType type) {
     case AUTH:
       table="authsystem";
       fields=" (status) ";
-      val = " (0) ";
+      val = boost::str(boost::format(" (%1%) ") % vishnu::STATUS_UNDEFINED);
       primary="numauthsystemid";
       break;
     case WORK:

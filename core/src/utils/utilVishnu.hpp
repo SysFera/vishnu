@@ -40,7 +40,7 @@ namespace vishnu {
   static const std::string UMSMAPPERNAME = "UMS";
   static const std::string TMSMAPPERNAME = "TMS";
   static const std::string FMSMAPPERNAME = "FMS";
-  static const int PASSWORD_MAX_SIZE = 8;
+  static const int PASSWORD_MAX_SIZE = 128;
   static const int PASSWORD_MIN_SIZE = 6;
   static const int DEFAUT_TIMEOUT = 10;
 

@@ -189,21 +189,21 @@ UserServer::update(UMS_Data::User *user) {
         if (updateDataProvided) {
           sqlquery.append((boost::format(" WHERE userid = '%1%'"
                                          " AND status != %2%;"
-                                         )%mdatabaseVishnu->escapeData(user->getUserId()) %convertToString(vishnu::STATUS_DELETED)).str());
+                                         )% mdatabaseVishnu->escapeData(user->getUserId()) %convertToString(vishnu::STATUS_DELETED)).str());
           mdatabaseVishnu->process(sqlquery);
 
           // close the current user sessions if the user account has been locked
           if (closeAccount) {
-            sqlquery = (boost::format("UPDATE vsession"
-                                      " SET state='%1%'"
-                                      " WHERE sessionkey IN (SELECT sessionkey"
-                                      "   FROM (SELECT users_numuserid, STATE FROM vsession) AS sessioninfo, users"
-                                      "   WHERE sessioninfo.users_numuserid=users.numuserid"
-                                      "   AND users.userid='%2%' AND sessioninfo.state='%3%');"
-                                      )
-                        %convertToString(vishnu::SESSION_CLOSED)
-                        %mdatabaseVishnu->escapeData(user->getUserId())
-                        %convertToString(vishnu::SESSION_ACTIVE)).str();
+            sqlquery = boost::str(boost::format("UPDATE vsession"
+                                                " SET state='%1%'"
+                                                " WHERE sessionkey IN (SELECT sessionkey"
+                                                "   FROM (SELECT users_numuserid, STATE FROM vsession) AS sessioninfo, users"
+                                                "   WHERE sessioninfo.users_numuserid=users.numuserid"
+                                                "   AND users.userid='%2%' AND sessioninfo.state='%3%');"
+                                                )
+                                  % convertToString(vishnu::SESSION_CLOSED)
+                                  % mdatabaseVishnu->escapeData(user->getUserId())
+                                  % convertToString(vishnu::SESSION_ACTIVE));
             mdatabaseVishnu->process(sqlquery);
           }
         }
@@ -228,13 +228,12 @@ int
 UserServer::deleteUser(UMS_Data::User user) {
   user.setStatus(vishnu::STATUS_DELETED);
   int ret = update(&user);
-  if (ret == 0){
+  if (ret == 0) {
     std::string req = mdatabaseVishnu->getRequest(VR_UPDATE_ACCOUNT_WITH_USERS);
-    std::string sqlUpdate = (boost::format(req)
-                             %vishnu::STATUS_DELETED
-                             %mdatabaseVishnu->escapeData(user.getUserId())
-                             ).str();
-    return mdatabaseVishnu->process(sqlUpdate.c_str());
+    std::string sqlUpdate = boost::str(boost::format(req)
+                                       % vishnu::STATUS_DELETED
+                                       % mdatabaseVishnu->escapeData(user.getUserId()));
+    return mdatabaseVishnu->process(sqlUpdate);
   }
   return ret;
 }//END: deleteUser(UMS_Data::User user)
@@ -245,37 +244,26 @@ UserServer::deleteUser(UMS_Data::User user) {
  * \return raises an exception on error
  */
 int
-UserServer::changePassword(std::string newPassword) {
-  std::string sqlChangePwd;
-  std::string sqlUpdatePwdState;
-  //the flagForChangePwd is set to true to avoid the password state checking
+UserServer::changePassword(const std::string& newPassword) {
 
   //If the user exist
   if (isAuthenticate(true)) {
     //If the identifiers used for the connection are a global VISHNU identifiers registered on UMS database
-    if (!getAttribut("where userid='"+mdatabaseVishnu->escapeData(muser.getUserId())+"'", "numuserid").empty()) {
-      //Encrypt the password with the global userId as a salt
-      newPassword = vishnu::cryptPassword(muser.getUserId(), newPassword);
+    if (! getAttribut("WHERE userid='"+mdatabaseVishnu->escapeData(muser.getUserId())+"'", "numuserid").empty()) {
 
-      //sql code to change the user password
-      sqlChangePwd = (boost::format("UPDATE users SET pwd='%1%'"
-                                    " WHERE userid='%2%' AND pwd='%3%' AND status !=%4%;"
-                                    )
-                      %mdatabaseVishnu->escapeData(newPassword)
-                      %mdatabaseVishnu->escapeData(muser.getUserId())
-                      %mdatabaseVishnu->escapeData(muser.getPassword())
-                      %convertToString(vishnu::STATUS_DELETED)
-                      ).str();
+      //sql code to change the user password and set passwordstate to active
+      std::string sqlQuery = boost::str(boost::format("UPDATE users SET pwd='%1%'"
+                                                      " WHERE userid='%2%' AND pwd='%3%' AND status != %4%;"
+                                                      "UPDATE users SET passwordstate=%5% "
+                                                      " WHERE userid='%2%' AND pwd='%1%' AND status != %4%;"
+                                                      )
+                                        % mdatabaseVishnu->escapeData( vishnu::cryptPassword(muser.getUserId(), newPassword) )
+                                        % mdatabaseVishnu->escapeData(muser.getUserId())
+                                        % mdatabaseVishnu->escapeData(muser.getPassword())
+                                        % vishnu::STATUS_DELETED
+                                        % vishnu::STATUS_ACTIVE);
 
-      //append SQL query to update the passwordstate
-      sqlChangePwd += (boost::format("UPDATE users SET passwordstate=1 "
-                                     " WHERE userid='%1%' AND pwd='%2%' AND status=%3%;"
-                                     )
-                       %mdatabaseVishnu->escapeData(muser.getUserId())
-                       %mdatabaseVishnu->escapeData(newPassword)
-                       %convertToString(vishnu::STATUS_DELETED)).str();
-
-      mdatabaseVishnu->process(sqlChangePwd);
+      mdatabaseVishnu->process(sqlQuery);
 
       //Put the new user's password
       muser.setPassword(newPassword);
@@ -295,59 +283,66 @@ UserServer::changePassword(std::string newPassword) {
  * \return raises an exception on error
  */
 int
-UserServer::resetPassword(UMS_Data::User& user, std::string sendmailScriptPath) {
-  std::string sqlResetPwd;
-  std::string sqlUpdatePwdState;
-  std::string passwordCrypted;
-  std::string pwd;
+UserServer::resetPassword(UMS_Data::User& user, const std::string& sendmailScriptPath) {
 
 
-  //If the user exists
-  if (exist()) {
-    //if the user is an admin
-    if (isAdmin()) {
-      //if the user whose password will be reset exists
-      if (getAttribut("where userid='"+mdatabaseVishnu->escapeData(user.getUserId())+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"'").size() != 0) {
-        //generation of a new password
-        pwd = generatePassword(user.getUserId(), user.getUserId());
-        user.setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
-
-        //to get the password encryptes
-        passwordCrypted = vishnu::cryptPassword(user.getUserId(), user.getPassword());
-
-        //The sql code to reset the password
-        sqlResetPwd = "UPDATE users SET pwd='"+mdatabaseVishnu->escapeData(passwordCrypted)+"' where "
-                      "userid='"+mdatabaseVishnu->escapeData(user.getUserId())+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
-        //sql code to update the passwordstate
-        sqlUpdatePwdState = "UPDATE users SET passwordstate=0 "
-                            "where userid='"+mdatabaseVishnu->escapeData(user.getUserId())+"' and pwd='"+mdatabaseVishnu->escapeData(passwordCrypted)+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
-        //To append the previous sql codes
-        sqlResetPwd.append(sqlUpdatePwdState);
-        //Execution of the sql code on the database
-        mdatabaseVishnu->process(sqlResetPwd.c_str());
-        //to get the email adress of the user
-        std::string email = getAttribut("where userid='"+mdatabaseVishnu->escapeData(user.getUserId())+"' AND status !='"+convertToString(vishnu::STATUS_DELETED)+"'", "email");
-        user.setEmail(email);
-        //Send email
-        std::string emailBody = getMailContent(user, false);
-        sendMailToUser(user, emailBody, "Vishnu message: password reset", sendmailScriptPath);
-      } // End if the user whose password will be reset exists
-      else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_USERID, "You must use a global VISHNU identifier");
-        throw e;
-      }
-    } //END if the user is an admin
-    else {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
-    }
-  } //END if the user exists
-  else {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-    throw e;
+  if (! exist()) {
+    throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
   }
+
+  if (! isAdmin()) {
+    throw UMSVishnuException(ERRCODE_NO_ADMIN);
+  }
+
+  //if the user whose password will be reset exists
+  std::string sqlCondition = boost::str(boost::format("WHERE userid='%1%' AND  status !='%2%'")
+                                        % mdatabaseVishnu->escapeData(user.getUserId())
+                                        % vishnu::STATUS_DELETED);
+  std::string numUser = getAttribut(sqlCondition, "numuserid");
+  if (numUser.empty()) {
+    throw UMSVishnuException (ERRCODE_UNKNOWN_USERID, user.getUserId());
+  }
+
+  //generation of a new password
+  std::string pwd = generatePassword(user.getUserId(), user.getUserId());
+  user.setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
+
+  //to get the password encryptes
+  std::string passwordCrypted = vishnu::cryptPassword(user.getUserId(), user.getPassword());
+
+  //The sql code to reset the password
+  std::string sqlResetPwdQuery = boost::str(boost::format("UPDATE users "
+                                                          " SET pwd='%1%'"
+                                                          "   WHERE userid='%2%'"
+                                                          "   AND status!=%3%;"
+                                                          "UPDATE users "
+                                                          "  SET passwordstate=%5%"
+                                                          "   WHERE userid='%2%'"
+                                                          "     AND pwd='%4%'"
+                                                          "     AND status!=%3%;"
+                                                          )
+                                            % mdatabaseVishnu->escapeData(passwordCrypted)
+                                            % mdatabaseVishnu->escapeData(user.getUserId())
+                                            % vishnu::STATUS_DELETED
+                                            % mdatabaseVishnu->escapeData(passwordCrypted)
+                                            % vishnu::STATUS_LOCKED);
+
+  mdatabaseVishnu->process(sqlResetPwdQuery);
+
+  sqlCondition = boost::str(boost::format("WHERE userid='%1%' AND  status !='%2%'")
+                            % mdatabaseVishnu->escapeData(user.getUserId())
+                            % vishnu::STATUS_DELETED);
+
+  user.setEmail( getAttribut(sqlCondition, "email") );
+
+  //Send email
+  sendMailToUser(user,
+                 getMailContent(user, false),
+                 "SysFeraDS - password reset",
+                 sendmailScriptPath);
+
   return 0;
-}//END: resetPassword(UMS_Data::User user)
+}
 
 /**
  * \brief Destructor
@@ -515,9 +510,9 @@ UserServer::generatePassword(std::string value1, std::string value2) {
 */
 int
 UserServer::sendMailToUser(const UMS_Data::User& user,
-                           std::string content,
-                           std::string subject,
-                           std::string sendmailScriptPath) {
+                           const std::string& content,
+                           const std::string& subject,
+                           const std::string& sendmailScriptPath) {
 
   std::vector<std::string> tokens;
   std::ostringstream command;
@@ -526,7 +521,7 @@ UserServer::sendMailToUser(const UMS_Data::User& user,
   std::string address = user.getEmail();
   //If the address is empty
   if (address.empty()) {
-    throw UserException(ERRCODE_INVALID_MAIL_ADRESS, "Empty email address");
+    throw UMSVishnuException(ERRCODE_INVALID_MAIL_ADRESS, "Empty email address");
   }
 
   //If the script is empty
@@ -667,8 +662,8 @@ UserServer::getUserAccountLogin(const std::string& machineId) {
 void
 UserServer::CheckUserState(bool flagForChangePwd) {
   if (isAttributOk("status", 1)) {
-    if (!flagForChangePwd) {
-      if (!isAttributOk("passwordstate", 1)) {
+    if (! flagForChangePwd) {
+      if (! isAttributOk("passwordstate", 1)) {
         throw UMSVishnuException (ERRCODE_TEMPORARY_PASSWORD);
       }
     }

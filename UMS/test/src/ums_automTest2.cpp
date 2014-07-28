@@ -112,11 +112,11 @@ BOOST_AUTO_TEST_CASE( User_base )
     {
       std::string uid = m_test_ums_admin_vishnu_login;
       std::string pwd = m_test_ums_admin_vishnu_pwd;
-      std::string np;
-      BOOST_CHECK  (connect      (uid, pwd, sess, cop )==0);
-      BOOST_CHECK    (resetPassword(sess.getSessionKey(), uid, np       )==0);
-      BOOST_CHECK    (changePassword(uid, np, pwd       )==0);
-      BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
+      std::string newPwd;
+      BOOST_CHECK  (connect(uid, pwd, sess, cop) == 0);
+      BOOST_CHECK  (resetPassword(sess.getSessionKey(), uid, newPwd) == 0);
+      BOOST_CHECK  (changePassword(uid, newPwd, pwd) ==0 );
+      BOOST_CHECK  (close        (sess.getSessionKey()) == 0);
     }
   }
   
@@ -285,10 +285,10 @@ BOOST_AUTO_TEST_CASE( User_failure )
     
     BOOST_MESSAGE(" Testing reset password bad uid UA2-E"    );
     {
-      std::string np;
+      std::string newPwd;
       BOOST_CHECK  (connect      (uid, pwd  , sess, cop)==0);
       BOOST_CHECK  (addUser(sess.getSessionKey(), *use            )==0);
-      BOOST_CHECK_THROW    (resetPassword(sess.getSessionKey(), "bad", np          ), VishnuException);
+      BOOST_CHECK_THROW    (resetPassword(sess.getSessionKey(), "bad", newPwd          ), VishnuException);
       BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
       BOOST_CHECK  (close        (sess.getSessionKey()                 )==0);
     }

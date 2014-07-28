@@ -2,6 +2,7 @@
 
 #include <map>                          // for map
 #include <utility>                      // for pair
+#include <boost/format.hpp>
 
 
 UserException::UserException():VishnuException(){ initMsg();}
@@ -31,5 +32,5 @@ UserException::getMsg() const{
   if (mp.count(mval)){
     return mp[mval];
   }
-  return "Unknown error code for the User.\n";
+  return boost::str(boost::format("Unknown error code for the User: %1%.\n") % mval);
 }

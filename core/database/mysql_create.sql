@@ -2,31 +2,7 @@
 -- Script name          : mysql_create.sql
 -- Script owner         : SysFera SA
 
--- REVISIONS
--- Revision nb          : 1.0
--- Revision date        : 07/06/11
--- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
--- Revision comment     : release of FMS and IMS modules (VISHNU v1.2.0)
-
--- Revision nb          : 1.3
--- Revision date        : 02/02/12
--- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
--- Revision comment     : Add auth System
-
--- Revision nb          : 1.4
--- Revision date        : 12/07/12
--- Revision author      : Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
--- Revision comment     : Adds support for advanced IO and merging with the WebBoard database
-
--- Revision nb          : 1.5
--- Revision date        : 12/07/12
--- Revision author      : Amine Bsila <amine.bsila@sysfera.com>
--- Revision comment     : Adds the columns vmId and vmIp in the table job
-
--- Revision nb          : 1.6
--- Revision date        : 14/04/13
--- Revision author      : Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
--- Revision comment     : Added column status in tables account
+-- Last update          : 24/07/12
 
 
 USE vishnu;
@@ -507,42 +483,6 @@ CREATE TABLE `notification` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `optionu`
---
-
-DROP TABLE IF EXISTS `optionu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `optionu` (
-  `numoptionid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `defaultvalue` int(11) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `optionid` int(11) DEFAULT NULL,
-  PRIMARY KEY (`numoptionid`)
-) ENGINE=InnoDB AUTO_INCREMENT=501 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `optionvalue`
---
-
-DROP TABLE IF EXISTS `optionvalue`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `optionvalue` (
-  `numoptionvalueid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `optionu_numoptionid` bigint(20) NOT NULL,
-  `users_numuserid` bigint(20) NOT NULL,
-  `value` int(11) DEFAULT NULL,
-  PRIMARY KEY (`numoptionvalueid`),
-  KEY `FKEBDE0A1CBE23B1A5` (`optionu_numoptionid`),
-  KEY `FKEBDE0A1CA63719F2` (`users_numuserid`),
-  CONSTRAINT `FKEBDE0A1CA63719F2` FOREIGN KEY (`users_numuserid`) REFERENCES `users` (`numuserid`) ON DELETE CASCADE,
-  CONSTRAINT `FKEBDE0A1CBE23B1A5` FOREIGN KEY (`optionu_numoptionid`) REFERENCES `optionu` (`numoptionid`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `parameter_value`
 --
 
@@ -887,24 +827,6 @@ CREATE TABLE `users` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `vishnu`
---
-
-DROP TABLE IF EXISTS `vishnu`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `vishnu` (
-  `formatidauth` varchar(255) DEFAULT NULL,
-  `formatidfiletransfer` varchar(255) DEFAULT NULL,
-  `formatidjob` varchar(255) DEFAULT NULL,
-  `formatidmachine` varchar(255) DEFAULT NULL,
-  `formatiduser` varchar(255) DEFAULT NULL,
-  `formatidwork` varchar(255) DEFAULT NULL,
-  `updatefreq` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=378 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `vsession`
 --
 
@@ -982,12 +904,10 @@ GRANT SELECT ON vishnu TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_db_admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON optionu TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON state TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON description TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON vsession TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON account TO "vishnu_db_admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON optionvalue TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON threshold TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON command TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
@@ -1007,12 +927,10 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON vishnu TO vishnu_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_user";
-GRANT SELECT, INSERT, UPDATE, DELETE ON optionu TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON state TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON description TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON vsession TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON account TO "vishnu_user";
-GRANT SELECT, INSERT, UPDATE, DELETE ON optionvalue TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON threshold TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON command TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";

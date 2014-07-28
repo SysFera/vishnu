@@ -77,31 +77,20 @@ BOOST_AUTO_TEST_CASE( Account_base )
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
 
-  BOOST_MESSAGE(" Testing delete local account normal U4.2B"    );
-  {
-    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd , sess, cop)==0);
-    BOOST_CHECK    (deleteLocalAccount(sess.getSessionKey(), use->getUserId() , m_test_ums_user_vishnu_machineid     )==0);
-    BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
-    BOOST_CHECK    (close             (sess.getSessionKey()                )==0);
-  }
-
-
   BOOST_MESSAGE(" Testing normal list local account U4.3B" );
   {
     BOOST_CHECK  (connect         (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    lioa.setAdminListOption(true);
     BOOST_CHECK  (listLocalAccounts(sess.getSessionKey(), *lia, lioa      )==0);
     BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
-    BOOST_CHECK (lia->getAccounts().size()>0);
-
+    BOOST_CHECK  (lia->getAccounts().size()>0);
   }
-
-  // Test list local account mid
-
 
   BOOST_MESSAGE(" Testing normal list local account on a machine U4.3B" );
   BOOST_CHECK  (connect         (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
   lioa.setMachineId(m_test_ums_user_vishnu_machineid);
   lia  = ecoreFactory->createListLocalAccounts();
+  lioa.setAdminListOption(true);
   BOOST_CHECK  (listLocalAccounts(sess.getSessionKey(), *lia, lioa      )==0);
   BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
   BOOST_CHECK (lia->getAccounts().size()>0);
@@ -109,6 +98,13 @@ BOOST_AUTO_TEST_CASE( Account_base )
     BOOST_CHECK((lia->getAccounts()[0]->getMachineId()).compare(m_test_ums_user_vishnu_machineid) == 0);
   }
 
+  BOOST_MESSAGE(" Testing delete local account normal U4.2B"    );
+  {
+    BOOST_CHECK    (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd , sess, cop)==0);
+    BOOST_CHECK    (deleteLocalAccount(sess.getSessionKey(), use->getUserId() , m_test_ums_user_vishnu_machineid )==0);
+    BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
+    BOOST_CHECK    (close             (sess.getSessionKey()                )==0);
+  }
 }
 
 
@@ -197,7 +193,7 @@ BOOST_AUTO_TEST_CASE( Account_failure )
   BOOST_MESSAGE(" Testing delete local account bad uid U4.2E"    );
   {
     BOOST_CHECK  (connect           (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd  , sess, cop)==0);
-    BOOST_CHECK_THROW      (deleteLocalAccount(sess.getSessionKey(), "bad", m_test_ums_user_vishnu_machineid     ), VishnuException);
+    BOOST_CHECK_THROW      (deleteLocalAccount(sess.getSessionKey(), "bad", m_test_ums_admin_vishnu_login     ), VishnuException);
     BOOST_CHECK    (close             (sess.getSessionKey()                 )==0);
   }
 

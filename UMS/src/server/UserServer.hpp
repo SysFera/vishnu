@@ -71,7 +71,7 @@ public:
    * \return raises an exception on error
    */
   int
-  changePassword(std::string newPassword);
+  changePassword(const std::string& newPassword);
   /**
    * \brief Function to change VISHNU user password
    * \param user The user data structure
@@ -79,7 +79,7 @@ public:
    * \return raises an exception on error
    */
   int
-  resetPassword(UMS_Data::User& user, std::string sendmailScriptPath);
+  resetPassword(UMS_Data::User& user, const std::string& sendmailScriptPath);
   /**
    * \brief Destructor
    */
@@ -198,9 +198,9 @@ private:
    */
   int
   sendMailToUser(const UMS_Data::User& user,
-                 std::string content,
-                 std::string subject,
-                 std::string sendmailScriptPath);
+                 const std::string& content,
+                 const std::string& subject,
+                 const std::string& sendmailScriptPath);
 
   /**
    * \brief Function to get the email content

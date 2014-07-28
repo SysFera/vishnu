@@ -131,7 +131,8 @@ public:
   finish (std::string cmdDescription,
           vishnu::CmdType cmdType,
           vishnu::CmdStatus cmdStatus,
-          std::string newVishnuObjectID = "", bool checkSession=true);
+          const std::string& newVishnuObjectID = "",
+          bool checkSession=true);
 
   private:
   /////////////////////////////////

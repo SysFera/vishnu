@@ -55,8 +55,10 @@ AuthSystemServer::add(void) {
       mauthsystem->setAuthSystemId(vishnu::getObjectId(AUTH, mauthsystem->getName()));
       // To check if the authentication id generated and the name to save do not exist,
       // except the authentication reserved by getObjectId
-      std::string sqlcond = (boost::format("WHERE authsystemid='%1%'"
-                                           " AND status IS NULL")%mdatabaseVishnu->escapeData(mauthsystem->getAuthSystemId())).str();
+      std::string sqlcond = boost::str(boost::format("WHERE authsystemid='%1%'"
+                                                     " AND status = %2%")
+                                       % mdatabaseVishnu->escapeData(mauthsystem->getAuthSystemId())
+                                       % vishnu::STATUS_UNDEFINED);
       if (getAttribut(sqlcond, "count(*)") == "1") {
         mauthsystem->setStatus(vishnu::STATUS_ACTIVE);
         sqlUpdate+="name='"+mdatabaseVishnu->escapeData(mauthsystem->getName())+"',";
@@ -76,7 +78,7 @@ AuthSystemServer::add(void) {
           numAuth = getAttribut("where authsystemid='"+mdatabaseVishnu->escapeData(mauthsystem->getAuthSystemId())+"'");
           std::string sql = (boost::format("INSERT INTO ldapauthsystem (authsystem_authsystemid, ldapbase)"
                                            " VALUES (%1%, '%2%')"
-                               ) % numAuth %mdatabaseVishnu->escapeData(mauthsystem->getLdapBase())).str();
+                                           ) % numAuth %mdatabaseVishnu->escapeData(mauthsystem->getLdapBase())).str();
           mdatabaseVishnu->process(sql);
         }
       } else {
@@ -227,10 +229,10 @@ AuthSystemServer::deleteAuthSystem() {
         std::string sql = (boost::format("UPDATE authsystem"
                                          " SET status=%1%"
                                          " WHERE authsystemid='%2%'"
-                                        )%vishnu::STATUS_DELETED %mdatabaseVishnu->escapeData(mauthsystem->getAuthSystemId())).str();
+                                         )%vishnu::STATUS_DELETED %mdatabaseVishnu->escapeData(mauthsystem->getAuthSystemId())).str();
         mdatabaseVishnu->process(sql);
 
-// Deleting all the auth account when the auth system is deleted
+        // Deleting all the auth account when the auth system is deleted
         std::string req = mdatabaseVishnu->getRequest(VR_UPDATE_AUTHACCOUNT_WITH_AUTHSYSTEM);
         sql = (boost::format(req)
                %vishnu::STATUS_DELETED %mdatabaseVishnu->escapeData(mauthsystem->getAuthSystemId())).str();
@@ -290,7 +292,7 @@ bool
 AuthSystemServer::exist() {
   std::string sqlcond = (boost::format("WHERE authsystemid = '%1%'"
                                        " AND status != %2%"
-                                      )%mdatabaseVishnu->escapeData(mauthsystem->getAuthSystemId()) %vishnu::STATUS_DELETED).str();
+                                       )%mdatabaseVishnu->escapeData(mauthsystem->getAuthSystemId()) %vishnu::STATUS_DELETED).str();
   return (!getAttribut(sqlcond, "numauthsystemid").empty());
 }
 

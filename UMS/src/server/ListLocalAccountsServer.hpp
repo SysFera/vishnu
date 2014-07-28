@@ -55,16 +55,16 @@ public:
     size_t machineIdSize = options->getMachineId().size();
     bool isListAll = options->isAdminListOption();
 
-    if ((!userServer.isAdmin()) && (userIdSize!=0 || isListAll)) {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
+    if (! userServer.isAdmin()
+        && (userIdSize != 0 || isListAll)) {
+      throw UMSVishnuException(ERRCODE_NO_ADMIN);
     }
 
-    if(!isListAll) {
+    if(! isListAll) {
       addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
     }
     //The admin option
-    if(userIdSize!=0) {
+    if (userIdSize != 0) {
       //To check if the user id is correct
       checkUserId(options->getUserId());
 
@@ -72,11 +72,11 @@ public:
       addOptionRequest("userid", options->getUserId(), sqlRequest);
     }
 
-    if(machineIdSize!=0) {
+    if (machineIdSize != 0) {
       //To check if the machine id is correct
       checkMachineId(options->getMachineId());
 
-      if(!isListAll && userIdSize==0) {
+      if (! isListAll && userIdSize == 0) {
         sqlRequest=sqlListofLocalAccountInitial;
         addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
       }
@@ -92,18 +92,18 @@ public:
    */
   UMS_Data::ListLocalAccounts* list(UMS_Data::ListLocalAccOptions_ptr option)
   {
-    std::string sqlListofLocalAccount = (boost::format("SELECT machineid, userid, aclogin, home"
-                                                       " FROM account, machine, users"
-                                                       " WHERE account.machine_nummachineid=machine.nummachineid"
-                                                       " AND account.users_numuserid=users.numuserid"
-                                                       " AND users.status=%1%"
-                                                       " AND machine.status=%1%"
-                                                       " AND account.status=%1%"
-                                                       )%vishnu::STATUS_ACTIVE).str();
+    std::string sqlListofLocalAccount = boost::str(boost::format("SELECT machineid, userid, aclogin, home"
+                                                                 " FROM account, machine, users"
+                                                                 " WHERE account.machine_nummachineid=machine.nummachineid"
+                                                                 " AND account.users_numuserid=users.numuserid"
+                                                                 " AND users.status=%1%"
+                                                                 " AND machine.status=%1%"
+                                                                 " AND account.status=%1%"
+                                                                 ) % vishnu::STATUS_ACTIVE);
 
 
-    std::vector<std::string>::iterator ii;
-    std::vector<std::string> results;
+    std::vector<std::string>::iterator dbResultIter;
+    std::vector<std::string> dbResults;
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListLocalAccounts();
 
@@ -120,23 +120,21 @@ public:
       boost::scoped_ptr<DatabaseResult> ListofLocalAccount (mdatabaseInstance->getResult(sqlListofLocalAccount.c_str()));
       if (ListofLocalAccount->getNbTuples() != 0){
         for (size_t i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
-          results.clear();
-          results = ListofLocalAccount->get(i);
-          ii = results.begin();
+          dbResults.clear();
+          dbResults = ListofLocalAccount->get(i);
+          dbResultIter = dbResults.begin();
 
           UMS_Data::LocalAccount_ptr localAccount = ecoreFactory->createLocalAccount();
-          localAccount->setMachineId(*ii);
-          localAccount->setUserId(*(++ii));
-          localAccount->setAcLogin(*(++ii));
-          localAccount->setHomeDirectory(*(++ii));
+          localAccount->setMachineId(*dbResultIter);
+          localAccount->setUserId(*(++dbResultIter));
+          localAccount->setAcLogin(*(++dbResultIter));
+          localAccount->setHomeDirectory(*(++dbResultIter));
 
           mlistObject->getAccounts().push_back(localAccount);
         }
       }
-    }
-    else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-      throw e;
+    } else {
+      throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
     }
     return mlistObject;
   }

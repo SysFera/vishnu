@@ -51,9 +51,8 @@ public:
   processOptions(UserServer userServer, const UMS_Data::ListUsersOptions_ptr& options, std::string& sqlRequest) {
 
 
-    if(!userServer.isAdmin()) {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
+    if(! userServer.isAdmin()) {
+      throw UMSVishnuException (ERRCODE_NO_ADMIN);
     }
     std::string  userId = options->getUserId();
     if(userId.size()!=0) {
@@ -67,15 +66,17 @@ public:
       //To check if the authSystem identifier is correct
       checkAuthSystemId(authSystemId);
       //addOptionRequest("authsystemid", authSystemId, sqlRequest);
-      std::string luserCmd = (boost::format("SELECT userid "
-                                            " FROM authsystem, users, authaccount "
-                                            " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
-                                            " AND authaccount.users_numuserid=users.numuserid"
-                                            " AND authsystemid='%1%'"
-                                            " AND authsystem.status!=%2%"
-                                            " AND users.status!=%2%"
-                                            " AND authaccount.status!=%2%"
-                                            )%mdatabaseInstance->escapeData(authSystemId) %vishnu::STATUS_DELETED).str();
+      std::string luserCmd = boost::str(boost::format("SELECT userid "
+                                                      " FROM authsystem, users, authaccount "
+                                                      " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
+                                                      " AND authaccount.users_numuserid=users.numuserid"
+                                                      " AND authsystemid='%1%'"
+                                                      " AND authsystem.status!=%2%"
+                                                      " AND users.status!=%2%"
+                                                      " AND authaccount.status!=%2%"
+                                                      )
+                                        % mdatabaseInstance->escapeData(authSystemId)
+                                        % vishnu::STATUS_DELETED);
       sqlRequest.append(" AND userid IN ("+mdatabaseInstance->escapeData(luserCmd)+")");
     }
 
@@ -87,14 +88,8 @@ public:
   * \return raises an exception on error
   */
   UMS_Data::ListUsers* list(UMS_Data::ListUsersOptions_ptr option) {
-    std::string sqlListofUsers = (boost::format("SELECT userid, pwd, firstname, lastname, "
-                                                "       privilege, email, status"
-                                                " FROM users"
-                                                " WHERE not userid='%1%'"
-                                                " AND users.status<>%2%")
-                                  %vishnu::ROOTUSERNAME %vishnu::STATUS_DELETED).str();
 
-    std::vector<std::string>::iterator ii;
+    std::vector<std::string>::iterator dbResultIter;
     std::vector<std::string> results;
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListUsers();
@@ -105,23 +100,42 @@ public:
     //if the user exists
     if (userServer.exist()) {
 
-      processOptions(userServer, option, sqlListofUsers);
-      sqlListofUsers.append(" order by userid");
+      std::string sqlQuery = "";
+      if ( userServer.isAdmin()) {
+        // query all users
+        sqlQuery = boost::str(boost::format(
+                                "SELECT userid, pwd, firstname, lastname, privilege, email, status"
+                                " FROM users"
+                                " WHERE users.status<>%1%") % vishnu::STATUS_DELETED);
+      } else {
+        // dont query admin users
+        sqlQuery = boost::str(boost::format(
+                                "SELECT userid, pwd, firstname, lastname, privilege, email, status"
+                                " FROM users"
+                                " WHERE userid<>'%1%'"
+                                " AND users.status<>%2%") % vishnu::ROOTUSERNAME % vishnu::STATUS_DELETED);
+      }
+
+      processOptions(userServer, option, sqlQuery);
+
+      sqlQuery.append(" ORDER BY userid");
+
       //To get the list of users from the database
-      boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseInstance->getResult(sqlListofUsers.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseInstance->getResult(sqlQuery));
+
       if (ListofUsers->getNbTuples() != 0){
-        for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
+        for (size_t resultIndex = 0; resultIndex < ListofUsers->getNbTuples(); ++resultIndex) {
           results.clear();
-          results = ListofUsers->get(i);
-          ii = results.begin();
+          results = ListofUsers->get(resultIndex);
+          dbResultIter = results.begin();
           UMS_Data::User_ptr user = ecoreFactory->createUser();
-          user->setUserId(*ii);
-          user->setPassword(*(++ii));
-          user->setFirstname(*(++ii));
-          user->setLastname(*(++ii));
-          user->setPrivilege(vishnu::convertToInt(*(++ii)));
-          user->setEmail(*(++ii));
-          user->setStatus(vishnu::convertToInt(*(++ii)));
+          user->setUserId(*dbResultIter);
+          user->setPassword(*(++dbResultIter));
+          user->setFirstname(*(++dbResultIter));
+          user->setLastname(*(++dbResultIter));
+          user->setPrivilege(vishnu::convertToInt(*(++dbResultIter)));
+          user->setEmail(*(++dbResultIter));
+          user->setStatus(vishnu::convertToInt(*(++dbResultIter)));
 
           mlistObject->getUsers().push_back(user);
         }

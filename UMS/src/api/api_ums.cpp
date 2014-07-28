@@ -396,26 +396,22 @@ vishnu::changePassword(const std::string& userId,
                        const std::string& password,
                        const std::string& passwordNew)
 throw(UserException, SystemException) {
-  checkIfTextIsEmpty(passwordNew, "The new password is empty",
-                     ERRCODE_INVALID_PARAM);
-  if (passwordNew.size()<PASSWORD_MIN_SIZE){
+  checkIfTextIsEmpty(passwordNew, "The new password is empty", ERRCODE_INVALID_PARAM);
+  if (passwordNew.size() < PASSWORD_MIN_SIZE){
     throw UMSVishnuException(ERRCODE_INVALID_PARAM,
-                             "The new password is too short, it must be at least 6 characters long");
+                             boost::str(boost::format("The new password is too short, it must be at least %1% characters long") % PASSWORD_MIN_SIZE));
   }
-  if (passwordNew.size()>PASSWORD_MAX_SIZE){
+  if (passwordNew.size() > PASSWORD_MAX_SIZE){
     throw UMSVishnuException(ERRCODE_INVALID_PARAM,
-                             "The new password is too long, it must be at most 8 characters long");
+                             boost::str(boost::format("The new password is too long, it must be at most %1% characters long") % PASSWORD_MAX_SIZE));
   }
-
 
   UMS_Data::User user;
   user.setUserId(userId);
   UserProxy userProxy(user);
 
-  std::string encryptedPassword =
-      vishnu::cryptPassword(userId, password, false);
-  std::string encryptedPasswordNew =
-      vishnu::cryptPassword(userId, passwordNew, false);
+  std::string encryptedPassword = vishnu::cryptPassword(userId, password, false);
+  std::string encryptedPasswordNew = vishnu::cryptPassword(userId, passwordNew, false);
 
   return userProxy.changePassword(encryptedPassword, encryptedPasswordNew);
 }

@@ -476,15 +476,14 @@ solveUserPasswordReset(diet_profile_t* pb) {
     // set success result
     diet_string_set(pb, 0, "success");
     diet_string_set(pb, 1, user.getPassword());
-    // To save the connection
-    sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
+
+    sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS, "", false);
   } catch (VishnuException& ex) {
     try {
-      sessionServer.finish(cmd, UMS, vishnu::CMDFAILED);
+      sessionServer.finish(cmd, UMS, vishnu::CMDFAILED, "", false);
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
-    // set success result
     diet_string_set(pb, 0, "error");
     diet_string_set(pb, 1, ex.what());
   }

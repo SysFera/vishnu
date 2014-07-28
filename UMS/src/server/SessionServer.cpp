@@ -312,7 +312,8 @@ int
 SessionServer::finish(std::string cmdDescription,
                       vishnu::CmdType cmdType,
                       vishnu::CmdStatus cmdStatus,
-                      std::string newVishnuObjectID, bool checkSession) {
+                      const std::string& newVishnuObjectID,
+                      bool checkSession) {
 
   //To save the date of the last connection
   if (checkSession) {
