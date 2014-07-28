@@ -585,10 +585,10 @@ vishnu::getIdFormatTemplate(IdType objectType)
   std::string format = "$CPT";
   switch(objectType) {
     case MACHINE:
-      format = "machine_$CPT";
+      format = "$NAME";
       break;
     case USER:
-      format = "user_$CPT";
+      format = "$NAME";
       break;
     case JOB:
       format = "J_$CPT";
