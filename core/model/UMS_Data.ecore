@@ -460,29 +460,6 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="OptionValue" instanceTypeName="OptionValue">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optionName" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the name of an option"/>
-        <details key="shortOption" value=""/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the value of an option"/>
-        <details key="shortOption" value=""/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListOptionsValues" instanceTypeName="ListOptionsValues">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="optionValues" upperBound="-1"
-        eType="#//OptionValue" containment="true">
-      <eAnnotations source="Description">
-        <details key="content" value="is a list of optionValue objects which encapsulates the optionValue information"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListOptOptions" instanceTypeName="ListOptOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAllDeftValue" eType="ecore:EDataType Ecore.ecore#//EBoolean"
         defaultValueLiteral="false">
