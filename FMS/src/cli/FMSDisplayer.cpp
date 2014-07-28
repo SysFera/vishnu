@@ -12,6 +12,31 @@
 #include <iomanip>
 #include <iostream>
 
+/*
+  Internationalzation, multibyte string, UTF8 and other funny stuffs.
+  If we have to use some emphasis for display, the right method is wide string.
+  The most standard of character set is UTF-8.
+  But, the integration of UTF8 in C++ begins in C++ 11 !
+  C++ can use wide char for compute but for input/output there is no standard.
+  So you can :
+   - use an externel library like ICU
+   - use a framework like QT
+   - use a good operating system like windows
+   - use a prototype library like boost (be carefull to the version and the evolution)
+
+  or you can use C.
+  The usage of multibyte and wide string is normalize since C99.
+
+  The good scenario is :
+   - initialize the locale : setlocale(LC_ALL, "")
+   - convert the multibyte string to wide string with mbstowcs
+   - compute in C with wchar or construct a wstring and compute in C++
+   - convert the wide string to multibyte string with wcstombs
+*/
+#include <locale.h>
+#include <wchar.h>
+#include <stdlib.h>
+
 /**
  * \brief Display a '-' caracter
  * \param size: The number of '-' to diplay
@@ -266,22 +291,33 @@ std::ostream& operator<<(std::ostream& os,  FMS_Data::DirEntryList& dirEntryList
   size_t maxFileSize = std::string("Size").size();
   size_t maxTypeSize = std::string("Type").size();
   size_t maxCreationTimeSize = std::string("CreationTime").size();
+
+  // Buffers for C conversion
+  // THis length is good for most filesystem
+ #define  LG_MAX_FILENAME 255
+  
+  wchar_t buf[LG_MAX_FILENAME];                  // Filename in wide char format
+  char output[LG_MAX_FILENAME*sizeof(wchar_t)];  // Filename un multibyte format
+  size_t lg;                                     // Size of output for a given line
   
   mode_t perms;
-  std::string path;
   std::string owner;
   std::string group;
   std::size_t FileSize;
   std::string type;
   std::string creationTime;
 
+  // For good multibyte conversion, you have to initialize the locale
+  // This iniitialization use the correct define in environment
+  setlocale(LC_ALL, "");
+
   for(unsigned int i = 0; i < dirEntryList.getDirEntries().size(); i++) {
 
     perms = (dirEntryList.getDirEntries().get(i))->getPerms();
     maxPermsSize = std::max(maxPermsSize, ConvertModeToString(perms).size());
 
-    path = (dirEntryList.getDirEntries().get(i))->getPath();
-    maxPathSize = std::max(maxPathSize, path.size());
+    // we compute the size by a conversion in wide char (depens of locale)
+    maxPathSize = std::max(maxPathSize, mbstowcs(buf,((dirEntryList.getDirEntries().get(i))->getPath()).c_str(),LG_MAX_FILENAME));
 
     owner = (dirEntryList.getDirEntries().get(i))->getOwner();
     maxOwnerSize = std::max(maxOwnerSize, owner.size());
@@ -328,11 +364,19 @@ std::ostream& operator<<(std::ostream& os,  FMS_Data::DirEntryList& dirEntryList
   setFill(maxCreationTimeSize, os);
   os << std::endl;
 
-
   for(unsigned int i = 0; i < dirEntryList.getDirEntries().size(); i++) {
     
     perms = (dirEntryList.getDirEntries().get(i))->getPerms();
-    path = (dirEntryList.getDirEntries().get(i))->getPath();
+ 
+    // Conversion in wide char and compute of the real size
+    lg = mbstowcs(buf,((dirEntryList.getDirEntries().get(i))->getPath()).c_str(),LG_MAX_FILENAME);
+ 
+    // Completion with withespace to a fixed size
+    for (unsigned int j = lg; j < maxPathSize + 2; j++)
+      buf[j] = L' ';
+    // and null terminated
+    buf[maxPathSize+2] = 0;
+
     owner = (dirEntryList.getDirEntries().get(i))->getOwner();
     group = (dirEntryList.getDirEntries().get(i))->getGroup();
     FileSize = (dirEntryList.getDirEntries().get(i))->getSize();
@@ -341,7 +385,13 @@ std::ostream& operator<<(std::ostream& os,  FMS_Data::DirEntryList& dirEntryList
     
     
     os << std::setw(maxPermsSize+2) << std::left << ConvertModeToString(perms);
-    os << std::setw(maxPathSize+2) << std::left <<  path;
+
+    // we make the conversion to multibyte string (depends of locale in most case UT8)
+    wcstombs(output,buf,sizeof(output));
+ 
+    // insertion of the string output in the stream
+    os << output;
+ 
     os << std::setw(maxOwnerSize+2) << std::left << owner;
     os << std::setw(maxOwnerSize+2) << std::left << group;
     os << std::setw(maxFileSize+2) << std::left << FileSize;
