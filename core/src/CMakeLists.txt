@@ -82,8 +82,6 @@ set(UMS_Data_SRCS
   emfdata/UMS_Data/ListMachinesImpl.cpp
   emfdata/UMS_Data/ListMachineOptions.cpp
   emfdata/UMS_Data/ListMachineOptionsImpl.cpp
-  emfdata/UMS_Data/ListOptOptions.cpp
-  emfdata/UMS_Data/ListOptOptionsImpl.cpp
   emfdata/UMS_Data/AuthSystem.cpp
   emfdata/UMS_Data/AuthSystemImpl.cpp
   emfdata/UMS_Data/ListAuthSystems.cpp
@@ -121,7 +119,6 @@ set(UMS_Data_HEADERS
   emfdata/UMS_Data/Machine.hpp
   emfdata/UMS_Data/ListMachines.hpp
   emfdata/UMS_Data/ListMachineOptions.hpp
-  emfdata/UMS_Data/ListOptOptions.hpp
   emfdata/UMS_Data/AuthSystem.hpp
   emfdata/UMS_Data/ListAuthSystems.hpp
   emfdata/UMS_Data/ListAuthSysOptions.hpp
