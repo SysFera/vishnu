@@ -55,8 +55,6 @@
 %include "UMS_Data/ListLocalAccOptions.hpp"
 %include "UMS_Data/Machine.hpp"
 %include "UMS_Data/ListMachineOptions.hpp"
-%include "UMS_Data/OptionValue.hpp"
-%include "UMS_Data/ListOptOptions.hpp"
 %include "UMS_Data/AuthAccount.hpp"
 %include "UMS_Data/AuthSystem.hpp"
 %include "UMS_Data/ListAuthSysOptions.hpp"
@@ -100,7 +98,6 @@
 %include "UMS_Data/ListCommands.hpp"
 %include "UMS_Data/ListLocalAccounts.hpp"
 %include "UMS_Data/ListMachines.hpp"
-%include "UMS_Data/ListOptionsValues.hpp"
 %include "TMS_Data/ListJobResults.hpp"
 %include "TMS_Data/ListJobs.hpp"
 %include "TMS_Data/ListProgression.hpp"
@@ -116,7 +113,6 @@
 %template(EMachineList) ::ecorecpp::mapping::EList<::UMS_Data::Machine>;
 %template(ELocalAccList) ::ecorecpp::mapping::EList<::UMS_Data::LocalAccount>;
 %template(ECommandList) ::ecorecpp::mapping::EList<::UMS_Data::Command>;
-%template(EOptionList) ::ecorecpp::mapping::EList<::UMS_Data::OptionValue>;
 %template(EAuthSystemList) ::ecorecpp::mapping::EList<::UMS_Data::AuthSystem>;
 %template(EAuthAccountList) ::ecorecpp::mapping::EList<::UMS_Data::AuthAccount>;
 %template(EJobList) ::ecorecpp::mapping::EList<::TMS_Data::Job>;
@@ -250,7 +246,6 @@ EMFTYPE(Session,UMS_Data,getSessions,ListSessions, listSession, "UMS_Data::Sessi
 EMFTYPE(Machine,UMS_Data,getMachines,ListMachines, listMachine, "UMS_Data::Machine", UMS_DataFactory, createMachine)
 EMFTYPE(LocalAccount,UMS_Data,getAccounts,ListLocalAccounts, listLocalAcc, "UMS_Data::LocalAccount", UMS_DataFactory, createLocalAccount)
 EMFTYPE(Command,UMS_Data,getCommands,ListCommands, listCommands, "UMS_Data::Command", UMS_DataFactory, createCommand)
-EMFTYPE(OptionValue,UMS_Data,getOptionValues,ListOptionsValues, listOptValues, "UMS_Data::OptionValue", UMS_DataFactory, createOptionValue)
 EMFTYPE(AuthSystem,UMS_Data,getAuthSystems,ListAuthSystems, listAuthSys, "UMS_Data::AuthSystem", UMS_DataFactory, createAuthSystem)
 EMFTYPE(AuthAccount,UMS_Data,getAuthAccounts,ListAuthAccounts, listAuthAccounts, "UMS_Data::AuthAccount", UMS_DataFactory, createAuthAccount)
 
