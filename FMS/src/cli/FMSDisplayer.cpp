@@ -343,7 +343,7 @@ std::ostream& operator<<(std::ostream& os,  FMS_Data::DirEntryList& dirEntryList
     os << std::setw(maxPermsSize+2) << std::left << ConvertModeToString(perms);
     os << std::setw(maxPathSize+2) << std::left <<  path;
     os << std::setw(maxOwnerSize+2) << std::left << owner;
-    os << std::setw(maxOwnerSize+2) << std::left << group;
+    os << std::setw(maxGroupSize+2) << std::left << group;
     os << std::setw(maxFileSize+2) << std::left << FileSize;
     os << std::setw(maxTypeSize+2) << std::left << type;
     os << std::setw(maxCreationTimeSize+2) << std::left << creationTime;
