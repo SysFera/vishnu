@@ -74,8 +74,7 @@ UserServer::add(UMS_Data::User*& user, std::string sendmailScriptPath) {
       user->setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
 
       //Generation of userid
-      idUserGenerated = vishnu::getObjectId(USER,
-                                            user->getLastname());
+      idUserGenerated = vishnu::getObjectId(USER, user->getLastname());
 
       user->setUserId(idUserGenerated);
       //To get the password encrypted
