@@ -89,7 +89,8 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
                                        const std::string& srcFilePath,
                                        const std::string& destFilePath)
   : mtransferType(File::undefined),
-    msessionServer(sessionServer) {
+    msessionServer(sessionServer)
+{
   mfileTransfer.setSourceMachineId(srcHost);
   mfileTransfer.setDestinationMachineId(destHost);
   mfileTransfer.setSourceFilePath(srcFilePath);
