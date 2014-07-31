@@ -358,12 +358,11 @@ private:
   void
   waitThread ();
   /**
-   * \brief To get the client machine name and userId from database
-   * \param name to store the client machine name
-   * \param userId to store the userId
+   * @brief return a pair <machineid, userid> corresponding to the user session
+   * @return
    */
-  void
-  getUserInfo(std::string& name, std::string& userId);
+  std::pair<std::string, std::string>
+  getMachineUserPair(void);
   /**
    * \brief acommon add transfer function used by the other add transfer function
    * \param srcUser the source user
@@ -411,11 +410,7 @@ private:
   void
   processOptions(const FMS_Data::StopTransferOptions& options,
                  std::string& sqlRequest);
-  /**
-   * \brief To Update file transfer data
-   */
-  void
-  updateData();
+
   /**
    * \brief To Update file transfer data in database
    * \param status the last execution status
