@@ -106,11 +106,16 @@ FileTransferServer::getMachineUserPair(void)
 
   std::vector<std::string> result;
   std::vector<std::string>::const_iterator iter;
-  std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
+  std::string cond = boost::str(boost::format("WHERE sessionkey='%1%'")
+                                % FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey()));
+  std::string sessionId = msessionServer.getAttribut(cond, "vsessionid");
 
-  std::string sqlTransferRequest="SELECT name, userid,vsessionid from clmachine,users,vsession where vsession.clmachine_numclmachineid=clmachine.numclmachineid  "
-                                 " and vsession.users_numuserid=users.numuserid and "
-                                 "vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
+  std::string sqlTransferRequest=boost::str(boost::format("SELECT name, userid,vsessionid"
+                                                          " FROM clmachine,users,vsession"
+                                                          " WHERE vsession.clmachine_numclmachineid=clmachine.numclmachineid  "
+                                                          "  AND vsession.users_numuserid=users.numuserid "
+                                                          "  AND vsessionid='%1%';")
+                                            % FileTransferServer::getDatabaseInstance()->escapeData(sessionId));
 
   boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
 
