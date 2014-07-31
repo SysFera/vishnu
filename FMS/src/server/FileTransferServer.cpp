@@ -190,24 +190,7 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
   }
 
   FMS_Data::CpFileOptions optionsCopy(options);
-  int timeout (0); //FIXE: get timeout from config
-//  if (options.getTrCommand() == vishnu::UNDEFINED_TRANSFER_MANAGER) {
-//    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
-
-//    std::string query="SELECT users.numuserid,users_numuserid,vsessionid from users,vsession "
-//                      " WHERE vsession.users_numuserid=users.numuserid "
-//                      "  AND vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
-
-//    boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(query));
-
-//    if (dbResult->getNbTuples() != 0) {
-
-//      std::string numuserId= dbResult->getFirstElement();
-//      OptionValueServer optionValueServer;
-//      optionsCopy.setTrCommand(optionValueServer.getOptionValueForUser(numuserId, TRANSFERCMD_OPT));
-//      timeout = optionValueServer.getOptionValueForUser(numuserId, TRANSFER_TIMEOUT_OPT);
-//    }
-//  }
+  int timeout (0); //FIXME: get timeout from config
 
   boost::scoped_ptr<FileTransferCommand> transferManager(
         FileTransferCommand::getTransferManager(optionsCopy, timeout));
