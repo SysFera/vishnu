@@ -96,11 +96,14 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
   mfileTransfer.setDestinationFilePath(destFilePath);
 }
 
+/**
+ * @brief return a pair <machineid, userid> corresponding to the user session
+ * @return
+ */
+std::pair<std::string, std::string>
+FileTransferServer::getMachineUserPair(void)
+{
 
-// To get a user info from the database
-void
-FileTransferServer::getUserInfo(std::string& clientMachineName,
-                                std::string& userId) {
   std::vector<std::string> result;
   std::vector<std::string>::const_iterator iter;
   std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
@@ -111,6 +114,8 @@ FileTransferServer::getUserInfo(std::string& clientMachineName,
 
   boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
 
+  std::string clientMachineName = "";
+  std::string userId = "";
   if (transfer->getNbTuples() != 0) {
     for (size_t i = 0; i< transfer->getNbTuples(); ++i){
       result.clear();
@@ -118,9 +123,10 @@ FileTransferServer::getUserInfo(std::string& clientMachineName,
       iter=result.begin();
       clientMachineName=*(iter);
       userId=*(++iter);
-
     }
   }
+
+  return std::pair<std::string, std::string>(clientMachineName, userId);
 }
 
 // To log data into database
@@ -150,19 +156,6 @@ FileTransferServer::updateDatabaseRecord()
   db->process(sqlUpdate);
 }
 
-// update file transfer data
-void
-FileTransferServer::updateData() {
-
-  std::string clientMachineName;
-  std::string userId;
-
-  getUserInfo(clientMachineName, userId);
-
-  mfileTransfer.setTransferId( vishnu::getObjectId(vishnu::FILETRANSFERT, clientMachineName) );
-  mfileTransfer.setClientMachineId(clientMachineName);
-  mfileTransfer.setUserId(userId);
-}
 
 // To add a new file transfer thread
 int
@@ -173,7 +166,11 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
                                       const std::string& destMachineName,
                                       const FMS_Data::CpFileOptions& options)
 {
-  updateData(); // update datas and get the vishnu transfer id
+  std::pair<std::string, std::string> machineUserPair = getMachineUserPair();
+  mfileTransfer.setTransferId( vishnu::getObjectId(vishnu::FILETRANSFERT, machineUserPair.first) );
+  mfileTransfer.setClientMachineId(machineUserPair.first);
+  mfileTransfer.setUserId(machineUserPair.second);
+
   int direction;
   if (vishnu::ifLocalTransferInvolved(srcMachineName, destMachineName, direction)) {
     mfileTransfer.setStatus(vishnu::TRANSFER_WAITING_CLIENT_RESPONSE);
@@ -192,8 +189,7 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
   FMS_Data::CpFileOptions optionsCopy(options);
   int timeout (0); //FIXME: get timeout from config
 
-  boost::scoped_ptr<FileTransferCommand> transferManager(
-        FileTransferCommand::getTransferManager(optionsCopy, timeout));
+  boost::scoped_ptr<FileTransferCommand> transferManager( FileTransferCommand::getTransferManager(optionsCopy, timeout) );
 
   boost::scoped_ptr<SSHFile> srcFileServer(
         new SSHFile(msessionServer,
@@ -248,15 +244,9 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
 
   // create the thread to perform the copy
   if (mtransferType == File::copy) {
-    mthread = boost::thread(&FileTransferServer::copy,
-                            this,
-                            transferExec,
-                            transferManager->getCommand());
+    mthread = boost::thread(&FileTransferServer::copy, this,transferExec, transferManager->getCommand());
   } else if (mtransferType == File::move) {
-    mthread = boost::thread(&FileTransferServer::move,
-                            this,
-                            transferExec,
-                            transferManager->getCommand());
+    mthread = boost::thread(&FileTransferServer::move, this, transferExec, transferManager->getCommand());
   }
 
   return 0;
