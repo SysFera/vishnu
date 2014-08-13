@@ -49,29 +49,27 @@ public:
   processOptions(UserServer userServer, const UMS_Data::ListSessionOptions_ptr& options, std::string& sqlRequest)
   {
     boost::posix_time::ptime pt;
-    size_t userIdSize = options->getUserId().size();
     bool listAll = options->isAdminListOption();
 
-    if ((!userServer.isAdmin()) && (userIdSize!=0 || listAll)) {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
+    if (! userServer.isAdmin()
+        && (! options->getUserId().empty() || listAll)) {
+      throw UMSVishnuException (ERRCODE_NO_ADMIN);
     }
 
     if(options->getMachineId().size()!=0) {
       //To check if the name of the machine is correct
       checkClientMachineName(options->getMachineId());
 
-      sqlRequest = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout, lastconnect,"
-                   "creation, closure, authid from vsession, users, clmachine where vsession.users_numuserid=users.numuserid"
-                   " and vsession.clmachine_numclmachineid=clmachine.numclmachineid";
+      sqlRequest = "SELECT vsessionid, userid, sessionkey, state, closepolicy, "
+                   "   timeout, lastconnect, creation, closure, authid "
+                   " FROM vsession, users, clmachine "
+                   " WHERE vsession.users_numuseridd=users.numuserid"
+                   " AND vsession.clmachine_numclmachineid=clmachine.numclmachineid";
       addOptionRequest("name", options->getMachineId(), sqlRequest);
     }
 
-    if(userIdSize!=0) {
-      //To check if the user id is correct
-      checkUserId(options->getUserId());
-
-      addOptionRequest("userid", options->getUserId(), sqlRequest);
+    if(! options->getUserId().empty()) {
+      addOptionRequest("users.numuserid", getNumUser(options->getUserId()), sqlRequest);
     } else {
       if(!listAll) {
         addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
@@ -134,51 +132,49 @@ public:
   UMS_Data::ListSessions*
   list(UMS_Data::ListSessionOptions_ptr option)
   {
-    std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout, lastconnect, "
-                                    "creation, closure, authid from vsession, users where vsession.users_numuserid=users.numuserid";
+    std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, "
+                                    "  timeout, lastconnect, creation, closure, authid "
+                                    " FROM vsession, users where vsession.users_numuserid=users.numuserid";
 
-    std::vector<std::string>::iterator ii;
-    std::vector<std::string> results;
+    std::vector<std::string>::iterator dbResultIter;
+    std::vector<std::string> dbResults;
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListSessions();
 
     //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
-    //if the user exists
-    if (userServer.exist()) {
 
-      processOptions(userServer, option, sqlListOfSessions);
-      sqlListOfSessions.append(" order by creation");
-      //To get the list of sessions from the database
-      boost::scoped_ptr<DatabaseResult> ListOfSessions (mdatabaseInstance->getResult(sqlListOfSessions.c_str()));
+    if (! userServer.exist()) {
+      throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
+    }
 
-      if (ListOfSessions->getNbTuples() != 0){
-        for (size_t i = 0; i < ListOfSessions->getNbTuples(); ++i) {
-          results.clear();
-          results = ListOfSessions->get(i);
-          ii = results.begin();
+    processOptions(userServer, option, sqlListOfSessions);
+    sqlListOfSessions.append(" order by creation");
+    //To get the list of sessions from the database
+    boost::scoped_ptr<DatabaseResult> ListOfSessions (mdatabase->getResult(sqlListOfSessions));
 
-          UMS_Data::Session_ptr session = ecoreFactory->createSession();
-          session->setSessionId(*(ii));
-          session->setUserId(*(++ii));
-          session->setSessionKey(*(++ii));
-          session->setStatus(vishnu::convertToInt(*(++ii)));
-          session->setClosePolicy(vishnu::convertToInt(*(++ii)));
-          session->setTimeout(vishnu::convertToInt(*(++ii)));
-          session->setDateLastConnect(convertToTimeType(*(++ii)));
-          session->setDateCreation(convertToTimeType(*(++ii)));
-          session->setDateClosure(convertToTimeType(*(++ii)));
-          session->setAuthenId(*(++ii));
+    if (ListOfSessions->getNbTuples() != 0){
+      for (size_t i = 0; i < ListOfSessions->getNbTuples(); ++i) {
+        dbResults.clear();
+        dbResults = ListOfSessions->get(i);
+        dbResultIter = dbResults.begin();
 
-          mlistObject->getSessions().push_back(session);
-        }
+        UMS_Data::Session_ptr session = ecoreFactory->createSession();
+        session->setSessionId(*(dbResultIter));
+        session->setUserId(*(++dbResultIter));
+        session->setSessionKey(*(++dbResultIter));
+        session->setStatus(vishnu::convertToInt(*(++dbResultIter)));
+        session->setClosePolicy(vishnu::convertToInt(*(++dbResultIter)));
+        session->setTimeout(vishnu::convertToInt(*(++dbResultIter)));
+        session->setDateLastConnect(convertToTimeType(*(++dbResultIter)));
+        session->setDateCreation(convertToTimeType(*(++dbResultIter)));
+        session->setDateClosure(convertToTimeType(*(++dbResultIter)));
+        session->setAuthenId(*(++dbResultIter));
+        mlistObject->getSessions().push_back(session);
       }
     }
-    else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-      throw e;
-    }
+
     return mlistObject;
   }
 
