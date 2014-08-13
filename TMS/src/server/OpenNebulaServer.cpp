@@ -92,12 +92,12 @@ OpenNebulaServer::submit(const std::string& scriptPath,
 
   //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
-  jobPtr->setJobName(returnInputOrDefaultIfEmpty(options.getName(), "PID_"+jobPtr->getBatchJobId()));
+  jobPtr->setName(returnInputOrDefaultIfEmpty(options.getName(), "PID_"+jobPtr->getBatchJobId()));
 
   jobPtr->setOutputPath(mbaseDataDir+"/stdout");
   jobPtr->setErrorPath(mbaseDataDir+"/stderr");
   jobPtr->setNbNodes(1);
-  jobPtr->setOwner(mvmUser);
+  jobPtr->setLocalAccount(mvmUser);
 
   jobSteps.getJobs().push_back(jobPtr);
   return 0;

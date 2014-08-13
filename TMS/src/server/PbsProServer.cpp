@@ -627,22 +627,22 @@ PbsProServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
 
   // Creating job
   job.setBatchJobId(jobid);
-  job.setJobName(name);
-  job.setOwner(owner);
+  job.setName(name);
+  job.setLocalAccount(owner);
   if (state.compare("")!=0) {
     job.setStatus(convertPbsProStateToVishnuState(state));
   } else {
     job.setStatus(0);
   }
 
-  job.setJobQueue(location);
+  job.setQueue(location);
   job.setOutputPath(output);
   job.setErrorPath(error);
 
   if (prio.compare("")!=0) {
-    job.setJobPrio(convertPbsProPrioToVishnuPrio(convertToInt(prio.c_str())));
+    job.setPriority(convertPbsProPrioToVishnuPrio(convertToInt(prio.c_str())));
   } else {
-    job.setJobPrio(100);
+    job.setPriority(100);
   }
 
   if (qtime.compare("")!=0) {
@@ -689,7 +689,7 @@ PbsProServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
     job.setNbNodesAndCpuPerNode("1:1");
   }
 
-  job.setJobWorkingDir(workingDir);
+  job.setWorkingDir(workingDir);
 }
 
 

@@ -21,6 +21,7 @@
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
 #include "constants.hpp"
+#include "utilServer.hpp"
 
 /**
  * \class ListProgressServer
@@ -35,10 +36,9 @@ public:
    */
   ListProgressServer(const std::string& authkey)
     : QueryServer<TMS_Data::ProgressOptions, TMS_Data::ListProgression>(),
-    mcommandName("vishnu_get_job_progress")
+      mcommandName("vishnu_get_job_progress")
   {
-    UserSessionInfo userSessionInfo;
-    vishnu::validateAuthKey(authkey, mdatabaseInstance, userSessionInfo);
+    vishnu::validateAuthKey(authkey, mdatabase, muserSessionInfo);
   }
 
   /**
@@ -59,36 +59,33 @@ public:
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListProgression();
 
-    std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId "
-                             " FROM vsession, job "
-      " WHERE vsession.numsessionid=job.vsession_numsessionid ";
+    std::string query = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId"
+                        " FROM vsession, job"
+                        " WHERE vsession.numsessionid=job.vsession_numsessionid";
 
-    std::string machineId = options->getMachineId();
-    if (!machineId.empty()){
-      checkMachineId(machineId);
-      sqlRequest += "  AND submitMachineId='"+mdatabaseInstance->escapeData(machineId)+"'";
+    if (! options->getMachineId().empty()){
+      query += "  AND job.machine_nummachineid='"+ getNumMachine(options->getMachineId()) +"'";
     }
 
     if (! options->getJobId().empty()) {
       std::string jobId = options->getJobId();
-      sqlRequest.append(" and jobId='"+mdatabaseInstance->escapeData(jobId)+"'");
-      boost::scoped_ptr<DatabaseResult> sqlResult(ServerXMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
-      if(sqlResult->getNbTuples() == 0) {
+      query.append(" AND jobId='"+mdatabase->escapeData(jobId)+"'");
+      boost::scoped_ptr<DatabaseResult> sqlResult(ServerXMS::getInstance()->getDatabaseVishnu()->getResult(query.c_str()));
+      if (sqlResult->getNbTuples() == 0) {
         throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
       }
     } else {
-      sqlRequest.append(" and owner='"+mdatabaseInstance->escapeData(options->getUser())+"'");
+      query.append(" AND owner='"+mdatabase->escapeData(options->getUser())+"'");
     }
 
-    sqlRequest.append("  and status < 5 order by jobId");
+    query.append("  AND status < 5 ORDER BY jobId");
 
-    boost::scoped_ptr<DatabaseResult> sqlResult(ServerXMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
+    boost::scoped_ptr<DatabaseResult> sqlResult(ServerXMS::getInstance()->getDatabaseVishnu()->getResult(query.c_str()));
 
     if (sqlResult->getNbTuples() != 0){
-      for (size_t i = 0; i < sqlResult->getNbTuples(); ++i) {
-
+      for (size_t entryIndex = 0; entryIndex < sqlResult->getNbTuples(); ++entryIndex) {
         results.clear();
-        results = sqlResult->get(i);
+        results = sqlResult->get(entryIndex);
         iter = results.begin();
 
         TMS_Data::Progression_ptr job = ecoreFactory->createProgression();
@@ -168,14 +165,15 @@ public:
 
 private:
 
-  /////////////////////////////////
-  // Attributes
-  /////////////////////////////////
-
   /**
   * \brief The name of the ListProgressServer command line
   */
   std::string mcommandName;
+
+  /**
+   * @brief Information about the user and the session
+   */
+  UserSessionInfo muserSessionInfo;
 };
 
 #endif

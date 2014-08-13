@@ -98,6 +98,15 @@ public:
                               const std::vector<std::string>& ignoredIds=std::vector<std::string>())=0;
 
   /**
+   * @brief Get instance of batch server
+   * @param batchType The batch type
+   * @param version The batch version
+   * @return
+   */
+  static BatchServer*
+  getBatchServer(int batchType, const std::string& version);
+
+  /**
    * \brief Destructor
    */
   virtual ~BatchServer();
