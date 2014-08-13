@@ -4,14 +4,15 @@
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 15/12/10
  */
-#include "MYSQLDatabase.hpp"
-
-#include <boost/scoped_ptr.hpp>
-#include <vector>
 
 #include "SystemException.hpp"
+#include "Logger.hpp"
 #include "utilVishnu.hpp"
 #include "errmsg.h"
+#include "MYSQLDatabase.hpp"
+#include <boost/scoped_ptr.hpp>
+#include <boost/format.hpp>
+#include <vector>
 
 using namespace std;
 using namespace vishnu;
@@ -21,71 +22,59 @@ string dbErrorMsg(MYSQL *conn) {
   return msg != '\0' ? " {" + string(msg) + "}" : "";
 }
 
-int dbErrorNo(MYSQL *conn) {
-  return mysql_errno(conn);
-}
+/**
+ * \brief Function to process the request in the database
+ * \param query The SQL query to process
+ * \param transacId the id of the transaction if one is used
+ * \return A pair<int, int> containing the return code and LAST_INSERT_ID (only useful for insertion). Raises an exception on error
+ */
+std::pair<int, uint64_t>
+MYSQLDatabase::process(const std::string& query, int transacId)
+{
+  std::pair<MYSQL*, int> connectionInfo = getConnectionFromPool(transacId);
 
-int
-MYSQLDatabase::process(string request, int transacId){
-  int reqPos;
-  MYSQL* conn = NULL;
-  if (transacId==-1) {
-    conn = getConnection(reqPos);
-  } else {
-    reqPos = -1;
-    conn = (&(mpool[transacId].mmysql));
-  }
-
-  int res;
-  if (request.empty()) {
-    releaseConnection(reqPos);
+  if (query.empty()) {
+    releaseConnection(connectionInfo.second);
     throw SystemException(ERRCODE_DBERR, "Empty SQL query");
   }
-  // The query must always end with a semicolumn when CLIENT_MULTI_STATEMENTS
-  // option is set
-  if (request.at(request.length()-1) != ';') {
-    request.append(";");
+
+  std::string preparedQuery = query;
+  if (preparedQuery.at(preparedQuery.length()-1) != ';') {
+    preparedQuery.append(";"); // query must end with semicolom ';'
   }
 
-  res=mysql_real_query(conn, request.c_str (), request.length());
-  if (res) {
-    if((dbErrorNo(conn) != CR_SERVER_LOST) && (dbErrorNo(conn) != CR_SERVER_GONE_ERROR)) {
-      throw SystemException(ERRCODE_DBERR, dbErrorMsg(conn));
-    }
-    connectPoolIndex(reqPos);  // try to reinitialise the socket
-    res=mysql_real_query(conn, request.c_str (), request.length());
-    if (res) {
-      // Could not execute the query
-      releaseConnection(reqPos);
-      throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
-    }
+  int rc = mysql_real_query(connectionInfo.first, preparedQuery.c_str(), preparedQuery.length());
+  if (rc != 0) {
+    raiseOnCriticalMysqlError(connectionInfo.first, connectionInfo.second);
+
+    connectPoolIndex(connectionInfo.second);  // try to reinitialise the socket
+    rc = mysql_real_query(connectionInfo.first, preparedQuery.c_str (), preparedQuery.length());
+
+    raiseOnMysqlError(rc, connectionInfo.first, connectionInfo.second);
   }
 
-  // Due to CLIENT_MULTI_STATEMENTS option, results must always be retrieved
-  // process each statement result
+  // Due to CLIENT_MULTI_STATEMENTS option, results must always be retrieved process each statement result
   do {
-    // did current statement return data?
-    MYSQL_RES *result = mysql_store_result(conn);
-    if (result) {
-      // yes; process rows and free the result set
-      mysql_free_result(result);
+    MYSQL_RES* mysqlResultPtr = mysql_store_result(connectionInfo.first);
+    if (mysqlResultPtr) { // did current statement return data?
+      mysql_free_result(mysqlResultPtr);
     } else {
-      // no result set or error
-      if (mysql_field_count(conn) != 0) {
-        // some error occurred
-        releaseConnection(reqPos);
-        throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
+      if (mysql_field_count(connectionInfo.first) != 0) { // some error occurred
+        releaseConnection(connectionInfo.second);
+        throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(connectionInfo.first));
       }
     }
     // more results? -1 = no, >0 = error, 0 = yes (keep looping)
-    if ((res = mysql_next_result(conn)) > 0) {
-      releaseConnection(reqPos);
-      throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
+    rc = mysql_next_result(connectionInfo.first);
+    if (rc > 0) {
+      raiseOnMysqlError(-1, connectionInfo.first, connectionInfo.second);
     }
-  } while (res == 0);
+  } while (rc == 0);
 
-  releaseConnection(reqPos);
-  return SUCCESS;
+  uint64_t lastId = mysql_insert_id(connectionInfo.first);
+  releaseConnection(connectionInfo.second);
+
+  return std::pair<int, uint64_t>(0, lastId);
 }
 /**
  * \brief To make a connection to the database
@@ -96,7 +85,7 @@ MYSQLDatabase::connect(){
   for (unsigned int i=0; i<mconfig.getDbPoolSize();i++) {
     connectPoolIndex(i);
   }
-  return SUCCESS;
+  return 0;
 }
 
 /**
@@ -162,7 +151,7 @@ MYSQLDatabase::disconnect(){
   for (unsigned int i = 0 ; i < mconfig.getDbPoolSize() ; i++) {
     mysql_close (&(mpool[i].mmysql));
   }
-  return SUCCESS;
+  return 0;
 }
 
 
@@ -172,89 +161,81 @@ MYSQLDatabase::disconnect(){
  * \return The result of the latest request
  */
 DatabaseResult*
-MYSQLDatabase::getResult(string request, int transacId) {
-  int reqPos;
-  MYSQL* conn = NULL;
-  int res;
-  if (transacId==-1) {
-    conn = getConnection(reqPos);
-  } else {
-    reqPos = -1;
-    conn = (&(mpool[transacId].mmysql));
-  }
-  // Execute the SQL query
-  if ((res=mysql_real_query(conn, request.c_str (), request.length())) != 0) {
+MYSQLDatabase::getResult(const std::string& request, int transacId) {
 
-    if((dbErrorNo(conn) != CR_SERVER_LOST) && (dbErrorNo(conn) != CR_SERVER_GONE_ERROR)) {
-      throw SystemException(ERRCODE_DBERR, dbErrorMsg(conn));
-    }
-    connectPoolIndex(reqPos);  // try to reinitialise the socket
-    res=mysql_real_query(conn, request.c_str (), request.length());
-    if (res) {
-      releaseConnection(reqPos);
-      throw SystemException(ERRCODE_DBERR, "S-Query error" + dbErrorMsg(conn));
-    }
+  // get connection info
+  std::pair<MYSQL*, int> connectionInfo = getConnectionFromPool(transacId);
+
+  // make query
+  int rc = mysql_real_query(connectionInfo.first, request.c_str (), request.length());
+  if (rc != 0) {
+    raiseOnCriticalMysqlError(connectionInfo.first, connectionInfo.second);
+    connectPoolIndex(connectionInfo.second);  // try to reinitialise the socket
+    rc = mysql_real_query(connectionInfo.first, request.c_str (), request.length());
+    raiseOnMysqlError(rc, connectionInfo.first, connectionInfo.second);
   }
 
-  // Get the result handle (does not fetch data from the server)
-  MYSQL_RES *result = mysql_use_result(conn);
-  if (!result) {
-    releaseConnection(reqPos);
-    throw SystemException(ERRCODE_DBERR, "Cannot get query results" + dbErrorMsg(conn));
+  // check for error
+  MYSQL_RES* mysqlResultPtr = mysql_use_result(connectionInfo.first);
+  if (! mysqlResultPtr) {
+    raiseOnMysqlError(rc, connectionInfo.first, connectionInfo.second);
   }
-  int size = mysql_num_fields(result);
-  // Fetch data rows
+
+  // parse result
+  int size = mysql_num_fields(mysqlResultPtr);
+
+  // Fetch rows data
   MYSQL_ROW row;
   vector<string> rowStr;
   vector<vector<string> > results;
-  while ((row = mysql_fetch_row(result))) {
+  while ((row = mysql_fetch_row(mysqlResultPtr))) {
     rowStr.clear();
     for (unsigned int i=0;i<size;i++){
       rowStr.push_back(string(row[i] ? row[i] : ""));
     }
     results.push_back(rowStr);
   }
+
   // Fetch column names
   MYSQL_FIELD *field;
   vector<string> attributesNames;
-  while((field = mysql_fetch_field( result))) {
+  while((field = mysql_fetch_field( mysqlResultPtr))) {
     attributesNames.push_back(string(field->name));
   }
 
   // Free the result
-  mysql_free_result(result);
+  mysql_free_result(mysqlResultPtr);
 
   // Finalize
-  releaseConnection(reqPos);
+  releaseConnection(connectionInfo.second);
   return new DatabaseResult(results, attributesNames);
 }
 
 
 MYSQL*
 MYSQLDatabase::getConnection(int& id){
-  int i = 0;
+  int poolIndex = 0;
   int locked;
   // Looking for an unused connection (will block until a connection is free)
   while (true) {
     // If the connection is not used
-    if(!mpool[i].mused) {
-      locked = pthread_mutex_trylock(&(mpool[i].mmutex));
+    if (!mpool[poolIndex].mused) {
+      locked = pthread_mutex_trylock(&(mpool[poolIndex].mmutex));
       // If lock fails-> the mutex was taken before trylock call
       if (locked) {
         // Try next connexion
         sleep(2);
         continue;
-      }
-      else {
-        mpool[i].mused=true;
-        id = i;
-        return &(mpool[i].mmysql);
+      } else {
+        mpool[poolIndex].mused=true;
+        id = poolIndex;
+        return &(mpool[poolIndex].mmysql);
       }
     }
-    i++;
+    ++poolIndex;
     // I do not use modulo '%' because i need to be sure i>0
-    if (i==mconfig.getDbPoolSize()) {
-      i=0;
+    if (poolIndex==mconfig.getDbPoolSize()) {
+      poolIndex = 0;
       sleep(10);
     }
   }
@@ -341,7 +322,7 @@ MYSQLDatabase::generateId(string table, string fields, string val, int tid, std:
   vector<string>::iterator iter;
 
   try{
-    process(sqlCommand.c_str(), tid);
+    process(sqlCommand, tid);
     boost::scoped_ptr<DatabaseResult> result(getResult(getcpt.c_str(), tid));
     if (result->getNbTuples()==0) {
       throw SystemException(ERRCODE_DBERR, "Failure generating the id");
@@ -353,11 +334,6 @@ MYSQLDatabase::generateId(string table, string fields, string val, int tid, std:
     throw (e);
   }
   return convertToInt(*iter);
-}
-
-string
-MYSQLDatabase::getRequest(const int key){
-  return mmysqlfact.get(key);
 }
 
 
@@ -378,4 +354,83 @@ MYSQLDatabase::escapeData(const std::string& data)
   releaseConnection(connId);
 
   return std::string(escapedSql, escapedSqlLen);
+}
+
+/**
+ * @brief Return the last inserted id
+ * @param transactionId The transaction id
+ * @param errorMsg OUT old error message in case of error
+ * @return the id or -1 in case of error.
+ */
+int
+MYSQLDatabase::lastInsertedId(int transactionId, std::string& errorMsg)
+{
+  std::string query = boost::str(boost::format("SELECT LAST_INSERT_ID()"));
+  int lastId = -1;
+  try{
+    boost::scoped_ptr<DatabaseResult> dbResult(getResult(query, transactionId));
+    if (dbResult->getNbTuples() != 0) {
+      vector<string> resultList = dbResult->get(0);
+      lastId = convertToInt(*(resultList.begin()));
+    } else {
+      errorMsg = boost::str(boost::format("%1% return %2% tuples") % query % dbResult->getNbTuples());
+    }
+  } catch (VishnuException& ex){
+    errorMsg = std::string(ex.what());
+  }
+  if (lastId < 0) {
+    LOG(boost::str(boost::format("[ERROR] %1%") % errorMsg), LogErr);
+  }
+  return lastId;
+}
+
+
+/**
+ * @brief Get a connection from the pool of connections
+ * @param transaction The id of the related transaction
+ * @return Pair of connection and index in the pool
+ */
+std::pair<MYSQL*, int>
+MYSQLDatabase::getConnectionFromPool(int transaction)
+{
+  std::pair<MYSQL*, int> result;
+  result.first = NULL;
+  if (transaction==-1) {
+    result.first = getConnection(result.second);
+  } else {
+    result.second = -1;
+    result.first = (&(mpool[transaction].mmysql));
+  }
+  return result;
+}
+
+
+/**
+ * @brief Throw exception if the latest query exit with fatal error
+ * @param conn The MYSQL connection pointer
+ * @param poolIndex The index of the connection in the pool
+ */
+void
+MYSQLDatabase::raiseOnCriticalMysqlError(MYSQL* conn, int poolIndex)
+{
+  int ecode = mysql_errno(conn);
+  if (ecode != CR_SERVER_LOST && ecode != CR_SERVER_GONE_ERROR) {
+    releaseConnection(poolIndex);
+    throw SystemException(ERRCODE_DBERR, dbErrorMsg(conn));
+  }
+}
+
+/**
+ * @brief Raise exception if a MySQL call exit with non-zero error code
+ * @param ecode The exit error code
+ * @param conn The MYSQL connection pointer
+ * @param poolIndex The index of the connection in the pool
+ */
+void
+MYSQLDatabase::raiseOnMysqlError(int ecode, MYSQL* conn, int poolIndex)
+{
+  if (ecode != 0) {
+    releaseConnection(poolIndex);
+    throw SystemException(ERRCODE_DBERR, dbErrorMsg(conn));
+  }
 }
