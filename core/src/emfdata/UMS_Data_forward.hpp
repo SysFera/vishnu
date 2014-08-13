@@ -133,10 +133,6 @@ namespace UMS_Data
     class ListMachineOptions;
     typedef ListMachineOptions* ListMachineOptions_ptr;
 
-    // ListOptOptions
-    class ListOptOptions;
-    typedef ListOptOptions* ListOptOptions_ptr;
-
     // AuthSystem
     class AuthSystem;
     typedef AuthSystem* AuthSystem_ptr;
