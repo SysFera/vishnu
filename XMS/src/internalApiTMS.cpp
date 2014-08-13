@@ -92,7 +92,7 @@ solveSubmitJob(diet_profile_t* pb) {
 
 
     std::string jobId = jobServer.submitJob(scriptContent,
-                                            &options,
+                                            & options,
                                             server->getDefaultBatchOption());
 
     diet_string_set(pb,0, "success");
