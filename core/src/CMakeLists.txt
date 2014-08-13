@@ -331,15 +331,13 @@ if(COMPILE_SERVER_UMS OR COMPILE_SERVER_FMS OR COMPILE_SERVER_TMS )
      database/DbConfiguration.cpp
      database/DbFactory.cpp
      database/Database.cpp
-     database/DatabaseResult.cpp
-     database/RequestFactory.cpp)
+     database/DatabaseResult.cpp)
 
   set(utils_server_SRCS utils/utilServer.cpp utils/utilPosix.cpp)
 
   if(MYSQL_FOUND AND ENABLE_MYSQL)
     set(database_SRCS ${database_SRCS}
-       database/MYSQLDatabase.cpp
-       database/MYSQLRequestFactory.cpp)
+       database/MYSQLDatabase.cpp)
     set(DB_LIBS ${DATABASE_LIBS})
     set(DBFACT_COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS} -DUSE_MYSQL")
   endif(MYSQL_FOUND AND ENABLE_MYSQL)
