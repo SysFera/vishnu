@@ -85,7 +85,7 @@ vishnu::convertToLong(const std::string& sval) {
   long value = -1;
   try{
     value = boost::lexical_cast<long>(sval);
-  }catch(...){}
+  } catch(...){}
 
   return value;
 }
