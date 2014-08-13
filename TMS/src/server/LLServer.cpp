@@ -47,19 +47,19 @@ LLServer::submit(const std::string& scriptPath,
                                        % llJobInfo.step_list[step]->id.proc);
     currentJobStepPtr->setBatchJobId(jobStepId);
     currentJobStepPtr->setStatus(convertLLStateToVishnuState(llJobInfo.step_list[step]->status));
-    currentJobStepPtr->setJobName(std::string(llJobInfo.job_name));
+    currentJobStepPtr->setName(std::string(llJobInfo.job_name));
     currentJobStepPtr->setSubmitDate(llJobInfo.step_list[step]->q_date);
     currentJobStepPtr->setEndDate(llJobInfo.step_list[step]->completion_date);
-    currentJobStepPtr->setOwner(std::string(llJobInfo.owner));
-    currentJobStepPtr->setJobQueue(std::string(llJobInfo.step_list[step]->stepclass));
+    currentJobStepPtr->setLocalAccount(std::string(llJobInfo.owner));
+    currentJobStepPtr->setQueue(std::string(llJobInfo.step_list[step]->stepclass));
     currentJobStepPtr->setWallClockLimit(llJobInfo.step_list[step]->limits.soft_wall_clock_limit);
     currentJobStepPtr->setGroupName(std::string(llJobInfo.step_list[step]->group_name));
-    currentJobStepPtr->setJobDescription(std::string(llJobInfo.step_list[step]->comment));
-    currentJobStepPtr->setJobPrio(convertLLPrioToVishnuPrio(llJobInfo.step_list[step]->prio));
+    currentJobStepPtr->setDescription(std::string(llJobInfo.step_list[step]->comment));
+    currentJobStepPtr->setPriority(convertLLPrioToVishnuPrio(llJobInfo.step_list[step]->prio));
     currentJobStepPtr->setMemLimit(llJobInfo.step_list[step]->memory_requested);
     currentJobStepPtr->setNbCpus(llJobInfo.step_list[step]->cpus_per_core);
     currentJobStepPtr->setNbNodes(llJobInfo.step_list[step]->max_processors);
-    currentJobStepPtr->setJobWorkingDir(llJobInfo.step_list[step]->iwd);
+    currentJobStepPtr->setWorkingDir(llJobInfo.step_list[step]->iwd);
     currentJobStepPtr->setOutputPath(boost::str(boost::format("%1%/%2%")
                                                 % llJobInfo.step_list[step]->iwd
                                                 % llJobInfo.step_list[step]->out));
@@ -203,7 +203,7 @@ LLServer::processOptions(const char* scriptPath,
 
     if(options.isSelectQueueAutom()) {
       int node = 0;
-      istringstream isNode;
+      std::istringstream isNode;
       std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
       if(optionNodesValue.empty()) {
         node = vishnu::convertToInt(getLLResourceValue(scriptPath, "node"));
@@ -251,16 +251,16 @@ LLServer::insertOptionLine(const std::string& optionLineToInsert,
   size_t pos = 0;
   size_t posLastDirective = 0;
 
-  while(pos!=string::npos) {
+  while(pos != std::string::npos) {
 
     pos = content.find("#", pos);
-    if(pos!=string::npos) {
+    if(pos != std::string::npos) {
 
       std::string line = content.substr(pos, content.find("\n", pos)-pos);
       pos++;
       size_t pos1 = line.find("#");
       size_t pos2 = line.find("@");
-      if((pos1!=string::npos) && (pos2!=string::npos)) {
+      if((pos1 != std::string::npos) && (pos2 != std::string::npos)) {
         std::string space = line.substr(pos1+1, pos2-pos1-1);
         size_t spaceSize = space.size();
         int i = 0;
@@ -271,7 +271,7 @@ LLServer::insertOptionLine(const std::string& optionLineToInsert,
         if(i==spaceSize) {
           std::string line_tolower(line);
           std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
-          if(line_tolower.find("queue")!=string::npos) {
+          if(line_tolower.find("queue") != std::string::npos) {
             content.insert(posLastDirective, optionLineToInsert);
             pos = pos + optionLineToInsert.size()+1;
           }
@@ -338,29 +338,29 @@ LLServer::getJobState(const std::string& jobId) {
         if(!rc) {
           int res = 0;
           switch(state) {
-          case STATE_NOTQUEUED:
-            res = 1;
-            break;
-          case STATE_PENDING:case STATE_HOLD:
-            res = 2;
-            break;
-          case STATE_IDLE:case STATE_VACATE_PENDING:case STATE_VACATED:case STATE_PREEMPTED:
-          case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:
-            res = 3;
-            break;
-          case STATE_RUNNING:case STATE_STARTING:case STATE_COMPLETE_PENDING:
-            res = 4;
-            break;
-          case STATE_COMPLETED:case STATE_TERMINATED:
-            res = 5;
-            break;
-          case STATE_REJECT_PENDING:case STATE_REMOVE_PENDING:case STATE_REJECTED:
-          case STATE_CANCELED:case STATE_REMOVED:
-            res = 6;
-            break;
-          default:
-            res = 0;
-            break;
+            case STATE_NOTQUEUED:
+              res = 1;
+              break;
+            case STATE_PENDING:case STATE_HOLD:
+              res = 2;
+              break;
+            case STATE_IDLE:case STATE_VACATE_PENDING:case STATE_VACATED:case STATE_PREEMPTED:
+            case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:
+              res = 3;
+              break;
+            case STATE_RUNNING:case STATE_STARTING:case STATE_COMPLETE_PENDING:
+              res = 4;
+              break;
+            case STATE_COMPLETED:case STATE_TERMINATED:
+              res = 5;
+              break;
+            case STATE_REJECT_PENDING:case STATE_REMOVE_PENDING:case STATE_REJECTED:
+            case STATE_CANCELED:case STATE_REMOVED:
+              res = 6;
+              break;
+            default:
+              res = 0;
+              break;
           }
           if (res > 0) {
             return res;
@@ -611,7 +611,7 @@ LLServer::listQueues(const std::string& optQueueName) {
 
     ll_get_data(queryInfos, LL_ClassComment, &classComment);
 
-    string description = std::string(classComment);
+    std::string description = std::string(classComment);
     size_t pos = description.find("\"");
     while(pos!=std::string::npos) {
       description.replace(pos, 1, " ");
@@ -692,16 +692,16 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
           if(!rc)
           {
             switch(state) {
-            case STATE_RUNNING:case STATE_STARTING:
-              run[jclass]++;
-              break;
-            case STATE_IDLE:case STATE_PENDING:case STATE_PREEMPTED:
-            case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:case STATE_HOLD:
-              que[jclass]++;
-              break;
-            default:
-              res = 0;
-              break;
+              case STATE_RUNNING:case STATE_STARTING:
+                run[jclass]++;
+                break;
+              case STATE_IDLE:case STATE_PENDING:case STATE_PREEMPTED:
+              case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:case STATE_HOLD:
+                que[jclass]++;
+                break;
+              default:
+                res = 0;
+                break;
             }
           }
         }
@@ -723,75 +723,75 @@ int
 LLServer::convertLLStateToVishnuState(int state) {
   int res = 0;
   switch(state) {
-  case STATE_IDLE:
-    res = 3;
-    break;
-  case STATE_RUNNING:
-    res = 4;
-    break;
-  case STATE_STARTING:
-    res = 4;
-    break;
-  case STATE_COMPLETE_PENDING:
-    res = 4;
-    break;
-  case STATE_REJECT_PENDING:
-    res = 6;
-    break;
-  case STATE_REMOVE_PENDING:
-    res = 6;
-    break;
-  case STATE_VACATE_PENDING:
-    res = 3;
-    break;
-  case STATE_VACATED:
-    res = 3;
-    break;
-  case STATE_REJECTED:
-    res = 6;
-    break;
-  case STATE_CANCELED:
-    res = 6;
-    break;
-  case STATE_REMOVED:
-    res = 6;
-    break;
-  case STATE_PENDING:
-    res = 2;
-    break;
-  case STATE_PREEMPTED:
-    res = 3;
-    break;
-  case STATE_PREEMPT_PENDING:
-    res = 3;
-    break;
-  case STATE_RESUME_PENDING:
-    res = 3;
-    break;
-  case STATE_COMPLETED:
-    res = 5;
-    break;
-  case STATE_TERMINATED:
-    res = 5;
-    break;
-  case STATE_HOLD:
-    res = 2;
-    break;
-  case STATE_DEFERRED:
-    res = 1;
-    break;
-  case STATE_SUBMISSION_ERR:
-    res = 1;
-    break;
-  case STATE_NOTQUEUED:
-    res = 1;
-    break;
-  case STATE_NOTRUN:
-    res = 1;
-    break;
-  default:
-    res = 5;
-    break;
+    case STATE_IDLE:
+      res = 3;
+      break;
+    case STATE_RUNNING:
+      res = 4;
+      break;
+    case STATE_STARTING:
+      res = 4;
+      break;
+    case STATE_COMPLETE_PENDING:
+      res = 4;
+      break;
+    case STATE_REJECT_PENDING:
+      res = 6;
+      break;
+    case STATE_REMOVE_PENDING:
+      res = 6;
+      break;
+    case STATE_VACATE_PENDING:
+      res = 3;
+      break;
+    case STATE_VACATED:
+      res = 3;
+      break;
+    case STATE_REJECTED:
+      res = 6;
+      break;
+    case STATE_CANCELED:
+      res = 6;
+      break;
+    case STATE_REMOVED:
+      res = 6;
+      break;
+    case STATE_PENDING:
+      res = 2;
+      break;
+    case STATE_PREEMPTED:
+      res = 3;
+      break;
+    case STATE_PREEMPT_PENDING:
+      res = 3;
+      break;
+    case STATE_RESUME_PENDING:
+      res = 3;
+      break;
+    case STATE_COMPLETED:
+      res = 5;
+      break;
+    case STATE_TERMINATED:
+      res = 5;
+      break;
+    case STATE_HOLD:
+      res = 2;
+      break;
+    case STATE_DEFERRED:
+      res = 1;
+      break;
+    case STATE_SUBMISSION_ERR:
+      res = 1;
+      break;
+    case STATE_NOTQUEUED:
+      res = 1;
+      break;
+    case STATE_NOTRUN:
+      res = 1;
+      break;
+    default:
+      res = 5;
+      break;
   }
   return res;
 }
@@ -823,7 +823,7 @@ LLServer::convertLLPrioToVishnuPrio(const int& prio) {
  * \param ignoredIds the list of job ids to ignore
  */
 void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-                              const std::vector<string>& ignoredIds) {
+                              const std::vector<std::string>& ignoredIds) {
 
   LL_element *queryObject;
   LL_element *queryInfos, *step, *credential;
@@ -879,13 +879,13 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
           TMS_Data::Job_ptr job = new TMS_Data::Job();
 
           if(owner!=NULL) {
-            job->setOwner(owner);
+            job->setLocalAccount(owner);
           }
           job->setSubmitDate(submittime);
           job->setEndDate(-1);
 
           ll_get_data(step, LL_StepName, &value);
-          job->setJobName(value);
+          job->setName(value);
 
           ll_get_data(step, LL_StepState, &state);
           job->setStatus(convertLLStateToVishnuState(state));
@@ -897,7 +897,7 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 
 
           ll_get_data(step, LL_StepPriority, &pri);
-          job->setJobPrio(convertLLPrioToVishnuPrio(pri));
+          job->setPriority(convertLLPrioToVishnuPrio(pri));
 
           ll_get_data(step, LL_StepOutputFile, &value);
           job->setOutputPath(value);
@@ -909,13 +909,13 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
           job->setWallClockLimit(wc_time_soft);
 
           ll_get_data(step, LL_StepJobClass, &jclass);
-          job->setJobQueue(jclass);
+          job->setQueue(jclass);
 
           ll_get_data(step, LL_StepLoadLevelerGroup, &value);
           job->setGroupName(value);
 
           ll_get_data(step, LL_StepComment, &value);
-          job->setJobDescription(value);
+          job->setDescription(value);
 
           job->setMemLimit(-1);
 
@@ -930,7 +930,7 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
           }
           //To fill the job working dir
           ll_get_data(step, LL_StepIwd, &value);
-          job->setJobWorkingDir(value);
+          job->setWorkingDir(value);
 
           listOfJobs->getJobs().push_back(job);
         }
@@ -963,13 +963,13 @@ LLServer::getLLResourceValue(const char* file,
   std::string resourceValue;
   std::string LLPrefix = "#@";
   std::string line;
-  ifstream ifile(file);
+  std::ifstream ifile(file);
   if (ifile.is_open()) {
     while (!ifile.eof()) {
       getline(ifile, line);
       std::transform(line.begin(), line.end(), line.begin(), ::tolower);
       size_t pos = line.find('#');
-      if(pos==string::npos) {
+      if (pos == std::string::npos) {
         continue;
       }
       line = line.erase(0, pos);
@@ -988,7 +988,7 @@ LLServer::getLLResourceValue(const char* file,
 
     ifile.close();
   }
-  istringstream cleanResourceValue(resourceValue);
+  std::istringstream cleanResourceValue(resourceValue);
   cleanResourceValue >> resourceValue;
 
   return resourceValue;

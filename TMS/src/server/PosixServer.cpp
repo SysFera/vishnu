@@ -54,16 +54,16 @@ PosixServer::submit(const std::string& scriptPath,
 
   TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
   jobPtr->setStatus(vishnu::STATE_RUNNING);
-  jobPtr->setJobQueue("posix");
+  jobPtr->setQueue("posix");
 
   // If no name give a default job name
   if (options.getName().empty()){
-    jobPtr->setJobName("posix_job");
+    jobPtr->setName("posix_job");
   } else {
-    jobPtr->setJobName(options.getName());
+    jobPtr->setName(options.getName());
   }
 
-  strncpy(op.jobName, jobPtr->getJobName().c_str(), sizeof(op.jobName)-1);
+  strncpy(op.jobName, jobPtr->getName().c_str(), sizeof(op.jobName)-1);
 
   ret = reqSubmit(scriptPath, &resultat, &op);
 

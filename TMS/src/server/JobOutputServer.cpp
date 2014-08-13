@@ -40,15 +40,29 @@ TMS_Data::JobResult
 JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
 
   //To get the output and error path of the job
-  std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, outputDir "
-                           "FROM job "
-                           "WHERE job.jobId='"+mdatabaseInstance->escapeData(jobId)+"' ";
-  std::string machineTmp = options->getStringProperty("machineid");
-  if (! machineTmp.empty()){
-    sqlRequest += "  AND job.submitMachineId='"+mdatabaseInstance->escapeData(machineTmp)+"'" ;
+  std::string query;
+
+  std::string machineId = options->getStringProperty("machineid");
+  if (! machineId.empty()){
+    query = boost::str(
+              boost::format("SELECT outputPath, errorPath, owner, job.status, outputDir "
+                            " FROM job, machine"
+                            " WHERE job.jobId='%1%'"
+                            "   AND machine.machineid='%2%'"
+                            "   AND machine.nummachineid=job.machine_nummachineid;"
+                            )
+              % mdatabaseInstance->escapeData(jobId)
+              % machineId);
+  } else {
+    query = boost::str(
+              boost::format("SELECT outputPath, errorPath, owner, status, outputDir"
+                            " FROM job"
+                            " WHERE job.jobId='%1%';"
+                            )
+              % mdatabaseInstance->escapeData(jobId));
   }
 
-  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(sqlRequest));
+  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(query));
   if(sqlResult->getNbTuples() == 0) {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
@@ -67,21 +81,21 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
   }
 
   switch(status) {
-  case vishnu::STATE_COMPLETED:
-  case vishnu::STATE_DOWNLOADED:
-    break;
-  case vishnu::STATE_CANCELLED:
-  case vishnu::STATE_FAILED:
-    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Can't get output from cancelled or failed jobs");
-    break;
-  case vishnu::STATE_UNDEFINED:
-  case vishnu::STATE_SUBMITTED:
-  case vishnu::STATE_QUEUED:
-  case vishnu::STATE_WAITING:
-  case vishnu::STATE_RUNNING:
-  default:
-    throw TMSVishnuException(ERRCODE_JOB_IS_NOT_TERMINATED);
-    break;
+    case vishnu::STATE_COMPLETED:
+    case vishnu::STATE_DOWNLOADED:
+      break;
+    case vishnu::STATE_CANCELLED:
+    case vishnu::STATE_FAILED:
+      throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Can't get output from cancelled or failed jobs");
+      break;
+    case vishnu::STATE_UNDEFINED:
+    case vishnu::STATE_SUBMITTED:
+    case vishnu::STATE_QUEUED:
+    case vishnu::STATE_WAITING:
+    case vishnu::STATE_RUNNING:
+    default:
+      throw TMSVishnuException(ERRCODE_JOB_IS_NOT_TERMINATED);
+      break;
   }
 
   outputPath = outputPath.substr(outputPath.find(":")+1);
@@ -117,30 +131,33 @@ JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
   std::string sqlQuery;
   if (days <= 0) {
     // Here download only newly completed jobs
-    sqlQuery = (boost::format("SELECT jobId, outputPath, errorPath, outputDir "
-                              "FROM vsession, job "
-                              "WHERE vsession.numsessionid=job.vsession_numsessionid"
-                              "  AND job.owner='%1%'"
-                              "  AND job.submitMachineId='%2%'"
-                              "  AND job.status=%3%"
-                              ) % mdatabaseInstance->escapeData(muserSessionInfo.user_aclogin)
-                % mdatabaseInstance->escapeData(mmachineId)
-                % vishnu::convertToString(vishnu::STATE_COMPLETED)).str();
+    sqlQuery = boost::str(
+                 boost::format("SELECT jobId, outputPath, errorPath, outputDir"
+                               " FROM vsession, job"
+                               " WHERE vsession.numsessionid=job.vsession_numsessionid"
+                               "  AND job.users_numuserid=%1%"
+                               "  AND job.machine_nummachineid=%3%"
+                               "  AND job.status=%2%;"
+                               )
+                 % muserSessionInfo.num_user
+                 % muserSessionInfo.num_machine
+                 % vishnu::STATE_COMPLETED);
   } else {
     // Here also download jobs already downloaded
-    sqlQuery = (boost::format("SELECT jobId, outputPath, errorPath, outputDir "
-                              "FROM vsession, job "
-                              "WHERE vsession.numsessionid=job.vsession_numsessionid"
-                              "  AND submitdate >= DATE_SUB(CURDATE(),INTERVAL %1% DAY)"
-                              "  AND job.owner='%2%'"
-                              "  AND job.submitMachineId='%3%'"
-                              "  AND (job.status=%4% OR job.status=%5%)"
-                              )
-                % vishnu::convertToString(days)
-                % mdatabaseInstance->escapeData(muserSessionInfo.user_aclogin)
-                % mdatabaseInstance->escapeData(mmachineId)
-                % vishnu::convertToString(vishnu::STATE_COMPLETED)
-                % vishnu::convertToString(vishnu::STATE_DOWNLOADED)).str();
+    sqlQuery =  boost::str
+                (boost::format("SELECT jobId, outputPath, errorPath, outputDir"
+                               " FROM vsession, job"
+                               " WHERE vsession.numsessionid=job.vsession_numsessionid"
+                               "  AND job.users_numuserid=%1%"
+                               "  AND job.machine_nummachineid=%2%"
+                               "  AND (job.status=%3% OR job.status=%4%)"
+                               "  AND submitdate >= DATE_SUB(CURDATE(),INTERVAL %5% DAY);"
+                               )
+                 % muserSessionInfo.num_user
+                 % muserSessionInfo.num_machine
+                 % vishnu::STATE_COMPLETED
+                 % vishnu::STATE_DOWNLOADED
+                 % days);
   }
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(sqlQuery.c_str()));
