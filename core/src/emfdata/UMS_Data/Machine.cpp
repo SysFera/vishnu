@@ -31,7 +31,7 @@ using namespace ::UMS_Data;
 
 // Default constructor
 Machine::Machine() :
-    m_machineId(""), m_machineDescription(""), m_status(-1)
+    m_machineId(""), m_description(""), m_status(-1)
 {
 
     /*PROTECTED REGION ID(MachineImpl__MachineImpl) START*/
@@ -77,104 +77,52 @@ void Machine::setMachineId(::ecore::EString const& _machineId)
 #endif
 }
 
-::ecore::EString const& Machine::getName() const
+::ecore::EString const& Machine::getAddress() const
 {
-    return m_name;
+    return m_address;
 }
 
-void Machine::setName(::ecore::EString const& _name)
+void Machine::setAddress(::ecore::EString const& _address)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_name = m_name;
+    ::ecore::EString _old_address = m_address;
 #endif
-    m_name = _name;
+    m_address = _address;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__name(),
-                _old_name,
-                m_name
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__address(),
+                _old_address,
+                m_address
         );
         eNotify(&notification);
     }
 #endif
 }
 
-::ecore::EString const& Machine::getSite() const
+::ecore::EString const& Machine::getDescription() const
 {
-    return m_site;
+    return m_description;
 }
 
-void Machine::setSite(::ecore::EString const& _site)
+void Machine::setDescription(::ecore::EString const& _description)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_site = m_site;
+    ::ecore::EString _old_description = m_description;
 #endif
-    m_site = _site;
+    m_description = _description;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__site(),
-                _old_site,
-                m_site
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-::ecore::EString const& Machine::getMachineDescription() const
-{
-    return m_machineDescription;
-}
-
-void Machine::setMachineDescription(::ecore::EString const& _machineDescription)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_machineDescription = m_machineDescription;
-#endif
-    m_machineDescription = _machineDescription;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__machineDescription(),
-                _old_machineDescription,
-                m_machineDescription
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-::ecore::EString const& Machine::getLanguage() const
-{
-    return m_language;
-}
-
-void Machine::setLanguage(::ecore::EString const& _language)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_language = m_language;
-#endif
-    m_language = _language;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__language(),
-                _old_language,
-                m_language
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__description(),
+                _old_description,
+                m_description
         );
         eNotify(&notification);
     }
@@ -201,32 +149,6 @@ void Machine::setStatus(::UMS_Data::StatusType _status)
                 (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__status(),
                 _old_status,
                 m_status
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-::ecore::EString const& Machine::getSshPublicKey() const
-{
-    return m_sshPublicKey;
-}
-
-void Machine::setSshPublicKey(::ecore::EString const& _sshPublicKey)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_sshPublicKey = m_sshPublicKey;
-#endif
-    m_sshPublicKey = _sshPublicKey;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getMachine__sshPublicKey(),
-                _old_sshPublicKey,
-                m_sshPublicKey
         );
         eNotify(&notification);
     }

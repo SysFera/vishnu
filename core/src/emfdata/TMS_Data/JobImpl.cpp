@@ -61,34 +61,25 @@ void Job::_initialize()
                 m_sessionId);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__SUBMITMACHINEID:
+    case ::TMS_Data::TMS_DataPackage::JOB__MACHINE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_submitMachineId);
+                m_machine);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__SUBMITMACHINENAME:
+    case ::TMS_Data::TMS_DataPackage::JOB__ID:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_submitMachineName);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_id);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBID:
+    case ::TMS_Data::TMS_DataPackage::JOB__NAME:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobId);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_name);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBNAME:
+    case ::TMS_Data::TMS_DataPackage::JOB__PATH:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobName);
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBPATH:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobPath);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_path);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::JOB__OUTPUTPATH:
@@ -103,21 +94,15 @@ void Job::_initialize()
                 m_errorPath);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBPRIO:
-    {
-        ::ecorecpp::mapping::any_traits< ::TMS_Data::JobPriority >::toAny(_any,
-                m_jobPrio);
-    }
-        return _any;
     case ::TMS_Data::TMS_DataPackage::JOB__NBCPUS:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_nbCpus);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBWORKINGDIR:
+    case ::TMS_Data::TMS_DataPackage::JOB__WORKINGDIR:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobWorkingDir);
+                m_workingDir);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::JOB__STATUS:
@@ -138,16 +123,16 @@ void Job::_initialize()
                 m_endDate);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__OWNER:
+    case ::TMS_Data::TMS_DataPackage::JOB__LOCALACCOUNT:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_owner);
+                m_localAccount);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBQUEUE:
+    case ::TMS_Data::TMS_DataPackage::JOB__QUEUE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobQueue);
+                m_queue);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::JOB__WALLCLOCKLIMIT:
@@ -162,10 +147,10 @@ void Job::_initialize()
                 m_groupName);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBDESCRIPTION:
+    case ::TMS_Data::TMS_DataPackage::JOB__DESCRIPTION:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobDescription);
+                m_description);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::JOB__MEMLIMIT:
@@ -230,6 +215,12 @@ void Job::_initialize()
                 m_submitError);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::JOB__PRIORITY:
+    {
+        ::ecorecpp::mapping::any_traits< ::TMS_Data::JobStatus >::toAny(_any,
+                m_priority);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -245,34 +236,28 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_sessionId);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::JOB__SUBMITMACHINEID:
+    case ::TMS_Data::TMS_DataPackage::JOB__MACHINE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_submitMachineId);
+                m_machine);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::JOB__SUBMITMACHINENAME:
+    case ::TMS_Data::TMS_DataPackage::JOB__ID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_submitMachineName);
+                m_id);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBID:
+    case ::TMS_Data::TMS_DataPackage::JOB__NAME:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobId);
+                m_name);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBNAME:
+    case ::TMS_Data::TMS_DataPackage::JOB__PATH:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobName);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBPATH:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobPath);
+                m_path);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::JOB__OUTPUTPATH:
@@ -287,22 +272,16 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_errorPath);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBPRIO:
-    {
-        ::ecorecpp::mapping::any_traits< ::TMS_Data::JobPriority >::fromAny(
-                _newValue, m_jobPrio);
-    }
-        return;
     case ::TMS_Data::TMS_DataPackage::JOB__NBCPUS:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
                 m_nbCpus);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBWORKINGDIR:
+    case ::TMS_Data::TMS_DataPackage::JOB__WORKINGDIR:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobWorkingDir);
+                m_workingDir);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::JOB__STATUS:
@@ -323,16 +302,16 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_endDate);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::JOB__OWNER:
+    case ::TMS_Data::TMS_DataPackage::JOB__LOCALACCOUNT:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_owner);
+                m_localAccount);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBQUEUE:
+    case ::TMS_Data::TMS_DataPackage::JOB__QUEUE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobQueue);
+                m_queue);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::JOB__WALLCLOCKLIMIT:
@@ -347,10 +326,10 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_groupName);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBDESCRIPTION:
+    case ::TMS_Data::TMS_DataPackage::JOB__DESCRIPTION:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobDescription);
+                m_description);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::JOB__MEMLIMIT:
@@ -419,6 +398,12 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_submitError);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::JOB__PRIORITY:
+    {
+        ::ecorecpp::mapping::any_traits< ::TMS_Data::JobStatus >::fromAny(
+                _newValue, m_priority);
+    }
+        return;
 
     }
     throw "Error";
@@ -431,54 +416,48 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::JOB__SESSIONID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_sessionId);
-    case ::TMS_Data::TMS_DataPackage::JOB__SUBMITMACHINEID:
+    case ::TMS_Data::TMS_DataPackage::JOB__MACHINE:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_submitMachineId);
-    case ::TMS_Data::TMS_DataPackage::JOB__SUBMITMACHINENAME:
+                m_machine);
+    case ::TMS_Data::TMS_DataPackage::JOB__ID:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(m_id);
+    case ::TMS_Data::TMS_DataPackage::JOB__NAME:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_submitMachineName);
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBID:
+                m_name);
+    case ::TMS_Data::TMS_DataPackage::JOB__PATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobId);
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBNAME:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobName);
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBPATH:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobPath);
+                m_path);
     case ::TMS_Data::TMS_DataPackage::JOB__OUTPUTPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_outputPath);
     case ::TMS_Data::TMS_DataPackage::JOB__ERRORPATH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_errorPath);
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBPRIO:
-        return m_jobPrio != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__NBCPUS:
         return m_nbCpus != -1;
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBWORKINGDIR:
+    case ::TMS_Data::TMS_DataPackage::JOB__WORKINGDIR:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobWorkingDir);
+                m_workingDir);
     case ::TMS_Data::TMS_DataPackage::JOB__STATUS:
         return m_status != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__SUBMITDATE:
         return m_submitDate != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__ENDDATE:
         return m_endDate != -1;
-    case ::TMS_Data::TMS_DataPackage::JOB__OWNER:
+    case ::TMS_Data::TMS_DataPackage::JOB__LOCALACCOUNT:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_owner);
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBQUEUE:
+                m_localAccount);
+    case ::TMS_Data::TMS_DataPackage::JOB__QUEUE:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobQueue);
+                m_queue);
     case ::TMS_Data::TMS_DataPackage::JOB__WALLCLOCKLIMIT:
         return m_wallClockLimit != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__GROUPNAME:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_groupName);
-    case ::TMS_Data::TMS_DataPackage::JOB__JOBDESCRIPTION:
+    case ::TMS_Data::TMS_DataPackage::JOB__DESCRIPTION:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobDescription);
+                m_description);
     case ::TMS_Data::TMS_DataPackage::JOB__MEMLIMIT:
         return m_memLimit != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__NBNODES:
@@ -505,6 +484,8 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::JOB__SUBMITERROR:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_submitError);
+    case ::TMS_Data::TMS_DataPackage::JOB__PRIORITY:
+        return m_priority != -1;
 
     }
     throw "Error";

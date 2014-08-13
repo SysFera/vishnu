@@ -61,38 +61,22 @@ void Machine::_initialize()
                 m_machineId);
     }
         return _any;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__NAME:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_name);
-    }
-        return _any;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__SITE:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_site);
-    }
-        return _any;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__MACHINEDESCRIPTION:
+    case ::UMS_Data::UMS_DataPackage::MACHINE__ADDRESS:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_machineDescription);
+                m_address);
     }
         return _any;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__LANGUAGE:
+    case ::UMS_Data::UMS_DataPackage::MACHINE__DESCRIPTION:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_language);
+                m_description);
     }
         return _any;
     case ::UMS_Data::UMS_DataPackage::MACHINE__STATUS:
     {
         ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::toAny(_any,
                 m_status);
-    }
-        return _any;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__SSHPUBLICKEY:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_sshPublicKey);
     }
         return _any;
 
@@ -111,40 +95,22 @@ void Machine::eSet(::ecore::EInt _featureID,
                 m_machineId);
     }
         return;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__NAME:
+    case ::UMS_Data::UMS_DataPackage::MACHINE__ADDRESS:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_name);
+                m_address);
     }
         return;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__SITE:
+    case ::UMS_Data::UMS_DataPackage::MACHINE__DESCRIPTION:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_site);
-    }
-        return;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__MACHINEDESCRIPTION:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_machineDescription);
-    }
-        return;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__LANGUAGE:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_language);
+                m_description);
     }
         return;
     case ::UMS_Data::UMS_DataPackage::MACHINE__STATUS:
     {
         ::ecorecpp::mapping::any_traits< ::UMS_Data::StatusType >::fromAny(
                 _newValue, m_status);
-    }
-        return;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__SSHPUBLICKEY:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_sshPublicKey);
     }
         return;
 
@@ -158,22 +124,13 @@ void Machine::eSet(::ecore::EInt _featureID,
     {
     case ::UMS_Data::UMS_DataPackage::MACHINE__MACHINEID:
         return m_machineId != "";
-    case ::UMS_Data::UMS_DataPackage::MACHINE__NAME:
+    case ::UMS_Data::UMS_DataPackage::MACHINE__ADDRESS:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_name);
-    case ::UMS_Data::UMS_DataPackage::MACHINE__SITE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_site);
-    case ::UMS_Data::UMS_DataPackage::MACHINE__MACHINEDESCRIPTION:
-        return m_machineDescription != "";
-    case ::UMS_Data::UMS_DataPackage::MACHINE__LANGUAGE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_language);
+                m_address);
+    case ::UMS_Data::UMS_DataPackage::MACHINE__DESCRIPTION:
+        return m_description != "";
     case ::UMS_Data::UMS_DataPackage::MACHINE__STATUS:
         return m_status != -1;
-    case ::UMS_Data::UMS_DataPackage::MACHINE__SSHPUBLICKEY:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_sshPublicKey);
 
     }
     throw "Error";
