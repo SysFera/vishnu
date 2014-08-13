@@ -481,6 +481,13 @@ private:
   static void
   setSSHCommand(const std::string& sshCommand) {msshCommand=sshCommand;}
 
+  /**
+   * @brief Insert the current transfer info into database
+   * @return void. The transfer id will be recored in the encapsulated transfer object description
+   */
+  void
+  dbSave(void);
+
 };
 
 #endif

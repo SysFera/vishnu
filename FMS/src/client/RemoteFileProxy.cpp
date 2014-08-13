@@ -365,7 +365,7 @@ int
 RemoteFileProxy::transferFile(const std::string& dest,
                               const FMS_Data::CpFileOptions& options,
                               const std::string& serviceName,
-                              FMS_Data::FileTransfer& fileTransfer)
+                              FMS_Data::FileTransfer& transfer)
 {
   std::string destHost = FileProxy::extHost(dest);
   bfs::path destPath(FileProxy::extName(dest));
@@ -400,47 +400,45 @@ RemoteFileProxy::transferFile(const std::string& dest,
   diet_string_get(profile, 1, resultSerialized);
   FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
   parseEmfObject(resultSerialized, fileTransfer_ptr);
-  fileTransfer = *fileTransfer_ptr;
+  transfer = *fileTransfer_ptr;
   delete fileTransfer_ptr;
 
   int direction;
-  if (vishnu::ifLocalTransferInvolved(fileTransfer.getSourceMachineId(),
-                                      fileTransfer.getDestinationMachineId(),
-                                      direction))
+  if (vishnu::ifLocalTransferInvolved(transfer.getSourceMachineId(), transfer.getDestinationMachineId(), direction))
   {
-
-    std::string baseCommand = vishnu::buildTransferBaseCommand(options.getTrCommand(),
-                                                               options.isIsRecursive(),
-                                                               false,
-                                                               0);
+    std::string baseCommand = vishnu::buildTransferCommand(options.getTrCommand(),
+                                                           options.isIsRecursive(),
+                                                           false,
+                                                           0);
     std::string transferCommand = boost::str(boost::format("%1% %2% %3%")
                                              % baseCommand
-                                             % fileTransfer.getSourceFilePath()
-                                             % fileTransfer.getDestinationFilePath());
+                                             % transfer.getSourceFilePath()
+                                             % transfer.getDestinationFilePath());
 
     bool isAsyncTransfer = (serviceName == SERVICES_FMS[REMOTEFILECOPYASYNC]
                             || serviceName == SERVICES_FMS[REMOTEFILEMOVEASYNC]);
 
     std::string errorMsg;
     if (! isAsyncTransfer) {
-      vishnu::execSystemCommand(transferCommand, errorMsg);
-      fileTransfer.setErrorMsg(errorMsg);
-      finalizeTransfer(fileTransfer, direction);
-    } else { // asynchronous
       pid_t pid = fork();
       if (pid < 0) {
-        fileTransfer.setErrorMsg("cannot fork process for asynchronous transfer");
-        finalizeTransfer(fileTransfer, direction);
-        throw FMSVishnuException(ERRCODE_CLI_ERROR_RUNTIME, fileTransfer.getErrorMsg());
+        transfer.setErrorMsg("cannot fork process for asynchronous transfer");
+        finalizeTransfer(transfer, direction);
+        throw FMSVishnuException(ERRCODE_CLI_ERROR_RUNTIME, transfer.getErrorMsg());
       } else if (pid ==0) {
         setsid();  // detach the session
         vishnu::execSystemCommand(transferCommand, errorMsg);
-        fileTransfer.setErrorMsg(errorMsg);
-        finalizeTransfer(fileTransfer, direction);
+        transfer.setErrorMsg(errorMsg);
+        finalizeTransfer(transfer, direction);
       } else {
         /** parent: just completed execution */
       }
+    } else { // synchronous transfer
+      vishnu::execSystemCommand(transferCommand, errorMsg);
+      transfer.setErrorMsg(errorMsg);
+      finalizeTransfer(transfer, direction);
     }
+
     if (! errorMsg.empty()) {
       std::clog << errorMsg <<"\n";
     }
@@ -492,6 +490,7 @@ RemoteFileProxy::finalizeTransfer(FMS_Data::FileTransfer& transfer, int directio
 {
   //Set parameters
 
+  std::cout << "transfer ID: "<< transfer.getTransferId()<<" \n";
   if (! transfer.getErrorMsg().empty()) {
     transfer.setStatus(vishnu::TRANSFER_FAILED);
   } else {
