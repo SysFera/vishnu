@@ -49,49 +49,41 @@ public:
   void
   processOptions(UserServer userServer, const UMS_Data::ListMachineOptions_ptr& options, std::string& sqlRequest)
   {
-    std::string sqlJoinLstMachines = (boost::format("SELECT machineid, name, site, machine.status,"
-                                                    "        lang, description, userid "
-                                                    " FROM machine, description, account, users"
-                                                    " WHERE machine.nummachineid = description.machine_nummachineid"
-                                                    " AND account.machine_nummachineid = machine.nummachineid "
-                                                    " AND account.users_numuserid = users.numuserid "
-                                                    " AND machine.status != %1%"
-                                                    " AND account.status != %1%"
-                                                    " AND users.status != %1%")%vishnu::STATUS_DELETED).str();
-    std::string sqlListofMachinesIntial =  sqlRequest;
-    size_t userIdSize = options->getUserId().size();
-    size_t machineIdSize = options->getMachineId().size();
+    std::string sqlJoinLstMachines = boost::str(boost::format("SELECT machineid, address, machine.status, description, userid "
+                                                              " FROM machine, account, users"
+                                                              " WHERE account.machine_nummachineid = machine.nummachineid "
+                                                              " AND account.users_numuserid = users.numuserid "
+                                                              " AND machine.status != %1%"
+                                                              " AND account.status != %1%"
+                                                              " AND users.status   != %1%"
+                                                              ) % vishnu::STATUS_DELETED);
+    std::string sqlListofMachinesIntial = sqlRequest;
     bool isListAll = options->isListAllMachine();
 
-    if ((!userServer.isAdmin()) && userIdSize!=0) {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
+    if (! userServer.isAdmin() && ! options->getUserId().empty()) {
+      throw UMSVishnuException (ERRCODE_NO_ADMIN);
     }
 
-    if(!isListAll) {
+    if(! isListAll) {
       sqlRequest = sqlJoinLstMachines;
       addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
     }
 
     //The admin option
-    if(userIdSize!=0) {
-      //To check if the user id is correct
-      checkUserId(options->getUserId());
-
+    if (! options->getUserId().empty()) {
       sqlRequest = sqlJoinLstMachines;
-      addOptionRequest("userid", options->getUserId(), sqlRequest);
+      addOptionRequest("users.numuserid", getNumUser(options->getUserId()), sqlRequest);
     }
 
-    if(machineIdSize!=0) {
-      //To check if the machine id is correct
-      checkMachineId(options->getMachineId());
+    if (! options->getMachineId().empty()) {
+      getNumMachine( options->getMachineId() );
 
-      if(!isListAll && userIdSize==0) {
-        sqlRequest=sqlListofMachinesIntial;
+      if(! isListAll && options->getUserId().empty()) {
+        sqlRequest = sqlListofMachinesIntial;
       }
+
       addOptionRequest("machineid", options->getMachineId(), sqlRequest);
     }
-
   }
 
   /**
@@ -100,12 +92,11 @@ public:
   * \return raises an exception on error
   */
   UMS_Data::ListMachines* list(UMS_Data::ListMachineOptions_ptr option) {
-    std::string sqlListofMachines = (boost::format("SELECT machineid, name, site, status, lang, description"
-                                                   " FROM machine, description"
-                                                   " WHERE machine.nummachineid = description.machine_nummachineid"
-                                                   " AND machine.status != %1%")%vishnu::STATUS_DELETED).str();
-    std::vector<std::string>::iterator ii;
-    std::vector<std::string> results;
+    std::string sqlListofMachines = boost::str(boost::format("SELECT machineid, address, status, description"
+                                                             " FROM machine"
+                                                             " WHERE machine.status != %1%") % vishnu::STATUS_DELETED);
+    std::vector<std::string>::iterator dbResultIter;
+    std::vector<std::string> dbResults;
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListMachines();
 
@@ -118,19 +109,17 @@ public:
       //To process options
       processOptions(userServer, option, sqlListofMachines);
 
-      boost::scoped_ptr<DatabaseResult> ListofMachines (mdatabaseInstance->getResult(sqlListofMachines.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofMachines (mdatabase->getResult(sqlListofMachines.c_str()));
       if (ListofMachines->getNbTuples() != 0){
         for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
-          results.clear();
-          results = ListofMachines->get(i);
-          ii = results.begin();
+          dbResults.clear();
+          dbResults = ListofMachines->get(i);
+          dbResultIter = dbResults.begin();
           UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
-          machine->setMachineId(*ii);
-          machine->setName(*(++ii));
-          machine->setSite(*(++ii));
-          machine->setStatus(vishnu::convertToInt(*(++ii)));
-          machine->setLanguage(*(++ii));
-          machine->setMachineDescription(*(++ii));
+          machine->setMachineId(*dbResultIter);
+          machine->setAddress(*(++dbResultIter));
+          machine->setStatus(vishnu::convertToInt(*(++dbResultIter)));
+          machine->setDescription(*(++dbResultIter));
 
           mlistObject->getMachines().push_back(machine);
         }

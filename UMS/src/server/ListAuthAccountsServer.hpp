@@ -35,8 +35,8 @@ public:
    */
   ListAuthAccountsServer(const SessionServer session)
     : QueryServer<UMS_Data::ListAuthAccOptions, UMS_Data::ListAuthAccounts>(),
-    mcommandName("vishnu_list_auth_accounts"),
-    msessionServer(session)
+      mcommandName("vishnu_list_auth_accounts"),
+      msessionServer(session)
   {
   }
 
@@ -64,7 +64,7 @@ public:
     //The admin option
     if(userIdSize!=0) {
       //To check if the user id is correct
-      checkUserId(options->getUserId());
+      getNumUser(options->getUserId());
       sqlRequest=sqlListofAuthAccountInitial;
       addOptionRequest("userid", options->getUserId(), sqlRequest);
     }
@@ -94,12 +94,12 @@ public:
   UMS_Data::ListAuthAccounts*
   list(UMS_Data::ListAuthAccOptions_ptr option)
   {
-    std::string sql = (boost::format("SELECT authsystemid, userid, aclogin"
-                                     " FROM authaccount, authsystem, users"
-                                     " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
-                                     "  AND authaccount.users_numuserid=users.numuserid"
-                                     "  AND authsystem.status!=%1%"
-                                     "  AND authaccount.status!=%1%")%vishnu::STATUS_DELETED).str();
+    std::string sql = boost::str(boost::format("SELECT authsystemid, userid, aclogin"
+                                               " FROM authaccount, authsystem, users"
+                                               " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
+                                               "  AND authaccount.users_numuserid=users.numuserid"
+                                               "  AND authsystem.status!=%1%"
+                                               "  AND authaccount.status!=%1%") % vishnu::STATUS_DELETED);
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -116,7 +116,7 @@ public:
       //To process options
       processOptions(userServer, option, sql);
 
-      boost::scoped_ptr<DatabaseResult> ListofAuthAccount (mdatabaseInstance->getResult(sql.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofAuthAccount (mdatabase->getResult(sql.c_str()));
       if (ListofAuthAccount->getNbTuples() != 0){
         for (size_t i = 0; i < ListofAuthAccount->getNbTuples(); ++i) {
           results.clear();

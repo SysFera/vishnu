@@ -17,7 +17,7 @@ using namespace vishnu;
 */
 CommandServer::CommandServer(SessionServer session):msessionServer(session) {
   DbFactory factory;
-  mdatabaseVishnu = factory.getDatabaseInstance();
+  mdatabase = factory.getDatabaseInstance();
   mcommand = "";
 }
 
@@ -29,7 +29,7 @@ CommandServer::CommandServer(SessionServer session):msessionServer(session) {
 CommandServer::CommandServer(std::string cmd, SessionServer session):
   msessionServer(session), mcommand(cmd) {
   DbFactory factory;
-  mdatabaseVishnu = factory.getDatabaseInstance();
+  mdatabase = factory.getDatabaseInstance();
 }
 
 /**
@@ -57,22 +57,20 @@ CommandServer::record(CmdType cmdType,
                       std::string startTime,
                       std::string endTime) {
 
-  std::string numsess = msessionServer.getAttribut("WHERE sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid");
-  std::string sqlCmd = (boost::format("INSERT INTO command (vsession_numsessionid, starttime,"
-                                      "   endtime, description, ctype, status, vishnuobjectid)"
-                                      " VALUES (%1%,%2%,%3%,'%4%',%5%,%6%,'%7%');"
-                                      )
-                        %numsess
-                        %startTime
-                        %endTime
-                        %mdatabaseVishnu->escapeData(mcommand)
-                        %convertToString(cmdType)
-                        %convertToString(cmdStatus)
-                        %mdatabaseVishnu->escapeData(newVishnuObjectID)
-                        ).str();
+  std::string numSession = msessionServer.getAttributFromSessionKey(msessionServer.getData().getSessionKey(), "numsessionid");
+  std::string sqlCmd = boost::str(boost::format("INSERT INTO command (vsession_numsessionid, starttime,"
+                                                "   endtime, description, ctype, status, vishnuobjectid)"
+                                                " VALUES (%1%,%2%,%3%,'%4%',%5%,%6%,'%7%');"
+                                                )
+                                  % numSession
+                                  % startTime
+                                  % endTime
+                                  % mdatabase->escapeData(mcommand)
+                                  % convertToString(cmdType)
+                                  % convertToString(cmdStatus)
+                                  % mdatabase->escapeData(newVishnuObjectID) );
 
-  mdatabaseVishnu->process(sqlCmd.c_str());
-  return 0;
+  return mdatabase->process(sqlCmd).first;
 }
 
 /**
@@ -85,10 +83,9 @@ CommandServer::isRunning() {
   std::string sqlCommand("SELECT numcommandid FROM command where endtime is NULL "
                          "and vsession_numsessionid=");
 
-  sqlCommand.append(msessionServer.getAttribut("WHERE "
-                                               "sessionkey='"+mdatabaseVishnu->escapeData(msessionServer.getData().getSessionKey())+"'", "numsessionid"));
+  sqlCommand.append(msessionServer.getAttributFromSessionKey(msessionServer.getData().getSessionKey(), "numsessionid"));
 
-  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(sqlCommand));
   return (result->getNbTuples() != 0);
 }
 

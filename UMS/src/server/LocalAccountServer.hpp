@@ -58,14 +58,34 @@ public:
   */
   UMS_Data::LocalAccount*
   getData();
+
   /**
-   * \brief Function to get localAccount information from the database vishnu
-   * \param condition The condition of the select request
-   * \param attrname the name of the attribut to get
-   * \return the value of the attribut or empty string if no results
+  * \brief Get the system login from a couple machineid/userid
+  * \param machineId The machine ID
+  * \param userId The user ID
+  * \return The local login, or empty if not exist
+  */
+  std::string
+  getAcLogin(std::string machineId, std::string userId);
+
+
+  /**
+   * @brief Get user database index from the user login and the machine database index
+   * @param acLogin The user local login
+   * @param numMachine The machine database index
+   * @return
    */
   std::string
-  getAttribut(std::string condition, std::string attrname = "numaccountid");
+  getNumUserFromAccount(const std::string&  acLogin, const std::string& numMachine);
+
+  /**
+   * @brief Get the database index of the account
+   * @param idmachine The database index of the machine
+   * @param iduser The database index of the user
+   * @return
+   */
+  std::string
+  getNumAccount(const std::string& idmachine, const std::string& iduser);
 
 private:
   /////////////////////////////////
@@ -82,7 +102,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  Database *mdatabase;
   /**
    * \brief Mutex to protect the id generation for the mcmd map
    */
@@ -98,7 +118,7 @@ private:
    * \return true if the localAccount exists else false
    */
   bool
-  exist(std::string idmachine, std::string iduser);
+  existLocalAccount(std::string idmachine, std::string iduser);
   /**
   * \brief Function to check if a given login is used on a machine
   * \param numMachine the internal id of the machine

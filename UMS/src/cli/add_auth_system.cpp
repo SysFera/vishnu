@@ -19,19 +19,16 @@ class Options;
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
-
 struct AddAuthenticationSystemFunc {
   UMS_Data::AuthSystem mnewAuthsystem;
 
   AddAuthenticationSystemFunc(const UMS_Data::AuthSystem& newAuthsystem ):
     mnewAuthsystem(newAuthsystem)
-  {};
+  {}
 
   int operator()(std::string sessionKey) {
-    int res=addAuthSystem(sessionKey,mnewAuthsystem);
-    cout <<"The new authentication system identifier is " << mnewAuthsystem.getAuthSystemId() << endl;
+    int res = vishnu::addAuthSystem(sessionKey,mnewAuthsystem);
+    std::cout <<"Auth system created: " << mnewAuthsystem.getAuthSystemId() << std::endl;
 
     return res;
   }
@@ -40,7 +37,7 @@ struct AddAuthenticationSystemFunc {
 
 int main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
-  string configFile;
+  std::string configFile;
 
   /********** EMF data ************/
   UMS_Data::AuthSystem newAuthsystem;
@@ -56,11 +53,14 @@ int main (int ac, char* av[]) {
 
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeAuthSystemOptions(av[0], configFile, fName,
-                                                        fURI, fAuthLogin,
-                                                        fAuthPassword,
-                                                        fUserPasswordEncryption,
-                                                        fType, fLdapBase, 1);
+  boost::shared_ptr<Options> opt= makeAuthSystemOptions(av[0],
+      configFile,
+      fName,
+      fURI,
+      fAuthLogin,
+      fAuthPassword,
+      fUserPasswordEncryption,
+      fType, fLdapBase, 1);
 
   bool isEmpty;
   //To process list options

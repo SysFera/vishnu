@@ -22,8 +22,6 @@
 #include "listMachineUtils.hpp"         // for makeListMachineOptions
 #include "utils.hpp"                    // for operator<<
 
-using namespace std;
-using namespace vishnu;
 
 struct ListMachineFunc {
 
@@ -33,17 +31,16 @@ struct ListMachineFunc {
 
   ListMachineFunc(UMS_Data::ListMachines lsMachine, UMS_Data::ListMachineOptions listOptions, bool full):
     mlsMachine(lsMachine), mlistOptions(listOptions), mfull(full)
-  {};
+  {}
 
   int operator()(std::string sessionKey) {
-    int res = listMachines(sessionKey,mlsMachine,mlistOptions);
+    int res = vishnu::listMachines(sessionKey,mlsMachine,mlistOptions);
     // Display the list
     if(mfull) {
-      cout << mlsMachine << endl;
-    }
-    else {
+      std::cout << mlsMachine << std::endl;
+    } else {
       for(unsigned int i = 0; i < mlsMachine.getMachines().size(); i++) {
-        cout << mlsMachine.getMachines().get(i) << endl;
+        std::cout << mlsMachine.getMachines().get(i) << std::endl;
       }
     }
 
@@ -53,7 +50,7 @@ struct ListMachineFunc {
 
 int main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
-  string configFile;
+  std::string configFile;
 
   /********** EMF data ************/
   UMS_Data::ListMachines lsMachine;
@@ -61,8 +58,8 @@ int main (int ac, char* av[]) {
   UMS_Data::ListMachineOptions listOptions;
 
   /******** Callback functions ******************/
-  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListMachineOptions::setUserId,boost::ref(listOptions),_1));
-  boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListMachineOptions::setMachineId,boost::ref(listOptions),_1));
+  boost::function1<void,std::string> fUserId( boost::bind(&UMS_Data::ListMachineOptions::setUserId,boost::ref(listOptions),_1));
+  boost::function1<void,std::string> fMachineId( boost::bind(&UMS_Data::ListMachineOptions::setMachineId,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, configFile, fMachineId);

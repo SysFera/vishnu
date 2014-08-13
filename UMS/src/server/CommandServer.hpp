@@ -65,7 +65,7 @@ public:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  Database *mdatabase;
   /**
   * \brief An object which encapsulates session data
   */

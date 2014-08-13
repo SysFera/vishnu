@@ -21,9 +21,6 @@
 #include "listMachineUtils.hpp"         // for makeListMachineOptions
 #include "utils.hpp"                    // for operator<<
 
-using namespace std;
-using namespace vishnu;
-
 struct ListLocalAccountFunc {
 
   UMS_Data::ListLocalAccounts mlsLocalAccount;
@@ -32,17 +29,17 @@ struct ListLocalAccountFunc {
 
   ListLocalAccountFunc(UMS_Data::ListLocalAccounts lsLocalAccount, UMS_Data::ListLocalAccOptions listOptions, bool full):
     mlsLocalAccount(lsLocalAccount), mlistOptions(listOptions), mfull(full)
-  {};
+  {}
 
   int operator()(std::string sessionKey) {
-    int res =  listLocalAccounts(sessionKey,mlsLocalAccount,mlistOptions);
+    int res =  vishnu::listLocalAccounts(sessionKey,mlsLocalAccount,mlistOptions);
     // Display the list
     if(mfull) {
-      cout << mlsLocalAccount << endl;
+      std::cout << mlsLocalAccount << std::endl;
     }
     else {
       for(unsigned int i = 0; i < mlsLocalAccount.getAccounts().size(); i++) {
-        cout << mlsLocalAccount.getAccounts().get(i) ;
+        std::cout << mlsLocalAccount.getAccounts().get(i) ;
       }
     }
 
@@ -55,7 +52,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string configFile;
+  std::string configFile;
 
   /********** EMF data ************/
 
@@ -65,12 +62,14 @@ int main (int ac, char* av[]){
 
   /******** Callback functions ******************/
 
-  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListLocalAccOptions::setUserId,boost::ref(listOptions),_1));
-
-  boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListLocalAccOptions::setMachineId,boost::ref(listOptions),_1));
+  boost::function1<void,std::string> fUserId( boost::bind(&UMS_Data::ListLocalAccOptions::setUserId,boost::ref(listOptions),_1));
+  boost::function1<void,std::string> fMachineId( boost::bind(&UMS_Data::ListLocalAccOptions::setMachineId,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, configFile, fMachineId);
+  boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],
+      fUserId,
+      configFile,
+      fMachineId);
 
   opt->add("adminListOption,a",
            "is an admin option for listing all local configurations of all users",
@@ -81,11 +80,11 @@ int main (int ac, char* av[]){
   if (opt->count("adminListOption")){
     listOptions.setAdminListOption(true);
   }
+
   bool full = false;
-  // Display the list
-  if(isEmpty|| (opt->count("adminListOption"))) {
+  if(isEmpty || (opt->count("adminListOption"))) {
     full = true;
   }
-   ListLocalAccountFunc listAccountFunc(lsLocalAccount, listOptions, full);
+  ListLocalAccountFunc listAccountFunc(lsLocalAccount, listOptions, full);
   return GenericCli().run(listAccountFunc, configFile, ac, av);
 }// end of main
