@@ -288,7 +288,7 @@ DROP TABLE IF EXISTS `filetransfer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `filetransfer` (
-  `transferid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `numfiletransferid` bigint(20) NOT NULL AUTO_INCREMENT,
   `clientmachineid` varchar(255) DEFAULT NULL,
   `destinationfilepath` varchar(255) DEFAULT NULL,
   `destinationmachineid` varchar(255) DEFAULT NULL,
@@ -300,9 +300,8 @@ CREATE TABLE `filetransfer` (
   `starttime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `status` int(11) DEFAULT NULL,
   `trcommand` int(11) DEFAULT NULL,
-  `numuserid` varchar(255) DEFAULT NULL,
   `vsession_numsessionid` bigint(20) NOT NULL,
-  PRIMARY KEY (`transferid`),
+  PRIMARY KEY (`numfiletransferid`),
   KEY `FKFCE97167F58538BC` (`vsession_numsessionid`),
   CONSTRAINT `FKFCE97167F58538BC` FOREIGN KEY (`vsession_numsessionid`) REFERENCES `vsession` (`numsessionid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -353,21 +352,21 @@ DROP TABLE IF EXISTS `job`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `job` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `vsession_numsessionid` bigint(20) NOT NULL,
   `work_id` bigint(20) DEFAULT NULL,
   `users_numuserid` bigint(20) DEFAULT NULL,
   `machine_nummachineid` bigint(20) DEFAULT NULL,
-  `vsession_numsessionid` bigint(20) NOT NULL,
   `batchjobid` varchar(255) DEFAULT NULL,
   `batchtype` int(11) DEFAULT NULL,
   `enddate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `errorpath` varchar(255) DEFAULT NULL,
   `groupname` varchar(255) DEFAULT NULL,
-  `jobdescription` varchar(255) DEFAULT NULL,
-  `jobname` varchar(255) DEFAULT NULL,
-  `jobpath` varchar(255) DEFAULT NULL,
-  `jobprio` int(11) DEFAULT NULL,
-  `jobqueue` varchar(255) DEFAULT NULL,
-  `jobworkingdir` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `scriptpath` varchar(255) DEFAULT NULL,
+  `priority` int(11) DEFAULT NULL,
+  `queue` varchar(255) DEFAULT NULL,
+  `workingdir` varchar(255) DEFAULT NULL,
   `memlimit` int(11) DEFAULT NULL,
   `nbcpus` int(11) DEFAULT NULL,
   `nbnodes` int(11) DEFAULT NULL,

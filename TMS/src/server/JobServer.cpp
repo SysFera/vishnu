@@ -870,16 +870,16 @@ JobServer::dbSave(int action, TMS_Data::Job& job)
 
     std::string query = boost::str(
                           boost::format("INSERT INTO job"
-                                        "(jobName, batchType, batchJobId, jobPath, outputPath, errorPath, outputDir,"
-                                        "nbCpus, jobWorkingDir, status, submitDate, jobQueue, groupName,jobDescription,"
-                                        "memLimit, nbNodes, nbNodesAndCpuPerNode, wallClockLimit,"
+                                        "(name, batchType, batchJobId, scriptpath, outputPath, errorPath, outputDir,"
+                                        "nbCpus, workingdir, status, submitDate, queue, groupName, description,"
+                                        "memLimit, nbNodes, nbNodesAndCpuPerNode, wallClockLimit, priority,"
                                         "work_id, relatedSteps, vmId, vmIp,"
                                         "vsession_numsessionid, users_numuserid, machine_nummachineid)"
                                         "VALUES('%1%', '%2%', '%3%', '%4%', '%5%', '%6%', '%7%',"
                                         "'%8%', '%9%','%10%','%11%','%12%','%13%','%14%',"
-                                        "'%15%', '%16%', '%17%', '%18%',"
-                                        "%19%, '%20%', '%21%', '%22%',"
-                                        "%23%, %24%, %25%)")
+                                        "'%15%', '%16%', '%17%', '%18%',%19%,"
+                                        "%20%, '%21%', '%22%','%23%',"
+                                        " %24%, %25%, %26%)")
                           % job.getName()
                           % mbatchType
                           % job.getBatchJobId()
@@ -898,6 +898,7 @@ JobServer::dbSave(int action, TMS_Data::Job& job)
                           % job.getNbNodes()
                           % job.getNbNodesAndCpuPerNode()
                           % job.getWallClockLimit()
+                          % job.getPriority()
                           % (job.getWorkId() > 0 ? vishnu::convertToString(job.getWorkId()) : "NULL")
                           % job.getRelatedSteps()
                           % job.getVmId()

@@ -139,9 +139,10 @@ public:
   TMS_Data::ListJobs*
   list(TMS_Data::ListJobsOptions_ptr options)
   {
-    std::string query ="SELECT vsession.vsessionid, job.id, batchJobId, jobName, users.userid, account.aclogin, machine.machineid, "
-                       " jobPath, outputPath, errorPath, nbCpus, jobWorkingDir, job.status, submitDate, endDate, jobQueue, "
-                       " wallClockLimit, groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, work_id"
+    std::string query ="SELECT vsession.vsessionid, job.id, batchJobId, name, users.userid, account.aclogin, "
+                       "machine.machineid, scriptpath, outputPath, errorPath, nbCpus, workingdir, "
+                       "job.status, submitDate, endDate, queue, wallClockLimit, priority, groupName, "
+                       "job.description, memLimit, nbNodes, nbNodesAndCpuPerNode, work_id"
                        " FROM job, vsession, users, machine, account"
                        " WHERE job.vsession_numsessionid = vsession.numsessionid"
                        "  AND  job.users_numuserid       = users.numuserid"
@@ -183,6 +184,7 @@ public:
       job->setEndDate( vishnu::string_to_time_t(*(++curResultEntry)) );
       job->setQueue(*(++curResultEntry));
       job->setWallClockLimit(vishnu::convertToInt(*(++curResultEntry)));
+      job->setPriority(vishnu::convertToInt(*(++curResultEntry)));
       job->setGroupName(*(++curResultEntry));
       job->setDescription(*(++curResultEntry));
       job->setMemLimit(vishnu::convertToInt(*(++curResultEntry)));

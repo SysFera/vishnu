@@ -47,7 +47,7 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
     query = boost::str(
               boost::format("SELECT outputPath, errorPath, owner, job.status, outputDir "
                             " FROM job, machine"
-                            " WHERE job.jobId='%1%'"
+                            " WHERE job.id='%1%'"
                             "   AND machine.machineid='%2%'"
                             "   AND machine.nummachineid=job.machine_nummachineid;"
                             )
@@ -132,7 +132,7 @@ JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
   if (days <= 0) {
     // Here download only newly completed jobs
     sqlQuery = boost::str(
-                 boost::format("SELECT jobId, outputPath, errorPath, outputDir"
+                 boost::format("SELECT job.id, outputPath, errorPath, outputDir"
                                " FROM vsession, job"
                                " WHERE vsession.numsessionid=job.vsession_numsessionid"
                                "  AND job.users_numuserid=%1%"
@@ -145,7 +145,7 @@ JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
   } else {
     // Here also download jobs already downloaded
     sqlQuery =  boost::str
-                (boost::format("SELECT jobId, outputPath, errorPath, outputDir"
+                (boost::format("SELECT job.id, outputPath, errorPath, outputDir"
                                " FROM vsession, job"
                                " WHERE vsession.numsessionid=job.vsession_numsessionid"
                                "  AND job.users_numuserid=%1%"
@@ -199,7 +199,7 @@ JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
 
     // Mark the job as downloaded, so it will be ignored at the subsequent calls
     std::string query = (boost::format("UPDATE job SET status=%1% "
-                                       " WHERE jobId='%2%';"
+                                       " WHERE job.id='%2%';"
                                        ) % vishnu::convertToString(vishnu::STATE_DOWNLOADED)
                          % mdatabaseInstance->escapeData(jobId)).str();
     mdatabaseInstance->process(query);
