@@ -474,179 +474,164 @@ namespace UMS_Data
         static const int MACHINE__MACHINEID = 55;
 
         /**
-         * \brief Constant for MACHINE__NAME feature
+         * \brief Constant for MACHINE__ADDRESS feature
          */
-        static const int MACHINE__NAME = 56;
+        static const int MACHINE__ADDRESS = 56;
 
         /**
-         * \brief Constant for MACHINE__SITE feature
+         * \brief Constant for MACHINE__DESCRIPTION feature
          */
-        static const int MACHINE__SITE = 57;
-
-        /**
-         * \brief Constant for MACHINE__MACHINEDESCRIPTION feature
-         */
-        static const int MACHINE__MACHINEDESCRIPTION = 58;
-
-        /**
-         * \brief Constant for MACHINE__LANGUAGE feature
-         */
-        static const int MACHINE__LANGUAGE = 59;
+        static const int MACHINE__DESCRIPTION = 57;
 
         /**
          * \brief Constant for MACHINE__STATUS feature
          */
-        static const int MACHINE__STATUS = 60;
-
-        /**
-         * \brief Constant for MACHINE__SSHPUBLICKEY feature
-         */
-        static const int MACHINE__SSHPUBLICKEY = 61;
+        static const int MACHINE__STATUS = 58;
 
         /**
          * \brief Constant for LISTMACHINES__MACHINES feature
          */
-        static const int LISTMACHINES__MACHINES = 62;
+        static const int LISTMACHINES__MACHINES = 59;
 
         /**
          * \brief Constant for LISTMACHINEOPTIONS__USERID feature
          */
-        static const int LISTMACHINEOPTIONS__USERID = 63;
+        static const int LISTMACHINEOPTIONS__USERID = 60;
 
         /**
          * \brief Constant for LISTMACHINEOPTIONS__LISTALLMACHINE feature
          */
-        static const int LISTMACHINEOPTIONS__LISTALLMACHINE = 64;
+        static const int LISTMACHINEOPTIONS__LISTALLMACHINE = 61;
 
         /**
          * \brief Constant for LISTMACHINEOPTIONS__MACHINEID feature
          */
-        static const int LISTMACHINEOPTIONS__MACHINEID = 65;
+        static const int LISTMACHINEOPTIONS__MACHINEID = 62;
 
         /**
          * \brief Constant for AUTHSYSTEM__AUTHSYSTEMID feature
          */
-        static const int AUTHSYSTEM__AUTHSYSTEMID = 66;
+        static const int AUTHSYSTEM__AUTHSYSTEMID = 63;
 
         /**
          * \brief Constant for AUTHSYSTEM__NAME feature
          */
-        static const int AUTHSYSTEM__NAME = 67;
+        static const int AUTHSYSTEM__NAME = 64;
 
         /**
          * \brief Constant for AUTHSYSTEM__URI feature
          */
-        static const int AUTHSYSTEM__URI = 68;
+        static const int AUTHSYSTEM__URI = 65;
 
         /**
          * \brief Constant for AUTHSYSTEM__AUTHLOGIN feature
          */
-        static const int AUTHSYSTEM__AUTHLOGIN = 69;
+        static const int AUTHSYSTEM__AUTHLOGIN = 66;
 
         /**
          * \brief Constant for AUTHSYSTEM__AUTHPASSWORD feature
          */
-        static const int AUTHSYSTEM__AUTHPASSWORD = 70;
+        static const int AUTHSYSTEM__AUTHPASSWORD = 67;
 
         /**
          * \brief Constant for AUTHSYSTEM__USERPASSWORDENCRYPTION feature
          */
-        static const int AUTHSYSTEM__USERPASSWORDENCRYPTION = 71;
+        static const int AUTHSYSTEM__USERPASSWORDENCRYPTION = 68;
 
         /**
          * \brief Constant for AUTHSYSTEM__TYPE feature
          */
-        static const int AUTHSYSTEM__TYPE = 72;
+        static const int AUTHSYSTEM__TYPE = 69;
 
         /**
          * \brief Constant for AUTHSYSTEM__STATUS feature
          */
-        static const int AUTHSYSTEM__STATUS = 73;
+        static const int AUTHSYSTEM__STATUS = 70;
 
         /**
          * \brief Constant for AUTHSYSTEM__LDAPBASE feature
          */
-        static const int AUTHSYSTEM__LDAPBASE = 74;
+        static const int AUTHSYSTEM__LDAPBASE = 71;
 
         /**
          * \brief Constant for LISTAUTHSYSTEMS__AUTHSYSTEMS feature
          */
-        static const int LISTAUTHSYSTEMS__AUTHSYSTEMS = 75;
+        static const int LISTAUTHSYSTEMS__AUTHSYSTEMS = 72;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS feature
          */
-        static const int LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS = 76;
+        static const int LISTAUTHSYSOPTIONS__LISTALLAUTHSYSTEMS = 73;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__LISTFULLINFO feature
          */
-        static const int LISTAUTHSYSOPTIONS__LISTFULLINFO = 77;
+        static const int LISTAUTHSYSOPTIONS__LISTFULLINFO = 74;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__USERID feature
          */
-        static const int LISTAUTHSYSOPTIONS__USERID = 78;
+        static const int LISTAUTHSYSOPTIONS__USERID = 75;
 
         /**
          * \brief Constant for LISTAUTHSYSOPTIONS__AUTHSYSTEMID feature
          */
-        static const int LISTAUTHSYSOPTIONS__AUTHSYSTEMID = 79;
+        static const int LISTAUTHSYSOPTIONS__AUTHSYSTEMID = 76;
 
         /**
          * \brief Constant for AUTHACCOUNT__AUTHSYSTEMID feature
          */
-        static const int AUTHACCOUNT__AUTHSYSTEMID = 80;
+        static const int AUTHACCOUNT__AUTHSYSTEMID = 77;
 
         /**
          * \brief Constant for AUTHACCOUNT__USERID feature
          */
-        static const int AUTHACCOUNT__USERID = 81;
+        static const int AUTHACCOUNT__USERID = 78;
 
         /**
          * \brief Constant for AUTHACCOUNT__ACLOGIN feature
          */
-        static const int AUTHACCOUNT__ACLOGIN = 82;
+        static const int AUTHACCOUNT__ACLOGIN = 79;
 
         /**
          * \brief Constant for LISTAUTHACCOUNTS__AUTHACCOUNTS feature
          */
-        static const int LISTAUTHACCOUNTS__AUTHACCOUNTS = 83;
+        static const int LISTAUTHACCOUNTS__AUTHACCOUNTS = 80;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__LISTALL feature
          */
-        static const int LISTAUTHACCOPTIONS__LISTALL = 84;
+        static const int LISTAUTHACCOPTIONS__LISTALL = 81;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__USERID feature
          */
-        static const int LISTAUTHACCOPTIONS__USERID = 85;
+        static const int LISTAUTHACCOPTIONS__USERID = 82;
 
         /**
          * \brief Constant for LISTAUTHACCOPTIONS__AUTHSYSTEMID feature
          */
-        static const int LISTAUTHACCOPTIONS__AUTHSYSTEMID = 86;
+        static const int LISTAUTHACCOPTIONS__AUTHSYSTEMID = 83;
 
         /**
          * \brief Constant for VERSION__MAJOR feature
          */
-        static const int VERSION__MAJOR = 87;
+        static const int VERSION__MAJOR = 84;
 
         /**
          * \brief Constant for VERSION__MINOR feature
          */
-        static const int VERSION__MINOR = 88;
+        static const int VERSION__MINOR = 85;
 
         /**
          * \brief Constant for VERSION__PATCH feature
          */
-        static const int VERSION__PATCH = 89;
+        static const int VERSION__PATCH = 86;
 
         /**
          * \brief Constant for VERSION__STRINGFORMAT feature
          */
-        static const int VERSION__STRINGFORMAT = 90;
+        static const int VERSION__STRINGFORMAT = 87;
 
         // EClassifiers methods
 
@@ -1169,40 +1154,22 @@ namespace UMS_Data
         virtual ::ecore::EAttribute_ptr getMachine__machineId();
 
         /**
-         * \brief Returns the reflective object for feature name of class Machine
+         * \brief Returns the reflective object for feature address of class Machine
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getMachine__name();
+        virtual ::ecore::EAttribute_ptr getMachine__address();
 
         /**
-         * \brief Returns the reflective object for feature site of class Machine
+         * \brief Returns the reflective object for feature description of class Machine
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getMachine__site();
-
-        /**
-         * \brief Returns the reflective object for feature machineDescription of class Machine
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getMachine__machineDescription();
-
-        /**
-         * \brief Returns the reflective object for feature language of class Machine
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getMachine__language();
+        virtual ::ecore::EAttribute_ptr getMachine__description();
 
         /**
          * \brief Returns the reflective object for feature status of class Machine
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getMachine__status();
-
-        /**
-         * \brief Returns the reflective object for feature sshPublicKey of class Machine
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getMachine__sshPublicKey();
 
         /**
          * \brief Returns the reflective object for feature machines of class ListMachines
@@ -1823,34 +1790,19 @@ namespace UMS_Data
         ::ecore::EAttribute_ptr m_Machine__machineId;
 
         /**
-         * \brief The instance for the feature name of class Machine
+         * \brief The instance for the feature address of class Machine
          */
-        ::ecore::EAttribute_ptr m_Machine__name;
+        ::ecore::EAttribute_ptr m_Machine__address;
 
         /**
-         * \brief The instance for the feature site of class Machine
+         * \brief The instance for the feature description of class Machine
          */
-        ::ecore::EAttribute_ptr m_Machine__site;
-
-        /**
-         * \brief The instance for the feature machineDescription of class Machine
-         */
-        ::ecore::EAttribute_ptr m_Machine__machineDescription;
-
-        /**
-         * \brief The instance for the feature language of class Machine
-         */
-        ::ecore::EAttribute_ptr m_Machine__language;
+        ::ecore::EAttribute_ptr m_Machine__description;
 
         /**
          * \brief The instance for the feature status of class Machine
          */
         ::ecore::EAttribute_ptr m_Machine__status;
-
-        /**
-         * \brief The instance for the feature sshPublicKey of class Machine
-         */
-        ::ecore::EAttribute_ptr m_Machine__sshPublicKey;
 
         /**
          * \brief The instance for the feature machines of class ListMachines

@@ -81,59 +81,48 @@ namespace TMS_Data
         void setSessionId(::ecore::EString const& _sessionId);
 
         /**
-         * \brief To get the submitMachineId
-         * \return The submitMachineId attribute value
+         * \brief To get the machine
+         * \return The machine attribute value
          **/
-        ::ecore::EString const& getSubmitMachineId() const;
+        ::ecore::EString const& getMachine() const;
         /**
-         * \brief To set the submitMachineId
-         * \param _submitMachineId The submitMachineId value
+         * \brief To set the machine
+         * \param _machine The machine value
          **/
-        void setSubmitMachineId(::ecore::EString const& _submitMachineId);
+        void setMachine(::ecore::EString const& _machine);
 
         /**
-         * \brief To get the submitMachineName
-         * \return The submitMachineName attribute value
+         * \brief To get the id
+         * \return The id attribute value
          **/
-        ::ecore::EString const& getSubmitMachineName() const;
+        ::ecore::EString const& getId() const;
         /**
-         * \brief To set the submitMachineName
-         * \param _submitMachineName The submitMachineName value
+         * \brief To set the id
+         * \param _id The id value
          **/
-        void setSubmitMachineName(::ecore::EString const& _submitMachineName);
+        void setId(::ecore::EString const& _id);
 
         /**
-         * \brief To get the jobId
-         * \return The jobId attribute value
+         * \brief To get the name
+         * \return The name attribute value
          **/
-        ::ecore::EString const& getJobId() const;
+        ::ecore::EString const& getName() const;
         /**
-         * \brief To set the jobId
-         * \param _jobId The jobId value
+         * \brief To set the name
+         * \param _name The name value
          **/
-        void setJobId(::ecore::EString const& _jobId);
+        void setName(::ecore::EString const& _name);
 
         /**
-         * \brief To get the jobName
-         * \return The jobName attribute value
+         * \brief To get the path
+         * \return The path attribute value
          **/
-        ::ecore::EString const& getJobName() const;
+        ::ecore::EString const& getPath() const;
         /**
-         * \brief To set the jobName
-         * \param _jobName The jobName value
+         * \brief To set the path
+         * \param _path The path value
          **/
-        void setJobName(::ecore::EString const& _jobName);
-
-        /**
-         * \brief To get the jobPath
-         * \return The jobPath attribute value
-         **/
-        ::ecore::EString const& getJobPath() const;
-        /**
-         * \brief To set the jobPath
-         * \param _jobPath The jobPath value
-         **/
-        void setJobPath(::ecore::EString const& _jobPath);
+        void setPath(::ecore::EString const& _path);
 
         /**
          * \brief To get the outputPath
@@ -158,17 +147,6 @@ namespace TMS_Data
         void setErrorPath(::ecore::EString const& _errorPath);
 
         /**
-         * \brief To get the jobPrio
-         * \return The jobPrio attribute value
-         **/
-        ::TMS_Data::JobPriority getJobPrio() const;
-        /**
-         * \brief To set the jobPrio
-         * \param _jobPrio The jobPrio value
-         **/
-        void setJobPrio(::TMS_Data::JobPriority _jobPrio);
-
-        /**
          * \brief To get the nbCpus
          * \return The nbCpus attribute value
          **/
@@ -180,15 +158,15 @@ namespace TMS_Data
         void setNbCpus(::ecore::EInt _nbCpus);
 
         /**
-         * \brief To get the jobWorkingDir
-         * \return The jobWorkingDir attribute value
+         * \brief To get the workingDir
+         * \return The workingDir attribute value
          **/
-        ::ecore::EString const& getJobWorkingDir() const;
+        ::ecore::EString const& getWorkingDir() const;
         /**
-         * \brief To set the jobWorkingDir
-         * \param _jobWorkingDir The jobWorkingDir value
+         * \brief To set the workingDir
+         * \param _workingDir The workingDir value
          **/
-        void setJobWorkingDir(::ecore::EString const& _jobWorkingDir);
+        void setWorkingDir(::ecore::EString const& _workingDir);
 
         /**
          * \brief To get the status
@@ -224,26 +202,26 @@ namespace TMS_Data
         void setEndDate(::ecore::ELong _endDate);
 
         /**
-         * \brief To get the owner
-         * \return The owner attribute value
+         * \brief To get the localAccount
+         * \return The localAccount attribute value
          **/
-        ::ecore::EString const& getOwner() const;
+        ::ecore::EString const& getLocalAccount() const;
         /**
-         * \brief To set the owner
-         * \param _owner The owner value
+         * \brief To set the localAccount
+         * \param _localAccount The localAccount value
          **/
-        void setOwner(::ecore::EString const& _owner);
+        void setLocalAccount(::ecore::EString const& _localAccount);
 
         /**
-         * \brief To get the jobQueue
-         * \return The jobQueue attribute value
+         * \brief To get the queue
+         * \return The queue attribute value
          **/
-        ::ecore::EString const& getJobQueue() const;
+        ::ecore::EString const& getQueue() const;
         /**
-         * \brief To set the jobQueue
-         * \param _jobQueue The jobQueue value
+         * \brief To set the queue
+         * \param _queue The queue value
          **/
-        void setJobQueue(::ecore::EString const& _jobQueue);
+        void setQueue(::ecore::EString const& _queue);
 
         /**
          * \brief To get the wallClockLimit
@@ -268,15 +246,15 @@ namespace TMS_Data
         void setGroupName(::ecore::EString const& _groupName);
 
         /**
-         * \brief To get the jobDescription
-         * \return The jobDescription attribute value
+         * \brief To get the description
+         * \return The description attribute value
          **/
-        ::ecore::EString const& getJobDescription() const;
+        ::ecore::EString const& getDescription() const;
         /**
-         * \brief To set the jobDescription
-         * \param _jobDescription The jobDescription value
+         * \brief To set the description
+         * \param _description The description value
          **/
-        void setJobDescription(::ecore::EString const& _jobDescription);
+        void setDescription(::ecore::EString const& _description);
 
         /**
          * \brief To get the memLimit
@@ -400,6 +378,17 @@ namespace TMS_Data
          **/
         void setSubmitError(::ecore::EString const& _submitError);
 
+        /**
+         * \brief To get the priority
+         * \return The priority attribute value
+         **/
+        ::TMS_Data::JobStatus getPriority() const;
+        /**
+         * \brief To set the priority
+         * \param _priority The priority value
+         **/
+        void setPriority(::TMS_Data::JobStatus _priority);
+
         // References
 
 
@@ -427,25 +416,21 @@ namespace TMS_Data
 
         ::ecore::EString m_sessionId;
 
-        ::ecore::EString m_submitMachineId;
+        ::ecore::EString m_machine;
 
-        ::ecore::EString m_submitMachineName;
+        ::ecore::EString m_id;
 
-        ::ecore::EString m_jobId;
+        ::ecore::EString m_name;
 
-        ::ecore::EString m_jobName;
-
-        ::ecore::EString m_jobPath;
+        ::ecore::EString m_path;
 
         ::ecore::EString m_outputPath;
 
         ::ecore::EString m_errorPath;
 
-        ::TMS_Data::JobPriority m_jobPrio;
-
         ::ecore::EInt m_nbCpus;
 
-        ::ecore::EString m_jobWorkingDir;
+        ::ecore::EString m_workingDir;
 
         ::TMS_Data::JobStatus m_status;
 
@@ -453,15 +438,15 @@ namespace TMS_Data
 
         ::ecore::ELong m_endDate;
 
-        ::ecore::EString m_owner;
+        ::ecore::EString m_localAccount;
 
-        ::ecore::EString m_jobQueue;
+        ::ecore::EString m_queue;
 
         ::ecore::ELong m_wallClockLimit;
 
         ::ecore::EString m_groupName;
 
-        ::ecore::EString m_jobDescription;
+        ::ecore::EString m_description;
 
         ::ecore::EInt m_memLimit;
 
@@ -484,6 +469,8 @@ namespace TMS_Data
         ::ecore::EString m_relatedSteps;
 
         ::ecore::EString m_submitError;
+
+        ::TMS_Data::JobStatus m_priority;
 
         // References
 
