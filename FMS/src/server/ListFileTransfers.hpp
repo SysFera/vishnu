@@ -62,7 +62,7 @@ public:
     if (options->getFromMachineId().size() != 0) {
       //To add the fromMachineId on the request
 
-      sqlRequest.append(" and (sourceMachineId='"+mdatabaseInstance->escapeData(options->getFromMachineId())+"'"+" or destinationMachineId='"+mdatabaseInstance->escapeData(options->getFromMachineId())+"')");
+      sqlRequest.append(" and (sourceMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"'"+" or destinationMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"')");
 
       onlyProgressFile = false;
     }
@@ -74,7 +74,7 @@ public:
         throw UMSVishnuException (ERRCODE_NO_ADMIN);
       }
 
-      checkUserId(options->getUserId());
+      getNumUser(options->getUserId());
       addOptionRequest("userId", options->getUserId(), sqlRequest);
       onlyProgressFile = false;
     }
@@ -109,7 +109,7 @@ public:
 
     std::vector<std::string>::iterator iter;
     std::vector<std::string> results;
-    vishnu::validateAuthKey(mauthKey, mdatabaseInstance, muserSessionInfo);
+    vishnu::validateAuthKey(mauthKey, mdatabase, muserSessionInfo);
 
     FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createFileTransferList();
@@ -118,7 +118,7 @@ public:
     sqlListOfFiles.append(" order by startTime");
 
 
-    boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabaseInstance->getResult(sqlListOfFiles));
+    boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabase->getResult(sqlListOfFiles));
 
     time_t startTime;
 
@@ -187,8 +187,8 @@ private:
    * \param transferId the file transfer identifier
    */
   void checkTransferId(std::string transferId) {
-    std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+mdatabaseInstance->escapeData(transferId)+"'";
-    boost::scoped_ptr<DatabaseResult> transfer(mdatabaseInstance->getResult(sqlTransferRequest));
+    std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+mdatabase->escapeData(transferId)+"'";
+    boost::scoped_ptr<DatabaseResult> transfer(mdatabase->getResult(sqlTransferRequest));
     if (transfer->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
     }
