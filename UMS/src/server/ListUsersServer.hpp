@@ -57,15 +57,13 @@ public:
     std::string  userId = options->getUserId();
     if(userId.size()!=0) {
       //To check if the user id is correct
-      checkUserId(options->getUserId());
+      getNumUser(options->getUserId());
       addOptionRequest("userid", userId, sqlRequest);
     }
 
     std::string  authSystemId = options->getAuthSystemId();
-    if(authSystemId.size()!=0) {
-      //To check if the authSystem identifier is correct
+    if (! authSystemId.empty()) {
       checkAuthSystemId(authSystemId);
-      //addOptionRequest("authsystemid", authSystemId, sqlRequest);
       std::string luserCmd = boost::str(boost::format("SELECT userid "
                                                       " FROM authsystem, users, authaccount "
                                                       " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
@@ -75,9 +73,9 @@ public:
                                                       " AND users.status!=%2%"
                                                       " AND authaccount.status!=%2%"
                                                       )
-                                        % mdatabaseInstance->escapeData(authSystemId)
+                                        % mdatabase->escapeData(authSystemId)
                                         % vishnu::STATUS_DELETED);
-      sqlRequest.append(" AND userid IN ("+mdatabaseInstance->escapeData(luserCmd)+")");
+      sqlRequest.append(" AND userid IN ("+mdatabase->escapeData(luserCmd)+")");
     }
 
   }
@@ -98,53 +96,52 @@ public:
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
     //if the user exists
-    if (userServer.exist()) {
+    if (! userServer.exist()) {
+      throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
+    }
 
-      std::string sqlQuery = "";
-      if ( userServer.isAdmin()) {
-        // query all users
-        sqlQuery = boost::str(boost::format(
-                                "SELECT userid, pwd, firstname, lastname, privilege, email, status"
-                                " FROM users"
-                                " WHERE users.status<>%1%") % vishnu::STATUS_DELETED);
-      } else {
-        // dont query admin users
-        sqlQuery = boost::str(boost::format(
-                                "SELECT userid, pwd, firstname, lastname, privilege, email, status"
-                                " FROM users"
-                                " WHERE userid<>'%1%'"
-                                " AND users.status<>%2%") % vishnu::ROOTUSERNAME % vishnu::STATUS_DELETED);
-      }
+    std::string sqlQuery = "";
+    if ( userServer.isAdmin()) {
+      // query all users
+      sqlQuery = boost::str(boost::format(
+                              "SELECT userid, pwd, firstname, lastname, privilege, email, status"
+                              " FROM users"
+                              " WHERE users.status<>%1%") % vishnu::STATUS_DELETED);
+    } else {
+      sqlQuery = boost::str(boost::format(
+                              "SELECT userid, pwd, firstname, lastname, privilege, email, status"
+                              " FROM users"
+                              " WHERE userid != '%1%'"
+                              " AND users.status != %2%")
+                            % vishnu::ROOTUSERNAME
+                            % vishnu::STATUS_DELETED);
+    }
 
-      processOptions(userServer, option, sqlQuery);
+    processOptions(userServer, option, sqlQuery);
 
-      sqlQuery.append(" ORDER BY userid");
+    sqlQuery.append(" ORDER BY userid");
 
-      //To get the list of users from the database
-      boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseInstance->getResult(sqlQuery));
+    //To get the list of users from the database
+    boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabase->getResult(sqlQuery));
 
-      if (ListofUsers->getNbTuples() != 0){
-        for (size_t resultIndex = 0; resultIndex < ListofUsers->getNbTuples(); ++resultIndex) {
-          results.clear();
-          results = ListofUsers->get(resultIndex);
-          dbResultIter = results.begin();
-          UMS_Data::User_ptr user = ecoreFactory->createUser();
-          user->setUserId(*dbResultIter);
-          user->setPassword(*(++dbResultIter));
-          user->setFirstname(*(++dbResultIter));
-          user->setLastname(*(++dbResultIter));
-          user->setPrivilege(vishnu::convertToInt(*(++dbResultIter)));
-          user->setEmail(*(++dbResultIter));
-          user->setStatus(vishnu::convertToInt(*(++dbResultIter)));
+    if (ListofUsers->getNbTuples() != 0){
+      for (size_t resultIndex = 0; resultIndex < ListofUsers->getNbTuples(); ++resultIndex) {
+        results.clear();
+        results = ListofUsers->get(resultIndex);
+        dbResultIter = results.begin();
+        UMS_Data::User_ptr user = ecoreFactory->createUser();
+        user->setUserId(*dbResultIter);
+        user->setPassword(*(++dbResultIter));
+        user->setFirstname(*(++dbResultIter));
+        user->setLastname(*(++dbResultIter));
+        user->setPrivilege(vishnu::convertToInt(*(++dbResultIter)));
+        user->setEmail(*(++dbResultIter));
+        user->setStatus(vishnu::convertToInt(*(++dbResultIter)));
 
-          mlistObject->getUsers().push_back(user);
-        }
+        mlistObject->getUsers().push_back(user);
       }
     }
-    else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-      throw e;
-    }
+
     return mlistObject;
 
 

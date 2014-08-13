@@ -28,22 +28,21 @@ typedef  boost::function1<void,std::string> StringcallBackType;
 /**
  * \brief To build options for the VISHNU machine commands
  * \param pgName : The name of the command
- * \param fName : The machine name option callback
  * \param configFile : Represents the VISHNU config file
- * \param fSite : The site name option callback
- * \param fLanguage : The language option callback
+ * \param fMachineId : The machine name option callback
+ * \param fAddress : Callback to bind host address
  * \param fMachineDescription : The machine description option callback
- * \param type : Indicates if it is an add or an update command, 0 means update, and 1 means add
+ * \param type: 1 for create, 0 for update
  * \return The description of all options allowed by the command
  */
 
 
-boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & configFile,
-                                              StringcallBackType & fSite, StringcallBackType& fLanguage,
-                                              StringcallBackType& fMachineDescription,int type=0);
-
-
-
+boost::shared_ptr<Options> makeMachineOptions(std::string pgName,
+                                              std::string& configFile,
+                                              StringcallBackType& fMachineId,
+                                              StringcallBackType& fAddress,
+                                              StringcallBackType& fMachineDescription,
+                                              int type);
 
 
 #endif

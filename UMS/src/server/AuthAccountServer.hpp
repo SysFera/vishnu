@@ -57,14 +57,7 @@ public:
    */
   UMS_Data::AuthAccount*
   getData();
-  /**
-   * \brief Function to get authAccount information from the database vishnu
-   * \param condition The condition of the select request
-   * \param attrname the name of the attribut to get
-   * \return the value of the attribut or empty string if no results
-   */
-  std::string
-  getAttribut(std::string condition, std::string attrname = "authaccountid");
+
 
 private:
   /////////////////////////////////
@@ -82,17 +75,18 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
-  /////////////////////////////////
-  // Functions
-  /////////////////////////////////
+
+
   /**
-  * \brief Function to check authAccount on database
-  * \param idAuthSystem The internal database id of the user-authentication system
-  * \param idUser The internal database id of the user
-  * \return true if the authAccount exists else false
+  * \brief Function to check if a given login is used on a user-authentication system
+  * \param numAuthSystem the internal id of the user-authentication system
+  * \param numUser the User database identifier
+  * \return true if the user identifier exists in the database
   */
   bool
-  exist(std::string idAuthSystem, std::string idUser);
+  exist(std::string numAuthSystem, std::string numUser);
+
+
    /**
   * \brief Function to check if a given login is used on a user-authentication system
   * \param numAuthSystem the internal id of the user-authentication system
@@ -106,7 +100,7 @@ private:
   * \param userServer The user server to use
   * \return raises an exception on error
   */
-  int
+  void
   checkAuthAccountUserId(UserServer& userServer);
 
   /**

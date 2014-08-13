@@ -15,6 +15,8 @@ using namespace std;
  * \brief To build options for the VISHNU user commands
  * \param pgName : The name of the command
  * \param configFile: Represents the VISHNU config file
+ * \param fUserId: The user id option callback
+ * \param fStatus: The status option callback
  * \param fPrivilege: The privilege option callback
  * \param ffirstname: The user first name option callback
  * \param fLastName: The user last name option callback
@@ -25,11 +27,16 @@ using namespace std;
 
 
 boost::shared_ptr<Options>
-makeUserOptions(std::string pgName,std::string & configFile,
-                privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
-                StringcallBackType& fLastname, StringcallBackType& fEmail, int type){
-
-
+makeUserOptions(std::string pgName,
+                std::string& configFile,
+                StringcallBackType& fUserId,
+                StatusCallBackType& fStatus,
+                PrivilegeCallBackType& fPrivilege,
+                StringcallBackType& fFirstname,
+                StringcallBackType& fLastname,
+                StringcallBackType& fEmail,
+                int type)
+{
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   opt->add("configFile,c",
@@ -37,66 +44,41 @@ makeUserOptions(std::string pgName,std::string & configFile,
            ENV,
            configFile);
 
-  Group_type group=CONFIG;
+  opt->add("userId,u",
+           "The user identifier",
+           HIDDEN,
+           fUserId,
+           1);
+  opt->setPosition("userId", 1);
 
-  if(type){// type =0 for "update function" and type=1 for "add function"
-
-    group=HIDDEN;
-  }
-
+  opt->add("status,s",
+           "The user status. 0 => inactive, 1 => active",
+           CONFIG,
+           fStatus);
 
   opt->add("firstname,f",
-           "The firstname of the user",
-           group,
+           "The user firstname",
+           CONFIG,
            fFirstname,
            type);
 
-
-
-  if(type){
-
-    opt->setPosition("firstname",1);
-
-  }
-
-
   opt->add("lastname,l",
-           "The lastname of the user",
-           group,
+           "The user lastname",
+           CONFIG,
            fLastname,
            type);
 
-  if(type){
-    opt->setPosition("lastname",1);
-
-  }
-
   opt->add("privilege,p",
-           "the privilege of the user (admin or simple user)",
-           group,
+           "The user privilege. 1 => admin, 0 => regular user",
+           CONFIG,
            fPrivilege,
            type);
 
-
-  if(type){
-    opt->setPosition("privilege",1);
-  }
-
   opt->add("email,m",
-           "The email of the user",
-           group,
+           "The user email address",
+           CONFIG,
            fEmail,
            type);
 
-  if(type){
-    opt->setPosition("email",1);
-
-  }
-
-
-
   return opt;
-
-
-
 }

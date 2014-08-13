@@ -23,22 +23,16 @@
 class Options;
 
 namespace po = boost::program_options;
-
-using namespace std;
-using namespace vishnu;
-
 struct AddLocalAccountFunc {
 
   UMS_Data::LocalAccount mnewAcLogin;
 
   AddLocalAccountFunc(UMS_Data::LocalAccount newAcLogin): mnewAcLogin(newAcLogin)
-  {};
+  {}
 
   int operator()(std::string sessionKey) {
-    string sshPublicKey;
-    int res=addLocalAccount(sessionKey,mnewAcLogin,sshPublicKey);// call the UMS add local account service
-
-    return res;
+    std::string sshPublicKey;
+    return vishnu::addLocalAccount(sessionKey, mnewAcLogin, sshPublicKey);
   }
 };
 
@@ -46,30 +40,34 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string configFile;
+  std::string configFile;
 
   /********** EMF data ************/
 
-  UMS_Data::LocalAccount newAcLogin;
+  UMS_Data::LocalAccount localAccountInfo;
 
   /******** Callback functions ******************/
 
-  boost::function1<void,string> fUserId( boost::bind(&UMS_Data::LocalAccount::setUserId,boost::ref(newAcLogin),_1));
-  boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::LocalAccount::setMachineId,boost::ref(newAcLogin),_1));
-  boost::function1<void,string> fAcLogin( boost::bind(&UMS_Data::LocalAccount::setAcLogin,boost::ref(newAcLogin),_1));
-  boost::function1<void,string> fHomeDirectory( boost::bind(&UMS_Data::LocalAccount::setHomeDirectory,boost::ref(newAcLogin),_1));
+  boost::function1<void,std::string> fUserId( boost::bind(&UMS_Data::LocalAccount::setUserId,boost::ref(localAccountInfo),_1));
+  boost::function1<void,std::string> fMachineId( boost::bind(&UMS_Data::LocalAccount::setMachineId,boost::ref(localAccountInfo),_1));
+  boost::function1<void,std::string> fAcLogin( boost::bind(&UMS_Data::LocalAccount::setAcLogin,boost::ref(localAccountInfo),_1));
+  boost::function1<void,std::string> fHomeDirectory( boost::bind(&UMS_Data::LocalAccount::setHomeDirectory,boost::ref(localAccountInfo),_1));
 
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,configFile,fMachineId,
-      fAcLogin,fHomeDirectory,1);
+  boost::shared_ptr<Options> opt = makeLocalAccountOptions(av[0],
+      fUserId,
+      configFile,
+      fMachineId,
+      fAcLogin,
+      fHomeDirectory,
+      0);
 
   bool isEmpty;
-  //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-  AddLocalAccountFunc apiFunc(newAcLogin);
+  AddLocalAccountFunc apiFunc(localAccountInfo);
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main

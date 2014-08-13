@@ -31,7 +31,7 @@ struct UpDateMachineFunc {
   UMS_Data::Machine mupDateMachine;
 
   UpDateMachineFunc(UMS_Data::Machine upDateMachine):
-  mupDateMachine(upDateMachine)
+    mupDateMachine(upDateMachine)
   {};
 
   int operator()(std::string sessionKey) {
@@ -44,35 +44,25 @@ struct UpDateMachineFunc {
 int main (int ac, char* av[]){
 
 
-  /******* Parsed value containers ****************/
-
   string configFile;
-
-  /********** EMF data ************/
-
   UMS_Data::Machine upMachine;
 
-
-  /**************** Callback functions *************/
-
-  boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(upMachine),_1));
-
-  boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(upMachine),_1));
-
+  boost::function1<void,string> fHostAddress( boost::bind(&UMS_Data::Machine::setAddress,boost::ref(upMachine),_1));
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::Machine::setMachineId,boost::ref(upMachine),_1));
-
-  boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(upMachine),_1));
-
-  boost::function1<void,string> fMachineDescription( boost::bind(&UMS_Data::Machine::setMachineDescription,boost::ref(upMachine),_1));
-
+  boost::function1<void,string> fMachineDescription( boost::bind(&UMS_Data::Machine::setDescription,boost::ref(upMachine),_1));
   boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::Machine::setStatus,boost::ref(upMachine),_1));
 
   // Describe options
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,configFile, fSite,fLanguage,fMachineDescription);
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0],
+      configFile,
+      fMachineId,
+      fHostAddress,
+      fMachineDescription,
+      0);
 
 
   opt->add("machineId",
-           "The identifier of the machine",
+           "The machine identifier",
            HIDDEN,
            fMachineId,
            1);
@@ -85,7 +75,6 @@ int main (int ac, char* av[]){
            fStatus);
 
   bool isEmpty;
-  //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
 
 
