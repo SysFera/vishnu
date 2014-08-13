@@ -221,7 +221,7 @@ namespace vishnu
  * \param machineId Id of the machine
  * \return the name of the machine
  */
-  inline std::string getMachineName(const std::string& sessionKey, const std::string& machineId);
+  inline std::string getMachineAddress(const std::string& sessionKey, const std::string& machineId);
 
 
   /**

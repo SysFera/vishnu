@@ -14,10 +14,10 @@
  * @return A string
  */
 std::string
-vishnu::buildTransferBaseCommand(int type,
-                                 const bool& isRecursive,
-                                 const bool& useCompression,
-                                 int timeout) {
+vishnu::buildTransferCommand(int type,
+                             const bool& isRecursive,
+                             const bool& useCompression,
+                             int timeout) {
 
   std::string command;
   std::string options;
@@ -27,44 +27,43 @@ vishnu::buildTransferBaseCommand(int type,
   }
 
   switch (type) {
-  case vishnu::RSYNC_TRANSFER:
+    case vishnu::RSYNC_TRANSFER:
 
-    if (useCompression) {
-      options.append (" -z");
-    }
+      if (useCompression) {
+        options.append (" -z");
+      }
 
-    if (timeout) {
-      options.append(boost::str(boost::format(" --timeout=%1%") % timeout));
-    }
+      if (timeout) {
+        options.append(boost::str(boost::format(" --timeout=%1%") % timeout));
+      }
 
-    options.append("--rsh=\"ssh -t -q"
-                   " -o UserKnownHostsFile=/dev/null"
-                   " -o StrictHostKeyChecking=no"
-                   " -o PasswordAuthentication=no"
-                   " -o BatchMode=yes"
-                   " -o Compression=yes\" ");
+      options.append("--rsh=\"ssh -t -q"
+                     " -o UserKnownHostsFile=/dev/null"
+                     " -o StrictHostKeyChecking=no"
+                     " -o PasswordAuthentication=no"
+                     " -o BatchMode=yes"
+                     " -o Compression=yes\" ");
 
-    command = boost::str(boost::format("rsync -aPq %1%") % options);
-    break;
+      command = boost::str(boost::format("rsync -aPq %1%") % options);
+      break;
 
-  case vishnu::SCP_TRANSFER:
-  default:
+    case vishnu::SCP_TRANSFER:
+    default:
+      if (useCompression)  {
+        options.append(" -o Compression=yes");
+      }
 
-    if (useCompression)  {
-      options.append(" -o Compression=yes");
-    }
+      if (timeout >0) {
+        options.append( boost::str(boost::format(" -o ConnectTimeout=%1%") % timeout) );
+      }
 
-    if (timeout >0) {
-      options.append( boost::str(boost::format(" -o ConnectTimeout=%1%") % timeout) );
-    }
+      options.append(" -o UserKnownHostsFile=/dev/null"
+                     " -o StrictHostKeyChecking=no"
+                     " -o PasswordAuthentication=no"
+                     " -o BatchMode=yes");
 
-    options.append(" -o UserKnownHostsFile=/dev/null"
-                   " -o StrictHostKeyChecking=no"
-                   " -o PasswordAuthentication=no"
-                   " -o BatchMode=yes");
-
-    command = boost::str(boost::format("scp -q %1%") % options);
-    break;
+      command = boost::str(boost::format("scp -q %1%") % options);
+      break;
   }
   return command;
 }

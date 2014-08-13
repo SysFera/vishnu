@@ -88,7 +88,7 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
  * \brief Function to get the hostname of a machine id
  *  \param Id of the machine
  */
-std::string vishnu::getMachineName(const std::string& sessionKey, const std::string& machineId) {
+std::string vishnu::getMachineAddress(const std::string& sessionKey, const std::string& machineId) {
 
   UMS_Data::ListMachines machines;
   UMS_Data::ListMachineOptions mopts;
@@ -96,9 +96,9 @@ std::string vishnu::getMachineName(const std::string& sessionKey, const std::str
   mopts.setMachineId(machineId);
   vishnu::listMachines(sessionKey, machines, mopts);
   if (machines.getMachines().size() == 0) {
-    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to get the information concerning the machine "+machineId);
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to get the machine address: "+machineId);
   }
-  return machines.getMachines().get(0)->getName();
+  return machines.getMachines().get(0)->getAddress();
 }
 
 /**
@@ -157,8 +157,8 @@ vishnu::genericFileCopier(const std::string& sessionKey,
   src = srcMachineId.empty()? srcPath : srcMachineId+":"+srcPath;
   dest = destMachineId.empty()? destPath : destMachineId+":"+destPath;
   if (vishnu::cp(sessionKey, src, dest, copts) != 0) {
-    string srcMachine = (! srcMachineId.empty())? getMachineName(sessionKey, srcMachineId) : "localhost";
-    string destMachine = (! destMachineId.empty())? getMachineName(sessionKey, destMachineId) : "localhost";
+    string srcMachine = (! srcMachineId.empty())? getMachineAddress(sessionKey, srcMachineId) : "localhost";
+    string destMachine = (! destMachineId.empty())? getMachineAddress(sessionKey, destMachineId) : "localhost";
     string msg = boost::str(boost::format("error while copying the file %1% (machine: %2%) to %3% (machine: %4%)")
                             % src
                             % dest
@@ -308,8 +308,9 @@ vishnu::getMachineLoadPerformance(const string& sessionKey,
   } catch (VishnuException& ex) {
     std::cerr << ex.what() << std::endl;
   } catch(...) {
-    std::cerr << "E: error while calculating the load performance of the machine "
-              << machine->getMachineId() << " (" << machine->getName() <<")"<< std::endl;
+    std::cerr << boost::str(boost::format("E: error while calculating the load performance of machine: %1 (%2%)\n")
+                            % machine->getMachineId()
+                            % machine->getAddress());
   }
 
   return load ;
