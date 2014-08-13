@@ -151,7 +151,7 @@ FileTransferServer::updateDatabaseRecord()
   sqlUpdate+="processid=" + vishnu::convertToString(-1) + ",";
   sqlUpdate+="errorMsg='" + getDatabaseInstance()->escapeData(mfileTransfer.getErrorMsg()) + "',";
   sqlUpdate+="startTime=CURRENT_TIMESTAMP ";
-  sqlUpdate+="WHERE transferid='" + FileTransferServer::getDatabaseInstance()->escapeData(mfileTransfer.getTransferId()) + "';";
+  sqlUpdate+="WHERE numfiletransferid='" + FileTransferServer::getDatabaseInstance()->escapeData(mfileTransfer.getTransferId()) + "';";
   db->process(sqlUpdate);
 }
 
@@ -323,7 +323,7 @@ FileTransferServer::updateStatus(const FMS_Data::Status& status,
   std::string sqlUpdateRequest = "UPDATE filetransfer"
                                  " SET status="+vishnu::convertToString(status)+
                                  ", errorMsg='"+getDatabaseInstance()->escapeData(errorMsg)+"'"+
-                                 " WHERE transferid='"+getDatabaseInstance()->escapeData(transferId)+"'"
+                                 " WHERE numfiletransferid='"+getDatabaseInstance()->escapeData(transferId)+"'"
                                  + " and status<>2";
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest);
 }
@@ -331,7 +331,9 @@ FileTransferServer::updateStatus(const FMS_Data::Status& status,
 // get error message from database
 std::string
 FileTransferServer::getErrorFromDatabase(const std::string& transferid) {
-  std::string sqlCommand = "SELECT errormsg from filetransfer where transferid='"+ FileTransferServer::getDatabaseInstance()->escapeData(transferid) +"'";
+  std::string sqlCommand = "SELECT errormsg "
+                           " FROM filetransfer "
+                           " WHERE numfiletransferid='"+ FileTransferServer::getDatabaseInstance()->escapeData(transferid) +"'";
 
   boost::scoped_ptr<DatabaseResult> result(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
 
