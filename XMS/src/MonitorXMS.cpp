@@ -196,11 +196,8 @@ MonitorXMS::checkSession(){
 
 void
 MonitorXMS::checkFile(){
-  std::vector<std::string>::iterator iter;
-  std::vector<std::string> tmp;
-  std::string pid,transferId;
-  std::string sqlUpdatedRequest;
-  std::string sqlRequest = "SELECT transferid,processid "
+
+  std::string sqlRequest = "SELECT numfiletransferid, processid "
                            " FROM filetransfer,vsession"
                            " WHERE vsession.numsessionid=filetransfer.vsession_numsessionid "
                            " AND filetransfer.status=0";
@@ -208,17 +205,17 @@ MonitorXMS::checkFile(){
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest));
     if (result->getNbTuples() != 0) {
       for (size_t i = 0; i < result->getNbTuples(); ++i) {
-        tmp.clear();
-        tmp = result->get(i);
-        iter = tmp.begin();
-        transferId=*iter;
-        ++iter;
-        pid = *iter;
-        ++iter;
+        std::vector<std::string> dbResultEntry = result->get(i);
+        std::vector<std::string>::iterator dbResultEntryIter = dbResultEntry.begin();
+        std::string transferId=*dbResultEntryIter;
+        ++dbResultEntryIter;
+        std::string pid = *dbResultEntryIter;
+        ++dbResultEntryIter;
         try {
           if(false==vishnu::process_exists(vishnu::convertToString(pid))) {
-            sqlUpdatedRequest = "UPDATE filetransfer SET status=3 where transferid='"+transferId+"'";
-            mdatabaseVishnu->process(sqlUpdatedRequest);
+            std::string query = "UPDATE filetransfer SET status=3"
+                                " WHERE numfiletransferid='"+transferId+"'";
+            mdatabaseVishnu->process(query);
           }
         } catch (VishnuException& ex) {
           std::clog << boost::format("[FMSMONITOR][ERROR] %1%\n")%ex.what();
