@@ -130,7 +130,7 @@ int solveChangeGroup (diet_profile_t* profile) {
 
     // check the machine
     machineServer.checkMachine();
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -213,7 +213,7 @@ int solveChangeMode (diet_profile_t* profile) {
     machineServer.checkMachine();
 
     // get the machineName
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -285,7 +285,7 @@ int solveGetFileContent(diet_profile_t* profile) {
     machineServer.checkMachine();
 
     // get the machineName
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -359,7 +359,7 @@ solveGetInfos(diet_profile_t* profile) {
     machineServer.checkMachine();
 
     // get the machineName
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
 
@@ -444,7 +444,7 @@ int solveHeadFile(diet_profile_t* profile) {
     machineServer.checkMachine();
 
     // get the machineName
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -524,7 +524,7 @@ int solveListDir(diet_profile_t* profile) {
     machineServer.checkMachine();
 
     // get the machineName
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -608,7 +608,7 @@ int solveCreateDir(diet_profile_t* profile) {
     machineServer.checkMachine();
 
     // get the machineName
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -685,7 +685,7 @@ int solveCreateFile(diet_profile_t* profile) {
     machineServer.checkMachine();
 
     // get the machineName
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -757,7 +757,7 @@ int solveRemoveDir(diet_profile_t* profile) {
     machineServer.checkMachine();
 
     // get the machineName
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -835,7 +835,7 @@ int solveRemoveFile(diet_profile_t* profile) {
     machineServer.checkMachine();
 
     // get the machineName
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -914,7 +914,7 @@ int solveTailFile(diet_profile_t* profile) {
     MachineServer machineServer(machine);
 
     machineServer.checkMachine();
-    machineName = machineServer.getMachineName();
+    machineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
