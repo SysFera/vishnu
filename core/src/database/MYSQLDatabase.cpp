@@ -14,12 +14,10 @@
 #include <boost/format.hpp>
 #include <vector>
 
-using namespace std;
-using namespace vishnu;
 
-string dbErrorMsg(MYSQL *conn) {
+std::string dbErrorMsg(MYSQL *conn) {
   const char *msg = mysql_error(conn);
-  return msg != '\0' ? " {" + string(msg) + "}" : "";
+  return msg != '\0' ? " {" + std::string(msg) + "}" : "";
 }
 
 /**
@@ -31,7 +29,8 @@ string dbErrorMsg(MYSQL *conn) {
 std::pair<int, uint64_t>
 MYSQLDatabase::process(const std::string& query, int transacId)
 {
-  std::pair<MYSQL*, int> connectionInfo = getConnectionFromPool(transacId);
+  std::pair<MYSQL*, int>
+      connectionInfo = getConnectionFromPool(transacId);
 
   if (query.empty()) {
     releaseConnection(connectionInfo.second);
@@ -164,9 +163,9 @@ DatabaseResult*
 MYSQLDatabase::getResult(const std::string& request, int transacId) {
 
   // get connection info
-  std::pair<MYSQL*, int> connectionInfo = getConnectionFromPool(transacId);
+  std::pair<MYSQL*, int>
+      connectionInfo  = getConnectionFromPool(transacId);
 
-  // make query
   int rc = mysql_real_query(connectionInfo.first, request.c_str (), request.length());
   if (rc != 0) {
     raiseOnCriticalMysqlError(connectionInfo.first, connectionInfo.second);
@@ -186,21 +185,21 @@ MYSQLDatabase::getResult(const std::string& request, int transacId) {
 
   // Fetch rows data
   MYSQL_ROW row;
-  vector<string> rowStr;
-  vector<vector<string> > results;
+  std::vector<std::string> rowStr;
+  std::vector<std::vector<std::string> > results;
   while ((row = mysql_fetch_row(mysqlResultPtr))) {
     rowStr.clear();
     for (unsigned int i=0;i<size;i++){
-      rowStr.push_back(string(row[i] ? row[i] : ""));
+      rowStr.push_back(std::string(row[i] ? row[i] : ""));
     }
     results.push_back(rowStr);
   }
 
   // Fetch column names
   MYSQL_FIELD *field;
-  vector<string> attributesNames;
+  std::vector<std::string> attributesNames;
   while((field = mysql_fetch_field( mysqlResultPtr))) {
-    attributesNames.push_back(string(field->name));
+    attributesNames.push_back(std::string(field->name));
   }
 
   // Free the result
@@ -314,29 +313,6 @@ MYSQLDatabase::flush(int transactionID){
   mysql_commit(conn);
 }
 
-int
-MYSQLDatabase::generateId(string table, string fields, string val, int tid, std::string primary) {
-  std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
-  std::string getcpt("SELECT LAST_INSERT_ID() FROM "+table);
-  vector<string> results = vector<string>();
-  vector<string>::iterator iter;
-
-  try{
-    process(sqlCommand, tid);
-    boost::scoped_ptr<DatabaseResult> result(getResult(getcpt.c_str(), tid));
-    if (result->getNbTuples()==0) {
-      throw SystemException(ERRCODE_DBERR, "Failure generating the id");
-    }
-    results.clear();
-    results = result->get(0);
-    iter = results.begin();
-  } catch (SystemException& e){
-    throw (e);
-  }
-  return convertToInt(*iter);
-}
-
-
 /**
  * @brief escapeData : transform a sql data to a SQL-escaped string
  * @param data: the string to transform
@@ -370,8 +346,8 @@ MYSQLDatabase::lastInsertedId(int transactionId, std::string& errorMsg)
   try{
     boost::scoped_ptr<DatabaseResult> dbResult(getResult(query, transactionId));
     if (dbResult->getNbTuples() != 0) {
-      vector<string> resultList = dbResult->get(0);
-      lastId = convertToInt(*(resultList.begin()));
+      std::vector<std::string> resultList = dbResult->get(0);
+      lastId = vishnu::convertToInt(*(resultList.begin()));
     } else {
       errorMsg = boost::str(boost::format("%1% return %2% tuples") % query % dbResult->getNbTuples());
     }
