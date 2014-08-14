@@ -67,17 +67,17 @@ BOOST_AUTO_TEST_CASE(get_job_information_normal_call)
 
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo, options) == 0);
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
       ListJobs lsJobs;
       ListJobsOptions lsOptions;
-      lsOptions.setJobId(jobInfo.getJobId());
+      lsOptions.setJobId(jobInfo.getId());
       lsOptions.setMachineId(machineId);
       BOOST_REQUIRE(listJobs(sessionKey, lsJobs, lsOptions)==0  );
 
       Job job;
 
-      BOOST_CHECK_EQUAL(getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job), 0  );
+      BOOST_CHECK_EQUAL(getJobInfo(sessionKey, jobInfo.getId(), machineId, job), 0  );
 
     // Check the success of getJobInfo function
 
@@ -87,7 +87,7 @@ BOOST_AUTO_TEST_CASE(get_job_information_normal_call)
 
     //  Clean up: delete the submitted job
       CancelOptions cancelOpts;
-      cancelOpts.setJobId(jobInfo.getJobId());
+      cancelOpts.setJobId(jobInfo.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOpts)==0  );
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
@@ -134,14 +134,14 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_sessionKey)
 
       Job job;
 
-      BOOST_CHECK_THROW(getJobInfo("bad sessionKey ", jobInfo.getJobId(), machineId, job), VishnuException);
+      BOOST_CHECK_THROW(getJobInfo("bad sessionKey ", jobInfo.getId(), machineId, job), VishnuException);
 
       BOOST_TEST_MESSAGE("***********************  Get a job info: bad sessionKey  ok!!!!*****************************");
 
     //  Clean up: delete the submitted job
 
       CancelOptions cancelOpts;
-      cancelOpts.setJobId(jobInfo.getJobId());
+      cancelOpts.setJobId(jobInfo.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOpts) == 0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
