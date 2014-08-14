@@ -60,7 +60,7 @@ JobServer::JobServer(const std::string& authKey,
     mstandaloneSed = false;
   }
   checkMachineId(machineId);
-  vishnu::validateAuthKey(mauthKey, mmachineId, mdatabase, muserSessionInfo);
+  vishnu::validateAuthKey(mauthKey, mmachineId, mdatabase, msessionInfo);
 }
 
 
@@ -110,7 +110,7 @@ JobServer::submitJob(std::string& scriptContent,
         jobInfo.setLocalAccount( vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true, "root") );
         break;
       default:
-        jobInfo.setLocalAccount(vishnu::convertToString(muserSessionInfo.num_user));
+        jobInfo.setLocalAccount(vishnu::convertToString(msessionInfo.num_user));
         break;
     }
 
@@ -160,8 +160,8 @@ JobServer::handleSshBatchExec(int action,
                               int batchType,
                               const std::string& batchVersion)
 {
-  SSHJobExec sshJobExec(muserSessionInfo.user_aclogin,
-                        muserSessionInfo.machine_address,
+  SSHJobExec sshJobExec(msessionInfo.user_aclogin,
+                        msessionInfo.machine_address,
                         static_cast<BatchType>(batchType),
                         batchVersion, // ignored for POSIX backend
                         JsonObject::serialize(baseJobInfo),
@@ -235,7 +235,7 @@ JobServer::handleNativeBatchExec(int action,
 
     // if not cloud-mode submission, switch user before running the request
     if (! isCloudBackend(mbatchType)) {
-      processExitCode = setuid(getSystemUid(muserSessionInfo.user_aclogin));
+      processExitCode = setuid(getSystemUid(msessionInfo.user_aclogin));
       if (processExitCode != 0) { // write error message to pipe for the parent
         errorMsg = std::string(strerror(errno));
         write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
@@ -612,7 +612,7 @@ JobServer::setRealFilePaths(std::string& scriptContent,
                             JsonObject* options,
                             TMS_Data::Job& jobInfo)
 {
-  std::string workingDir = muserSessionInfo.user_achome;
+  std::string workingDir = msessionInfo.user_achome;
   std::string scriptPath = "";
   std::string inputDir = "";
 
@@ -822,7 +822,7 @@ JobServer::createJobScriptExecutaleFile(std::string& content,
   vishnu::saveInFile(path, processScript(content,
                                          options,
                                          defaultBatchOption,
-                                         muserSessionInfo.machine_address));
+                                         msessionInfo.machine_address));
 
   vishnu::makeFileExecutable(path);
 
@@ -862,24 +862,24 @@ JobServer::dbSave(int action, TMS_Data::Job& job)
   } else if (action == SubmitBatchAction) {
     // Append the machine name to the error and output path if necessary
     size_t pos = job.getOutputPath().find(":");
-    std::string prefixOutputPath = (pos == std::string::npos)? muserSessionInfo.machine_address+":" : "";
+    std::string prefixOutputPath = (pos == std::string::npos)? msessionInfo.machine_address+":" : "";
     job.setOutputPath(prefixOutputPath+job.getOutputPath());
     pos = job.getErrorPath().find(":");
-    std::string prefixErrorPath = (pos == std::string::npos)? muserSessionInfo.machine_address+":" : "";
+    std::string prefixErrorPath = (pos == std::string::npos)? msessionInfo.machine_address+":" : "";
     job.setErrorPath(prefixErrorPath+job.getErrorPath());
 
     std::string query = boost::str(
                           boost::format("INSERT INTO job"
-                                        "(name, batchType, batchJobId, scriptpath, outputPath, errorPath, outputDir,"
-                                        "nbCpus, workingdir, status, submitDate, queue, groupName, description,"
-                                        "memLimit, nbNodes, nbNodesAndCpuPerNode, wallClockLimit, priority,"
-                                        "work_id, relatedSteps, vmId, vmIp,"
-                                        "vsession_numsessionid, users_numuserid, machine_nummachineid)"
-                                        "VALUES('%1%', '%2%', '%3%', '%4%', '%5%', '%6%', '%7%',"
-                                        "'%8%', '%9%','%10%','%11%','%12%','%13%','%14%',"
-                                        "'%15%', '%16%', '%17%', '%18%',%19%,"
-                                        "%20%, '%21%', '%22%','%23%',"
-                                        " %24%, %25%, %26%)")
+                                        "  (name, batchType, batchJobId, scriptpath, outputPath, errorPath, outputDir,"
+                                        "   nbCpus, workingdir, status, submitDate, queue, groupName, description,"
+                                        "   memLimit, nbNodes, nbNodesAndCpuPerNode, wallClockLimit, priority,"
+                                        "   work_id, relatedSteps, vmId, vmIp,"
+                                        "   vsession_numsessionid, users_numuserid, machine_nummachineid)"
+                                        " VALUES('%1%', %2%, '%3%', '%4%', '%5%', '%6%', '%7%',"
+                                        "   %8%, '%9%', %10%, CURRENT_TIMESTAMP,'%11%','%12%', '%13%',"  /* CURRENT_TIMESTAMP => submit time*/
+                                        "   %14%, %15%, '%16%', %17%, %18%,"
+                                        "   %19%, '%20%', '%21%', '%22%',"
+                                        "   %23%, %24%, %25%);")
                           % job.getName()
                           % mbatchType
                           % job.getBatchJobId()
@@ -890,7 +890,6 @@ JobServer::dbSave(int action, TMS_Data::Job& job)
                           % job.getNbCpus()
                           % job.getWorkingDir()
                           % job.getStatus()
-                          % "CURRENT_TIMESTAMP" //job.getSubmitDate()
                           % job.getQueue()
                           % job.getGroupName()
                           % job.getDescription()
@@ -903,9 +902,9 @@ JobServer::dbSave(int action, TMS_Data::Job& job)
                           % job.getRelatedSteps()
                           % job.getVmId()
                           % job.getVmIp()
-                          % muserSessionInfo.num_session
-                          % muserSessionInfo.num_user
-                          % muserSessionInfo.num_machine
+                          % msessionInfo.num_session
+                          % msessionInfo.num_user
+                          % msessionInfo.num_machine
                           );
 
     std::pair<int, uint64_t>
@@ -915,16 +914,12 @@ JobServer::dbSave(int action, TMS_Data::Job& job)
 
     // logging
     if (job.getSubmitError().empty()) {
-      LOG(boost::str(
-            boost::format("[INFO] job submitted: %1%. User: %2%. Owner: %3%")
-            % job.getId()
-            % muserSessionInfo.userid
-            % muserSessionInfo.user_aclogin), LogInfo);
+      LOG((boost::format("[INFO] job submitted: %1%. User: %2%. Owner: %3%")
+           % job.getId() % msessionInfo.userid % msessionInfo.user_aclogin).str(),
+          LogInfo);
     } else {
-      LOG((boost::str(
-             boost::format("[WARN] submission error: %1% [%2%]")
-             % job.getId()
-             % job.getSubmitError())), LogWarning);
+      LOG((boost::format("[WARN] submission error: %1% [%2%]") % job.getId() % job.getSubmitError()).str(),
+          LogWarning);
     }
   } else {
     throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");
