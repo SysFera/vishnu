@@ -75,6 +75,14 @@ namespace vishnu {
   convertToLong(const std::string& val) ;
 
   /**
+   * @brief Convert a time_t to timestamp string
+   * @param seconds Number of second since epoch
+   * @return
+   */
+  std::string
+  timeToTimestamp(time_t seconds);
+
+  /**
  * \brief To crypt a password
  * \param salt The salt to use to crypt
  * \param password The password to crypt
@@ -314,6 +322,15 @@ namespace vishnu {
  */
   void
   makeFileExecutable(const std::string& path);
+
+
+  /**
+   * @brief Remove machine prefix on the path and return the resulting path
+   * @param path The path in the form of  [machine:]/real/path. [] means optional
+   * @return The real path on the machine
+   */
+  std::string
+  removeMachinePrefix(const std::string& path);
 
 } //END NAMESPACE
 #endif // _UTILVISHNU_H_
