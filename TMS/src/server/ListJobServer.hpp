@@ -78,21 +78,17 @@ public:
       query.append(cond);
     }
 
-    time_t fromSubmitDate = static_cast<time_t>(options->getFromSubmitDate());
-    if (fromSubmitDate > 0) {
-      std::string textTime = boost::posix_time::to_iso_string(boost::posix_time::from_time_t(fromSubmitDate));
+    if (options->getFromSubmitDate() > 0) {
       std::string cond = boost::str(
                            boost::format(" AND job.submitDate >= '%1%'")
-                           % mdatabase->escapeData(textTime));
+                           % vishnu::timeToTimestamp(options->getFromSubmitDate() ));
       query.append(cond);
     }
 
-    time_t toSubmitDate = static_cast<time_t>(options->getToSubmitDate());
-    if (toSubmitDate > 0) {
-      std::string textTime = boost::posix_time::to_iso_string(boost::posix_time::from_time_t(toSubmitDate));
+    if (options->getToSubmitDate() > 0) {
       std::string cond = boost::str(
                            boost::format(" AND job.submitDate <= '%1%'")
-                           % mdatabase->escapeData(textTime));
+                           % vishnu::timeToTimestamp(options->getToSubmitDate()) );
       query.append(cond);
     }
 
