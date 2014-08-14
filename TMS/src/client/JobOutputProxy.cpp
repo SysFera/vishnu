@@ -92,18 +92,20 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
     boost::split(lineVec, line, boost::is_any_of(" "));
     int nbFiles = lineVec.size();
 
-    std::string missingFileContent = "";
+    std::string missingFileContent;
     if (! line.empty() && nbFiles > 0) {
       vishnu::copyFiles(sessionKey, mmachineId, lineVec, outputDir, copts, missingFileContent, 0);
       std::string outputPath = "";
       std::string errorPath = "";
       if (nbFiles >= 1) {
-        outputPath = boost::str(boost::format("%1%/%2%%3%")
-                                % outputDir % bfs::basename(lineVec[0]) % bfs::extension(lineVec[0]));
+        outputPath = boost::str(
+                       boost::format("%1%/%2%%3%")
+                       % outputDir % bfs::basename(lineVec[0]) % bfs::extension(lineVec[0]));
       }
       if (nbFiles >= 2) {
-        errorPath = boost::str(boost::format("%1%/%2%%3%")
-                               % outputDir % bfs::basename(lineVec[1]) % bfs::extension(lineVec[0]));
+        errorPath = boost::str(
+                      boost::format("%1%/%2%%3%")
+                      % outputDir % bfs::basename(lineVec[1]) % bfs::extension(lineVec[0]));
       }
       jobResult.setOutputPath(outputPath);
       jobResult.setErrorPath(errorPath);

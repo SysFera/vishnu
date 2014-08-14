@@ -121,7 +121,7 @@ void vishnu::copyFiles(const std::string& sessionKey,
 {
   missingFiles.clear();
   int nbFiles = remoteFileList.size() ;
-  for (int index=startPos; index < nbFiles; ++index) {
+  for (int index = startPos; index < nbFiles; ++index) {
     try {
       genericFileCopier(sessionKey,
                         sourceMachineId,
@@ -159,11 +159,12 @@ vishnu::genericFileCopier(const std::string& sessionKey,
   if (vishnu::cp(sessionKey, src, dest, copts) != 0) {
     string srcMachine = (! srcMachineId.empty())? getMachineAddress(sessionKey, srcMachineId) : "localhost";
     string destMachine = (! destMachineId.empty())? getMachineAddress(sessionKey, destMachineId) : "localhost";
-    string msg = boost::str(boost::format("error while copying the file %1% (machine: %2%) to %3% (machine: %4%)")
-                            % src
-                            % dest
-                            % srcMachine
-                            % destMachine);
+    string msg = boost::str(
+                   boost::format("error while copying %1%:%2% %3%:%4%")
+                   % dest
+                   % src
+                   % destMachine
+                   % srcMachine);
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, msg);
   }
   return dest;

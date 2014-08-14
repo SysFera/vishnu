@@ -19,9 +19,6 @@
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
-
 struct JobProgressFunc {
 
   TMS_Data::ProgressOptions mprogOp;
@@ -34,7 +31,7 @@ struct JobProgressFunc {
 
   int operator()(std::string sessionKey) {
     TMS_Data::ListProgression prog;
-    int res = getJobProgress(sessionKey, prog, mprogOp);
+    int res = vishnu::getJobProgress(sessionKey, prog, mprogOp);
     if (mprogOp.getJobId().empty() && mprogOp.getUser().empty()) {
       std::cout << prog << std::endl;
     } else {
@@ -57,9 +54,9 @@ struct JobProgressFunc {
  */
 boost::shared_ptr<Options>
 makeGetJobProgOp(std::string pgName,
-                 boost::function1<void, string>& setJobIdFct,
-                 boost::function1<void, string>& setUser,
-                 boost::function1<void, string>& setMachineIdFct,
+                 boost::function1<void, std::string>& setJobIdFct,
+                 boost::function1<void, std::string>& setUser,
+                 boost::function1<void, std::string>& setMachineIdFct,
                  std::string& sessionKey,
                  std::string& configFile) {
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -100,9 +97,9 @@ int main (int argc, char* argv[]){
 
   // Declare the obtions object, the related callbacks
   TMS_Data::ProgressOptions progOp;
-  boost::function1<void,string> setJobIdFct(boost::bind(&TMS_Data::ProgressOptions::setJobId,boost::ref(progOp),_1));
-  boost::function1<void,string> setUserFct(boost::bind(&TMS_Data::ProgressOptions::setUser,boost::ref(progOp),_1));
-  boost::function1<void,string> setMachineIdFct(boost::bind(&TMS_Data::ProgressOptions::setMachineId,boost::ref(progOp),_1));
+  boost::function1<void,std::string> setJobIdFct(boost::bind(&TMS_Data::ProgressOptions::setJobId,boost::ref(progOp),_1));
+  boost::function1<void,std::string> setUserFct(boost::bind(&TMS_Data::ProgressOptions::setUser,boost::ref(progOp),_1));
+  boost::function1<void,std::string> setMachineIdFct(boost::bind(&TMS_Data::ProgressOptions::setMachineId,boost::ref(progOp),_1));
 
   boost::shared_ptr<Options> opt = makeGetJobProgOp(argv[0], setJobIdFct, setUserFct, setMachineIdFct, sessionKey, configFile);
 
