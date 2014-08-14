@@ -275,7 +275,7 @@ private:
    * @return
    */
   bool
-  isAdminSession(void) {return muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN;}
+  isAdminSession(void) {return msessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN;}
 
 private:
 
@@ -287,7 +287,7 @@ private:
   /**
    * @brief Information about the user and the session
    */
-  UserSessionInfo muserSessionInfo;
+  UserSessionInfo msessionInfo;
 
   /**
    * \brief The machine identifier
