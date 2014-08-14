@@ -35,7 +35,7 @@ namespace bfs= boost::filesystem;
 
 // The database, UMS and TMS SeD are launched by TMSSedFixture.
 
-//BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, workingdir),0  );
+//BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getId(), outputInfos, workingdir),0  );
 
 //bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath())) ;
 
@@ -55,7 +55,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
 
-//  // get the session key and the machine identifier
+  //  // get the session key and the machine identifier
 
   string sessionKey=vc.getConnexion();
 
@@ -78,13 +78,13 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 
       BOOST_CHECK_EQUAL(submitJob(sessionKey, scriptFilePath, jobInfo, subOptions), 0);
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
       // To check the success of submitJob function
 
       ListJobs lsJobs;
       ListJobsOptions lsOptions;
-      lsOptions.setJobId(jobInfo.getJobId());
+      lsOptions.setJobId(jobInfo.getId());
       lsOptions.setMachineId(machineId);
       BOOST_REQUIRE(listJobs(sessionKey, lsJobs, lsOptions)==0  );
 
@@ -92,9 +92,9 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 
       BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*****************************");
 
-  //  Clean up: delete the submitted job
+      //  Clean up: delete the submitted job
       CancelOptions cancelOptions;
-      cancelOptions.setJobId(jobInfo.getJobId());
+      cancelOptions.setJobId(jobInfo.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions)==0  );
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
@@ -139,10 +139,10 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
       subOptions.setMachine(machineId);
       BOOST_CHECK_EQUAL(submitJob(sessionKey, scriptFilePath, jobInfo,subOptions),0  );
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
       Job job;
-      getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
+      getJobInfo(sessionKey, jobInfo.getId(), machineId, job);
 
       while (vishnu::STATE_COMPLETED!=job.getStatus()){
         BOOST_TEST_MESSAGE("************ The job status is " << job.getStatus() );
@@ -150,14 +150,14 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
         bpt::seconds sleepTime(5);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
+        getJobInfo(sessionKey, jobInfo.getId(), machineId, job);
         BOOST_TEST_MESSAGE("************ The job status2 is " << job.getStatus() );
       }
 
       JobResult outputInfos;
       JobOutputOptions ouputOptions;
 
-      BOOST_CHECK_EQUAL(getJobOutput(sessionKey, jobInfo.getJobId(), outputInfos, ouputOptions), 0);
+      BOOST_CHECK_EQUAL(getJobOutput(sessionKey, jobInfo.getId(), outputInfos, ouputOptions), 0);
       BOOST_TEST_MESSAGE("************ outputInfos.getOutputPath() = " << outputInfos.getOutputPath());
       std::string jobOutputPath = outputInfos.getOutputPath();
       //To get the content of the output
@@ -176,43 +176,43 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
         jobOutputContent = oss.str();
         ifile.close();
 
-//    //
-//    // FIXME DO NOT WORK
-//    // GENERATED FILE DOES NOT CONTAIN THE VALUES : BIG FAILURE
-//    //
-//              vishnuEnvId = findValue(jobOutputContent, "#TEST_JOB_ID:");
-//              batchEnvId = findValue(jobOutputContent, "#BATCH_JOB_ID:");
-//              vishnuEnvName  = findValue(jobOutputContent, "#TEST_JOB_NAME:");
-//              batchEnvName  = findValue(jobOutputContent, "#BATCH_JOB_NAME:");
-//
-//              /* iThe following tests below are difficult: because ALL batchs do not provide environment variable for
-//                * the number of nodes and the nodes file
-//              */
-//              /*
-//                  std::string tmp = findValue(jobOutputContent, "#TEST_NUM_NODES:");
-//                  if(!tmp.empty()) {
-//                  std::istringstream iss(tmp);
-//                  iss >> envNbNodes;
-//                  }
-//                  vishnuNodesFile = findValue(jobOutputContent, "#TEST_NODEFILE:");
-//                  */
-//
-//              /* Only VISHNU provides this variable: VISHNU_SUBMIT_MACHINE_NAME
-//                */
-//              envSubmitMachine = findValue(jobOutputContent, "TEST_SUBMIT_MACHINE_NAME:");
-//
-//            }
-//
-//            BOOST_TEST_MESSAGE("*********************** vishnuEnvId=" << vishnuEnvId);
-//            BOOST_TEST_MESSAGE("*********************** vishnuEnvName=" << vishnuEnvName);
-//            BOOST_TEST_MESSAGE("*********************** envSubmitMachine=" << envSubmitMachine);
-//
-//            BOOST_TEST_MESSAGE("*********************** batchEnvId=" << batchEnvId);
-//            BOOST_TEST_MESSAGE("*********************** batchEnvName=" << batchEnvName);
-//            BOOST_TEST_MESSAGE("*********************** jobSubmitMachineName=" << job.getSubmitMachineName());
-//
-//    // TODO FAIL WITH TORQUE / POSIX WITH STUPID RESULTS
-//            BOOST_REQUIRE((vishnuEnvId==batchEnvId) && (vishnuEnvName==batchEnvName) && (envSubmitMachine==job.getSubmitMachineName()));
+        //    //
+        //    // FIXME DO NOT WORK
+        //    // GENERATED FILE DOES NOT CONTAIN THE VALUES : BIG FAILURE
+        //    //
+        //              vishnuEnvId = findValue(jobOutputContent, "#TEST_JOB_ID:");
+        //              batchEnvId = findValue(jobOutputContent, "#BATCH_JOB_ID:");
+        //              vishnuEnvName  = findValue(jobOutputContent, "#TEST_JOB_NAME:");
+        //              batchEnvName  = findValue(jobOutputContent, "#BATCH_JOB_NAME:");
+        //
+        //              /* iThe following tests below are difficult: because ALL batchs do not provide environment variable for
+        //                * the number of nodes and the nodes file
+        //              */
+        //              /*
+        //                  std::string tmp = findValue(jobOutputContent, "#TEST_NUM_NODES:");
+        //                  if(!tmp.empty()) {
+        //                  std::istringstream iss(tmp);
+        //                  iss >> envNbNodes;
+        //                  }
+        //                  vishnuNodesFile = findValue(jobOutputContent, "#TEST_NODEFILE:");
+        //                  */
+        //
+        //              /* Only VISHNU provides this variable: VISHNU_SUBMIT_MACHINE_NAME
+        //                */
+        //              envSubmitMachine = findValue(jobOutputContent, "TEST_SUBMIT_MACHINE_NAME:");
+        //
+        //            }
+        //
+        //            BOOST_TEST_MESSAGE("*********************** vishnuEnvId=" << vishnuEnvId);
+        //            BOOST_TEST_MESSAGE("*********************** vishnuEnvName=" << vishnuEnvName);
+        //            BOOST_TEST_MESSAGE("*********************** envSubmitMachine=" << envSubmitMachine);
+        //
+        //            BOOST_TEST_MESSAGE("*********************** batchEnvId=" << batchEnvId);
+        //            BOOST_TEST_MESSAGE("*********************** batchEnvName=" << batchEnvName);
+        //            BOOST_TEST_MESSAGE("*********************** jobSubmitMachineName=" << job.getSubmitMachineName());
+        //
+        //    // TODO FAIL WITH TORQUE / POSIX WITH STUPID RESULTS
+        //            BOOST_REQUIRE((vishnuEnvId==batchEnvId) && (vishnuEnvName==batchEnvName) && (envSubmitMachine==job.getSubmitMachineName()));
       }
 
       BOOST_TEST_MESSAGE("***********************  submit a job: normal call2   ok!!!!*****************************");
@@ -235,16 +235,16 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
 BOOST_AUTO_TEST_CASE(submit_a_Job_bad_sessionKey)
 {
 
- BOOST_TEST_MESSAGE("Testing bad session Key for job submission (use case T1.1)");
+  BOOST_TEST_MESSAGE("Testing bad session Key for job submission (use case T1.1)");
 
- for(int i = 0; i < m_test_tms_machines.size();++i)
- {
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
 
-   std::string machineId= m_test_tms_machines.at(i).machine_id;
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
 
-   //Setting submitjob parameters
+    //Setting submitjob parameters
 
-   const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
+    const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
     Job jobInfo;
     SubmitOptions subOptions;
     subOptions.setMachine(machineId);
@@ -253,7 +253,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_sessionKey)
     BOOST_CHECK(bfs::remove_all(script)==1);
     BOOST_TEST_MESSAGE("***********************  submit a job: bad sessionKey    ok!!!!*****************************");
 
- }
+  }
 
 
 }
@@ -372,10 +372,10 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_path)
     Job jobInfo2;
     SubmitOptions subOptions;
     BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId1, scriptFilePathWaiting, jobInfo,subOptions),0 );
-    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
     BOOST_CHECK_EQUAL(submitJob(sessionKey, autom, scriptFilePath, jobInfo2, subOptions),0 );
-    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo2.getJobId() );
+    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo2.getId() );
 
     BOOST_TEST_MESSAGE("************ Submit machine Id " << jobInfo2.getSubmitMachineId() );
     BOOST_CHECK_EQUAL(jobInfo2.getSubmitMachineId().compare(machineId2), 0);

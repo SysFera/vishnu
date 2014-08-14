@@ -386,13 +386,13 @@ string VishnuConnexion::getConnexion(){
 
 bool operator== (const TMS_Data::Job& lJob,const TMS_Data::Job& rJob ){
 
-  return ( (lJob.getJobId() == rJob.getJobId())
-           && (lJob.getSubmitMachineId() == rJob.getSubmitMachineId())
-           && (lJob.getJobPath() == rJob.getJobPath())
-           && (lJob.getJobName() == rJob.getJobName())
-           && (lJob.getJobPrio() == rJob.getJobPrio())
-           && (lJob.getOwner() == rJob.getOwner() )
-           && (lJob.getJobQueue() == rJob.getJobQueue() )
+  return ( (lJob.getId() == rJob.getId())
+           && (lJob.getMachine() == rJob.getMachine())
+           && (lJob.getPath() == rJob.getPath())
+           && (lJob.getName() == rJob.getName())
+           && (lJob.getPriority() == rJob.getPriority())
+           && (lJob.getLocalAccount() == rJob.getLocalAccount() )
+           && (lJob.getQueue() == rJob.getQueue() )
            && (lJob.getWallClockLimit() == rJob.getWallClockLimit() )
 
 
