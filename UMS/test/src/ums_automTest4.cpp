@@ -47,13 +47,10 @@ BOOST_AUTO_TEST_CASE( Machine_base )
   {
 
 
-    BOOST_CHECK  (connect    (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    BOOST_CHECK  (connect   (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     ma.setMachineId         (maid);
-    ma.setName              (mana);
-    ma.setSite              (site);
-    ma.setMachineDescription(desc);
-    ma.setLanguage          (lang);
-    ma.setSshPublicKey      ("id_rsa.pub");
+    ma.setAddress           (mana);
+    ma.setDescription       (desc);
     BOOST_CHECK    (addMachine (sess.getSessionKey(), ma            )==0);
     BOOST_CHECK    (close      (sess.getSessionKey()                )==0);
   }
@@ -61,7 +58,7 @@ BOOST_AUTO_TEST_CASE( Machine_base )
   BOOST_MESSAGE(" Testing update machine UA6.4B"    );
   {
     BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
-    ma.setName("Machina");
+    ma.setAddress("Machina");
     BOOST_CHECK    (updateMachine(sess.getSessionKey(), ma            )==0);
     BOOST_CHECK    (close        (sess.getSessionKey()                )==0);
 
@@ -83,9 +80,9 @@ BOOST_AUTO_TEST_CASE( Machine_base )
     BOOST_CHECK (lim->getMachines().size() > 0);
     // Irrelevant test, if you have various machines you can't know which one will be returned as the first
     // by this test, and the basic user may not have access to this machine
-//    if (lim->getMachines().size()>0) {
-//      BOOST_CHECK((lim->getMachines()[0]->getMachineId()).compare(m_test_ums_user_vishnu_machineid) == 0);
-//    }
+    //    if (lim->getMachines().size()>0) {
+    //      BOOST_CHECK((lim->getMachines()[0]->getMachineId()).compare(m_test_ums_user_vishnu_machineid) == 0);
+    //    }
   }
 
 
@@ -124,11 +121,8 @@ BOOST_AUTO_TEST_CASE( Machine_failure )
   string lang = "fr"       ;
   Machine ma;
   ma.setMachineId         (maid);
-  ma.setName              (mana);
-  ma.setSite              (site);
-  ma.setMachineDescription(desc);
-  ma.setLanguage          (lang);
-  ma.setSshPublicKey      ("id_rsa.pub");
+  ma.setAddress           (mana);
+  ma.setDescription       (desc);
   ListMachines_ptr        lim  = ecoreFactory->createListMachines();
   ListMachineOptions      liom ;
 
