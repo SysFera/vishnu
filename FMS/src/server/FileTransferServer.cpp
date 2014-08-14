@@ -136,10 +136,10 @@ FileTransferServer::getMachineUserPair(void)
 void
 FileTransferServer::updateDatabaseRecord()
 {
+  std::string numSession = msessionServer.getAttributFromSessionKey( msessionServer.getData().getSessionKey(), "numsessionid" );
   Database* db = FileTransferServer::getDatabaseInstance();
-  std::string sqlUpdate="UPDATE filetransfer set ";
-  sqlUpdate+="vsession_numsessionid=" + msessionServer.getAttributFromSessionKey( msessionServer.getData().getSessionKey(), "numsessionid" ) + ",";
-  sqlUpdate+="userId='" + getDatabaseInstance()->escapeData(mfileTransfer.getUserId()) + "',";
+  std::string sqlUpdate="UPDATE filetransfer SET ";
+  sqlUpdate+="vsession_numsessionid=" + numSession + ",";
   sqlUpdate+="clientMachineId='" + getDatabaseInstance()->escapeData(mfileTransfer.getClientMachineId()) + "',";
   sqlUpdate+="sourceMachineId='" + getDatabaseInstance()->escapeData(mfileTransfer.getSourceMachineId()) + "',";
   sqlUpdate+="destinationMachineId='" + db->escapeData(mfileTransfer.getDestinationMachineId()) + "',";
@@ -645,25 +645,25 @@ void
 FileTransferServer::dbSave(void)
 {
   Database* db = getDatabaseInstance();
-
-  std::string query = boost::str(boost::format("INSERT INTO filetransfer"
-                                               " (vsession_numsessionid, userId, clientMachineId, sourceMachineId,"
-                                               " destinationMachineId, sourceFilePath, destinationFilePath,"
-                                               " status, fileSize, trCommand, processid, errorMsg, startTime)"
-                                               " VALUES(%1%,'%2%','%3%','%4%','%5%','%6%','%7%',%8%,%9%,%10%,%11%,'%12%',%13%)")
-                                 % msessionServer.getAttributFromSessionKey(msessionServer.getData().getSessionKey(), "numsessionid")
-                                 % getDatabaseInstance()->escapeData(mfileTransfer.getUserId())
-                                 % getDatabaseInstance()->escapeData(mfileTransfer.getClientMachineId())
-                                 % getDatabaseInstance()->escapeData(mfileTransfer.getSourceMachineId())
-                                 % db->escapeData(mfileTransfer.getDestinationMachineId())
-                                 % db->escapeData(mfileTransfer.getSourceFilePath())
-                                 % db->escapeData(mfileTransfer.getDestinationFilePath())
-                                 % vishnu::convertToString(mfileTransfer.getStatus())
-                                 % vishnu::convertToString(mfileTransfer.getSize())
-                                 % vishnu::convertToString(mfileTransfer.getTrCommand())
-                                 % vishnu::convertToString(-1)
-                                 % getDatabaseInstance()->escapeData(mfileTransfer.getErrorMsg())
-                                 % "CURRENT_TIMESTAMP");
+  std::string numSession = msessionServer.getAttributFromSessionKey(msessionServer.getData().getSessionKey(), "numsessionid");
+  std::string query = boost::str(
+                        boost::format("INSERT INTO filetransfer"
+                                      " (vsession_numsessionid, clientMachineId, sourceMachineId,"
+                                      " destinationMachineId, sourceFilePath, destinationFilePath,"
+                                      " status, fileSize, trCommand, processid, errorMsg, startTime)"
+                                      " VALUES(%1%,'%2%','%3%','%4%','%5%','%6%',%7%,%8%,%9%,%10%,'%11%',%12%)")
+                        % numSession
+                        % getDatabaseInstance()->escapeData(mfileTransfer.getClientMachineId())
+                        % getDatabaseInstance()->escapeData(mfileTransfer.getSourceMachineId())
+                        % db->escapeData(mfileTransfer.getDestinationMachineId())
+                        % db->escapeData(mfileTransfer.getSourceFilePath())
+                        % db->escapeData(mfileTransfer.getDestinationFilePath())
+                        % vishnu::convertToString(mfileTransfer.getStatus())
+                        % vishnu::convertToString(mfileTransfer.getSize())
+                        % vishnu::convertToString(mfileTransfer.getTrCommand())
+                        % vishnu::convertToString(-1)
+                        % getDatabaseInstance()->escapeData(mfileTransfer.getErrorMsg())
+                        % "CURRENT_TIMESTAMP");
 
 
   std::pair<int, u_int64_t> result = db->process(query);
