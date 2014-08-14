@@ -6,6 +6,7 @@
  */
 
 #include <boost/format.hpp>
+#include "ListJobServer.hpp"
 #include "JobOutputServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "LocalAccountServer.hpp"
@@ -39,48 +40,30 @@ JobOutputServer::JobOutputServer(const std::string& authKey,
 TMS_Data::JobResult
 JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
 
-  //To get the output and error path of the job
-  std::string query;
+  ListJobServer jobLister(mauthKey);
+  TMS_Data::ListJobsOptions jobListerOptions;
+
+  jobListerOptions.setJobId(jobId);
 
   std::string machineId = options->getStringProperty("machineid");
-  if (! machineId.empty()){
-    query = boost::str(
-              boost::format("SELECT outputPath, errorPath, owner, job.status, outputDir "
-                            " FROM job, machine"
-                            " WHERE job.id='%1%'"
-                            "   AND machine.machineid='%2%'"
-                            "   AND machine.nummachineid=job.machine_nummachineid;"
-                            )
-              % mdatabaseInstance->escapeData(jobId)
-              % machineId);
-  } else {
-    query = boost::str(
-              boost::format("SELECT outputPath, errorPath, owner, status, outputDir"
-                            " FROM job"
-                            " WHERE job.jobId='%1%';"
-                            )
-              % mdatabaseInstance->escapeData(jobId));
+  if (! machineId.empty()) {
+    jobListerOptions.setMachineId(machineId);
+  }
+  // query job list
+  boost::scoped_ptr<TMS_Data::ListJobs> jobList( jobLister.list(&jobListerOptions) );
+
+  if (jobList->getNbJobs() == 0) {
+    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID,jobId);
   }
 
-  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(query));
-  if(sqlResult->getNbTuples() == 0) {
-    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
-  }
+  TMS_Data::Job job = *(jobList->getJobs().at(0));
 
-  std::vector<std::string> results = sqlResult->get(0);
-  std::vector<std::string>::iterator iter = results.begin();
-  std::string outputPath = *iter++;
-  std::string errorPath = *iter++;
-  std::string owner = *iter++;
-  int status = vishnu::convertToInt( *iter++ );
-  std::string outputDir = *iter++;
-
-  if (owner != muserSessionInfo.user_aclogin) {
+  if (job.getLocalAccount() != muserSessionInfo.user_aclogin) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't get the output of "
                              "this job because it is for an other owner");
   }
 
-  switch(status) {
+  switch(job.getStatus()) {
     case vishnu::STATE_COMPLETED:
     case vishnu::STATE_DOWNLOADED:
       break;
@@ -98,15 +81,15 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
       break;
   }
 
-  outputPath = outputPath.substr(outputPath.find(":")+1);
-  errorPath = errorPath.substr(errorPath.find(":")+1);
+  LOG(boost::str(boost::format("[INFO] Get job ouput: %1%. aclogin: %2%")
+                 % job.getId()
+                 % job.getLocalAccount()),
+      LogInfo);
 
-  mjobResult.setOutputDir(outputDir) ;
-  mjobResult.setOutputPath(outputPath) ;
-  mjobResult.setErrorPath(errorPath) ;
-  LOG(boost::str(boost::format("[INFO] request to job ouput: %1%. aclogin: %2%")
-                 % jobId
-                 % owner), LogInfo);
+  mjobResult.setJobId(job.getId());
+  mjobResult.setOutputDir(job.getOutputDir());
+  mjobResult.setErrorPath( vishnu::removeMachinePrefix( job.getErrorPath() ) );
+  mjobResult.setOutputPath( vishnu::removeMachinePrefix( job.getOutputPath() ) );
 
   return mjobResult;
 }
@@ -117,97 +100,62 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
  * \return The list of job results data structure
  */
 TMS_Data::ListJobResults_ptr
-JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
+JobOutputServer::getCompletedJobsOutput(JsonObject* options)
+{
+  ListJobServer jobLister(mauthKey);
+  TMS_Data::ListJobsOptions jobListerOptions;
+
+  jobListerOptions.setOwner(muserSessionInfo.userid);
 
   int days = options->getIntProperty("days");
+  if (days <= 0) {
+    jobListerOptions.setStatus(vishnu::STATE_COMPLETED);
+  } else {
+    time_t now = time(NULL);
+    jobListerOptions.setFromSubmitDate(now - days * 3600 * 24);
+    jobListerOptions.setToSubmitDate(now);
+    std::string statuses = (boost::format("%1%%2%")
+                            % vishnu::STATE_COMPLETED
+                            % vishnu::STATE_DOWNLOADED).str();
+    jobListerOptions.setMultipleStatus(statuses);
+  }
 
-  std::vector<std::string> results;
-  std::vector<std::string>::iterator iter;
+  // query job list
+  boost::scoped_ptr<TMS_Data::ListJobs> jobList( jobLister.list( &jobListerOptions ) );
+
+  if (jobList->getNbJobs() == 0) {
+    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID, "No job available to download");
+  }
 
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistJobsResult = ecoreFactory->createListJobResults();
 
-  //To get the output and error path of all jobs
-  std::string sqlQuery;
-  if (days <= 0) {
-    // Here download only newly completed jobs
-    sqlQuery = boost::str(
-                 boost::format("SELECT job.id, outputPath, errorPath, outputDir"
-                               " FROM vsession, job"
-                               " WHERE vsession.numsessionid=job.vsession_numsessionid"
-                               "  AND job.users_numuserid=%1%"
-                               "  AND job.machine_nummachineid=%3%"
-                               "  AND job.status=%2%;"
-                               )
-                 % muserSessionInfo.num_user
-                 % muserSessionInfo.num_machine
-                 % vishnu::STATE_COMPLETED);
-  } else {
-    // Here also download jobs already downloaded
-    sqlQuery =  boost::str
-                (boost::format("SELECT job.id, outputPath, errorPath, outputDir"
-                               " FROM vsession, job"
-                               " WHERE vsession.numsessionid=job.vsession_numsessionid"
-                               "  AND job.users_numuserid=%1%"
-                               "  AND job.machine_nummachineid=%2%"
-                               "  AND (job.status=%3% OR job.status=%4%)"
-                               "  AND submitdate >= DATE_SUB(CURDATE(),INTERVAL %5% DAY);"
-                               )
-                 % muserSessionInfo.num_user
-                 % muserSessionInfo.num_machine
-                 % vishnu::STATE_COMPLETED
-                 % vishnu::STATE_DOWNLOADED
-                 % days);
-  }
+  for (size_t index = 0; index < jobList->getNbJobs(); ++index) {
 
-  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(sqlQuery.c_str()));
-
-  if (sqlResult->getNbTuples() == 0) {
-    return mlistJobsResult;
-  }
-
-  for (size_t i = 0; i < sqlResult->getNbTuples(); ++i) {
-    results.clear();
-    results = sqlResult->get(i);
-    iter = results.begin();
-
-    std::string jobId = *iter;
-    ++iter;
-    std::string outputPath = *iter;
-    ++iter;
-    std::string errorPath = *iter;
-    ++iter;
-    std::string outputDir = *iter;
-
-    // remove the hostname on the paths
-    size_t pos1 = outputPath.find(":");
-    if (pos1 != std::string::npos) {
-      outputPath = outputPath.substr(pos1+1);
-    }
-
-    size_t pos2 = errorPath.find(":");
-    if (pos2 != std::string::npos) {
-      errorPath = errorPath.substr(pos2+1);
-    }
-
-    TMS_Data::JobResult_ptr curResult = ecoreFactory->createJobResult();
-    curResult->setJobId(jobId);
-    curResult->setOutputDir( outputDir ) ;
-    curResult->setOutputPath(outputPath) ;
-    curResult->setErrorPath( errorPath) ;
-    mlistJobsResult->getResults().push_back(curResult);
+    TMS_Data::Job_ptr job = jobList->getJobs().get(index);
+    TMS_Data::JobResult_ptr jobResult = new TMS_Data::JobResult();
+    jobResult->setJobId(job->getId());
+    jobResult->setOutputDir(job->getOutputDir());
+    jobResult->setErrorPath( vishnu::removeMachinePrefix(job->getErrorPath()) );
+    jobResult->setOutputPath( vishnu::removeMachinePrefix(job->getOutputPath()) );
+    mlistJobsResult->getResults().push_back(jobResult);
 
     // Mark the job as downloaded, so it will be ignored at the subsequent calls
-    std::string query = (boost::format("UPDATE job SET status=%1% "
-                                       " WHERE job.id='%2%';"
-                                       ) % vishnu::convertToString(vishnu::STATE_DOWNLOADED)
-                         % mdatabaseInstance->escapeData(jobId)).str();
+    std::string query = boost::str(
+                          boost::format("UPDATE job SET status=%1% "
+                                        " WHERE job.id='%2%';"
+                                        ) % vishnu::convertToString(vishnu::STATE_DOWNLOADED)
+                          % mdatabaseInstance->escapeData(jobResult->getJobId()));
+
     mdatabaseInstance->process(query);
+
     LOG(boost::str(boost::format("[INFO] request to job ouput: %1%. aclogin: %2%")
-                   % jobId
-                   % muserSessionInfo.user_aclogin), LogInfo);
+                   % jobResult->getJobId()
+                   % muserSessionInfo.user_aclogin),
+        LogInfo);
   }
-  mlistJobsResult->setNbJobs(mlistJobsResult->getResults().size());
+
+  mlistJobsResult->setNbJobs( jobList->getNbJobs() );
 
   return mlistJobsResult;
 }
