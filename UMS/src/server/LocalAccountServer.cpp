@@ -65,8 +65,8 @@ LocalAccountServer::add() {
   std::string query = boost::str(boost::format("INSERT INTO account (machine_nummachineid, "
                                                "        users_numuserid, aclogin, home, status)"
                                                "VALUES ('%1%', '%2%', '%3%', '%4%', %5%)")
-                                 % numMachine
-                                 % numUser
+                                 % vishnu::convertToLong(numMachine)
+                                 % vishnu::convertToLong(numUser)
                                  % mdatabase->escapeData(mlocalAccount->getAcLogin())
                                  % mdatabase->escapeData(mlocalAccount->getHomeDirectory())
                                  % vishnu::STATUS_ACTIVE);
@@ -216,6 +216,7 @@ UMS_Data::LocalAccount *
 LocalAccountServer::getData() {
   return mlocalAccount;
 }
+
 /**
 * \brief Get the system login from a couple machineid/userid
 * \param machineId The machine ID
@@ -223,15 +224,17 @@ LocalAccountServer::getData() {
 * \return The local login, or empty if not exist
 */
 std::string
-LocalAccountServer::getAcLogin(std::string machineId, std::string userId) {
-
-  std::string query = boost::str(boost::format("SELECT aclogin "
-                                               " FROM account"
-                                               " WHERE machine_nummachineid = %1%"
-                                               "  AND users_numuserid=%2%"
-                                               "  AND status = %3%")
-                                 % machineId
-                                 % userId
+LocalAccountServer::getAcLogin(const std::string& machineId, const std::string& userId)
+{
+  std::string query = boost::str(boost::format("SELECT aclogin"
+                                               " FROM account, machine, users"
+                                               " WHERE machine.machineid   = '%1%'"
+                                               "  AND users.userid         = '%2%'"
+                                               "  AND account.status       = %3%"
+                                               "  AND machine.nummachineid =account.machine_nummachineid"
+                                               "  AND users.numuserid      = account.users_numuserid;")
+                                 % mdatabase->escapeData(machineId)
+                                 % mdatabase->escapeData(userId)
                                  % vishnu::STATUS_ACTIVE);
 
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(query));
@@ -246,28 +249,30 @@ LocalAccountServer::getAcLogin(std::string machineId, std::string userId) {
  * @return
  */
 std::string
-LocalAccountServer::getNumUserFromAccount(const std::string&  acLogin, const std::string& numMachine)
+LocalAccountServer::getNumUserFromAccount(const std::string& acLogin, const std::string& numMachine)
 {
   std::string query = boost::str(boost::format("SELECT numaccountid "
                                                " FROM account "
                                                "  WHERE machine_nummachineid = %1%"
                                                "   AND aclogin='%2%'"
                                                "   AND status = %3%")
-                                 % mdatabase->escapeData(numMachine)
+                                 % vishnu::convertToLong(numMachine)
                                  % mdatabase->escapeData(acLogin)
                                  % vishnu::STATUS_ACTIVE);
+
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(query));
+
   return result->getFirstElement();
 }
 
 /**
  * @brief Get the database index of the account
- * @param idmachine The database index of the machine
- * @param iduser The database index of the user
+ * @param numMachine The database index of the machine
+ * @param numUser The database index of the user
  * @return
  */
 std::string
-LocalAccountServer::getNumAccount(const std::string& idmachine, const std::string& iduser)
+LocalAccountServer::getNumAccount(const std::string& numMachine, const std::string& numUser)
 {
   std::string query = boost::str(boost::format("SELECT numaccountid"
                                                " FROM account"
@@ -275,10 +280,12 @@ LocalAccountServer::getNumAccount(const std::string& idmachine, const std::strin
                                                "  AND users_numuserid=%2%"
                                                "  AND status != %3%"
                                                )
-                                 % idmachine
-                                 % iduser
+                                 % vishnu::convertToLong(numMachine)
+                                 % vishnu::convertToLong(numUser)
                                  % vishnu::STATUS_DELETED);
+
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(query));
+
   return result->getFirstElement();
 }
 

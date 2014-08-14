@@ -66,7 +66,7 @@ public:
   * \return The local login, or empty if not exist
   */
   std::string
-  getAcLogin(std::string machineId, std::string userId);
+  getAcLogin(const std::string& machineId, const std::string& userId);
 
 
   /**
@@ -80,12 +80,12 @@ public:
 
   /**
    * @brief Get the database index of the account
-   * @param idmachine The database index of the machine
-   * @param iduser The database index of the user
+   * @param numMachine The database index of the machine
+   * @param numUser The database index of the user
    * @return
    */
   std::string
-  getNumAccount(const std::string& idmachine, const std::string& iduser);
+  getNumAccount(const std::string& numMachine, const std::string& numUser);
 
 private:
   /////////////////////////////////

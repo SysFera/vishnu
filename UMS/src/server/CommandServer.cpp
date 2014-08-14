@@ -9,7 +9,6 @@
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include <boost/format.hpp>
-using namespace vishnu;
 
 /**
 * \brief Constructor
@@ -51,26 +50,28 @@ CommandServer::getCommand() {
 * \return raises an exception on error
 */
 int
-CommandServer::record(CmdType cmdType,
-                      CmdStatus cmdStatus,
+CommandServer::record(vishnu::CmdType cmdType,
+                      vishnu::CmdStatus cmdStatus,
                       std::string newVishnuObjectID,
                       std::string startTime,
                       std::string endTime) {
 
   std::string numSession = msessionServer.getAttributFromSessionKey(msessionServer.getData().getSessionKey(), "numsessionid");
-  std::string sqlCmd = boost::str(boost::format("INSERT INTO command (vsession_numsessionid, starttime,"
-                                                "   endtime, description, ctype, status, vishnuobjectid)"
-                                                " VALUES (%1%,%2%,%3%,'%4%',%5%,%6%,'%7%');"
-                                                )
-                                  % numSession
-                                  % startTime
-                                  % endTime
-                                  % mdatabase->escapeData(mcommand)
-                                  % convertToString(cmdType)
-                                  % convertToString(cmdStatus)
-                                  % mdatabase->escapeData(newVishnuObjectID) );
+  std::string query = boost::str(
 
-  return mdatabase->process(sqlCmd).first;
+                         boost::format("INSERT INTO command (vsession_numsessionid, starttime,"
+                                       "   endtime, description, ctype, status, vishnuobjectid)"
+                                       " VALUES (%1%,%2%,%3%,'%4%',%5%,%6%,'%7%');"
+                                       )
+                         % numSession
+                         % startTime
+                         % endTime
+                         % mdatabase->escapeData(mcommand)
+                         % cmdType
+                         % cmdStatus
+                         % mdatabase->escapeData(newVishnuObjectID) );
+
+  return mdatabase->process(query).first;
 }
 
 /**
