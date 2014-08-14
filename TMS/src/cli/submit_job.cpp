@@ -20,9 +20,6 @@
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
 
-using namespace std;
-using namespace vishnu;
-
 /**
  * \brief To build options for the VISHNU submit job command
  * \param pgName: The name of the command
@@ -51,30 +48,30 @@ using namespace vishnu;
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
-makeSubJobOp(string pgName,
-             boost::function1<void, string>& setMachineFct,
-             boost::function1<void, string>& setProgramNameFct,
-             boost::function1<void, string>& setQueueFct,
+makeSubJobOp(std::string pgName,
+             boost::function1<void, std::string>& setMachineFct,
+             boost::function1<void, std::string>& setProgramNameFct,
+             boost::function1<void, std::string>& setQueueFct,
              boost::function1<void, int>& setMemoryFct,
              boost::function1<void, int>& setNbCpuFct,
-             boost::function1<void, string>& setNbNodeAndCpuFct,
-             boost::function1<void, string>& setStdoutPathFct,
-             boost::function1<void, string>& setStderrPathFct,
-             boost::function1<void, string>& setMailNotificationFct,
-             boost::function1<void, string>& setNotificationUserFct,
-             boost::function1<void, string>& setJobGroupFct,
-             boost::function1<void, string>& setWorkingDirFct,
-             boost::function1<void, string>& setCpuTimeFct,
-             boost::function1<void, string>& setTextParamsFct,
-             boost::function1<void, string>& setFileParamsFct,
-             boost::function1<void, string>& setSpecificParamsFct,
-             vector<string>& textParamsVector,
-             vector<string>& fileParamsVector,
+             boost::function1<void, std::string>& setNbNodeAndCpuFct,
+             boost::function1<void, std::string>& setStdoutPathFct,
+             boost::function1<void, std::string>& setStderrPathFct,
+             boost::function1<void, std::string>& setMailNotificationFct,
+             boost::function1<void, std::string>& setNotificationUserFct,
+             boost::function1<void, std::string>& setJobGroupFct,
+             boost::function1<void, std::string>& setWorkingDirFct,
+             boost::function1<void, std::string>& setCpuTimeFct,
+             boost::function1<void, std::string>& setTextParamsFct,
+             boost::function1<void, std::string>& setFileParamsFct,
+             boost::function1<void, std::string>& setSpecificParamsFct,
+             std::vector<std::string>& textParamsVector,
+             std::vector<std::string>& fileParamsVector,
              boost::function1<void, long long>& setWorkIdFct,
-             string& loadCriterionStr,
-             string& walltime,
-             string& sessionKey,
-             string& configFile)
+             std::string& loadCriterionStr,
+             std::string& walltime,
+             std::string& sessionKey,
+             std::string& configFile)
 {
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -84,9 +81,9 @@ makeSubJobOp(string pgName,
            ENV,
            configFile);
   opt->add("sessionkey,k",
-      "VISHNU session key to connect",
-      ENV,
-      sessionKey);
+           "VISHNU session key to connect",
+           ENV,
+           sessionKey);
 
   // All cli options
   opt->add("machine,r",
@@ -209,54 +206,54 @@ int main (int argc, char* argv[]){
   TMS_Data::SubmitOptions submitOptions;
 
   /******** Callback functions ******************/
-  boost::function1<void,string> setProgramNameFct(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setMachineFct(boost::bind(&TMS_Data::SubmitOptions::setMachine,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setQueueFct(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(submitOptions),_1));
-  boost::function1<void,int> setMemoryFct(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(submitOptions),_1));
-  boost::function1<void,int> setNbCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setNbNodeAndCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setStdoutPatchFct(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setStderrPathFct(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setMailNoticicationFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotification,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setNotificationUserFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotifyUser,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setUserGroupFct(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setWorkingGroupFct(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(submitOptions),_1));
-  boost::function1<void,string> serCpuTimeFct(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setTextParamsFct(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setSpecificParamsFct(boost::bind(&TMS_Data::SubmitOptions::setSpecificParams,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setFileParamsFct(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setProgramNameFct(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setMachineFct(boost::bind(&TMS_Data::SubmitOptions::setMachine,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setQueueFct(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(submitOptions),_1));
+  boost::function1<void, int> setMemoryFct(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(submitOptions),_1));
+  boost::function1<void, int> setNbCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setNbNodeAndCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setStdoutPatchFct(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setStderrPathFct(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setMailNoticicationFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotification,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setNotificationUserFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotifyUser,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setUserGroupFct(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setWorkingGroupFct(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> serCpuTimeFct(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setTextParamsFct(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setSpecificParamsFct(boost::bind(&TMS_Data::SubmitOptions::setSpecificParams,boost::ref(submitOptions),_1));
+  boost::function1<void, std::string> setFileParamsFct(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(submitOptions),_1));
   boost::function1<void,long long> setWorkIdFct(boost::bind(&TMS_Data::SubmitOptions::setWorkId,boost::ref(submitOptions),_1));
-  vector<string> textParamsVector ;
-  vector<string> fileParamsVector ;
+  std::vector<std::string> textParamsVector ;
+  std::vector<std::string> fileParamsVector ;
   std::string loadCriterionStr;
   /*********** Out parameters *********************/
 
   TMS_Data::Job job;
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeSubJobOp(argv[0],
-                                                setMachineFct,
-                                                setProgramNameFct,
-                                                setQueueFct,
-                                                setMemoryFct,
-                                                setNbCpuFct,
-                                                setNbNodeAndCpuFct,
-                                                setStdoutPatchFct,
-                                                setStderrPathFct,
-                                                setMailNoticicationFct,
-                                                setNotificationUserFct,
-                                                setUserGroupFct,
-                                                setWorkingGroupFct,
-                                                serCpuTimeFct,
-                                                setTextParamsFct,
-                                                setFileParamsFct,
-                                                setSpecificParamsFct,
-                                                textParamsVector,
-                                                fileParamsVector,
-                                                setWorkIdFct,
-                                                loadCriterionStr,
-                                                walltime,
-                                                sessionKey,
-                                                configFile);
+      setMachineFct,
+      setProgramNameFct,
+      setQueueFct,
+      setMemoryFct,
+      setNbCpuFct,
+      setNbNodeAndCpuFct,
+      setStdoutPatchFct,
+      setStderrPathFct,
+      setMailNoticicationFct,
+      setNotificationUserFct,
+      setUserGroupFct,
+      setWorkingGroupFct,
+      serCpuTimeFct,
+      setTextParamsFct,
+      setFileParamsFct,
+      setSpecificParamsFct,
+      textParamsVector,
+      fileParamsVector,
+      setWorkIdFct,
+      loadCriterionStr,
+      walltime,
+      sessionKey,
+      configFile);
 
   opt->add("selectQueueAutom,Q",
            "allows to select automatically a queue which has the number of nodes requested by the user.",
@@ -282,7 +279,7 @@ int main (int argc, char* argv[]){
       submitOptions.setPosix(true);
     }
     if (!walltime.empty()) {
-      submitOptions.setWallTime(convertStringToWallTime(walltime));
+      submitOptions.setWallTime(vishnu::convertStringToWallTime(walltime));
     }
 
     //To set the load criterion
@@ -293,19 +290,19 @@ int main (int argc, char* argv[]){
     int loadCriterionType = NBWAITINGJOBS;
     if (loadCriterionStr.empty()) {
       switch(loadCriterionStr[0]) {
-      case '2':
-      case 'R':
-        loadCriterionType = NBRUNNINGJOBS;
-        break;
-      case '1':
-      case 'T':
-        loadCriterionType = NBJOBS;
-        break;
-      case '0'://Default
-      case 'W':
-      default:
-        loadCriterionType = NBWAITINGJOBS;
-        break;
+        case '2':
+        case 'R':
+          loadCriterionType = NBRUNNINGJOBS;
+          break;
+        case '1':
+        case 'T':
+          loadCriterionType = NBJOBS;
+          break;
+        case '0'://Default
+        case 'W':
+        default:
+          loadCriterionType = NBWAITINGJOBS;
+          break;
       }
     }
     TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();
@@ -317,10 +314,10 @@ int main (int argc, char* argv[]){
     }
 
     //Validate textual parameters syntax, if any
-    string paramOptName = "textParams" ;
+    std::string paramOptName = "textParams" ;
 
     if(opt->count(paramOptName) || ! textParamsVector.empty()) {
-      string paramStr ;
+      std::string paramStr ;
       int ret = vishnu::validateParameters(opt, paramStr, paramOptName, textParamsVector);
       if( ret != 0 ) return ret ;
       submitOptions.setTextParams(paramStr) ;
@@ -329,14 +326,14 @@ int main (int argc, char* argv[]){
     //Validate file parameters syntax, if any
     paramOptName = "fileParams" ;
     if(opt->count(paramOptName) || !fileParamsVector.empty()) {
-      string paramStr ;
+      std::string paramStr ;
       int ret = vishnu::validateParameters(opt, paramStr, paramOptName, fileParamsVector) ;
-      if( ret != 0 ) return ret ;
+      if( ret != 0 ) return ret;
       submitOptions.setFileParams(paramStr) ;
     }
 
     // initializing VISHNU
-    if (vishnuInitialize(const_cast<char*>(configFile.c_str()), argc, argv)) {
+    if (vishnu::vishnuInitialize(const_cast<char*>(configFile.c_str()), argc, argv)) {
       errorUsage(argv[0], communicationErrorMsg, EXECERROR);
       return  CLI_ERROR_COMMUNICATION ;
     }
@@ -348,7 +345,7 @@ int main (int argc, char* argv[]){
 
     // vishnu call: submit
     if(! sessionKey.empty()){
-      submitJob(sessionKey, scriptPath, job, submitOptions);
+      vishnu::submitJob(sessionKey, scriptPath, job, submitOptions);
     }
 
     displaySubmit(job);
