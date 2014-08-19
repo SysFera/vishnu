@@ -131,6 +131,10 @@ public:
 
 private:
   /**
+   * @brief Holds database instance
+   */
+  Database* mdatabase;
+  /**
    * \brief The last execution return value
    */
   mutable int mlastExecStatus;
@@ -324,6 +328,11 @@ public:
 
 private:
   /**
+   * @brief Holds database instance
+   */
+  Database* mdatabase;
+
+  /**
    * \brief The file transfer type  (copy or move)
    */
   File::TransferType mtransferType;
@@ -436,16 +445,8 @@ private:
    * \param transferid the transfer identifier
    * \return the error message
    */
-  static std::string
+  std::string
   getErrorFromDatabase(const std::string& transferid);
-
-
-  /**
-   * \brief To check if the user identifier exists
-   * \param userId the user identifier
-   */
-  static void
-  checkUserId(std::string userId);
 
 
   /**
@@ -454,7 +455,7 @@ private:
    * \param value the option value
    * \param request the sql request to modify
    */
-  static void
+  void
   addOptionRequest(const std::string& name,
                    const std::string& value,
                    std::string& request);
@@ -464,7 +465,7 @@ private:
    * \brief To check if the transfer identifier exists
    * \param  transferId the transfer identifier
    */
-  static void
+  void
   checkTransferId(std::string transferId);
 
   /**
