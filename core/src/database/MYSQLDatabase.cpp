@@ -155,22 +155,23 @@ MYSQLDatabase::disconnect(){
 
 
 /**
- * \brief To get the result of the latest request (if any result)
- * \param transacId the id of the transaction if one is used
- * \return The result of the latest request
- */
+* \brief To get the result of a select request
+* \param query The request to process
+* \param transacId the id of the transaction if one is used
+* \return An object which encapsulates the database results
+*/
 DatabaseResult*
-MYSQLDatabase::getResult(const std::string& request, int transacId) {
+MYSQLDatabase::getResult(const std::string& query, int transacId) {
 
   // get connection info
   std::pair<MYSQL*, int>
       connectionInfo  = getConnectionFromPool(transacId);
 
-  int rc = mysql_real_query(connectionInfo.first, request.c_str (), request.length());
+  int rc = mysql_real_query(connectionInfo.first, query.c_str (), query.length());
   if (rc != 0) {
     raiseOnCriticalMysqlError(connectionInfo.first, connectionInfo.second);
     connectPoolIndex(connectionInfo.second);  // try to reinitialise the socket
-    rc = mysql_real_query(connectionInfo.first, request.c_str (), request.length());
+    rc = mysql_real_query(connectionInfo.first, query.c_str (), query.length());
     raiseOnMysqlError(rc, connectionInfo.first, connectionInfo.second);
   }
 
