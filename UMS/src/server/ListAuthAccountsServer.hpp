@@ -50,36 +50,31 @@ public:
   void
   processOptions(UserServer userServer, const UMS_Data::ListAuthAccOptions_ptr& options, std::string& sqlRequest)
   {
-    std::string sqlListofAuthAccountInitial = sqlRequest;
+    std::string intialQuery = sqlRequest;
 
-    size_t userIdSize = options->getUserId().size();
-    size_t authSystemIdSize = options->getAuthSystemId().size();
-    bool isListAll = options->isListAll();
-
-    if ((!userServer.isAdmin()) && (userIdSize!=0 || isListAll)) {
+    if ((!userServer.isAdmin()) && (! options->getUserId().empty() || options->isListAll())) {
       UMSVishnuException e (ERRCODE_NO_ADMIN);
       throw e;
     }
 
     //The admin option
-    if(userIdSize!=0) {
-      //To check if the user id is correct
+    if(! options->getUserId().empty()) {
       getNumUser(options->getUserId());
-      sqlRequest=sqlListofAuthAccountInitial;
-      addOptionRequest("userid", options->getUserId(), sqlRequest);
+      sqlRequest = intialQuery;
+      addOptionRequest("users.userid", options->getUserId(), sqlRequest);
     }
     else {
-      if(!isListAll) {
-        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+      if(! options->isListAll()) {
+        addOptionRequest("users.userid", userServer.getData().getUserId(), sqlRequest);
       }
     }
 
-    if(authSystemIdSize!=0) {
+    if(! options->getAuthSystemId().empty()) {
       //To check if the machine id is correct
       checkAuthSystemId(options->getAuthSystemId());
-      if(!isListAll && userIdSize==0) {
-        sqlRequest=sqlListofAuthAccountInitial;
-        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+      if(! options->isListAll() && options->getUserId().empty()) {
+        sqlRequest = intialQuery;
+        addOptionRequest("users.userid", userServer.getData().getUserId(), sqlRequest);
       }
       addOptionRequest("authsystemid", options->getAuthSystemId(), sqlRequest);
     }
@@ -94,11 +89,11 @@ public:
   UMS_Data::ListAuthAccounts*
   list(UMS_Data::ListAuthAccOptions_ptr option)
   {
-    std::string sql = boost::str(boost::format("SELECT authsystemid, userid, aclogin"
+    std::string sql = boost::str(boost::format("SELECT authsystemid, aclogin, users.userid"
                                                " FROM authaccount, authsystem, users"
-                                               " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
-                                               "  AND authaccount.users_numuserid=users.numuserid"
+                                               " WHERE authsystem_numauthsystemid=authsystem.numauthsystemid"
                                                "  AND authsystem.status!=%1%"
+                                               "  AND authaccount.users_numuserid=users.numuserid"
                                                "  AND authaccount.status!=%1%") % vishnu::STATUS_DELETED);
 
     std::vector<std::string>::iterator ii;
