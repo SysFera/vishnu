@@ -100,7 +100,7 @@ public:
   FMS_Data::FileTransferList*
   list(FMS_Data::LsTransferOptions_ptr options) {
 
-    std::string sqlListOfFiles = "SELECT numfiletransferid, filetransfer.status, users.userid, clientMachineId, "
+    std::string sqlListOfFiles = "SELECT DISTINCT numfiletransferid, filetransfer.status, users.userid, clientMachineId, "
                                  "   sourceMachineId, destinationMachineId, sourceFilePath,"
                                  "   destinationFilePath, fileSize, startTime, errorMsg, trCommand "
                                  " FROM filetransfer, vsession, users "
@@ -187,7 +187,9 @@ private:
    * \param transferId the file transfer identifier
    */
   void checkTransferId(std::string transferId) {
-    std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+mdatabase->escapeData(transferId)+"'";
+    std::string sqlTransferRequest = "SELECT transferId"
+                                     " FROM filetransfer"
+                                     " WHERE transferId='"+mdatabase->escapeData(transferId)+"'";
     boost::scoped_ptr<DatabaseResult> transfer(mdatabase->getResult(sqlTransferRequest));
     if (transfer->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;

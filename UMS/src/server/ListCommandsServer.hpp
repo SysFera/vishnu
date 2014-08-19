@@ -100,7 +100,7 @@ public:
     std::vector<std::string> results;
     std::string description;
 
-    query = "SELECT ctype, vsessionid, name, description, starttime, endtime, command.status"
+    query = "SELECT DISTINCT ctype, vsessionid, name, description, starttime, endtime, command.status"
             " FROM vsession, clmachine, command, users"
             " WHERE vsession.numsessionid=command.vsession_numsessionid"
             "  AND vsession.clmachine_numclmachineid=clmachine.numclmachineid"
