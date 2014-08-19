@@ -59,7 +59,7 @@ public:
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListProgression();
 
-    std::string query = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId"
+    std::string query = "SELECT DISTINCT jobId, jobName, wallClockLimit, endDate, status, batchJobId"
                         " FROM vsession, job"
                         " WHERE vsession.numsessionid=job.vsession_numsessionid";
 

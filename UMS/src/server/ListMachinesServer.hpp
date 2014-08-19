@@ -49,7 +49,7 @@ public:
   void
   processOptions(UserServer userServer, const UMS_Data::ListMachineOptions_ptr& options, std::string& sqlRequest)
   {
-    std::string sqlJoinLstMachines = boost::str(boost::format("SELECT machineid, address, machine.status, description, userid "
+    std::string sqlJoinLstMachines = boost::str(boost::format("SELECT DISTINCT machineid, address, machine.status, description, userid "
                                                               " FROM machine, account, users"
                                                               " WHERE account.machine_nummachineid = machine.nummachineid "
                                                               " AND account.users_numuserid = users.numuserid "

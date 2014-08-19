@@ -89,7 +89,7 @@ public:
    */
   UMS_Data::ListLocalAccounts* list(UMS_Data::ListLocalAccOptions_ptr option)
   {
-    std::string query = boost::str(boost::format("SELECT machineid, userid, aclogin, home"
+    std::string query = boost::str(boost::format("SELECT DISTINCT machineid, userid, aclogin, home"
                                                  " FROM account, machine, users"
                                                  " WHERE account.machine_nummachineid = machine.nummachineid"
                                                  "   AND account.users_numuserid      = users.numuserid"
