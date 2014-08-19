@@ -56,12 +56,12 @@ public :
 
   /**
   * \brief To get the result of a select request
-  * \param request The request to process
+  * \param query The request to process
   * \param transacId the id of the transaction if one is used
   * \return An object which encapsulates the database results
   */
   DatabaseResult*
-  getResult(const std::string& request, int transacId = -1);
+  getResult(const std::string& query, int transacId = -1);
 
   /**
    * \brief To get the type of database
