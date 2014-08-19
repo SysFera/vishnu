@@ -49,36 +49,28 @@ public:
    */
   void processOptions(UserServer userServer, const UMS_Data::ListLocalAccOptions_ptr& options, std::string& sqlRequest)
   {
-    std::string sqlListofLocalAccountInitial = sqlRequest;
-
-    bool isListAll = options->isAdminListOption();
 
     if (! userServer.isAdmin()
-        && (! options->getUserId().empty() || isListAll)) {
+        && (! options->getUserId().empty() || options->isAdminListOption())) {
       throw UMSVishnuException(ERRCODE_NO_ADMIN);
     }
 
-    if(! isListAll) {
+    if(! options->isAdminListOption()) {
       addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
     }
 
     //The admin option
     if (! options->getUserId().empty()) {
-      sqlRequest = sqlListofLocalAccountInitial;
-      std::string numUser = getNumUser(options->getUserId());
-      addOptionRequest("users.numuserid", numUser, sqlRequest);
+      addOptionRequest("users.userid", options->getUserId(), sqlRequest);
     }
 
     if (! options->getMachineId().empty()) {
+      addOptionRequest("machine.machineid", options->getMachineId(), sqlRequest);
 
-      std::string numMachine = getNumMachine(options->getMachineId());
-
-      if (! isListAll && options->getUserId().empty()) {
-        sqlRequest = sqlListofLocalAccountInitial;
+      if (! options->isAdminListOption()
+          && options->getUserId().empty()) {
         addOptionRequest("users.userid", userServer.getData().getUserId(), sqlRequest);
       }
-
-      addOptionRequest("machine.nummachineid", numMachine, sqlRequest);
     }
   }
 
@@ -91,11 +83,11 @@ public:
   {
     std::string query = boost::str(boost::format("SELECT DISTINCT machineid, userid, aclogin, home"
                                                  " FROM account, machine, users"
-                                                 " WHERE account.machine_nummachineid = machine.nummachineid"
+                                                 " WHERE account.status               = %1%"
+                                                 "   AND machine.status               = %1%"
+                                                 "   AND users.status                 = %1%"
+                                                 "   AND account.machine_nummachineid = machine.nummachineid"
                                                  "   AND account.users_numuserid      = users.numuserid"
-                                                 "   AND users.status                 =%1%"
-                                                 "   AND machine.status               =%1%"
-                                                 "   AND account.status               =%1%"
                                                  ) % vishnu::STATUS_ACTIVE);
 
 
