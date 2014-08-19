@@ -79,7 +79,7 @@ protected:
    * \param request the request
    */
   template <class T>
-  void addIntegerOptionRequest(const std::string& name, T& value, std::string& request) {
+  void addIntegerOptionRequest(const std::string& name, const T& value, std::string& request) {
     std::ostringstream osValue;
     osValue << value;
     request.append(" and "+name+"=");
@@ -94,7 +94,7 @@ protected:
    * \param comp The where statement
    */
   template <class T>
-  void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp) {
+  void addTimeRequest(const std::string& name, const T& value, std::string& request, std::string comp) {
     std::ostringstream osValue;
     osValue << value;
     request.append(" and "+name+ " "+comp+" ");
@@ -119,7 +119,7 @@ protected:
    * \param request the request
    */
   template <class T>
-  void addIntegerCondition(const std::string& name, T& value, std::string& request) {
+  void addIntegerCondition(const std::string& name, const T& value, std::string& request) {
     std::ostringstream osValue;
     osValue << value;
     request.append(" where "+name+"=");
