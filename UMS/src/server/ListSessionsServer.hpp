@@ -46,7 +46,7 @@ public:
    * \return raises an exception on error
    */
   void
-  processOptions(UserServer userServer, const UMS_Data::ListSessionOptions_ptr& options, std::string& sqlRequest)
+  processOptions(UserServer userServer, const UMS_Data::ListSessionOptions_ptr& options, std::string& query)
   {
     boost::posix_time::ptime pt;
     bool listAll = options->isAdminListOption();
@@ -56,23 +56,15 @@ public:
       throw UMSVishnuException (ERRCODE_NO_ADMIN);
     }
 
-    if(options->getMachineId().size()!=0) {
-      //To check if the name of the machine is correct
-      checkClientMachineName(options->getMachineId());
-
-      sqlRequest = "SELECT DISTINCT vsessionid, userid, sessionkey, state, closepolicy, "
-                   "   timeout, lastconnect, creation, closure, authid "
-                   " FROM vsession, users, clmachine "
-                   " WHERE vsession.users_numuseridd=users.numuserid"
-                   "   AND vsession.clmachine_numclmachineid=clmachine.numclmachineid";
-      addOptionRequest("name", options->getMachineId(), sqlRequest);
+    if(! options->getMachineId().empty()) {
+      addOptionRequest("clmachine.name", options->getMachineId(), query);
     }
 
     if(! options->getUserId().empty()) {
-      addOptionRequest("users.numuserid", getNumUser(options->getUserId()), sqlRequest);
+      addOptionRequest("users.userid", options->getUserId(), query);
     } else {
-      if(!listAll) {
-        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+      if (! listAll) {
+        addOptionRequest("users.userid", userServer.getData().getUserId(), query);
       }
     }
 
@@ -80,48 +72,34 @@ public:
     if (status == vishnu::STATUS_UNDEFINED) {
       status = vishnu::STATUS_ACTIVE;
     }
-    //To check the status value
-    checkStatus(status);
 
-    addIntegerOptionRequest("state", status, sqlRequest);
+    addIntegerOptionRequest("state", status, query);
 
-    int closePolicy = options->getSessionClosePolicy();
-    //To check the closePolicy value
-    checkClosePolicy(closePolicy);
-
-    if(closePolicy) {
-      addIntegerOptionRequest("closepolicy", closePolicy, sqlRequest);
+    if (options->getSessionClosePolicy()) {
+      addIntegerOptionRequest("closepolicy", options->getSessionClosePolicy(), query);
     }
 
-    int timeOut = options->getSessionInactivityDelay();
-    if(timeOut < 0) {
+    if (options->getSessionInactivityDelay() < 0) {
       throw UMSVishnuException(ERRCODE_INCORRECT_TIMEOUT);
     }
-    if(timeOut) {
-      addIntegerOptionRequest("timeout", timeOut, sqlRequest);
+
+    if (options->getSessionInactivityDelay()) {
+      addIntegerOptionRequest("timeout", options->getSessionInactivityDelay(), query);
     }
 
-    if(options->getSessionId().size()!=0) {
-      //To check if the session id is correct
-      checkSessionId(options->getSessionId());
-
-      addOptionRequest("vsessionid", options->getSessionId(), sqlRequest);
+    if (! options->getSessionId().empty()) {
+      addOptionRequest("vsessionid", options->getSessionId(), query);
     }
 
     time_t startDate = static_cast<time_t>(options->getStartDateOption());
-    if(startDate!=-1) {
-      pt =  boost::posix_time::from_time_t(startDate);
-      std::string startDateStr =  boost::posix_time::to_iso_string(pt);
-      addTimeRequest("creation", startDateStr, sqlRequest, ">=");
+    if (startDate > 0) {
+      addTimeRequest("creation", vishnu::timeToTimestamp(startDate), query, ">=");
     }
 
     time_t endDate = static_cast<time_t>(options->getEndDateOption());
-    if(endDate!=-1) {
-      pt =  boost::posix_time::from_time_t(endDate);
-      std::string endDateStr =  boost::posix_time::to_iso_string(pt);
-      addTimeRequest("closure", endDateStr, sqlRequest, "<=");
+    if (endDate > 0) {
+      addTimeRequest("closure", vishnu::timeToTimestamp(endDate), query, "<=");
     }
-
   }
 
   /**
@@ -132,10 +110,14 @@ public:
   UMS_Data::ListSessions*
   list(UMS_Data::ListSessionOptions_ptr option)
   {
-    std::string sqlListOfSessions = "SELECT DISTINCT vsessionid, userid, sessionkey, state, closepolicy, "
-                                    "  timeout, lastconnect, creation, closure, authid "
-                                    " FROM vsession, users"
-                                    "  WHERE vsession.users_numuserid=users.numuserid";
+    std::string query = (boost::format("SELECT DISTINCT vsessionid, userid, sessionkey, state, closepolicy, "
+                                       "                timeout, lastconnect, creation, closure, authid "
+                                       " FROM vsession, users, clmachine"
+                                       " WHERE vsession.state            = %1%"
+                                       "    AND users.status             = %1%"
+                                       "    AND vsession.users_numuserid = users.numuserid"
+                                       "    AND vsession.clmachine_numclmachineid=clmachine.numclmachineid")
+                         % vishnu::STATUS_ACTIVE).str();
 
     std::vector<std::string>::iterator dbResultIter;
     std::vector<std::string> dbResults;
@@ -150,10 +132,10 @@ public:
       throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
     }
 
-    processOptions(userServer, option, sqlListOfSessions);
-    sqlListOfSessions.append(" order by creation");
+    processOptions(userServer, option, query);
+    query.append(" order by creation");
     //To get the list of sessions from the database
-    boost::scoped_ptr<DatabaseResult> ListOfSessions (mdatabase->getResult(sqlListOfSessions));
+    boost::scoped_ptr<DatabaseResult> ListOfSessions (mdatabase->getResult(query));
 
     if (ListOfSessions->getNbTuples() != 0){
       for (size_t i = 0; i < ListOfSessions->getNbTuples(); ++i) {
