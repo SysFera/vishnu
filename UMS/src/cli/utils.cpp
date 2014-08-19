@@ -614,9 +614,8 @@ operator<<(ostream& os, const UMS_Data::Machine_ptr& machine) {
 std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
 
-  size_t maxNameSize = std::string("Name").size();
   size_t maxMachineIdSize = std::string("machineId").size();
-  size_t maxAddressSize = std::string("Site").size();
+  size_t maxAddressSize = std::string("Address").size();
   std::string machineId;
   std::string hostAddress;
 
