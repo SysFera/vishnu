@@ -58,10 +58,12 @@ SessionServer::SessionServer(const UMS_Data::Session& session, int timeout)
 int
 SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Data::ConnectOptions* connectOpt) {
 
-  std::string numSubstituteUserId;
-  std::string userIdToconnect;
+  std::string numUserToconnect;
 
   msession.setAuthenId( user.getData().getUserId() );
+
+  // check user
+  user.checkUserId( connectOpt->getSubstituteUserId());
 
   if (! user.isAuthenticate()) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_USER);
@@ -72,19 +74,17 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
       throw UMSVishnuException (ERRCODE_NO_ADMIN);
     }
 
-    numSubstituteUserId = user.getNumUserFromId( connectOpt->getSubstituteUserId() );
-    //If the user to substitute exist
-    if (! user.checkUserId( connectOpt->getSubstituteUserId()) ) {
-      userIdToconnect = numSubstituteUserId;
-      msession.setUserId(connectOpt->getSubstituteUserId());
-    } else {
-      throw UMSVishnuException (ERRCODE_UNKNOWN_USERID);
+    numUserToconnect = user.getNumUserFromId( connectOpt->getSubstituteUserId() );
+    if (numUserToconnect.empty()) {
+      throw UMSVishnuException(ERRCODE_UNKNOWN_USER, connectOpt->getSubstituteUserId());
     }
+
+    msession.setUserId(connectOpt->getSubstituteUserId());
   }
 
   //if there is not a numSubstituteUserId
-  if (userIdToconnect.empty()) {
-    userIdToconnect = user.getNumUserFromLoginInfo(user.getData().getUserId(), user.getData().getPassword());
+  if (numUserToconnect.empty()) {
+    numUserToconnect = user.getNumUserFromLoginInfo(user.getData().getUserId(), user.getData().getPassword());
     msession.setUserId(user.getData().getUserId());
   }
 
@@ -95,10 +95,11 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
   solveConnectionMode(connectOpt);
 
   host.recordMachineClient();
-  recordSessionServer(host.getId(), userIdToconnect);
+  recordSessionServer(host.getId(), numUserToconnect);
 
   return 0;
-}//END: connectSession(UserServer, MachineClientServer, ConnectOptions*)
+}
+
 /**
  * \brief Function to reconnect the session
  * \param user The object which manipulates user information
