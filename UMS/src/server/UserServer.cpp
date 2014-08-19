@@ -102,10 +102,6 @@ UserServer::update(UMS_Data::User *user) {
     throw UMSVishnuException (ERRCODE_NO_ADMIN);
   }
 
-  if (checkUserId(user->getUserId()) != true) {
-    throw UMSVishnuException (ERRCODE_UNKNOWN_USERID);
-  }
-
   //if a new fisrtname has been defined
   if (! user->getFirstname().empty()) {
     query.append(" firstname='"+mdatabase->escapeData(user->getFirstname())+"'");
@@ -214,9 +210,7 @@ UserServer::changePassword(const std::string& newPassword) {
     throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
   }
 
-  if (! checkUserId(muser.getUserId())) {
-    throw UMSVishnuException (ERRCODE_READONLY_ACCOUNT);
-  }
+  checkUserId(muser.getUserId());
 
   std::string query = boost::str(boost::format("UPDATE users SET pwd='%1%'"
                                                " WHERE userid='%2%' AND pwd='%3%' AND status != %4%;"
@@ -254,9 +248,7 @@ UserServer::resetPassword(UMS_Data::User& user, const std::string& sendmailScrip
   }
 
   //if the user whose password will be reset exists
-  if (checkUserId (user.getUserId()) != true) {
-    throw UMSVishnuException (ERRCODE_UNKNOWN_USERID, user.getUserId());
-  }
+  checkUserId (user.getUserId());
 
   //generation of a new password
   std::string pwd = generatePassword(user.getUserId(), user.getUserId());
@@ -393,7 +385,9 @@ UserServer::getEntryAttribute(const std::string& userid, const std::string& attr
                                  % mdatabase->escapeData(attribute)
                                  % mdatabase->escapeData(userid)
                                  % vishnu::STATUS_DELETED);
+
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(query));
+
   return result->getFirstElement();
 }
 
@@ -454,17 +448,19 @@ UserServer::getAttributeFromSession(const std::string& attr, const std::string& 
                                  % mdatabase->escapeData(sessionKey));
 
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(query));
+
   return result->getFirstElement();
 }
 
 /**
  * \brief Function to check a userId
  * \param userId The userId to check
- * \return boolean telling whether the user exist or not
+ * \return throw exception if user not found
  */
-bool
-UserServer::checkUserId(std::string userId) {
-  return (! getEntryAttribute(userId, "userid").empty());
+void
+UserServer::checkUserId(const std::string& userId) {
+  if (getEntryAttribute(userId, "userid").empty())
+    throw UMSVishnuException(ERRCODE_UNKNOWN_USERID, userId);
 }
 
 /**
