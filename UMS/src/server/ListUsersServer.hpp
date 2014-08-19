@@ -64,7 +64,7 @@ public:
     std::string  authSystemId = options->getAuthSystemId();
     if (! authSystemId.empty()) {
       checkAuthSystemId(authSystemId);
-      std::string luserCmd = boost::str(boost::format("SELECT userid "
+      std::string luserCmd = boost::str(boost::format("SELECT DISTINCT userid "
                                                       " FROM authsystem, users, authaccount "
                                                       " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
                                                       " AND authaccount.users_numuserid=users.numuserid"

@@ -65,7 +65,7 @@ public:
         if (userServer.isAdmin()) {
           getNumUser(userId);
           sqlRequest.append(" AND authsystemid IN ("
-                            "     SELECT authsystemid "
+                            "     SELECT DISTINCT authsystemid "
                             "     FROM authsystem, users,authaccount"
                             "     WHERE userid='"+mdatabase->escapeData(userId)+"'"
                             "        AND authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
@@ -86,7 +86,7 @@ public:
       if (! options->isListAllAuthSystems()) {
         if (userId.empty() && authSystemId.empty()) {
           sqlRequest.append(" AND authsystemid IN ("
-                            "     SELECT authsystemid "
+                            "     SELECT DISTINCT authsystemid "
                             "     FROM authsystem, users,authaccount"
                             "     WHERE userid='"+mdatabase->escapeData(userServer.getData().getUserId())+"'"
                             "     AND authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
@@ -96,7 +96,7 @@ public:
       }
     } else {
       sqlRequest.append(" AND authsystemid IN ("
-                        "     SELECT authsystemid "
+                        "     SELECT DISTINCT authsystemid "
                         "     FROM authsystem, users, authaccount "
                         "     WHERE userid='"+mdatabase->escapeData(userServer.getData().getUserId())+"'"
                         "       AND authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
@@ -111,7 +111,7 @@ public:
   */
   UMS_Data::ListAuthSystems* list(UMS_Data::ListAuthSysOptions_ptr option) {
 
-    std::string sql = boost::str(boost::format("SELECT authsystemid, name, uri, authlogin, authpassword,"
+    std::string sql = boost::str(boost::format("SELECT DISTINCT authsystemid, name, uri, authlogin, authpassword,"
                                                "       userpwdencryption, authtype, authsystem.status, ldapbase "
                                                " FROM  authsystem, ldapauthsystem"
                                                " WHERE ldapauthsystem.authsystem_authsystemid = authsystem.numauthsystemid"

@@ -60,11 +60,11 @@ public:
       //To check if the name of the machine is correct
       checkClientMachineName(options->getMachineId());
 
-      sqlRequest = "SELECT vsessionid, userid, sessionkey, state, closepolicy, "
+      sqlRequest = "SELECT DISTINCT vsessionid, userid, sessionkey, state, closepolicy, "
                    "   timeout, lastconnect, creation, closure, authid "
                    " FROM vsession, users, clmachine "
                    " WHERE vsession.users_numuseridd=users.numuserid"
-                   " AND vsession.clmachine_numclmachineid=clmachine.numclmachineid";
+                   "   AND vsession.clmachine_numclmachineid=clmachine.numclmachineid";
       addOptionRequest("name", options->getMachineId(), sqlRequest);
     }
 
@@ -132,9 +132,10 @@ public:
   UMS_Data::ListSessions*
   list(UMS_Data::ListSessionOptions_ptr option)
   {
-    std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, "
+    std::string sqlListOfSessions = "SELECT DISTINCT vsessionid, userid, sessionkey, state, closepolicy, "
                                     "  timeout, lastconnect, creation, closure, authid "
-                                    " FROM vsession, users where vsession.users_numuserid=users.numuserid";
+                                    " FROM vsession, users"
+                                    "  WHERE vsession.users_numuserid=users.numuserid";
 
     std::vector<std::string>::iterator dbResultIter;
     std::vector<std::string> dbResults;

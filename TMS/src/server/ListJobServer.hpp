@@ -135,7 +135,7 @@ public:
   TMS_Data::ListJobs*
   list(TMS_Data::ListJobsOptions_ptr options)
   {
-    std::string query ="SELECT vsession.vsessionid, job.id, batchJobId, name, users.userid, account.aclogin, "
+    std::string query ="SELECT DISTINCT vsession.vsessionid, job.id, batchJobId, name, users.userid, account.aclogin, "
                        "machine.machineid, scriptpath, outputPath, errorPath, nbCpus, workingdir, "
                        "job.status, submitDate, endDate, queue, wallClockLimit, priority, groupName, "
                        "job.description, memLimit, nbNodes, nbNodesAndCpuPerNode, work_id"
