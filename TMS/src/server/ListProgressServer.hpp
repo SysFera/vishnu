@@ -59,26 +59,27 @@ public:
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListProgression();
 
-    std::string query = "SELECT DISTINCT jobId, jobName, wallClockLimit, endDate, status, batchJobId"
-                        " FROM vsession, job"
-                        " WHERE vsession.numsessionid=job.vsession_numsessionid";
+    std::string query = (boost::format("SELECT DISTINCT job.id, job.name, wallClockLimit, endDate, job.status, batchJobId"
+                                       " FROM vsession, job, users"
+                                       " WHERE users.status = %1%"
+                                       "  AND job.status < %2%"
+                                       "  AND vsession.numsessionid=job.vsession_numsessionid")
+                         % vishnu::STATUS_ACTIVE
+                         % vishnu::STATE_COMPLETED).str();
 
     if (! options->getMachineId().empty()){
-      query += "  AND job.machine_nummachineid='"+ getNumMachine(options->getMachineId()) +"'";
+      addOptionRequest("job.machine_nummachineid", options->getMachineId(), query);
     }
 
     if (! options->getJobId().empty()) {
-      std::string jobId = options->getJobId();
-      query.append(" AND jobId='"+mdatabase->escapeData(jobId)+"'");
-      boost::scoped_ptr<DatabaseResult> sqlResult(ServerXMS::getInstance()->getDatabaseVishnu()->getResult(query.c_str()));
-      if (sqlResult->getNbTuples() == 0) {
-        throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
-      }
-    } else {
-      query.append(" AND owner='"+mdatabase->escapeData(options->getUser())+"'");
+      addOptionRequest("job.id", options->getJobId(), query);
     }
 
-    query.append("  AND status < 5 ORDER BY jobId");
+    if (! options->getUser().empty()) {
+      addOptionRequest("users.userid", options->getUser(), query);
+    }
+
+    query.append(" ORDER BY job.id");
 
     boost::scoped_ptr<DatabaseResult> sqlResult(ServerXMS::getInstance()->getDatabaseVishnu()->getResult(query.c_str()));
 
