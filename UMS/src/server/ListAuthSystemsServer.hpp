@@ -48,36 +48,29 @@ public:
    * \return raises an exception on error
    */
   void
-  processOptions(UserServer userServer, const UMS_Data::ListAuthSysOptions_ptr& options, std::string& sqlRequest) {
-
-
+  processOptions(UserServer userServer, const UMS_Data::ListAuthSysOptions_ptr& options, std::string& sqlRequest)
+  {
     mfullInfo = options->isListFullInfo();
     if (mfullInfo) {
       if (! userServer.isAdmin()) {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
+        throw UMSVishnuException(ERRCODE_NO_ADMIN);
       }
     }
 
-    if (options != NULL) {
+    std::string userIdFilter = "";
+    if (! options) {
+      userIdFilter = userServer.getData().getUserId();
+    } else {
       std::string  userId = options->getUserId();
-      if(! userId.empty()) {
-        if (userServer.isAdmin()) {
-          getNumUser(userId);
-          sqlRequest.append(" AND authsystemid IN ("
-                            "     SELECT DISTINCT authsystemid "
-                            "     FROM authsystem, users,authaccount"
-                            "     WHERE userid='"+mdatabase->escapeData(userId)+"'"
-                            "        AND authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
-                            "        AND authaccount.users_numuserid=users.numuserid)"
-                            );
-        } else {
-          throw UMSVishnuException (ERRCODE_NO_ADMIN);
+      if (! userId.empty()) {
+        if (! userServer.isAdmin()) {
+          throw UMSVishnuException(ERRCODE_NO_ADMIN);
         }
+        userIdFilter = userId;
       }
 
       std::string  authSystemId = options->getAuthSystemId();
-      if(! authSystemId.empty()) {
+      if (! authSystemId.empty()) {
         checkAuthSystemId(authSystemId);
         addOptionRequest("authsystemid", authSystemId, sqlRequest);
       }
@@ -85,22 +78,23 @@ public:
       //If the option for listing all authSystem has not defined
       if (! options->isListAllAuthSystems()) {
         if (userId.empty() && authSystemId.empty()) {
-          sqlRequest.append(" AND authsystemid IN ("
-                            "     SELECT DISTINCT authsystemid "
-                            "     FROM authsystem, users,authaccount"
-                            "     WHERE userid='"+mdatabase->escapeData(userServer.getData().getUserId())+"'"
-                            "     AND authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
-                            "     AND authaccount.users_numuserid=users.numuserid)"
-                            );
+          userIdFilter = userServer.getData().getUserId();
         }
       }
-    } else {
-      sqlRequest.append(" AND authsystemid IN ("
-                        "     SELECT DISTINCT authsystemid "
-                        "     FROM authsystem, users, authaccount "
-                        "     WHERE userid='"+mdatabase->escapeData(userServer.getData().getUserId())+"'"
-                        "       AND authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
-                        "       AND authaccount.users_numuserid=users.numuserid)");
+    }
+
+    if (! userIdFilter.empty()) {
+      std::string subQuery = (boost::format("SELECT DISTINCT authsystemid "
+                                            "       FROM authsystem, users, authaccount"
+                                            "       WHERE users.status != '%1%'"
+                                            "        AND users.userid  = '%2%'"
+                                            "        AND authaccount.authsystem_numauthsystemid = authsystem.numauthsystemid"
+                                            "        AND authaccount.users_numuserid = users.numuserid")
+                              % vishnu::STATUS_DELETED
+                              % mdatabase->escapeData(userIdFilter)
+                              ).str();
+
+      sqlRequest.append(" AND authsystemid IN ("+subQuery+")");
     }
   }
 
@@ -114,7 +108,7 @@ public:
     std::string sql = boost::str(boost::format("SELECT DISTINCT authsystemid, name, uri, authlogin, authpassword,"
                                                "       userpwdencryption, authtype, authsystem.status, ldapbase "
                                                " FROM  authsystem, ldapauthsystem"
-                                               " WHERE ldapauthsystem.authsystem_authsystemid = authsystem.numauthsystemid"
+                                               " WHERE ldapauthsystem.authsystem_numauthsystemid = authsystem.numauthsystemid"
                                                "  AND authsystem.status!=%1%")%vishnu::STATUS_DELETED);
     std::vector<std::string>::iterator dbResultIter;
     std::vector<std::string> dbResults;
