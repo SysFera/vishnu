@@ -62,7 +62,7 @@ public:
     if (options->getFromMachineId().size() != 0) {
       //To add the fromMachineId on the request
 
-      sqlRequest.append(" and (sourceMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"'"+" or destinationMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"')");
+      sqlRequest.append(" AND (sourceMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"'"+" or destinationMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"')");
 
       onlyProgressFile = false;
     }
@@ -75,7 +75,7 @@ public:
       }
 
       getNumUser(options->getUserId());
-      addOptionRequest("userId", options->getUserId(), sqlRequest);
+      addOptionRequest("users.userId", options->getUserId(), sqlRequest);
       onlyProgressFile = false;
     }
 
@@ -83,11 +83,10 @@ public:
     if (options->getStatus() != 4) { // UNDEFINED FILE TRANSFER STATUS
       //To check the file status
       checkStatus(options->getStatus());
-      //To add the status on the request
-      addOptionRequest("status", vishnu::convertToString(options->getStatus()), sqlRequest);
+      addOptionRequest("filetransfer.status", vishnu::convertToString(options->getStatus()), sqlRequest);
     } else {
       if(onlyProgressFile) {
-        addOptionRequest("status", "0", sqlRequest);
+        addOptionRequest("filetransfer.status", "0", sqlRequest);
       }
     }
 
@@ -101,11 +100,12 @@ public:
   FMS_Data::FileTransferList*
   list(FMS_Data::LsTransferOptions_ptr options) {
 
-    std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, clientMachineId, "
+    std::string sqlListOfFiles = "SELECT numfiletransferid, filetransfer.status, users.userid, clientMachineId, "
                                  "   sourceMachineId, destinationMachineId, sourceFilePath,"
-                                 "   destinationFilePath, fileSize, startTime,errorMsg, trCommand "
-                                 " FROM filetransfer, vsession "
-                                 " WHERE vsession.numsessionid=filetransfer.vsession_numsessionid";
+                                 "   destinationFilePath, fileSize, startTime, errorMsg, trCommand "
+                                 " FROM filetransfer, vsession, users "
+                                 " WHERE vsession.numsessionid  = filetransfer.vsession_numsessionid"
+                                 "   AND vsession.users_numuserid=users.numuserid";
 
     std::vector<std::string>::iterator iter;
     std::vector<std::string> results;
@@ -115,7 +115,7 @@ public:
     mlistObject = ecoreFactory->createFileTransferList();
 
     processOptions(options, sqlListOfFiles);
-    sqlListOfFiles.append(" order by startTime");
+    sqlListOfFiles.append(" ORDER BY startTime");
 
 
     boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabase->getResult(sqlListOfFiles));
