@@ -62,14 +62,15 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
 
   msession.setAuthenId( user.getData().getUserId() );
 
-  // check user
-  user.checkUserId( connectOpt->getSubstituteUserId());
 
   if (! user.isAuthenticate()) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_USER);
   }
 
   if (! connectOpt->getSubstituteUserId().empty()) {
+
+    user.checkUserId( connectOpt->getSubstituteUserId());
+
     if (! user.isAdmin()) {
       throw UMSVishnuException (ERRCODE_NO_ADMIN);
     }
