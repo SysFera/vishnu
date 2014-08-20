@@ -50,26 +50,21 @@ public:
     bool onlyProgressFile = true;
 
     //To check if the transferId is defined
-    if (options->getTransferId().size() != 0) {
-      //To check the transfer Id
+    if (! options->getTransferId().empty()) {
       checkTransferId(options->getTransferId());
-      //To add the transferId on the request
-      addOptionRequest("transferid", options->getTransferId(), sqlRequest);
+      addOptionRequest("numfiletransferid", options->getTransferId(), sqlRequest);
       onlyProgressFile = false;
     }
 
     //To check if the fromMachineId is defined
-    if (options->getFromMachineId().size() != 0) {
-      //To add the fromMachineId on the request
-
-      sqlRequest.append(" AND (sourceMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"'"+" or destinationMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"')");
-
+    if (! options->getFromMachineId().empty()) {
+      sqlRequest.append(" AND (sourceMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"'"
+                        + " OR destinationMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"')");
       onlyProgressFile = false;
     }
 
     // check if the userId filter is defined
     if (! options->getUserId().empty()) {
-
       if (muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN) {
         throw UMSVishnuException (ERRCODE_NO_ADMIN);
       }
@@ -187,9 +182,9 @@ private:
    * \param transferId the file transfer identifier
    */
   void checkTransferId(std::string transferId) {
-    std::string sqlTransferRequest = "SELECT transferId"
+    std::string sqlTransferRequest = "SELECT numfiletransferid"
                                      " FROM filetransfer"
-                                     " WHERE transferId='"+mdatabase->escapeData(transferId)+"'";
+                                     " WHERE numfiletransferid='"+mdatabase->escapeData(transferId)+"'";
     boost::scoped_ptr<DatabaseResult> transfer(mdatabase->getResult(sqlTransferRequest));
     if (transfer->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
