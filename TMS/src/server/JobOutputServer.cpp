@@ -53,7 +53,7 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
   boost::scoped_ptr<TMS_Data::ListJobs> jobList( jobLister.list(&jobListerOptions) );
 
   if (jobList->getNbJobs() == 0) {
-    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID,jobId);
+    throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID, jobId);
   }
 
   TMS_Data::Job job = *(jobList->getJobs().at(0));
@@ -81,9 +81,9 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
       break;
   }
 
-  LOG(boost::str(boost::format("[INFO] Get job ouput: %1%. aclogin: %2%")
+  LOG((boost::format("[INFO] Get job ouput: %1%. aclogin: %2%")
                  % job.getId()
-                 % job.getLocalAccount()),
+                 % job.getLocalAccount()).str(),
       LogInfo);
 
   mjobResult.setJobId(job.getId());

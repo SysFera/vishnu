@@ -139,6 +139,12 @@ namespace vishnu {
     TRANSFER_WAITING_CLIENT_RESPONSE = 4,
   };
 
+
+  enum TransferTypeT {
+    TRANFER_SYNC,
+    TRANFER_ASYNC
+  };
+
   enum FileCopyDirectionT {
     CopyLocalRemote = 0,
     CopyRemoteLocal = 1

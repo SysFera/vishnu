@@ -66,9 +66,9 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
   }
 
   if (outputDir.empty()) {
-    outputDir = boost::str(boost::format("%1%/VISHNU_DOWNLOAD_%2%")
-                           % bfs::path(bfs::current_path()).string()
-                           % vishnu::generatedUniquePatternFromCurTime(jobId));
+    outputDir = (boost::format("%1%/VISHNU_DOWNLOAD_%2%")
+                 % bfs::path(bfs::current_path()).string()
+                 % vishnu::generatedUniquePatternFromCurTime(jobId)).str();
     vishnu::createOutputDir(outputDir);
   }
 
@@ -78,13 +78,17 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
   copts.setIsRecursive(true);
   copts.setTrCommand(0); // for using scp
   try {
-    std::string downloadInfoFile = boost::str(boost::format("%1%/%2%")
-                                              % outputDir
-                                              % boost::filesystem::unique_path("vishnu-%%%%%%.dinfo").string());
+    std::string downloadInfoFile = boost::str(
+                                     boost::format("%1%/%2%")
+                                     % outputDir
+                                     % boost::filesystem::unique_path("vishnu-%%%%%%.dinfo").string());
+
     vishnu::genericFileCopier(sessionKey, mmachineId, remoteOutputInfo, "", downloadInfoFile, copts);
-    std::istringstream fdescStream(vishnu::get_file_content(downloadInfoFile, false));
+
+    std::istringstream dataStream(vishnu::get_file_content(downloadInfoFile, false));
+
     std::string line;
-    if(! getline(fdescStream, line)) {
+    if(! getline(dataStream, line)) {
       line = "";
     }
     boost::trim(line);
@@ -98,14 +102,12 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
       std::string outputPath = "";
       std::string errorPath = "";
       if (nbFiles >= 1) {
-        outputPath = boost::str(
-                       boost::format("%1%/%2%%3%")
-                       % outputDir % bfs::basename(lineVec[0]) % bfs::extension(lineVec[0]));
+        outputPath = (boost::format("%1%/%2%%3%")
+                      % outputDir % bfs::basename(lineVec[0]) % bfs::extension(lineVec[0])).str();
       }
       if (nbFiles >= 2) {
-        errorPath = boost::str(
-                      boost::format("%1%/%2%%3%")
-                      % outputDir % bfs::basename(lineVec[1]) % bfs::extension(lineVec[0]));
+        errorPath = (boost::format("%1%/%2%%3%")
+                     % outputDir % bfs::basename(lineVec[1]) % bfs::extension(lineVec[0])).str();
       }
       jobResult.setOutputPath(outputPath);
       jobResult.setErrorPath(errorPath);
