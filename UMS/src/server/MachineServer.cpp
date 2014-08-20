@@ -177,7 +177,9 @@ MachineServer::getEntryAttribute(std::string machineId, std::string attribute)
                                  % attribute
                                  % machineId
                                  % vishnu::STATUS_DELETED);
+
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(query));
+
   return result->getFirstElement();
 }
 
@@ -226,8 +228,10 @@ MachineServer::findEntry(const std::string& column, const std::string& value)
 std::string
 MachineServer::getNumMachine(const std::string& machineId)
 {
-  std::string query = boost::str(boost::format("SELECT nummachineid FROM machine "
-                                               "WHERE machineid = '%1%' AND status != '%2%'")
+  std::string query = boost::str(boost::format("SELECT nummachineid"
+                                               " FROM machine "
+                                               " WHERE machineid = '%1%'"
+                                               "   AND status != '%2%'")
                                  % mdatabase->escapeData(machineId)
                                  % vishnu::STATUS_DELETED);
   boost::scoped_ptr<DatabaseResult> result( mdatabase->getResult(query) );
@@ -243,8 +247,10 @@ MachineServer::getNumMachine(const std::string& machineId)
 std::string
 MachineServer::getNumActiveMachine(const std::string& machineId)
 {
-  std::string query = boost::str(boost::format("SELECT nummachineid FROM machine "
-                                               "WHERE machineid = '%1%' AND status = '%2%'")
+  std::string query = boost::str(boost::format("SELECT nummachineid"
+                                               " FROM machine "
+                                               " WHERE machineid = '%1%'"
+                                               "   AND status = '%2%'")
                                  % mdatabase->escapeData(machineId)
                                  % vishnu::STATUS_ACTIVE);
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(query));

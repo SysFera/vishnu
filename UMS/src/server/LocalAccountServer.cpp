@@ -106,13 +106,11 @@ LocalAccountServer::update() {
     throw UMSVishnuException (ERRCODE_SESSIONKEY_NOT_FOUND);
   }
 
-  // Check if if the machine exists and is not locked
-  if (machineServer.getEntryAttribute(mlocalAccount->getMachineId(), "numachineid").empty()) {
+  std::string numMachine = machineServer.getEntryAttribute(mlocalAccount->getMachineId(), "nummachineid");
+  if (numMachine.empty()) {
     throw UMSVishnuException (ERRCODE_UNUSABLE_MACHINE);
   }
 
-  // Get the database number id of the machine
-  std::string numMachine = machineServer.getEntryAttribute(mlocalAccount->getMachineId(), "numachineid");
   std::string numUser = userServer.getNumUserFromId(mlocalAccount->getUserId());
 
   mmutex.lock();
@@ -130,7 +128,8 @@ LocalAccountServer::update() {
 
   //if a new home directory has been defined
   if (! mlocalAccount->getHomeDirectory().empty()) {
-    std::string curField = (boost::format("home='%1%'")%mdatabase->escapeData(mlocalAccount->getHomeDirectory())).str();
+    std::string curField = (boost::format("home='%1%'")
+                            % mdatabase->escapeData(mlocalAccount->getHomeDirectory())).str();
     fields += (fields.empty())? curField : ","+curField;
   }
 
@@ -189,15 +188,15 @@ LocalAccountServer::deleteLocalAccount() {
     throw UMSVishnuException (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
   }
 
-  std::string sql = boost::str(boost::format("UPDATE account"
-                                             " SET status=%1%"
-                                             " WHERE machine_nummachineid=%2%"
-                                             " AND users_numuserid=%3%"
-                                             )
-                               % vishnu::STATUS_DELETED
-                               % numMachine
-                               % numUser);
-  mdatabase->process(sql);
+  std::string query = (boost::format("UPDATE account"
+                                     " SET status=%1%"
+                                     " WHERE machine_nummachineid=%2%"
+                                     " AND users_numuserid=%3%"
+                                     )
+                       % vishnu::STATUS_DELETED
+                       % numMachine
+                       % numUser).str();
+  mdatabase->process(query);
 
 
   return 0;
