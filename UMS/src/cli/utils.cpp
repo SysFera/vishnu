@@ -277,14 +277,12 @@ operator<<(ostream& os, const UMS_Data::LocalAccount_ptr& account) {
   std::string userId = account->getUserId();
   std::string machineId = account->getMachineId();
   std::string acLogin = account->getAcLogin();
-  std::string sshKeyPath = account->getSshKeyPath();
   std::string homeDir = account->getHomeDirectory();
 
   os << "============ LocalAccount for " << acLogin << "===========" << std::endl;
   os << setw(25) << right << "UserId: " << userId << endl;
   os << setw(25) << right << "MachineId: " << machineId << endl;
   os << setw(25) << right << "AcLogin: "  << acLogin << endl;
-  os << setw(25) << right << "SshKeyPath: "  << sshKeyPath << endl ;
   os << setw(25) << right << "HomeDirectory: " << homeDir;
   os << endl;
 
