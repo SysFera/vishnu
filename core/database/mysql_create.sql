@@ -233,7 +233,6 @@ CREATE TABLE `authsystem` (
   `numauthsystemid` bigint(20) NOT NULL AUTO_INCREMENT,
   `authlogin` varchar(255) DEFAULT NULL,
   `authpassword` varchar(255) DEFAULT NULL,
-  `authsystemid` varchar(255) DEFAULT NULL,
   `authtype` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
