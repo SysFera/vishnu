@@ -89,7 +89,7 @@ AuthAccountServer::addOrUpdate(bool update)
                           boost::format(
                             "UPDATE authaccount"
                             " SET aclogin='%1%' "
-                            " WHERE authsystem_authsystemid=%2%"
+                            " WHERE authsystem_numauthsystemid=%2%"
                             "  AND users_numuserid=%3%;"
                             )
                           % mdatabaseVishnu->escapeData(mauthAccount->getAcLogin())
@@ -101,7 +101,7 @@ AuthAccountServer::addOrUpdate(bool update)
   } else if (!mauthAccount->getAcLogin().empty()) {
     std::string query = boost::str(
                           boost::format(
-                            "INSERT INTO authaccount (authsystem_authsystemid, users_numuserid, aclogin, status)"
+                            "INSERT INTO authaccount (authsystem_numauthsystemid, users_numuserid, aclogin, status)"
                             " VALUES ('%1%', '%2%', '%3%', %4%);")
                           % numAuthSystem
                           % numUser
@@ -155,7 +155,7 @@ AuthAccountServer::deleteAuthAccount()
                         boost::format(
                           "UPDATE authaccount"
                           " SET status=%1%"
-                          " WHERE authsystem_authsystemid=%2%"
+                          " WHERE authsystem_numauthsystemid=%2%"
                           " AND users_numuserid=%3%;"
                           )
                         % vishnu::STATUS_DELETED
@@ -196,7 +196,7 @@ AuthAccountServer::exist(std::string numAuthSystem, std::string numUser)
   std::string query = boost::str(
                         boost::format("SELECT authaccountid"
                                       " FROM authaccount"
-                                      " WHERE authsystem_authsystemid=%1%"
+                                      " WHERE authsystem_numauthsystemid=%1%"
                                       "  AND users_numuserid='%2%'"
                                       "  AND status != %3%;")
                         % mdatabaseVishnu->escapeData(numAuthSystem)
@@ -225,7 +225,7 @@ AuthAccountServer::isLoginUsed(std::string numAuthSystem, std::string acLogin) {
   std::string query = boost::str(
                         boost::format("SELECT users_numuserid"
                                       " FROM authaccount"
-                                      " WHERE authsystem_authsystemid=%1%"
+                                      " WHERE authsystem_numauthsystemid=%1%"
                                       "  AND aclogin='%2%'"
                                       "  AND status=%3%;")
                         % mdatabaseVishnu->escapeData(numAuthSystem)
