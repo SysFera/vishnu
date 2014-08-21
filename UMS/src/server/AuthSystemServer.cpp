@@ -85,67 +85,61 @@ AuthSystemServer::update() {
   }
 
   if (! mauthsystem->getName().empty()) {
-    query.append(boost::str(
-                   boost::format("UPDATE authsystem"
+    query.append( (boost::format("UPDATE authsystem"
                                  " SET name='%1%'"
-                                 " WHERE authsystemid='%2%';")
+                                 " WHERE numauthsystemid='%2%';")
                    % mdatabase->escapeData(mauthsystem->getName())
                    % mdatabase->escapeData(mauthsystem->getAuthSystemId())
-                   )
+                   ).str()
                  );
   }
 
   if (! mauthsystem->getURI().empty()) {
-    query.append(boost::str(
-                   boost::format("UPDATE authsystem"
+    query.append( (boost::format("UPDATE authsystem"
                                  " SET uri='%1%'"
-                                 " WHERE authsystemid='%2%';")
+                                 " WHERE numauthsystemid='%2%';")
                    % mdatabase->escapeData(mauthsystem->getURI())
                    % mdatabase->escapeData(mauthsystem->getAuthSystemId())
-                   )
-                 );
+                   ).str()
+                  );
   }
 
   if (! mauthsystem->getAuthLogin().empty()) {
-    query.append(boost::str(
-                   boost::format("UPDATE authsystem"
+    query.append((boost::format("UPDATE authsystem"
                                  " SET authlogin='%1%'"
-                                 " WHERE authsystemid='%2%';")
+                                 " WHERE numauthsystemid='%2%';")
                    % mdatabase->escapeData(mauthsystem->getAuthLogin())
                    % mdatabase->escapeData(mauthsystem->getAuthSystemId())
-                   )
+                   ).str()
                  );
   }
 
   if (! mauthsystem->getAuthPassword().empty()) {
-    query.append(boost::str(
-                   boost::format("UPDATE authsystem"
+    query.append( (boost::format("UPDATE authsystem"
                                  " SET authpassword='%1%'"
-                                 " WHERE authsystemid='%2%';")
+                                 " WHERE numauthsystemid='%2%';")
                    % mdatabase->escapeData(mauthsystem->getAuthPassword())
                    % mdatabase->escapeData(mauthsystem->getAuthSystemId())
-                   )
+                   ).str()
                  );
   }
 
   if (mauthsystem->getUserPasswordEncryption() != vishnu::STATUS_UNDEFINED) {
-    query.append(boost::str(
-                   boost::format("UPDATE authsystem"
+    query.append( (boost::format("UPDATE authsystem"
                                  " SET userpwdencryption='%1%'"
-                                 " WHERE authsystemid='%2%';")
+                                 " WHERE numauthsystemid='%2%';")
                    % mauthsystem->getUserPasswordEncryption()
-                   % mdatabase->escapeData(mauthsystem->getAuthSystemId()))
+                   % mdatabase->escapeData(mauthsystem->getAuthSystemId())).str()
                  );
   }
 
   if (mauthsystem->getType() != vishnu::STATUS_UNDEFINED) {
 
-    query.append(boost::str(
-                   boost::format("UPDATE authsystem"
+    query.append( (boost::format("UPDATE authsystem"
                                  " SET userpwdencryption='%1%'"
-                                 " WHERE authsystemid='%2%';")
+                                 " WHERE numauthsystemid='%2%';")
                    % mauthsystem->getType()
-                   % mdatabase->escapeData(mauthsystem->getAuthSystemId()))
+                   % mdatabase->escapeData(mauthsystem->getAuthSystemId())).str()
                  );
   }
 
@@ -163,7 +157,7 @@ AuthSystemServer::update() {
                                  " WHERE authsystem_numauthsystemid IN ("
                                  "      SELECT numauthsystemid "
                                  "        FROM authsystem "
-                                 "        WHERE authsystemid='%2%'")
+                                 "        WHERE numauthsystemid='%2%'")
                    % mdatabase->escapeData(mauthsystem->getLdapBase())
                    % mdatabase->escapeData(mauthsystem->getAuthSystemId()))
                  );
@@ -177,7 +171,7 @@ AuthSystemServer::update() {
       query.append(boost::str(
                      boost::format("UPDATE authsystem"
                                    " SET status=%1%"
-                                   " WHERE authsystemid='%2%';")
+                                   " WHERE numauthsystemid='%2%';")
                      % mauthsystem->getStatus()
                      % mdatabase->escapeData(mauthsystem->getAuthSystemId())
                      )
@@ -220,7 +214,7 @@ AuthSystemServer::deleteAuthSystem()
   std::string query = boost::str(
                         boost::format("UPDATE authsystem"
                                       " SET status=%1%"
-                                      " WHERE authsystemid='%2%'"
+                                      " WHERE numauthsystemid='%2%'"
                                       )
                         % vishnu::STATUS_DELETED
                         % mdatabase->escapeData(mauthsystem->getAuthSystemId()));
@@ -231,7 +225,7 @@ AuthSystemServer::deleteAuthSystem()
             boost::format("UPDATE authaccount, authsystem "
                           " SET authaccount.status='%1%' "
                           " WHERE authsystem.numauthsystemid=authaccount.authsystem_numauthsystemid "
-                          "  AND authsystem.authsystemid='%2%';")
+                          "  AND authsystem.numauthsystemid='%2%';")
             % vishnu::STATUS_DELETED
             % mdatabase->escapeData(mauthsystem->getAuthSystemId()));
 
@@ -264,7 +258,7 @@ AuthSystemServer::getEntryAttribute(const std::string& authSystemID, const std::
 
   std::string query = boost::str(boost::format("SELECT %1%"
                                                " FROM authsystem"
-                                               " WHERE authsystemid='%2%'"
+                                               " WHERE numauthsystemid='%2%'"
                                                "  AND status != %3%;")
                                  % mdatabase->escapeData(attr)
                                  % mdatabase->escapeData(authSystemID)
@@ -286,7 +280,7 @@ AuthSystemServer::getNumAuthSystem(const std::string& authId) {
 
   std::string query = boost::str(boost::format("SELECT numauthsystemid"
                                                " FROM authsystem"
-                                               " WHERE authsystemid='%1%'"
+                                               " WHERE numauthsystemid='%1%'"
                                                "  AND status != %2%;")
                                  % mdatabase->escapeData(authId)
                                  % vishnu::STATUS_DELETED);
@@ -302,9 +296,8 @@ AuthSystemServer::getNumAuthSystem(const std::string& authId) {
 */
 bool
 AuthSystemServer::exist() {
-  std::string sqlcond = (boost::format("WHERE authsystemid = '%1%'"
-                                       " AND status != %2%"
-                                       )
+  std::string sqlcond = (boost::format("WHERE numauthsystemid = '%1%'"
+                                       " AND status != %2%")
                          % mdatabase->escapeData(mauthsystem->getAuthSystemId())
                          % vishnu::STATUS_DELETED).str();
   return (!getEntryAttribute(sqlcond, "numauthsystemid").empty());

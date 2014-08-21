@@ -282,9 +282,9 @@ protected:
    */
   void
   checkAuthSystemId(std::string authSystemId) {
-    std::string sqlJobRequest = (boost::format("SELECT authsystemid"
+    std::string sqlJobRequest = (boost::format("SELECT numauthsystemid"
                                                " FROM authsystem"
-                                               " WHERE authsystemid='%1%'"
+                                               " WHERE numauthsystemid='%1%'"
                                                " AND status<>%2%")%mdatabase->escapeData(authSystemId) %vishnu::STATUS_DELETED).str();
     boost::scoped_ptr<DatabaseResult> result (mdatabase->getResult(sqlJobRequest.c_str()));
     if(result->getNbTuples() == 0) {
