@@ -149,32 +149,34 @@ SessionServer::close() {
 
   // initialize and check the user
   user.init();
-  if (user.exist()) {
-    int state = getState();
-    if (state != vishnu::SESSION_CLOSED) {
-      if (! commanderServer.isRunning()) {
-        mdatabase->process(boost::str(boost::format("UPDATE vsession"
-                                                    " SET state=%1%"
-                                                    " WHERE sessionkey='%1%';")
-                                      % vishnu::SESSION_CLOSED
-                                      % mdatabase->escapeData(msession.getSessionKey())));
+  if (! user.exist()) {
+    throw UMSVishnuException (ERRCODE_UNKNOWN_USER, user.getData().getUserId());
+  }
 
-        mdatabase->process(boost::str(boost::format("UPDATE vsession"
-                                                    " SET closure=CURRENT_TIMESTAMP"
-                                                    " WHERE sessionkey='%1%';")
-                                      % mdatabase->escapeData(msession.getSessionKey())));
-      } else {
-        int closePolicy = vishnu::convertToInt(getAttributFromSessionKey(msession.getSessionKey(), "closepolicy"));
-        if (closePolicy == vishnu::CLOSE_ON_DISCONNECT) {
-          disconnetToTimeout();
-        } else {
-          throw  UMSVishnuException (ERRCODE_COMMAND_RUNNING);
-        }
-      }
+  if (getState() == vishnu::SESSION_CLOSED) {
+    throw UMSVishnuException (ERRCODE_SESSIONKEY_EXPIRED);
+  }
+
+  if (! commanderServer.isRunning()) {
+    mdatabase->process(boost::str(boost::format("UPDATE vsession"
+                                                " SET state=%1%"
+                                                " WHERE sessionkey='%2%';")
+                                  % vishnu::SESSION_CLOSED
+                                  % mdatabase->escapeData(msession.getSessionKey())));
+
+    mdatabase->process(boost::str(boost::format("UPDATE vsession"
+                                                " SET closure=CURRENT_TIMESTAMP"
+                                                " WHERE sessionkey='%1%';")
+                                  % mdatabase->escapeData(msession.getSessionKey())));
+  } else {
+    int closePolicy = vishnu::convertToInt(getAttributFromSessionKey(msession.getSessionKey(), "closepolicy"));
+    if (closePolicy == vishnu::CLOSE_ON_DISCONNECT) {
+      disconnetToTimeout();
     } else {
-      throw UMSVishnuException (ERRCODE_SESSIONKEY_EXPIRED);
+      throw  UMSVishnuException (ERRCODE_COMMAND_RUNNING);
     }
   }
+
   return 0;
 }
 
