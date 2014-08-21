@@ -160,7 +160,7 @@ AuthSystemServer::update() {
     query.append(boost::str(
                    boost::format("UPDATE ldapauthsystem"
                                  " SET ldapbase='%1%'"
-                                 " WHERE authsystem_authsystemid IN ("
+                                 " WHERE authsystem_numauthsystemid IN ("
                                  "      SELECT numauthsystemid "
                                  "        FROM authsystem "
                                  "        WHERE authsystemid='%2%'")
@@ -230,7 +230,7 @@ AuthSystemServer::deleteAuthSystem()
   query = boost::str(
             boost::format("UPDATE authaccount, authsystem "
                           " SET authaccount.status='%1%' "
-                          " WHERE authsystem.numauthsystemid=authaccount.authsystem_authsystemid "
+                          " WHERE authsystem.numauthsystemid=authaccount.authsystem_numauthsystemid "
                           "  AND authsystem.authsystemid='%2%';")
             % vishnu::STATUS_DELETED
             % mdatabase->escapeData(mauthsystem->getAuthSystemId()));
@@ -264,7 +264,7 @@ AuthSystemServer::getEntryAttribute(const std::string& authSystemID, const std::
 
   std::string query = boost::str(boost::format("SELECT %1%"
                                                " FROM authsystem"
-                                               " WHERE authsystemid=%2%"
+                                               " WHERE authsystemid='%2%'"
                                                "  AND status != %3%;")
                                  % mdatabase->escapeData(attr)
                                  % mdatabase->escapeData(authSystemID)
@@ -286,7 +286,7 @@ AuthSystemServer::getNumAuthSystem(const std::string& authId) {
 
   std::string query = boost::str(boost::format("SELECT numauthsystemid"
                                                " FROM authsystem"
-                                               " WHERE authsystemid=%1%"
+                                               " WHERE authsystemid='%1%'"
                                                "  AND status != %2%;")
                                  % mdatabase->escapeData(authId)
                                  % vishnu::STATUS_DELETED);
@@ -304,7 +304,9 @@ bool
 AuthSystemServer::exist() {
   std::string sqlcond = (boost::format("WHERE authsystemid = '%1%'"
                                        " AND status != %2%"
-                                       )%mdatabase->escapeData(mauthsystem->getAuthSystemId()) %vishnu::STATUS_DELETED).str();
+                                       )
+                         % mdatabase->escapeData(mauthsystem->getAuthSystemId())
+                         % vishnu::STATUS_DELETED).str();
   return (!getEntryAttribute(sqlcond, "numauthsystemid").empty());
 }
 
@@ -355,7 +357,7 @@ AuthSystemServer::dbSave(void)
   std::string query = boost::str(
                         boost::format("INSERT INTO authsystem"
                                       "(name,uri,authlogin,authpassword,userpwdencryption,authtype,status)"
-                                      "VALUES('%1%','%2%','%3%','%4%','%5%','%6%','%7%')")
+                                      "VALUES('%1%','%2%','%3%','%4%','%5%','%6%','%7%');")
                         % mdatabase->escapeData(mauthsystem->getName())
                         % mdatabase->escapeData(mauthsystem->getURI())
                         % mdatabase->escapeData(mauthsystem->getAuthLogin())
@@ -368,12 +370,13 @@ AuthSystemServer::dbSave(void)
   std::pair<int, uint64_t>
       result = mdatabase->process(query);
 
+  mauthsystem->setAuthSystemId( vishnu::convertToString(result.second) );
+
 
   if (mauthsystem->getType() == LDAPTYPE ) { // LDAP
     query = boost::str(
-              boost::format("INSERT INTO ldapauthsystem (authsystem_authsystemid, ldapbase)"
-                            " VALUES (%1%, '%2%')"
-                            )
+              boost::format("INSERT INTO ldapauthsystem (authsystem_numauthsystemid, ldapbase)"
+                            " VALUES (%1%, '%2%');")
               % result.second
               % mdatabase->escapeData(mauthsystem->getLdapBase()));
     mdatabase->process(query);
