@@ -29,6 +29,7 @@ std::string dbErrorMsg(MYSQL *conn) {
 std::pair<int, uint64_t>
 MYSQLDatabase::process(const std::string& query, int transacId)
 {
+
   std::pair<MYSQL*, int>
       connectionInfo = getConnectionFromPool(transacId);
 
