@@ -66,7 +66,7 @@ public:
       checkAuthSystemId(authSystemId);
       std::string luserCmd = boost::str(boost::format("SELECT DISTINCT userid "
                                                       " FROM authsystem, users, authaccount "
-                                                      " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
+                                                      " WHERE authaccount.authsystem_numauthsystemid=authsystem.numauthsystemid"
                                                       " AND authaccount.users_numuserid=users.numuserid"
                                                       " AND authsystemid='%1%'"
                                                       " AND authsystem.status!=%2%"
