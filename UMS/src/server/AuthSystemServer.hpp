@@ -98,15 +98,15 @@ private:
   */
   Database *mdatabase;
 
-  /////////////////////////////////
-  // Functions
-  /////////////////////////////////
+
   /**
-  * \brief Function to check the user-authentication system on database
-  * \return true if the user-authentication system exists else false
+  * \brief Check if the auth system exist
+  * \return raise exception if it don't exist
   */
-  bool
-  exist();
+  void
+  checkExistAuthSystem();
+
+
   /**
   * \brief Function to check the user-authentication system parameters values
   *\return raises an exception on error
