@@ -10,7 +10,6 @@
 #include <exception>                    // for exception
 #include <iostream>                     // for operator<<, basic_ostream, etc
 #include <string>                       // for allocator, operator+, etc
-
 #include "GenericCli.hpp"               // for GenericCli
 #include "Options.hpp"                  // for Options
 #include "UserException.hpp"            // for ERRCODE_CLI_ERROR_RUNTIME
@@ -18,42 +17,40 @@
 #include "cliUtil.hpp"                  // for errorUsage, ::EXECERROR
 #include "sessionUtils.hpp"             // for checkBadSessionKeyError, etc
 
-
-using namespace std;
-using namespace vishnu;
-
-
 int main (int ac, char* av[]) {
-  /**************** Describe options *************/
-  try{
-    boost::shared_ptr< Options> opt(new Options(av[0]));
+
+  try {
+    std::string configFile;
+    boost::shared_ptr<Options> opt(new Options(av[0]));
+
+    opt->add("configFile,c",
+             "VISHNU configuration file",
+             ENV,
+             configFile);
 
     bool isEmpty;
-    //To process list options
     GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-    // get the sessionId
-    std::string sessionId=getLastSessionId(getppid());
-
-    // Vishnu call
-    if (false == sessionId.empty()){
-      std::cout << "current sessionId: " <<  sessionId << "\n";
-      return VISHNU_OK;
+    std::string sessionId = getLastSessionId(getppid());
+    if (! sessionId.empty()){
+      std::cout << "Session ID : " <<  sessionId << "\n";
+      return 0;
     }
 
-    errorUsage(av[0],"cannot retrieve sessionId");
+    errorUsage(av[0], "cannot retrieve sessionId");
     return ERRCODE_CLI_ERROR_RUNTIME;
 
-  } catch(VishnuException& e){// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
+  } catch(VishnuException& ex){// catch all Vishnu runtime error
+    std::string  msg = ex.getMsg()+" ["+ex.getMsgComp()+"]";
     errorUsage(av[0], msg,EXECERROR);
-    //check the bad session key
-    if (checkBadSessionKeyError(e)){
+    if (checkBadSessionKeyError(ex)){
       removeBadSessionKeyFromFile(getppid());
     }
-    return e.getMsgI() ;
+    return ex.getMsgI() ;
   } catch(std::exception& e){// catch all std runtime error
     errorUsage(av[0],e.what());
     return ERRCODE_CLI_ERROR_RUNTIME;
   }
-}// end of main
+
+  return 0;
+}

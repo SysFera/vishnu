@@ -34,9 +34,6 @@
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
-
 
 int
 main(int ac, char* av[]) {
@@ -44,7 +41,6 @@ main(int ac, char* av[]) {
   std::string configFile;
   std::string userId;
   std::string password;
-  std::string key;
 
   /********** EMF Data ****************************/
   UMS_Data::ConnectOptions connectOpt;
@@ -59,7 +55,7 @@ main(int ac, char* av[]) {
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt =
-    makeConnectOptions(av[0], userId, 0, configFile, CONFIG);
+      makeConnectOptions(av[0], userId, 0, configFile, CONFIG);
 
   opt->add("sessionInactivityDelay,d", "The session inactivity delay",
            CONFIG,fSessionInactivityDelay);
@@ -82,7 +78,7 @@ main(int ac, char* av[]) {
     checkVishnuConfig(*opt);
     if (opt->count("help")) {
       helpUsage(*opt);
-      exit(VISHNU_OK);
+      exit(0);
     }
 
     //Fix me
@@ -94,68 +90,39 @@ main(int ac, char* av[]) {
     }
 
     /************** Call UMS connect service *******************************/
-// lauch the daemon cleaner if it is not already running
+    // lauch the daemon cleaner if it is not already running
     cleaner(const_cast<char*>(configFile.c_str()), ac, av);
 
     // initializing vishnu
-    if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
-      errorUsage(av[0],communicationErrorMsg,EXECERROR);
+    if (vishnu::vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
+      errorUsage(av[0], communicationErrorMsg, EXECERROR);
       return  ERRCODE_CLI_ERROR_COMMUNICATION ;
     }
 
-    connect(userId,password, session, connectOpt);// call the api extern connect service to get a session key
-
+    vishnu::connect(userId,password, session, connectOpt);// call the api extern connect service to get a session key
     storeLastSession(session,getppid()); // store sessionKey into $HOME/.vishnu/sessions
     std::cout << "sessionId: " << session.getSessionId() << "\n";
     if (opt->count("showKey")){
       std::cout << "sessionKey: " << session.getSessionKey() << "\n";
     }
-  }  // End of try bloc
-
-
-  catch(po::required_option& e){// a required parameter is missing
-
-    usage(*opt,"[options] ",REQUIREDPARAMMSG);
-
+  } catch (po::required_option&) {
+    usage(*opt,"[options] ", REQUIREDPARAMMSG);
     return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
-  }
-  // {{RELAX<CODEREDUCER> The error handling is the same in all command
-
-  catch(po::error& e){ // catch all other bad parameter errors
-
-    errorUsage(av[0], e.what());
-
+  } catch (po::error& ex) {
+    errorUsage(av[0], ex.what());
     return ERRCODE_INVALID_PARAM;
-  }
-
-  catch(VishnuException& e){// catch all Vishnu runtime error
-
-    // handle the temporary password
-    if(ERRCODE_TEMPORARY_PASSWORD==e.getMsgI()){
-
+  } catch(VishnuException& ex){
+    if (ERRCODE_TEMPORARY_PASSWORD==ex.getMsgI()){
       errorUsage(av[0],"Your password is temporary, use vishnu_change_password command to change it",EXECERROR);
+    } else {
+      std::string  msg = ex.getMsg()+" ["+ex.getMsgComp()+"]";
+      errorUsage(av[0], msg, EXECERROR);
     }
-
-    else{
-
-      std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
-
-      errorUsage(av[0],msg,EXECERROR);
-    }
-
-    return e.getMsgI() ;
-
-  }
-
-  catch(std::exception& e){ // catch all std runtime error
-
-    errorUsage(av[0], e.what());
-
+    return ex.getMsgI() ;
+  } catch(std::exception& ex) {
+    errorUsage(av[0], ex.what());
     return ERRCODE_CLI_ERROR_RUNTIME;
   }
 
   return 0;
-
-// }}RELAX<CODEREDUCER>
-
 }// end of main
