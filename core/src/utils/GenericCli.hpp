@@ -127,34 +127,35 @@ public:
      * \param signature The signature of the command
      */
   void
-  processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty,
+  processListOpt(const boost::shared_ptr<Options>& opt,
+                 bool& isEmpty,
                  int ac, char*  av[],
-                 const std::string& signature = "") {
-    CLICmd cmd = CLICmd (ac, av, opt);
+                 const std::string& signature = "")
+  {
+    CLICmd cmd = CLICmd(ac, av, opt);
 
     try {
       opt->parse_cli(ac, av);
 
       isEmpty = opt->empty(); //if no value was given in the command line
-      // Parse the cli and setting the options found
-      int ret = cmd.parse(env_name_mapper());
+      int rc = cmd.parse(env_name_mapper());
 
-      if (ret != VISHNU_OK) {
+      if (rc != 0) {
         helpUsage(*opt, signature);
-        exit(ret);
+        exit(rc);
       }
 
       // PreProcess (adapt some parameters if necessary)
       checkVishnuConfig(*opt);
       if (opt->count("help")) {
         helpUsage(*opt, signature);
-        exit(VISHNU_OK);
+        exit(0);
       }
-    } catch(po::error& e) { // catch all other bad parameter errors
+    } catch(const po::error&) { // catch all other bad parameter errors
       helpUsage(*opt, signature);
       exit(ERRCODE_INVALID_PARAM);
-    } catch(std::exception& e) {// catch all std runtime error
-      errorUsage(av[0],e.what());
+    } catch(const std::exception& ex) {// catch all std runtime error
+      errorUsage(av[0],ex.what());
       exit(ERRCODE_INVALID_PARAM);
     }
   }
