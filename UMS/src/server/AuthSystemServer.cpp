@@ -80,9 +80,7 @@ AuthSystemServer::update() {
     throw UMSVishnuException (ERRCODE_NO_ADMIN);
   }
 
-  if (! exist()) {
-    throw UMSVishnuException (ERRCODE_UNKNOWN_AUTH_SYSTEM);
-  }
+  checkExistAuthSystem();
 
   if (! mauthsystem->getName().empty()) {
     query.append( (boost::format("UPDATE authsystem"
@@ -91,7 +89,7 @@ AuthSystemServer::update() {
                    % mdatabase->escapeData(mauthsystem->getName())
                    % mdatabase->escapeData(mauthsystem->getAuthSystemId())
                    ).str()
-                 );
+                  );
   }
 
   if (! mauthsystem->getURI().empty()) {
@@ -106,11 +104,11 @@ AuthSystemServer::update() {
 
   if (! mauthsystem->getAuthLogin().empty()) {
     query.append((boost::format("UPDATE authsystem"
-                                 " SET authlogin='%1%'"
-                                 " WHERE numauthsystemid='%2%';")
-                   % mdatabase->escapeData(mauthsystem->getAuthLogin())
-                   % mdatabase->escapeData(mauthsystem->getAuthSystemId())
-                   ).str()
+                                " SET authlogin='%1%'"
+                                " WHERE numauthsystemid='%2%';")
+                  % mdatabase->escapeData(mauthsystem->getAuthLogin())
+                  % mdatabase->escapeData(mauthsystem->getAuthSystemId())
+                  ).str()
                  );
   }
 
@@ -121,7 +119,7 @@ AuthSystemServer::update() {
                    % mdatabase->escapeData(mauthsystem->getAuthPassword())
                    % mdatabase->escapeData(mauthsystem->getAuthSystemId())
                    ).str()
-                 );
+                  );
   }
 
   if (mauthsystem->getUserPasswordEncryption() != vishnu::STATUS_UNDEFINED) {
@@ -130,7 +128,7 @@ AuthSystemServer::update() {
                                  " WHERE numauthsystemid='%2%';")
                    % mauthsystem->getUserPasswordEncryption()
                    % mdatabase->escapeData(mauthsystem->getAuthSystemId())).str()
-                 );
+                  );
   }
 
   if (mauthsystem->getType() != vishnu::STATUS_UNDEFINED) {
@@ -140,7 +138,7 @@ AuthSystemServer::update() {
                                  " WHERE numauthsystemid='%2%';")
                    % mauthsystem->getType()
                    % mdatabase->escapeData(mauthsystem->getAuthSystemId())).str()
-                 );
+                  );
   }
 
   if (! mauthsystem->getLdapBase().empty()) {
@@ -151,15 +149,15 @@ AuthSystemServer::update() {
       throw UMSVishnuException (ERRCODE_INVALID_PARAM, "The LDAP base option is incompatible with the authentication system type");
     }
 
-    query.append(boost::str(
-                   boost::format("UPDATE ldapauthsystem"
+    query.append( (boost::format("UPDATE ldapauthsystem"
                                  " SET ldapbase='%1%'"
                                  " WHERE authsystem_numauthsystemid IN ("
                                  "      SELECT numauthsystemid "
                                  "        FROM authsystem "
                                  "        WHERE numauthsystemid='%2%'")
                    % mdatabase->escapeData(mauthsystem->getLdapBase())
-                   % mdatabase->escapeData(mauthsystem->getAuthSystemId()))
+                   % mdatabase->escapeData(mauthsystem->getAuthSystemId())
+                   ).str()
                  );
 
   }
@@ -168,13 +166,12 @@ AuthSystemServer::update() {
   switch (mauthsystem->getStatus()) {
     case vishnu::STATUS_LOCKED:
     case vishnu::STATUS_ACTIVE:
-      query.append(boost::str(
-                     boost::format("UPDATE authsystem"
+      query.append( (boost::format("UPDATE authsystem"
                                    " SET status=%1%"
                                    " WHERE numauthsystemid='%2%';")
                      % mauthsystem->getStatus()
                      % mdatabase->escapeData(mauthsystem->getAuthSystemId())
-                     )
+                     ).str()
                    );
       break;
     default:
@@ -206,18 +203,15 @@ AuthSystemServer::deleteAuthSystem()
     throw UMSVishnuException (ERRCODE_NO_ADMIN);
   }
 
-  //if the user-authentication system exists
-  if (! exist()) {
-    throw UMSVishnuException (ERRCODE_UNKNOWN_AUTH_SYSTEM);
-  }
+  checkExistAuthSystem();
 
-  std::string query = boost::str(
-                        boost::format("UPDATE authsystem"
-                                      " SET status=%1%"
-                                      " WHERE numauthsystemid='%2%'"
-                                      )
-                        % vishnu::STATUS_DELETED
-                        % mdatabase->escapeData(mauthsystem->getAuthSystemId()));
+  std::string query = (boost::format("UPDATE authsystem"
+                                     " SET status=%1%"
+                                     " WHERE numauthsystemid='%2%'"
+                                     )
+                       % vishnu::STATUS_DELETED
+                       % mdatabase->escapeData(mauthsystem->getAuthSystemId())
+                       ).str();
 
   mdatabase->process(query);
 
@@ -291,16 +285,15 @@ AuthSystemServer::getNumAuthSystem(const std::string& authId) {
 }
 
 /**
-* \brief Function to check the user-authentication system on database
-* \return true if the authsystem exists else false
+* \brief Check if the auth system exist
+* \return raise exception if it don't exist
 */
-bool
-AuthSystemServer::exist() {
-  std::string sqlcond = (boost::format("WHERE numauthsystemid = '%1%'"
-                                       " AND status != %2%")
-                         % mdatabase->escapeData(mauthsystem->getAuthSystemId())
-                         % vishnu::STATUS_DELETED).str();
-  return (!getEntryAttribute(sqlcond, "numauthsystemid").empty());
+void
+AuthSystemServer::checkExistAuthSystem() {
+
+  if ( getEntryAttribute(mauthsystem->getAuthSystemId(), "numauthsystemid").empty() ) {
+    throw UMSVishnuException (ERRCODE_UNKNOWN_AUTH_SYSTEM);
+  }
 }
 
 
