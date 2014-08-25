@@ -294,12 +294,12 @@ std::ostream& operator<<(std::ostream& os,  FMS_Data::DirEntryList& dirEntryList
 
   // Buffers for C conversion
   // THis length is good for most filesystem
- #define  LG_MAX_FILENAME 255
-  
+ #define  LG_MAX_FILENAME 2048
+
   wchar_t buf[LG_MAX_FILENAME];                  // Filename in wide char format
   char output[LG_MAX_FILENAME*sizeof(wchar_t)];  // Filename un multibyte format
   size_t lg;                                     // Size of output for a given line
-  
+
   mode_t perms;
   std::string owner;
   std::string group;
@@ -364,13 +364,14 @@ std::ostream& operator<<(std::ostream& os,  FMS_Data::DirEntryList& dirEntryList
   setFill(maxCreationTimeSize, os);
   os << std::endl;
 
+
   for(unsigned int i = 0; i < dirEntryList.getDirEntries().size(); i++) {
     
     perms = (dirEntryList.getDirEntries().get(i))->getPerms();
- 
+
     // Conversion in wide char and compute of the real size
     lg = mbstowcs(buf,((dirEntryList.getDirEntries().get(i))->getPath()).c_str(),LG_MAX_FILENAME);
- 
+
     // Completion with withespace to a fixed size
     for (unsigned int j = lg; j < maxPathSize + 2; j++)
       buf[j] = L' ';
@@ -388,10 +389,10 @@ std::ostream& operator<<(std::ostream& os,  FMS_Data::DirEntryList& dirEntryList
 
     // we make the conversion to multibyte string (depends of locale in most case UT8)
     wcstombs(output,buf,sizeof(output));
- 
+
     // insertion of the string output in the stream
     os << output;
- 
+
     os << std::setw(maxOwnerSize+2) << std::left << owner;
     os << std::setw(maxGroupSize+2) << std::left << group;
     os << std::setw(maxFileSize+2) << std::left << FileSize;

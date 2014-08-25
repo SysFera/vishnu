@@ -68,7 +68,7 @@ makeRemoteCommandOpt(std::string pgName,
  * \param configFile the VISHNU configuration file
  * \param path the path of the file
  */
-void ParseRemoteCommandOptions (int argc, char* argv[],std::string& configFile, std::string sessionKey, std::string& path){
+void ParseRemoteCommandOptions (int argc, char* argv[],std::string& configFile, std::string& sessionKey, std::string& path){
 
 // build remote command options
 
