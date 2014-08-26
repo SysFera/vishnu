@@ -173,7 +173,7 @@ LocalAccountServer::deleteLocalAccount() {
 
   //if the session key is for the owner of the local account or the user is an admin
   if (userServer.getData().getUserId() != mlocalAccount->getUserId()
-      && userServer.isAdmin()) {
+      && ! userServer.isAdmin()) {
     throw UMSVishnuException (ERRCODE_NO_ADMIN);
   }
 
