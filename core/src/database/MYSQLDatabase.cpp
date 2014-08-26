@@ -13,11 +13,12 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/format.hpp>
 #include <vector>
+#include <mysqld_error.h>
 
 
-std::string dbErrorMsg(MYSQL *conn) {
-  const char *msg = mysql_error(conn);
-  return msg != '\0' ? " {" + std::string(msg) + "}" : "";
+inline std::string dbErrorMsg(MYSQL *conn)
+{
+  return std::string( mysql_error(conn) );
 }
 
 /**
@@ -50,7 +51,7 @@ MYSQLDatabase::process(const std::string& query, int transacId)
     connectPoolIndex(connectionInfo.second);  // try to reinitialise the socket
     rc = mysql_real_query(connectionInfo.first, preparedQuery.c_str (), preparedQuery.length());
 
-    raiseOnMysqlError(rc, connectionInfo.first, connectionInfo.second);
+    raiseExceptionIfMysqlError(rc, connectionInfo.first, connectionInfo.second);
   }
 
   // Due to CLIENT_MULTI_STATEMENTS option, results must always be retrieved process each statement result
@@ -61,13 +62,13 @@ MYSQLDatabase::process(const std::string& query, int transacId)
     } else {
       if (mysql_field_count(connectionInfo.first) != 0) { // some error occurred
         releaseConnection(connectionInfo.second);
-        throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(connectionInfo.first));
+        throw SystemException(ERRCODE_DBERR, dbErrorMsg(connectionInfo.first));
       }
     }
     // more results? -1 = no, >0 = error, 0 = yes (keep looping)
     rc = mysql_next_result(connectionInfo.first);
     if (rc > 0) {
-      raiseOnMysqlError(-1, connectionInfo.first, connectionInfo.second);
+      raiseExceptionIfMysqlError(rc, connectionInfo.first, connectionInfo.second);
     }
   } while (rc == 0);
 
@@ -173,13 +174,13 @@ MYSQLDatabase::getResult(const std::string& query, int transacId) {
     raiseOnCriticalMysqlError(connectionInfo.first, connectionInfo.second);
     connectPoolIndex(connectionInfo.second);  // try to reinitialise the socket
     rc = mysql_real_query(connectionInfo.first, query.c_str (), query.length());
-    raiseOnMysqlError(rc, connectionInfo.first, connectionInfo.second);
+    raiseExceptionIfMysqlError(rc, connectionInfo.first, connectionInfo.second);
   }
 
   // check for error
   MYSQL_RES* mysqlResultPtr = mysql_use_result(connectionInfo.first);
   if (! mysqlResultPtr) {
-    raiseOnMysqlError(rc, connectionInfo.first, connectionInfo.second);
+    raiseExceptionIfMysqlError(rc, connectionInfo.first, connectionInfo.second);
   }
 
   // parse result
@@ -400,15 +401,17 @@ MYSQLDatabase::raiseOnCriticalMysqlError(MYSQL* conn, int poolIndex)
 
 /**
  * @brief Raise exception if a MySQL call exit with non-zero error code
- * @param ecode The exit error code
+ * @param rc MySQL api return code
  * @param conn The MYSQL connection pointer
  * @param poolIndex The index of the connection in the pool
  */
 void
-MYSQLDatabase::raiseOnMysqlError(int ecode, MYSQL* conn, int poolIndex)
+MYSQLDatabase::raiseExceptionIfMysqlError(int rc, MYSQL* conn, int poolIndex)
 {
-  if (ecode != 0) {
+  if (rc != 0) {
     releaseConnection(poolIndex);
     throw SystemException(ERRCODE_DBERR, dbErrorMsg(conn));
   }
 }
+
+
