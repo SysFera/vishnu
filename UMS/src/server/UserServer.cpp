@@ -68,6 +68,10 @@ UserServer::add(UMS_Data::User*& user, std::string sendmailScriptPath) {
     throw UMSVishnuException (ERRCODE_NO_ADMIN);
   }
 
+  if (! getNumUserFromId(user->getUserId()).empty()) {
+    throw UMSVishnuException (ERRCODE_USERID_EXISTING, user->getUserId());
+  }
+
   //Generation of password
   std::string pwd = generatePassword(user->getLastname(), user->getFirstname());
   user->setPassword(pwd.substr(0, PASSWORD_MAX_SIZE));
