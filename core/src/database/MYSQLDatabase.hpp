@@ -189,12 +189,12 @@ private :
 
   /**
    * @brief Raise exception if a MySQL call exit with non-zero error code
-   * @param ecode The exit error code
+   * @param rc MySQL api return code
    * @param conn The MYSQL connection pointer
    * @param poolIndex The index of the connection in the pool
    */
   void
-  raiseOnMysqlError(int ecode, MYSQL* conn, int poolIndex);
+  raiseExceptionIfMysqlError(int ecode, MYSQL* conn, int poolIndex);
 };
 
 

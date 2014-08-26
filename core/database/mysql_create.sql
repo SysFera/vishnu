@@ -416,7 +416,7 @@ DROP TABLE IF EXISTS `machine`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `machine` (
   `nummachineid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `machineid` varchar(255) NOT NULL,
+  `machineid` varchar(255) UNIQUE NOT NULL,
   `address` varchar(255) NOT NULL,
   `diskspace` bigint(20) DEFAULT NULL,
   `memory` bigint(20) DEFAULT NULL,

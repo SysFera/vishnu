@@ -53,11 +53,6 @@ MachineServer::add(void) {
     throw UMSVishnuException (ERRCODE_NO_ADMIN);
   }
 
-  if (! findEntry("machineid", mmachine->getMachineId()).empty()
-      || ! findEntry("address", mmachine->getAddress()).empty() ) {
-    throw UMSVishnuException(ERRCODE_MACHINE_EXISTING);
-  }
-
   dbSave();
 
   return 0;
@@ -288,6 +283,5 @@ MachineServer::dbSave(void)
                                  % mmachine->getAddress()
                                  % mmachine->getDescription()
                                  % vishnu::STATUS_ACTIVE);
-
   mdatabase->process(query);
 }
