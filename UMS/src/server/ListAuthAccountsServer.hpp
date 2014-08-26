@@ -80,7 +80,7 @@ public:
   UMS_Data::ListAuthAccounts*
   list(UMS_Data::ListAuthAccOptions_ptr option)
   {
-    std::string query =(boost::format("SELECT DISTINCT numauthsystemid, aclogin, users.userid"
+    std::string query =(boost::format("SELECT DISTINCT numauthsystemid, users.userid, aclogin"
                                       " FROM authaccount, authsystem, users"
                                       " WHERE authsystem_numauthsystemid=authsystem.numauthsystemid"
                                       "  AND authsystem.status!=%1%"

@@ -548,11 +548,14 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
 
     acLogin = (lsAuthAccounts.getAuthAccounts().get(i))->getAcLogin();
     maxAcLoginSize = max(maxAcLoginSize, acLogin.size());
-
   }
 
-  os << setw(maxAuthAccountIdSize+2) << left << "authSystemId" << setw(maxUserIdSize+2) << left << "userId" << setw(maxAcLoginSize+2) << left << "acLogin";
-  os << endl;
+  os << setw(maxAuthAccountIdSize+2)
+     << left << "authSystemId" << setw(maxUserIdSize+2)
+     << left << "userId" << setw(maxAcLoginSize+2)
+     << left << "acLogin"
+     << endl;
+
   setFill(maxAuthAccountIdSize, os);
   setFill(maxUserIdSize, os);
   setFill(maxAcLoginSize, os);
@@ -562,10 +565,13 @@ operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts) {
     authAccountId = (lsAuthAccounts.getAuthAccounts().get(i))->getAuthSystemId();
     userId = (lsAuthAccounts.getAuthAccounts().get(i))->getUserId();
     acLogin = (lsAuthAccounts.getAuthAccounts().get(i))->getAcLogin();
-    os << setw(maxAuthAccountIdSize+2) << left << authAccountId;
-    os << setw(maxUserIdSize+2) << left << userId;
-    os << setw(maxAcLoginSize+2) << left <<  acLogin;
-    os << endl;
+    os << setw(maxAuthAccountIdSize+2)
+       << left << authAccountId
+       << setw(maxUserIdSize+2)
+       << left << userId
+       << setw(maxAcLoginSize+2)
+       << left <<  acLogin
+       << endl;
   }
 
   return os;
