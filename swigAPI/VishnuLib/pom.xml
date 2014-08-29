@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.sysfera</groupId>
 	<artifactId>VishnuLib</artifactId>
-<version>4.1.0-SNAPSHOT</version>
+	<version>4.1.0-SNAPSHOT</version>
 
 
 	<build>
@@ -29,4 +29,14 @@
 
 
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://sysfera-nexus:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <url>http://sysfera-nexus:8081/nexus/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
 </project>
