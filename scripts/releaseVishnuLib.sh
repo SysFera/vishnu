@@ -21,7 +21,7 @@ cp -r $vishnuDir/swigAPI/generated/swig_output/*.java Java/impl/VishnuLib/src/ma
 cd Java/impl/VishnuLib
 mvn clean
 mvn install
-
+mvn deploy
 cp target/VishnuLib-*.jar $destDir/
 
 cd $destDir
