@@ -22,31 +22,6 @@
 #include "vishnu_version.hpp"
 #include "TMSVishnuException.hpp"
 
-bool
-vishnu::isNew(const std::string& urlsup, const std::string& mid, const std::string& type) {
-
-  DbFactory factory;
-  Database *mdatabase;
-  mdatabase = factory.getDatabaseInstance();
-  std::string req = (boost::format("SELECT machineid"
-                                   " FROM process"
-                                   " WHERE machineid='%1%'"
-                                   " AND vishnuname='%2%'"
-                                   " AND dietname='%3%'"
-                                   " AND pstatus<>%4%")%mdatabase->escapeData(mid) %mdatabase->escapeData(type) %mdatabase->escapeData(urlsup) %vishnu::STATUS_DELETED).str();
-  try {
-    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req));
-    if (result->getNbTuples() != 0) {
-      return false;
-    }
-  } catch (SystemException& e) {
-    e.appendMsgComp(" Failed to determine if the process "+type + " already exist");
-    throw;
-  }
-  return true;
-}
-
-
 /**
  * @brief Validate session key and return details on the user and the session
  * @param authKey The authentication key
