@@ -418,8 +418,6 @@ CREATE TABLE `machine` (
   `nummachineid` bigint(20) NOT NULL AUTO_INCREMENT,
   `machineid` varchar(255) UNIQUE NOT NULL,
   `address` varchar(255) NOT NULL,
-  `diskspace` bigint(20) DEFAULT NULL,
-  `memory` bigint(20) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT 0,
   PRIMARY KEY (`nummachineid`)
@@ -511,25 +509,6 @@ CREATE TABLE `permission_module` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `process`
---
-
-DROP TABLE IF EXISTS `process`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `process` (
-  `numprocess` bigint(20) NOT NULL AUTO_INCREMENT,
-  `dietname` varchar(255) DEFAULT NULL,
-  `launchscript` TEXT,
-  `machineid` varchar(255) DEFAULT NULL,
-  `pstatus` int(11) DEFAULT NULL,
-  `uptime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `vishnuname` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`numprocess`)
-) ENGINE=InnoDB AUTO_INCREMENT=825 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -694,25 +673,6 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `state`
---
-
-DROP TABLE IF EXISTS `state`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `state` (
-  `numstateid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `cpuload` int(11) DEFAULT NULL,
-  `diskspace` int(11) DEFAULT NULL,
-  `machine_nummachineid` bigint(20) NOT NULL,
-  `memory` int(11) DEFAULT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`numstateid`),
-  KEY `FK68AC4911CFEDEFC` (`machine_nummachineid`),
-  CONSTRAINT `FK68AC4911CFEDEFC` FOREIGN KEY (`machine_nummachineid`) REFERENCES `machine` (`nummachineid`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `test_report`
@@ -729,26 +689,6 @@ CREATE TABLE `test_report` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `threshold`
---
-
-DROP TABLE IF EXISTS `threshold`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `threshold` (
-  `thresholdid` bigint(20) NOT NULL AUTO_INCREMENT,
-  `machine_nummachineid` bigint(20) NOT NULL,
-  `typet` int(11) DEFAULT NULL,
-  `users_numuserid` bigint(20) NOT NULL,
-  `value` int(11) DEFAULT NULL,
-  PRIMARY KEY (`thresholdid`),
-  KEY `FKA3E1E46B1CFEDEFC` (`machine_nummachineid`),
-  KEY `FKA3E1E46BA63719F2` (`users_numuserid`),
-  CONSTRAINT `FKA3E1E46B1CFEDEFC` FOREIGN KEY (`machine_nummachineid`) REFERENCES `machine` (`nummachineid`) ON DELETE CASCADE,
-  CONSTRAINT `FKA3E1E46BA63719F2` FOREIGN KEY (`users_numuserid`) REFERENCES `users` (`numuserid`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `user_role`
@@ -864,8 +804,8 @@ CREATE TABLE `work` (
 
 -- Role Creation;
 
-CREATE USER vishnu_user@'%' IDENTIFIED BY 'vishnu_user';
-CREATE USER vishnu_db_admin@localhost IDENTIFIED BY 'vishnu_db_admin';
+-- CREATE USER vishnu_user@'%' IDENTIFIED BY 'vishnu_user';
+-- CREATE USER vishnu_db_admin@localhost IDENTIFIED BY 'vishnu_db_admin';
 
 -- GRANT ALL ON sysferads TO vishnu_user;
 -- GRANT ALL ON sysferads TO vishnu_db_admin;
@@ -874,14 +814,11 @@ CREATE USER vishnu_db_admin@localhost IDENTIFIED BY 'vishnu_db_admin';
 GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_db_admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON state TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON vsession TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON account TO "vishnu_db_admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON threshold TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON command TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
-GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_db_admin";
@@ -895,14 +832,11 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON work TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON users TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON machine TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON clmachine TO "vishnu_user";
-GRANT SELECT, INSERT, UPDATE, DELETE ON state TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON vsession TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON account TO "vishnu_user";
-GRANT SELECT, INSERT, UPDATE, DELETE ON threshold TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON command TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_user";
-GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_user";
