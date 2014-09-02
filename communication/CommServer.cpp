@@ -49,27 +49,6 @@ registerSeD(const std::string& sedUri,
   int timeout  = vishnu::DEFAUT_TIMEOUT;
   config.getConfigValue<int>(vishnu::TIMEOUT, timeout);
 
-  if (config.getConfigValue<std::string>(vishnu::URISUPERVISOR, uriSupervisor) &&
-      vishnu::isNew(uriSupervisor, mid, sedType)) {
-    try {
-      DbFactory factory;
-      Database* database = factory.getDatabaseInstance();
-
-      std::string request = (boost::format("INSERT INTO process (dietname, launchscript,"
-                                           "            machineid, pstatus, uptime, vishnuname)"
-                                           " VALUES ('%1%','%2%','%3%',%4%,CURRENT_TIMESTAMP, '%5%')")
-                             %uriSupervisor
-                             %database->escapeData(config.scriptToString())
-                             %mid
-                             %vishnu::convertToString(vishnu::PRUNNING)
-                             %sedType
-                             ).str();
-
-      database->process(request.c_str());
-    } catch (...) {
-      if (sedType == "umssed") { throw; }
-    }
-  }
 
   return 0;
 }

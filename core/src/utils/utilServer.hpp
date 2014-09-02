@@ -114,29 +114,6 @@ namespace vishnu {
   } CmdType;
 
   /**
-   * \brief If the process is in an undefined state
-   */
-  static const int PUNDEF = 0;
-  /**
-   * \brief If the process is running
-   */
-  static const int PRUNNING = 1;
-  /**
-   * \brief If the process is down
-   */
-  static const int PDOWN = 2;
-
-  /**
-   * \brief Return if the server on the machine is already declared
-   * \param urlsup the url of the supervisor
-   * \param mid the machine id
-   * \param type the type of server
-   * \return if the server is already existant in the database on this machine
-   */
-  bool
-  isNew(const std::string& urlsup, const std::string& mid, const std::string& type);
-
-  /**
    * \brief Function to parse the EMF object
    * \param objectSerialized the EMF object serialized
    * \param object_ptr the object build with the objectSerialized
