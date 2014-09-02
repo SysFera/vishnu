@@ -39,9 +39,10 @@ struct ChangeFileGroupFunc {
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string configFile;
-  string path;
-  string group;
+  std::string configFile;
+  std::string sessionKey;
+  std::string path;
+  std::string group;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=processOpt(argv[0], configFile);
@@ -58,9 +59,14 @@ int main (int argc, char* argv[]){
       path,1);
   opt->setPosition("path",1);
 
+  opt->add("sessionkey,k",
+      "VISHNU session key to connect",
+      ENV,
+      sessionKey);
+
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,argc,argv);
   ChangeFileGroupFunc apiFunc(path,group);
-  return GenericCli().run(apiFunc, configFile, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv, sessionKey);
 
 }
