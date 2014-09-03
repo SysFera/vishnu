@@ -860,13 +860,19 @@ JobServer::dbSave(int action, TMS_Data::Job& job)
     LOG(boost::str(boost::format("[INFO] job cancelled: %1%") % job.getId()), LogInfo);
 
   } else if (action == SubmitBatchAction) {
+
     // Append the machine name to the error and output path if necessary
-    size_t pos = job.getOutputPath().find(":");
-    std::string prefixOutputPath = (pos == std::string::npos)? msessionInfo.machine_address+":" : "";
-    job.setOutputPath(prefixOutputPath+job.getOutputPath());
-    pos = job.getErrorPath().find(":");
-    std::string prefixErrorPath = (pos == std::string::npos)? msessionInfo.machine_address+":" : "";
-    job.setErrorPath(prefixErrorPath+job.getErrorPath());
+    if (! job.getOutputPath().empty()) {
+      size_t pos = job.getOutputPath().find(":");
+      std::string prefixOutputPath = (pos == std::string::npos)? msessionInfo.machine_address+":" : "";
+      job.setOutputPath(prefixOutputPath+job.getOutputPath());
+    }
+
+    if (! job.getErrorPath().empty()) {
+      size_t pos = job.getErrorPath().find(":");
+      std::string prefixErrorPath = (pos == std::string::npos)? msessionInfo.machine_address+":" : "";
+      job.setErrorPath(prefixErrorPath+job.getErrorPath());
+    }
 
     std::string query = boost::str(
                           boost::format("INSERT INTO job"
