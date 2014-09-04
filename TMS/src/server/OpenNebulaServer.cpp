@@ -274,9 +274,9 @@ void OpenNebulaServer::releaseResources(const std::string& vmId)
  * \param specificParamss The string containing the list of parameters
  */
 void OpenNebulaServer::retrieveUserSpecificParams(const std::string& specificParams) {
-  ListStrings listParams;
+  std::vector<std::string> listParams;
   boost::split(listParams, specificParams, boost::is_any_of(" "));
-  for (ListStrings::iterator it = listParams.begin(); it != listParams.end(); ++it) {
+  for (std::vector<std::string>::iterator it = listParams.begin(); it != listParams.end(); ++it) {
     size_t pos = it->find("=");
     if (pos != std::string::npos) {
       std::string param = it->substr(0, pos);
