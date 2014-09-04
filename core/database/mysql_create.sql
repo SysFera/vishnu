@@ -28,9 +28,6 @@
 -- Revision author      : Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
 -- Revision comment     : Added column status in tables account
 
-
-USE vishnu;
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;

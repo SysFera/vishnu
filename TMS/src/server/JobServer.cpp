@@ -211,13 +211,12 @@ void
 JobServer::handleNativeBatchExec(int action,
                                  const std::string& scriptPath,
                                  JsonObject* options,
-                                 TMS_Data::Job& jobInfo,
+                                 const TMS_Data::Job& jobInfo,
                                  int batchType,
                                  const std::string& batchVersion)
 {
 
   int ipcPipe[2];
-  char ipcMsgBuffer[255];
 
   if (pipe(ipcPipe) != 0)	 {	/* Create communication pipe*/
     throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Pipe creation failed");
@@ -230,9 +229,9 @@ JobServer::handleNativeBatchExec(int action,
   }
 
   const std::string SUCCESS_MSG_PREFIX = "SYSFERADS_SUCCESS";
-  int processExitCode = 0;
-  std::string errorMsg = "FAILED";
   if (pid == 0)  /** Child process */ {
+    int processExitCode = 0;
+    std::string errorMsg = "FAILED";
     close(ipcPipe[0]);
     processExitCode = 0;
 
@@ -245,7 +244,7 @@ JobServer::handleNativeBatchExec(int action,
       if (processExitCode != 0) { // write error message to pipe for the parent
         errorMsg = std::string(strerror(errno));
         write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
-        exit(processExitCode);
+        _exit(processExitCode);
       }
     }
 
@@ -288,7 +287,8 @@ JobServer::handleNativeBatchExec(int action,
         default:
           throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
           break;
-      }
+      } // switch (action)
+
     } catch (const VishnuException & ex) {
       errorMsg = std::string(ex.what());
       LOG("[ERROR] "+ errorMsg, LogErr);
@@ -297,22 +297,19 @@ JobServer::handleNativeBatchExec(int action,
       delete batchServer;
     }
     write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
-    exit(processExitCode);
+    _exit(processExitCode);
   } else { /** Parent process*/ // wait that child exists
     close(ipcPipe[1]);
     int exitCode;
     waitpid(pid, &exitCode, 0);
 
     // get possible error message send by the child
+    char ipcMsgBuffer[255];
     size_t nbRead = read(ipcPipe[0], ipcMsgBuffer, 255);
-    errorMsg = std::string(ipcMsgBuffer, nbRead);
+    std::string errorMsg = std::string(ipcMsgBuffer, nbRead);
 
     if (errorMsg.find(SUCCESS_MSG_PREFIX) == std::string::npos) {
       throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, boost::str(boost::format("Job worker exited on error: %1%") % errorMsg));
-    } else {
-      // on success errorMsg has should be SUCCESS_MSG_PREFIX:data. here data correspond to job id
-      size_t dataStartPos = errorMsg.find(":");
-      jobInfo.setJobId( errorMsg.substr(dataStartPos+1, std::string::npos) );
     }
   }
 }

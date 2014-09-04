@@ -256,7 +256,7 @@ private:
   handleNativeBatchExec(int action,
                         const std::string& scriptPath,
                         JsonObject* options,
-                        TMS_Data::Job& jobInfo,
+                        const TMS_Data::Job& jobInfo,
                         int batchType,
                         const std::string& batchVersion);
 
