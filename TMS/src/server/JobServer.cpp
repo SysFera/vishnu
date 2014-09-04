@@ -239,7 +239,7 @@ JobServer::handleNativeBatchExec(int action,
       if (processExitCode != 0) { // write error message to pipe for the parent
         errorMsg = std::string(strerror(errno));
         write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
-        exit(processExitCode);
+        _exit(processExitCode);
       }
     }
 
@@ -291,7 +291,7 @@ JobServer::handleNativeBatchExec(int action,
       delete batchServer;
     }
     write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
-    exit(processExitCode);
+    _exit(processExitCode);
   } else { /** Parent process*/ // wait that child exists
     close(ipcPipe[1]);
     int exitCode;
