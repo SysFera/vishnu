@@ -59,7 +59,7 @@ JobServer::JobServer(const std::string& authKey,
     mstandaloneSed = false;
   }
   checkMachineId(machineId);
-  vishnu::validateAuthKey(mauthKey, mmachineId, mdatabaseInstance, muserSessionInfo);
+  vishnu::validateAuthKey(mauthKey, mmachineId, mdatabaseInstance, msessionInfo);
 }
 
 
@@ -116,7 +116,7 @@ JobServer::submitJob(std::string& scriptContent,
         jobInfo.setOwner( vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true, "root") );
         break;
       default:
-        jobInfo.setOwner(muserSessionInfo.user_aclogin);
+        jobInfo.setOwner(msessionInfo.user_aclogin);
         break;
     }
 
@@ -143,7 +143,7 @@ JobServer::submitJob(std::string& scriptContent,
     jobInfo.setOutputPath("");
     jobInfo.setOutputDir("");
     jobInfo.setStatus(vishnu::STATE_FAILED);
-    updateJobRecordIntoDatabase(SubmitBatchAction, jobInfo);
+    dbSave(SubmitBatchAction, jobInfo);
     throw;
   }
   return JOB_ID;
@@ -166,8 +166,8 @@ JobServer::handleSshBatchExec(int action,
                               int batchType,
                               const std::string& batchVersion) {
 
-  SSHJobExec sshJobExec(muserSessionInfo.user_aclogin,
-                        muserSessionInfo.machine_name,
+  SSHJobExec sshJobExec(msessionInfo.user_aclogin,
+                        msessionInfo.machine_name,
                         static_cast<BatchType>(batchType),
                         batchVersion, // ignored for POSIX backend
                         JsonObject::serialize(baseJobInfo),
@@ -185,11 +185,11 @@ JobServer::handleSshBatchExec(int action,
       if (mbatchType != DELTACLOUD && mbatchType != OPENNEBULA && mdebugLevel) {
         vishnu::deleteFile(scriptPath.c_str());
       }
-      updateAndSaveJobSteps(jobSteps, baseJobInfo);
+      saveJobSteps(jobSteps, baseJobInfo);
       break;
     case CancelBatchAction:
       sshJobExec.sshexec("CANCEL", "", jobSteps);
-      updateJobRecordIntoDatabase(action, *(jobSteps.getJobs().get(0)));
+      dbSave(action, *(jobSteps.getJobs().get(0)));
       break;
     default:
       throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");
@@ -213,15 +213,8 @@ JobServer::handleNativeBatchExec(int action,
                                  JsonObject* options,
                                  TMS_Data::Job& jobInfo,
                                  int batchType,
-                                 const std::string& batchVersion) {
-  BatchFactory factory;
-  BatchServer* batchServer = factory.getBatchServerInstance(batchType, batchVersion);
-  if (! batchServer) {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                             boost::str(boost::format("getBatchServerInstance return NULL (batch: %1%, version: %2%)")
-                                        % vishnu::convertBatchTypeToString(static_cast<BatchType>(batchType))
-                                        % batchVersion));
-  }
+                                 const std::string& batchVersion)
+{
 
   int ipcPipe[2];
   char ipcMsgBuffer[255];
@@ -236,44 +229,61 @@ JobServer::handleNativeBatchExec(int action,
     throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Fork failed");
   }
 
-  int handlerExitCode = 0;
-  std::string errorMsg = "SUCCESS";
+  const std::string SUCCESS_MSG_PREFIX = "SYSFERADS_SUCCESS";
+  int processExitCode = 0;
+  std::string errorMsg = "FAILED";
   if (pid == 0)  /** Child process */ {
     close(ipcPipe[0]);
-    handlerExitCode = 0;
+    processExitCode = 0;
+
+    // make a copy of the job passed as reference to avoid conflict
+    TMS_Data::Job jobCopy = jobInfo;
+
     // if not cloud-mode submission, switch user before running the request
-    if (mbatchType != OPENNEBULA && mbatchType != DELTACLOUD) {
-      handlerExitCode = setuid(getSystemUid(muserSessionInfo.user_aclogin));
-      if (handlerExitCode != 0) {
-        // write error message to pipe for the parent
+    if (! isCloudBackend(mbatchType)) {
+      processExitCode = setuid(getSystemUid(msessionInfo.user_aclogin));
+      if (processExitCode != 0) { // write error message to pipe for the parent
         errorMsg = std::string(strerror(errno));
         write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
-        exit(handlerExitCode);
+        exit(processExitCode);
       }
     }
+
+    BatchServer* batchServer = NULL;
     try {
-      handlerExitCode = 0;
-      switch(action) {
+      batchServer = BatchServer::getBatchServer(batchType, batchVersion);
+      processExitCode = -1;
+
+      switch (action) {
+
+        // HANDLE SUBMIT
         case SubmitBatchAction: {
           // create output dir if needed
-          if (! jobInfo.getOutputDir().empty()) {
-            vishnu::createDir(jobInfo.getOutputDir());
+          if (! jobCopy.getOutputDir().empty()) {
+            vishnu::createDir(jobCopy.getOutputDir());
           }
-
           // submit the job
           TMS_Data::ListJobs jobSteps;
-          handlerExitCode = batchServer->submit(vishnu::copyFileToUserHome(scriptPath), options->getSubmitOptions(), jobSteps, NULL);
-          updateAndSaveJobSteps(jobSteps, jobInfo);
+          batchServer->submit(vishnu::copyFileToUserHome(scriptPath), options->getSubmitOptions(), jobSteps, NULL);
+          saveJobSteps(jobSteps, jobCopy);
+
+          // set exit success message
+          errorMsg = boost::str(boost::format("%1%:%2%") % SUCCESS_MSG_PREFIX % jobCopy.getJobId());
         }
           break;
+
+          // HANDLE CANCEL
         case CancelBatchAction:
-          if (mbatchType == DELTACLOUD || mbatchType == OPENNEBULA) {
-            handlerExitCode = batchServer->cancel(jobInfo.getVmId());
+          if (isCloudBackend(mbatchType) ){
+            batchServer->cancel(jobCopy.getVmId()) ;
           } else {
-            handlerExitCode = batchServer->cancel(jobInfo.getBatchJobId());
+            batchServer->cancel(jobCopy.getBatchJobId());
           }
-          jobInfo.setStatus(vishnu::STATE_CANCELLED);
-          updateJobRecordIntoDatabase(action, jobInfo);
+          jobCopy.setStatus(vishnu::STATE_CANCELLED);
+          dbSave(action, jobCopy);
+
+          // set exit success message
+          errorMsg = boost::str(boost::format("%1%:%2%") % SUCCESS_MSG_PREFIX % jobCopy.getJobId());
           break;
         default:
           throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
@@ -283,22 +293,26 @@ JobServer::handleNativeBatchExec(int action,
       errorMsg = std::string(ex.what());
       LOG("[ERROR] "+ errorMsg, LogErr);
     }
-
-    // write error message to pipe for the parent
+    if (batchServer) {
+      delete batchServer;
+    }
     write(ipcPipe[1], errorMsg.c_str(), errorMsg.size());
-    exit(handlerExitCode);
-  } else { /** Parent process*/
+    exit(processExitCode);
+  } else { /** Parent process*/ // wait that child exists
     close(ipcPipe[1]);
-    // wait that child exists
     int exitCode;
     waitpid(pid, &exitCode, 0);
 
     // get possible error message send by the child
     size_t nbRead = read(ipcPipe[0], ipcMsgBuffer, 255);
     errorMsg = std::string(ipcMsgBuffer, nbRead);
-    if (errorMsg != "SUCCESS") {
-      throw TMSVishnuException(ERRCODE_RUNTIME_ERROR,
-                               boost::str(boost::format("Job worker process exited with error: %1%") % errorMsg));
+
+    if (errorMsg.find(SUCCESS_MSG_PREFIX) == std::string::npos) {
+      throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, boost::str(boost::format("Job worker exited on error: %1%") % errorMsg));
+    } else {
+      // on success errorMsg has should be SUCCESS_MSG_PREFIX:data. here data correspond to job id
+      size_t dataStartPos = errorMsg.find(":");
+      jobInfo.setJobId( errorMsg.substr(dataStartPos+1, std::string::npos) );
     }
   }
 }
@@ -390,14 +404,14 @@ int JobServer::cancelJob(JsonObject* options)
 
   // Only a admin user can use the option 'all' for the job id
   if (userId == ALL_KEYWORD
-      && muserSessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
+      && msessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
                              boost::str(boost::format("Option privileged users can cancel all user jobs")));
   }
 
   // Only a admin user can delete jobs from another user
   if (! userId.empty()
-      && muserSessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
+      && msessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
                              boost::str(boost::format("Only privileged users can cancel other users jobs")));
   }
@@ -412,7 +426,7 @@ int JobServer::cancelJob(JsonObject* options)
                                     % mdatabaseInstance->escapeData(jobId)
                                     % mdatabaseInstance->escapeData(mauthKey));
     boost::scoped_ptr<DatabaseResult> sqlQueryResult(mdatabaseInstance->getResult(reqTmp));
-    if (sqlQueryResult->getNbTuples() == 0 && muserSessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
+    if (sqlQueryResult->getNbTuples() == 0 && msessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
       throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
                                boost::str(boost::format("Only privileged users can cancel other users jobs")));
     }
@@ -445,7 +459,7 @@ int JobServer::cancelJob(JsonObject* options)
     //    ** else perform cancel as for a normal user
     // *if normal user (not admin), cancel alls jobs submitted through vishnu by the user
     bool addUserFilter = true;
-    if (muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN && userId == ALL_KEYWORD) {
+    if (msessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN && userId == ALL_KEYWORD) {
       addUserFilter = false;
     }
 
@@ -459,7 +473,7 @@ int JobServer::cancelJob(JsonObject* options)
                                             " AND submitMachineId='%3%';"
                                             )
                               % baseSqlQuery
-                              % mdatabaseInstance->escapeData(muserSessionInfo.user_aclogin)
+                              % mdatabaseInstance->escapeData(msessionInfo.user_aclogin)
                               % mdatabaseInstance->escapeData(mmachineId));
       } else {
         // here we'll delete jobs submitted by the given user
@@ -485,7 +499,7 @@ int JobServer::cancelJob(JsonObject* options)
                             % baseSqlQuery
                             % mdatabaseInstance->escapeData(mmachineId));
       LOG(boost::str(boost::format("[WARN] received request to cancel all user jobs from %1%")
-                     % muserSessionInfo.user_aclogin), LogWarning);
+                     % msessionInfo.user_aclogin), LogWarning);
     }
   }
   // Process the query and treat the resulting jobs
@@ -526,8 +540,8 @@ int JobServer::cancelJob(JsonObject* options)
           break;
       }
 
-      if (currentJob.getOwner() != muserSessionInfo.user_aclogin
-          && muserSessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
+      if (currentJob.getOwner() != msessionInfo.user_aclogin
+          && msessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
         throw TMSVishnuException(ERRCODE_PERMISSION_DENIED);
       }
 
@@ -765,7 +779,7 @@ JobServer::setRealFilePaths(std::string& scriptContent,
                             JsonObject* options,
                             TMS_Data::Job& jobInfo)
 {
-  std::string workingDir = muserSessionInfo.user_achome;
+  std::string workingDir = msessionInfo.user_achome;
   std::string scriptPath = "";
   std::string inputDir = "";
 
@@ -889,12 +903,12 @@ JobServer::processScript(std::string& content,
  * @param baseJobInfo The base job info
  */
 void
-JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& baseJobInfo)
+JobServer::saveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& baseJobInfo)
 {
   if (jobSteps.getJobs().size() == 1) {
     TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(0);
     setBaseJobInfo(*currentJobPtr, baseJobInfo);
-    updateJobRecordIntoDatabase(SubmitBatchAction, *currentJobPtr);
+    dbSave(SubmitBatchAction, *currentJobPtr);
   } else {
     int nbSteps = jobSteps.getJobs().size();
 
@@ -906,7 +920,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
       // create an entry to the database for the step
       mdatabaseInstance->process(boost::str(boost::format("INSERT INTO job (jobid, vsession_numsessionid)"
                                                           " VALUES ('%1%', %2%)"
-                                                          ) % currentJobPtr->getJobId() % muserSessionInfo.num_session));
+                                                          ) % currentJobPtr->getJobId() % msessionInfo.num_session));
     }
 
     // now each job's related steps and record to database
@@ -919,7 +933,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
       }
       TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(step);
       currentJobPtr->setRelatedSteps(relatedStepList);
-      updateJobRecordIntoDatabase(SubmitBatchAction, *currentJobPtr);
+      dbSave(SubmitBatchAction, *currentJobPtr);
     }
   }
 }
@@ -930,7 +944,7 @@ JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& ba
  * @param job The concerned job
  */
 void
-JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
+JobServer::dbSave(int action, TMS_Data::Job& job)
 {
   if (action == CancelBatchAction) {
     std::string query = boost::str(boost::format("UPDATE job set status=%1% where jobid='%2%';")
@@ -943,20 +957,20 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
   } else if (action == SubmitBatchAction) {
     // Append the machine name to the error and output path if necessary
     size_t pos = job.getOutputPath().find(":");
-    std::string prefixOutputPath = (pos == std::string::npos)? muserSessionInfo.machine_name+":" : "";
+    std::string prefixOutputPath = (pos == std::string::npos)? msessionInfo.machine_name+":" : "";
     job.setOutputPath(prefixOutputPath+job.getOutputPath());
     pos = job.getErrorPath().find(":");
-    std::string prefixErrorPath = (pos == std::string::npos)? muserSessionInfo.machine_name+":" : "";
+    std::string prefixErrorPath = (pos == std::string::npos)? msessionInfo.machine_name+":" : "";
     job.setErrorPath(prefixErrorPath+job.getErrorPath());
 
     // Update the database with the result
     std::string query = "UPDATE job set ";
-    query+="vsession_numsessionid="+vishnu::convertToString(muserSessionInfo.num_session)+", ";
-    query+="job_owner_id="+vishnu::convertToString(muserSessionInfo.num_user)+", ";
+    query+="vsession_numsessionid="+vishnu::convertToString(msessionInfo.num_session)+", ";
+    query+="job_owner_id="+vishnu::convertToString(msessionInfo.num_user)+", ";
     query+="owner='"+mdatabaseInstance->escapeData(job.getOwner())+"', ";
     query+="submitMachineId='"+mdatabaseInstance->escapeData(mmachineId)+"', ";
-    query+="machine_id='"+mdatabaseInstance->escapeData(muserSessionInfo.num_machine)+"', ";
-    query+="submitMachineName='"+mdatabaseInstance->escapeData(muserSessionInfo.machine_name)+"', ";
+    query+="machine_id='"+mdatabaseInstance->escapeData(msessionInfo.num_machine)+"', ";
+    query+="submitMachineName='"+mdatabaseInstance->escapeData(msessionInfo.machine_name)+"', ";
     query+="batchJobId='"+mdatabaseInstance->escapeData(job.getBatchJobId())+"', ";
     query+="batchType="+vishnu::convertToString(mbatchType)+", ";
     query+="jobName='"+mdatabaseInstance->escapeData(job.getJobName())+"', ";
@@ -992,8 +1006,8 @@ JobServer::updateJobRecordIntoDatabase(int action, TMS_Data::Job& job)
     if (job.getSubmitError().empty()) {
       LOG(boost::str(boost::format("[INFO] job submitted: %1%. User: %2%. Owner: %3%")
                      % job.getJobId()
-                     % muserSessionInfo.userid
-                     % muserSessionInfo.user_aclogin), LogInfo);
+                     % msessionInfo.userid
+                     % msessionInfo.user_aclogin), LogInfo);
     } else {
       LOG((boost::str(boost::format("[WARN] submission error: %1% [%2%]")
                       % job.getJobId()
@@ -1054,7 +1068,7 @@ JobServer::createJobScriptExecutaleFile(std::string& content,
   vishnu::saveInFile(path, processScript(content,
                                          options,
                                          defaultBatchOption,
-                                         muserSessionInfo.machine_name));
+                                         msessionInfo.machine_name));
 
   vishnu::makeFileExecutable(path);
 

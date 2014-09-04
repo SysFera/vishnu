@@ -102,6 +102,15 @@ public:
    */
   virtual ~BatchServer();
 
+  /**
+   * @brief Get instance of batch server
+   * @param batchType The batch type
+   * @param version The batch version
+   * @return
+   */
+  static BatchServer*
+  getBatchServer(int batchType, const std::string& version);
+
 private:
 };
 

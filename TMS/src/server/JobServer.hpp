@@ -110,11 +110,18 @@ public:
   setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
 
   /**
+   * @brief Return true if the backend is a cloud
+   * @return
+   */
+  static bool
+  isCloudBackend(int batchType) {return batchType == DELTACLOUD || batchType == OPENNEBULA;}
+
+  /**
    * @brief Get logged user info
    * @return
    */
   UserSessionInfo
-  getUserSessionInfo(void) const {return muserSessionInfo;}
+  getUserSessionInfo(void) const {return msessionInfo;}
 
 private:
   /**
@@ -184,7 +191,7 @@ private:
    * @param baseJobInfo The base job info
    */
   void
-  updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& defaultJobInfo);
+  saveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& defaultJobInfo);
 
   /**
    * \brief Function to save the encapsulated job into the database
@@ -192,7 +199,7 @@ private:
    * @param job The concerned job
    */
   void
-  updateJobRecordIntoDatabase(int action, TMS_Data::Job& job);
+  dbSave(int action, TMS_Data::Job& job);
 
   /**
    * \brief Function to set the Working Directory
@@ -298,7 +305,7 @@ private:
   /**
    * @brief Information about the user and the session
    */
-  UserSessionInfo muserSessionInfo;
+  UserSessionInfo msessionInfo;
 
   /**
    * \brief The machine identifier
