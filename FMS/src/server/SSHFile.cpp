@@ -452,6 +452,10 @@ SSHFile::ls(const FMS_Data::LsDirOptions& options) const {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error listing directory: " + lsResult.second);
   }
+  if (lsResult.first.find("ls:") != std::string::npos) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
+                             "Error listing directory: " + lsResult.first);
+  }
 
   std::istringstream is(lsResult.first);
   char buffer[1024];
