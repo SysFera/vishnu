@@ -253,6 +253,10 @@ SSHFile::head(const FMS_Data::HeadOfFileOptions& options) {
                              "Error obtaining the head of the file: "+
                              headResult.second);
   }
+  if (headResult.first.find("head") != std::string::npos) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
+                             "Error heading file: " + headResult.first);
+  }
 
   return headResult.first;
 }
@@ -346,10 +350,16 @@ SSHFile::rm(const FMS_Data::RmFileOptions& options) {
     rmResult = ssh.exec(RMCMD + getPath());
   }
 
+
   if (rmResult.second.length() != 0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error removing " + getPath() + ": " + rmResult.second);
   }
+  if (rmResult.first.find("rm") != std::string::npos) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
+                             "Error removing file: " + rmResult.first);
+  }
+
   exists(false);
   upToDate=false;
 
@@ -372,6 +382,10 @@ SSHFile::rmdir() {
   if (rmdirResult.second.length() != 0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error removing " + getPath() + ": " + rmdirResult.second);
+  }
+  if (rmdirResult.first.find("rmdir") != std::string::npos) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
+                             "Error removing directory: " + rmdirResult.first);
   }
   exists(false);
   upToDate = false;
@@ -397,6 +411,10 @@ SSHFile::tail(const FMS_Data::TailOfFileOptions& options) {
   if (tailResult.second.length() != 0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error obtaining the head of the file: " + tailResult.second);
+  }
+  if (tailResult.first.find("tail") != std::string::npos) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
+                             "Error tailing file: " + tailResult.first);
   }
 
   return tailResult.first;
