@@ -222,7 +222,7 @@ SSHFile::chmod(const mode_t mode) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,
                              "Error changing file mode: " + chmodResult.second);
   }
-  if (chmodResult.first.find("help") != std::string::npos) {
+  if (chmodResult.first.find("chmod") != std::string::npos) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error changing file mode: " + chmodResult.first);
   }
