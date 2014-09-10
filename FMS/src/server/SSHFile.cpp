@@ -279,6 +279,10 @@ SSHFile::getContent() {
                              "Error obtaining the content of the file: "+
                              catResult.second);
   }
+  if (catResult.first.find("cat") != std::string::npos) {
+    throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
+                             "Error obtaining the content of the file: " + catResult.first);
+  }
 
   return catResult.first;
 }
