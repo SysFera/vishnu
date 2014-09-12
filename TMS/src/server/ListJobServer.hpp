@@ -142,7 +142,9 @@ public:
                        " FROM job, vsession, users, machine, account"
                        " WHERE job.vsession_numsessionid = vsession.numsessionid"
                        "  AND  job.users_numuserid       = users.numuserid"
-                       "  AND  job.machine_nummachineid  = account.machine_nummachineid";
+                       "  AND  job.machine_nummachineid  = account.machine_nummachineid"
+                       "  AND  machine.nummachineid  = account.machine_nummachineid"
+                       "  AND  users.numuserid  = account.users_numuserid";
 
     if (! options->isListAll()) {
       processOptions(options, query);
