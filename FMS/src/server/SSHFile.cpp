@@ -195,7 +195,7 @@ SSHFile::chgrp(const std::string& group) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,
                              "Error changing file group: " + chgrpResult.second);
   }
-  if (chgrpResult.first.find("chgrp") != std::string::npos) {
+  if (chgrpResult.first.find("chgrp:") != std::string::npos) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error changing file group: " + chgrpResult.first);
   }
@@ -222,7 +222,7 @@ SSHFile::chmod(const mode_t mode) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH,
                              "Error changing file mode: " + chmodResult.second);
   }
-  if (chmodResult.first.find("chmod") != std::string::npos) {
+  if (chmodResult.first.find("chmod:") != std::string::npos) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error changing file mode: " + chmodResult.first);
   }
@@ -253,7 +253,7 @@ SSHFile::head(const FMS_Data::HeadOfFileOptions& options) {
                              "Error obtaining the head of the file: "+
                              headResult.second);
   }
-  if (headResult.first.find("head") != std::string::npos) {
+  if (headResult.first.find("head:") != std::string::npos) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error heading file: " + headResult.first);
   }
@@ -279,11 +279,10 @@ SSHFile::getContent() {
                              "Error obtaining the content of the file: "+
                              catResult.second);
   }
-  if (catResult.first.find("cat") != std::string::npos) {
+  if (catResult.first.find("cat:") != std::string::npos) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error obtaining the content of the file: " + catResult.first);
   }
-
   return catResult.first;
 }
 /* Create a file through ssh. */
@@ -359,7 +358,7 @@ SSHFile::rm(const FMS_Data::RmFileOptions& options) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error removing " + getPath() + ": " + rmResult.second);
   }
-  if (rmResult.first.find("rm") != std::string::npos) {
+  if (rmResult.first.find("rm:") != std::string::npos) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error removing file: " + rmResult.first);
   }
@@ -387,7 +386,7 @@ SSHFile::rmdir() {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error removing " + getPath() + ": " + rmdirResult.second);
   }
-  if (rmdirResult.first.find("rmdir") != std::string::npos) {
+  if (rmdirResult.first.find("rmdir:") != std::string::npos) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error removing directory: " + rmdirResult.first);
   }
@@ -416,7 +415,7 @@ SSHFile::tail(const FMS_Data::TailOfFileOptions& options) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error obtaining the head of the file: " + tailResult.second);
   }
-  if (tailResult.first.find("tail") != std::string::npos) {
+  if (tailResult.first.find("tail:") != std::string::npos) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,
                              "Error tailing file: " + tailResult.first);
   }
