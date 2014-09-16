@@ -68,8 +68,12 @@ struct UMS_env_name_mapper{
 template <typename userIdType>
 
 boost::shared_ptr<Options>
-makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& configFile, const Group_type& userIdGroup=HIDDEN){
-
+makeConnectOptions(std::string pgName,
+                   userIdType& userId,
+                   int req,
+                   std::string& configFile,
+                   const Group_type& userIdGroup=HIDDEN)
+{
   boost::shared_ptr<Options> opt(new Options(pgName));
 
 
@@ -86,8 +90,6 @@ makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& co
 
 
   return opt;
-
-
 }
 
 

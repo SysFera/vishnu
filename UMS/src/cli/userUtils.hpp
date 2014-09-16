@@ -30,12 +30,19 @@ boost::function1<void,std::string> StringcallBackType;
  * \brief The privilege option callback type
  */
 typedef
-boost::function1<void,UMS_Data::PrivilegeType> privilegeCallBackType;
+boost::function1<void,UMS_Data::PrivilegeType> PrivilegeCallBackType;
+/**
+ * \brief The status option callback type
+ */
+typedef
+boost::function1<void,UMS_Data::StatusType> StatusCallBackType;
 
 /**
  * \brief To build options for the VISHNU user commands
  * \param pgName : The name of the command
  * \param configFile: Represents the VISHNU config file
+ * \param fUserId: The user id option callback
+ * \param fStatus: The status option callback
  * \param fPrivilege: The privilege option callback
  * \param fFirstname: The user first name option callback
  * \param fLastName: The user last name option callback
@@ -46,13 +53,15 @@ boost::function1<void,UMS_Data::PrivilegeType> privilegeCallBackType;
 
 
 boost::shared_ptr<Options>
-makeUserOptions(std::string pgName,std::string & configFile,
-                privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
-                StringcallBackType& fLastName, StringcallBackType & fEmail, int type=0);
-
-
-
-
+makeUserOptions(std::string pgName,
+                std::string& configFile,
+                StringcallBackType& fUserId,
+                StatusCallBackType& fStatus,
+                PrivilegeCallBackType& fPrivilege,
+                StringcallBackType& fFirstname,
+                StringcallBackType& fLastname,
+                StringcallBackType& fEmail,
+                int type);
 
 
 #endif

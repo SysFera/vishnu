@@ -619,25 +619,25 @@ TorqueServer::fillJobInfo(TMS_Data::Job& job, struct batch_status *p){
 
   // Creating job
   job.setBatchJobId(jobid);
-  job.setJobName(name);
-  job.setOwner(owner);
-  if (state.compare("")!=0) {
+  job.setName(name);
+  job.setLocalAccount(owner);
+  if (! state.empty()) {
     job.setStatus(convertTorqueStateToVishnuState(state));
   } else {
     job.setStatus(0);
   }
 
-  job.setJobQueue(location);
+  job.setQueue(location);
   job.setOutputPath(output);
   job.setErrorPath(error);
 
-  if (prio.compare("")!=0) {
-    job.setJobPrio(convertTorquePrioToVishnuPrio(convertToInt(prio.c_str())));
+  if (! prio.empty()) {
+    job.setPriority(convertTorquePrioToVishnuPrio(convertToInt(prio.c_str())));
   } else {
-    job.setJobPrio(100);
+    job.setPriority(100);
   }
 
-  if (qtime.compare("")!=0) {
+  if (! qtime.empty()) {
     std::istringstream isQtime(qtime.c_str());
     long lQtime;
     isQtime >> lQtime;
@@ -648,7 +648,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job& job, struct batch_status *p){
 
   job.setGroupName(group);
 
-  if (etime.compare("")!=0) {
+  if (! etime.empty()) {
     std::istringstream isEtime;
     long lEtime;
     isEtime >> lEtime;
@@ -657,19 +657,19 @@ TorqueServer::fillJobInfo(TMS_Data::Job& job, struct batch_status *p){
     job.setEndDate(0);
   }
 
-  if (wall.compare("")!=0) {
+  if (! wall.empty()) {
     job.setWallClockLimit(vishnu::convertStringToWallTime(wall));
   } else {
     job.setWallClockLimit(0);
   }
 
-  if (mem.compare("")!=0) {
+  if (! mem.empty()) {
     job.setMemLimit(convertTorqueMem(mem));
   } else {
     job.setMemLimit(0);
   }
 
-  if (node.compare("")!=0) {
+  if (! node.empty()) {
     int nbCpu;
     int maxNbCpu;
     int nbNodes = getNbNodesInNodeFormat(node, nbCpu, maxNbCpu);
@@ -680,7 +680,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job& job, struct batch_status *p){
     job.setNbNodes(1);
     job.setNbNodesAndCpuPerNode("1:1");
   }
-  job.setJobWorkingDir(workingDir);
+  job.setWorkingDir(workingDir);
 }
 
 

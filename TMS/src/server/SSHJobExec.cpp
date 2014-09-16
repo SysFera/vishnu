@@ -25,6 +25,7 @@
 #include "UMSVishnuException.hpp"
 #include "SSHJobExec.hpp"
 #include "Logger.hpp"
+#include "JobServer.hpp"
 
 #define CLEANUP_SUBMITTING_DATA(debugLevel) if (!debugLevel) { \
   vishnu::deleteFile(submitOptionsSerializedPath.c_str()); \
@@ -99,15 +100,14 @@ SSHJobExec::checkSshParams() {
 void
 SSHJobExec::sshexec(const std::string& actionName,
                     const std::string& script_path,
-                    TMS_Data::ListJobs& jobSteps) {
+                    TMS_Data::ListJobs& jobSteps)
+{
   checkSshParams();
-  std::string submitOptionsSerializedPath;
-
 
   std::string jobUpdateSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/jobResultSerialized%%%%%%").string();
-  submitOptionsSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/submitOptionsSerialized%%%%%%").string();
-  vishnu::saveInFile(submitOptionsSerializedPath, msubmitOptionsSerialized);
+  std::string submitOptionsSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/submitOptionsSerialized%%%%%%").string();
 
+  vishnu::saveInFile(submitOptionsSerializedPath, msubmitOptionsSerialized);
 
   std::string detailsForSubmit = "" ;
   if (actionName == "SUBMIT") {
@@ -120,12 +120,14 @@ SSHJobExec::sshexec(const std::string& actionName,
   // For traditional batch scheduler we need to submit the job through ssh
   // Not the case for cloud where we make RPC call
   std::string cmd;
-  if (mbatchType != DELTACLOUD
-      && mbatchType != OPENNEBULA) {
-    cmd = boost::str(boost::format("ssh -l %1% %2% "
-                                   "-o NoHostAuthenticationForLocalhost=yes "
-                                   "-o PasswordAuthentication=no "
-                                   )   % muser % mhostname);
+  if (! JobServer::isCloudBackend(mbatchType)) {
+    cmd = boost::str(
+            boost::format("ssh -l %1% %2% "
+                          "-o NoHostAuthenticationForLocalhost=yes "
+                          "-o PasswordAuthentication=no "
+                          )
+            % muser
+            % mhostname);
   }
 
   std::string errorPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/errorPath%%%%%%").string();
@@ -166,31 +168,31 @@ SSHJobExec::sshexec(const std::string& actionName,
 
   // THE FOLLOWIND CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
   if (actionName == "SUBMIT") {
-    if (bfs::exists(jobUpdateSerializedPath)) {
-      TMS_Data::ListJobs_ptr jobStepsPtr;
-      std::string jobResult;
-      jobResult = vishnu::get_file_content(jobUpdateSerializedPath, false);
-      if (! vishnu::parseEmfObject(jobResult, jobStepsPtr)) {
-        LOG("[ERROR] sshexec: cannot parse result", LogErr);
-        merrorInfo.clear();
-      } else {
-        TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-        jobSteps = *(ecoreFactory->createListJobs());
-        merrorInfo.append("\n").append(vishnu::get_file_content(stderrFilePath, false));
-        for (unsigned int j = 0; j < jobStepsPtr->getJobs().size(); j++) {
-          TMS_Data::Job_ptr job = ecoreFactory->createJob();
-          job->setSubmitError(merrorInfo);
-          *job = *jobStepsPtr->getJobs().get(j); //copy the content and not the pointer
-          jobSteps.getJobs().push_back(job);
-        }
-        jobSteps.setNbJobs(jobStepsPtr->getJobs().size());
-        jobSteps.setNbRunningJobs(jobStepsPtr->getNbRunningJobs());
-        jobSteps.setNbWaitingJobs(jobStepsPtr->getNbWaitingJobs());
-      }
-    } else {
+
+    if (! bfs::exists(jobUpdateSerializedPath)) {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, merrorInfo);
     }
 
+    TMS_Data::ListJobs_ptr jobStepsPtr;
+    std::string jobResult;
+    jobResult = vishnu::get_file_content(jobUpdateSerializedPath, false);
+    if (! vishnu::parseEmfObject(jobResult, jobStepsPtr)) {
+      LOG("[ERROR] sshexec: cannot parse result", LogErr);
+      merrorInfo.clear();
+    } else {
+      TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+      jobSteps = *(ecoreFactory->createListJobs());
+      merrorInfo.append("\n").append(vishnu::get_file_content(stderrFilePath, false));
+      for (unsigned int j = 0; j < jobStepsPtr->getJobs().size(); j++) {
+        TMS_Data::Job_ptr job = ecoreFactory->createJob();
+        job->setSubmitError(merrorInfo);
+        *job = *jobStepsPtr->getJobs().get(j); //copy the content and not the pointer
+        jobSteps.getJobs().push_back(job);
+      }
+      jobSteps.setNbJobs(jobStepsPtr->getJobs().size());
+      jobSteps.setNbRunningJobs(jobStepsPtr->getNbRunningJobs());
+      jobSteps.setNbWaitingJobs(jobStepsPtr->getNbWaitingJobs());
+    }
   } else {
     TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
     JsonObject jobJson(mjobSerialized);
@@ -198,7 +200,6 @@ SSHJobExec::sshexec(const std::string& actionName,
     jobPtr->setStatus(vishnu::STATE_CANCELLED);
     jobSteps = TMS_Data::ListJobs();
     jobSteps.getJobs().push_back(jobPtr);
-
   }
 
   if (! merrorInfo.empty()) {

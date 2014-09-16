@@ -68,21 +68,21 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
 
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo, options) == 0);
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
 
       ListProgression listOfProgress;
 
       ProgressOptions pgOptions;
 
-      pgOptions.setJobId(jobInfo.getJobId());
+      pgOptions.setJobId(jobInfo.getId());
       pgOptions.setMachineId(machineId);
 
       BOOST_CHECK_EQUAL(getJobProgress(sessionKey, listOfProgress, pgOptions), 0);
 
       // Check the success of the get jobs progression function
 
-      BOOST_CHECK( listOfProgress.getProgress().get(0)->getJobId()==jobInfo.getJobId());
+      BOOST_CHECK( listOfProgress.getProgress().get(0)->getJobId()==jobInfo.getId());
 
       BOOST_TEST_MESSAGE( "listOfProgress.getProgress().get(0)->getPercent():" <<listOfProgress.getProgress().get(0)->getPercent());
 
@@ -91,14 +91,14 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
 
       // ensure that the job is terminated
 
-      getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
+      getJobInfo(sessionKey, jobInfo.getId(), machineId, job);
 
       while (4!=job.getStatus()){
 
         bpt::seconds sleepTime(1);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
+        getJobInfo(sessionKey, jobInfo.getId(), machineId, job);
       }
 
       ListProgression jobRunningProgress;
@@ -117,7 +117,7 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
 
       //  Clean up: delete the submitted job
       CancelOptions cancelOpts;
-      cancelOpts.setJobId(jobInfo.getJobId());
+      cancelOpts.setJobId(jobInfo.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOpts) == 0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);

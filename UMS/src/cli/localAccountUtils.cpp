@@ -26,55 +26,35 @@ using namespace std;
  */
 
 boost::shared_ptr<Options>
-makeLocalAccountOptions(std::string pgName,StringcallBackType& fUserId,
-                        std::string & configFile, StringcallBackType & fMachineId,
+makeLocalAccountOptions(std::string pgName,
+                        StringcallBackType& fUserId,
+                        std::string & configFile,
+                        StringcallBackType & fMachineId,
                         StringcallBackType& fAcLogin,
-                        StringcallBackType & fHomeDirectory, int type){
+                        StringcallBackType & fHomeDirectory,
+                        int type){
 
   boost::shared_ptr<Options> opt=makeConnectOptions(pgName,fUserId,1,configFile);
 
-  opt->setPosition("userId",1);
+  opt->setPosition("userId", 1);
 
-  Group_type group=CONFIG;
-
-  if(type){// type =0 for "update function" and type=1 for "add function"
-
-    group=HIDDEN;
-  }
-
-
-
-  opt->add("machineId",
-           "the identifier of the machine associated to the local user configuration",
-           HIDDEN,
+  opt->add("machineId,m",
+           "The identifier of the target machine",
+           CONFIG,
            fMachineId,
-           1);
-
-
-  opt->setPosition("machineId",1);
+           type);
 
   opt->add("acLogin,l",
-           "login of the user on the associated machine",
-           group,
+           "User login on the targer machine",
+           CONFIG,
            fAcLogin,
            type);
 
-  if (type){
-    opt->setPosition("acLogin",1);
-  }
-
   opt->add("homeDirectory,d",
-           "The path of the home directory of the user on the associated machine",
-           group,
+           "The user home on the target machine",
+           CONFIG,
            fHomeDirectory,
            type);
 
-  if (type){
-    opt->setPosition("homeDirectory",1);
-  }
-
   return opt;
-
-
-
 }

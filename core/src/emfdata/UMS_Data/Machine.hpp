@@ -80,48 +80,26 @@ namespace UMS_Data
         void setMachineId(::ecore::EString const& _machineId);
 
         /**
-         * \brief To get the name
-         * \return The name attribute value
+         * \brief To get the address
+         * \return The address attribute value
          **/
-        ::ecore::EString const& getName() const;
+        ::ecore::EString const& getAddress() const;
         /**
-         * \brief To set the name
-         * \param _name The name value
+         * \brief To set the address
+         * \param _address The address value
          **/
-        void setName(::ecore::EString const& _name);
+        void setAddress(::ecore::EString const& _address);
 
         /**
-         * \brief To get the site
-         * \return The site attribute value
+         * \brief To get the description
+         * \return The description attribute value
          **/
-        ::ecore::EString const& getSite() const;
+        ::ecore::EString const& getDescription() const;
         /**
-         * \brief To set the site
-         * \param _site The site value
+         * \brief To set the description
+         * \param _description The description value
          **/
-        void setSite(::ecore::EString const& _site);
-
-        /**
-         * \brief To get the machineDescription
-         * \return The machineDescription attribute value
-         **/
-        ::ecore::EString const& getMachineDescription() const;
-        /**
-         * \brief To set the machineDescription
-         * \param _machineDescription The machineDescription value
-         **/
-        void setMachineDescription(::ecore::EString const& _machineDescription);
-
-        /**
-         * \brief To get the language
-         * \return The language attribute value
-         **/
-        ::ecore::EString const& getLanguage() const;
-        /**
-         * \brief To set the language
-         * \param _language The language value
-         **/
-        void setLanguage(::ecore::EString const& _language);
+        void setDescription(::ecore::EString const& _description);
 
         /**
          * \brief To get the status
@@ -133,17 +111,6 @@ namespace UMS_Data
          * \param _status The status value
          **/
         void setStatus(::UMS_Data::StatusType _status);
-
-        /**
-         * \brief To get the sshPublicKey
-         * \return The sshPublicKey attribute value
-         **/
-        ::ecore::EString const& getSshPublicKey() const;
-        /**
-         * \brief To set the sshPublicKey
-         * \param _sshPublicKey The sshPublicKey value
-         **/
-        void setSshPublicKey(::ecore::EString const& _sshPublicKey);
 
         // References
 
@@ -172,17 +139,11 @@ namespace UMS_Data
 
         ::ecore::EString m_machineId;
 
-        ::ecore::EString m_name;
+        ::ecore::EString m_address;
 
-        ::ecore::EString m_site;
-
-        ::ecore::EString m_machineDescription;
-
-        ::ecore::EString m_language;
+        ::ecore::EString m_description;
 
         ::UMS_Data::StatusType m_status;
-
-        ::ecore::EString m_sshPublicKey;
 
         // References
 

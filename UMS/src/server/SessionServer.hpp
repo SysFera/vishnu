@@ -92,14 +92,26 @@ public:
    */
   UMS_Data::Session
   getData() const;
+
   /**
-   * \brief Function to get user information from the database vishnu
-   * \param condition The condition of the select request
+   * \brief Get session attribute from sessionkey
+   * \param sessionKey The session key
    * \param attrname the name of the attribut to get
    * \return the value of the attribut or empty string if no results
    */
   std::string
-  getAttribut(std::string condition, std::string attrname="sessionkey");
+  getAttributFromSessionKey(const std::string& sessionKey, const std::string& attrname);
+
+  /**
+   * \brief Get session attribute from sessionkey
+   * \param sessionId The session key
+   * \param attrname the name of the attribut to get
+   * \return the value of the attribut or empty string if no results
+   */
+  std::string
+  getAttributFromSessionId(const std::string& sessionId, const std::string& attrname);
+
+
   /**
    * \brief Function to save the date of the last connection
    * \return raises an exception on error
@@ -134,7 +146,7 @@ public:
           const std::string& newVishnuObjectID = "",
           bool checkSession=true);
 
-  private:
+private:
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
@@ -145,7 +157,7 @@ public:
   /**
   * \brief An instance of vishnu database
   */
-  Database* mdatabaseVishnu;
+  Database* mdatabase;
 
   /**
    * @brief Hold connection timeout
@@ -193,13 +205,13 @@ public:
   getState(bool flagSessionId = false);
   /**
    * \brief Function to check the session on database
-   * \param idmachine the database number id of the client machine
-   * \param iduser the database number id of the owner of the session
+   * \param nummachine the database number id of the client machine
+   * \param numuser the database number id of the owner of the session
    * \param flagAdmin A flag for an admin to get the session key from another user
    * \return 0 on success and -1 if there is no results
    */
   int
-  getSessionkey(std::string idmachine, std::string iduser, bool flagAdmin = false);
+  getSessionkey(std::string nummachine, std::string iduser, bool flagAdmin = false);
   /**
    * \brief Function to solve the session connection parameters
    * \param connectOpt the connection parameters

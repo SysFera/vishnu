@@ -50,14 +50,15 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <net/if.h>
+#include <ctime>
 
 #include <errno.h>
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 namespace bs=boost::system;
 
-using namespace boost::posix_time;
-using namespace boost::gregorian;
+namespace btime = boost::posix_time;
+namespace bgred = boost::gregorian;
 
 /**
  * \brief Function to convert a string to int
@@ -85,9 +86,36 @@ vishnu::convertToLong(const std::string& sval) {
   long value = -1;
   try{
     value = boost::lexical_cast<long>(sval);
-  }catch(...){}
+  } catch(...){}
 
   return value;
+}
+
+/**
+ * @brief Convert a time_t to timestamp string
+ * @param seconds Number of second since epoch
+ * @return
+ */
+std::string
+vishnu::timeToTimestamp(time_t seconds)
+{
+  std::string result;
+  try {
+    std::tm* timeinfo = std::localtime(&seconds);
+    result = boost::str(
+               boost::format("%1%-%2%-%3% %4%:%5%:%6%")
+               % (1900 + timeinfo->tm_year)
+               % (1 + timeinfo->tm_mon)
+               % timeinfo->tm_mday
+               % timeinfo->tm_hour
+               % timeinfo->tm_min
+               % timeinfo->tm_sec
+               );
+  } catch (...) {
+    result = "0000-00-00 00:00:00";
+  }
+
+  return result;
 }
 
 /**
@@ -690,4 +718,19 @@ vishnu::makeFileExecutable(const std::string& path)
                 S_IROTH|S_IXOTH)) {
     throw SystemException(ERRCODE_INVDATA, boost::str(boost::format("Unable to make the script executable: %1%") % path)) ;
   }
+}
+
+/**
+ * @brief Remove machine prefix on the path and return the resulting path
+ * @param path The path in the form of  [machine:]/real/path. [] means optional
+ * @return The real path on the machine
+ */
+std::string
+vishnu::removeMachinePrefix(const std::string& path)
+{
+  size_t pos = path.find(":");
+  if (pos != std::string::npos)
+    return path.substr(pos +1);
+
+  return path;
 }

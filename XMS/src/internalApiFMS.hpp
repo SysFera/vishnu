@@ -209,7 +209,7 @@ solveTransferFile(diet_profile_t* profile){
     }
 
     // get the machineName
-    destMachineName = machineServer.getMachineName();
+    destMachineName = machineServer.getMachineAddress();
     delete machine;
 
     // get the acLogin
@@ -372,7 +372,7 @@ solveTransferRemoteFile(diet_profile_t* profile){
       machine->setMachineId(destHost);
       MachineServer destMachineServer(machine);
       destMachineServer.checkMachine();
-      destMachineName = destMachineServer.getMachineName();
+      destMachineName = destMachineServer.getMachineAddress();
       delete machine;
     } else {
       destMachineName = destHost;
@@ -423,7 +423,7 @@ solveTransferRemoteFile(diet_profile_t* profile){
     // check the source machine
     if (srcHost != "localhost"){
       srcMachineServer.checkMachine();
-      srcMachineName = srcMachineServer.getMachineName();
+      srcMachineName = srcMachineServer.getMachineAddress();
     } else {
       srcMachineName = srcHost;
     }
@@ -447,7 +447,7 @@ solveTransferRemoteFile(diet_profile_t* profile){
         MachineServer destMachineServer(machine);
         destMachineServer.checkMachine();
         // get the destination machineName
-        destMachineName = destMachineServer.getMachineName();
+        destMachineName = destMachineServer.getMachineAddress();
         delete machine;
       }
 

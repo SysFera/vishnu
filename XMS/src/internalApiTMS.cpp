@@ -92,7 +92,7 @@ solveSubmitJob(diet_profile_t* pb) {
 
 
     std::string jobId = jobServer.submitJob(scriptContent,
-                                            &options,
+                                            & options,
                                             server->getDefaultBatchOption());
 
     diet_string_set(pb,0, "success");
@@ -447,8 +447,8 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     jobListsSerialized = _ser.serialize_str(jobResults);
 
     std::ostringstream ossFileName ;
-    int nbResult = jobResults->getResults().size() ;
-    for(size_t i = 0; i < nbResult; i++) {
+    size_t nbResult = jobResults->getResults().size() ;
+    for(size_t i = 0; i < nbResult; ++i) {
       std::ostringstream missingFiles;
       missingFiles.clear() ;
       ossFileName << vishnu::getResultFiles(*jobResults->getResults().get(i), true);

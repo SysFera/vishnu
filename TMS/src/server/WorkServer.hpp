@@ -124,5 +124,12 @@ private:
   */
   std::string msshpublickey;
 
+  /**
+   * @brief Insert the current encapsulatedd object info into database
+   * @return
+   */
+  void
+  dbSave(void);
+
 };
 #endif
