@@ -6,9 +6,9 @@
  */
 #include "MockDatabase.hpp"
 
-int
+std::pair<int, uint64_t>
 MockDatabase::process(std::string request, int transacId){
-  return SUCCESS;
+  return std::pair<int, uint64_t>(SUCCESS, 0);
 }
 /**
  * \brief To make a connection to the database
