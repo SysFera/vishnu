@@ -22,24 +22,15 @@ class Options;
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
-
 struct AddUserFunc {
 
   UMS_Data::User mnewUser;
 
-  AddUserFunc(const UMS_Data::User& newUser ):
-     mnewUser(newUser)
-  {};
+  AddUserFunc(const UMS_Data::User& newUser): mnewUser(newUser) {}
 
   int operator()(std::string sessionKey) {
-
-
-     int res=addUser(sessionKey,mnewUser);
-
-      cout <<"The user identifier is " << mnewUser.getUserId() << endl;
-
+    int res = vishnu::addUser(sessionKey,mnewUser);
+    std::cout <<"User created: " << mnewUser.getUserId() << std::endl;
     return res;
   }
 };
@@ -48,30 +39,32 @@ struct AddUserFunc {
 int main (int ac, char* av[]){
 
 
-  /******* Parsed value containers ****************/
-
-  string configFile;
-
-  /********** EMF data ************/
-
-  UMS_Data::User newUser;
-
-  /******** Callback functions ******************/
-
-  boost::function1<void,UMS_Data::PrivilegeType> fPrivilege( boost::bind(&UMS_Data::User::setPrivilege,boost::ref(newUser),_1));
-  boost::function1<void,string> fFirstname( boost::bind(&UMS_Data::User::setFirstname,boost::ref(newUser),_1));
-  boost::function1<void,string> fLastname( boost::bind(&UMS_Data::User::setLastname,boost::ref(newUser),_1));
-  boost::function1<void,string> fEmail( boost::bind(&UMS_Data::User::setEmail,boost::ref(newUser),_1));
+  std::string configFile;
+  UMS_Data::User userInfo;
+  boost::function1<void,std::string> fUserId( boost::bind(&UMS_Data::User::setUserId,boost::ref(userInfo),_1));
+  boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::User::setStatus,boost::ref(userInfo),_1));
+  boost::function1<void,UMS_Data::PrivilegeType> fPrivilege( boost::bind(&UMS_Data::User::setPrivilege,boost::ref(userInfo),_1));
+  boost::function1<void,std::string> fFirstname( boost::bind(&UMS_Data::User::setFirstname,boost::ref(userInfo),_1));
+  boost::function1<void,std::string> fLastname( boost::bind(&UMS_Data::User::setLastname,boost::ref(userInfo),_1));
+  boost::function1<void,std::string> fEmail( boost::bind(&UMS_Data::User::setEmail,boost::ref(userInfo),_1));
 
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options>opt= makeUserOptions(av[0],configFile,fPrivilege,fFirstname, fLastname,fEmail,1);
+  boost::shared_ptr<Options>opt = makeUserOptions(av[0],
+      configFile,
+      fUserId,
+      fPrivilege,
+      fStatus,
+      fFirstname,
+      fLastname,
+      fEmail,
+      1);
 
 
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-  AddUserFunc apiFunc(newUser);
+  AddUserFunc apiFunc(userInfo);
   return GenericCli().run(apiFunc, configFile, ac, av);
 }  // end of main

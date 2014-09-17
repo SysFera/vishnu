@@ -10,12 +10,9 @@
 
 #include <string>
 #include <pthread.h>
-
 #include "Database.hpp"
 #include "DatabaseResult.hpp"
 #include "DbConfiguration.hpp"
-#include "MYSQLRequestFactory.hpp"
-
 #include "mysql.h"
 
 /**
@@ -26,12 +23,12 @@ class MYSQLDatabase : public Database{
 public :
   /**
    * \brief Function to process the request in the database
-   * \param request The request to process (must contain a SINGLE SQL statement without a semicolumn)
+   * \param query The SQL query to process
    * \param transacId the id of the transaction if one is used
-   * \return 0 on success, an error code otherwise
+   * \return A pair<int, int> containing the return code and LAST_INSERT_ID (only useful for insertion). Raises an exception on error
    */
-  int
-  process(std::string request, int transacId = -1);
+  virtual std::pair<int, uint64_t>
+  process(const std::string& query, int transacId = -1);
   /**
   * \brief To make a create a pool of MySQL connections
   * \return raises an exception on error
@@ -59,12 +56,12 @@ public :
 
   /**
   * \brief To get the result of a select request
-  * \param request The request to process
+  * \param query The request to process
   * \param transacId the id of the transaction if one is used
   * \return An object which encapsulates the database results
   */
   DatabaseResult*
-  getResult(std::string request, int transacId = -1);
+  getResult(const std::string& query, int transacId = -1);
 
   /**
    * \brief To get the type of database
@@ -100,24 +97,6 @@ public :
  */
   virtual void
   flush(int transactionID);
-  /**
- * \brief To get a unique id
- * \param table: The table to use to generate the id
- * \param fields: The fields of the table
- * \param val: The values of the fields to insert
- * \param tid: The transaction id
- * \param primary the primary key on the table
- * \return A new integer never returned by this function
- */
-  virtual int
-  generateId(std::string table, std::string fields, std::string val, int tid, std::string primary);
-/**
- * \brief To get a request from a request file based on a key
- * \param key the key indicating the request to get
- * \return the corresponding sql request
- */
-  virtual std::string
-  getRequest(const int key);
 
   /**
    * @brief escapeData : transform a sql data to a SQL-escaped string for MySQL
@@ -126,6 +105,17 @@ public :
    */
   virtual std::string
   escapeData(const std::string& data);
+
+
+protected:
+  /**
+   * @brief Return the last inserted id
+   * @param transactionId The transaction id
+   * @param errorMsg OUT old error message in case of error
+   * @return the id or -1 in case of error.
+   */
+  virtual int
+  lastInsertedId(int transactionId, std::string& errorMsg);
 
 private :
   /**
@@ -180,10 +170,31 @@ private :
   int
   disconnect();
 
+
   /**
-   * \brief Request factory
+   * @brief Get a connection from the pool of connections
+   * @param transaction The id of the related transaction
+   * @return Pair of connection and index in the pool
    */
-  MYSQLRequestFactory mmysqlfact;
+  std::pair<MYSQL*, int>
+  getConnectionFromPool(int transaction);
+
+  /**
+   * @brief Raise exception if MySQL exited with critical error
+   * @param conn The MYSQL connection pointer
+   * @param poolIndex The index of the connection in the pool
+   */
+  void
+  raiseOnCriticalMysqlError(MYSQL* conn, int poolIndex);
+
+  /**
+   * @brief Raise exception if a MySQL call exit with non-zero error code
+   * @param rc MySQL api return code
+   * @param conn The MYSQL connection pointer
+   * @param poolIndex The index of the connection in the pool
+   */
+  void
+  raiseExceptionIfMysqlError(int ecode, MYSQL* conn, int poolIndex);
 };
 
 

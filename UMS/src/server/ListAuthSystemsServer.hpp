@@ -48,58 +48,53 @@ public:
    * \return raises an exception on error
    */
   void
-  processOptions(UserServer userServer, const UMS_Data::ListAuthSysOptions_ptr& options, std::string& sqlRequest) {
-
-
+  processOptions(UserServer userServer, const UMS_Data::ListAuthSysOptions_ptr& options, std::string& sqlRequest)
+  {
     mfullInfo = options->isListFullInfo();
-    //If the full option is defined, the user must be an admin
     if (mfullInfo) {
-      if(!userServer.isAdmin()) {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
+      if (! userServer.isAdmin()) {
+        throw UMSVishnuException(ERRCODE_NO_ADMIN);
       }
     }
 
-    if (options != NULL) {
+    std::string userIdFilter = "";
+    if (! options) {
+      userIdFilter = userServer.getData().getUserId();
+    } else {
       std::string  userId = options->getUserId();
-      if(userId.size()!=0) {
-        //If the user is an admin
-        if(userServer.isAdmin()) {
-          checkUserId(userId);
-          sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users,"
-                            "authaccount where userid='"+mdatabaseInstance->escapeData(userId)+"'"
-                            "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
-                            );
-        }//End If the user is an admin
-        else {
-          UMSVishnuException e (ERRCODE_NO_ADMIN);
-          throw e;
+      if (! userId.empty()) {
+        if (! userServer.isAdmin()) {
+          throw UMSVishnuException(ERRCODE_NO_ADMIN);
         }
+        userIdFilter = userId;
       }
 
       std::string  authSystemId = options->getAuthSystemId();
-      if(authSystemId.size()!=0) {
-        //To check if the authSystem identifier is correct
+      if (! authSystemId.empty()) {
         checkAuthSystemId(authSystemId);
-        addOptionRequest("authsystemid", authSystemId, sqlRequest);
+        addOptionRequest("numauthsystemid", authSystemId, sqlRequest);
       }
 
       //If the option for listing all authSystem has not defined
-      if (!options->isListAllAuthSystems()) {
-        //If the option userId has not
-        if ((userId.size() == 0) && (authSystemId.size() == 0)) {
-          sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users,"
-                            "authaccount where userid='"+mdatabaseInstance->escapeData(userServer.getData().getUserId())+"'"
-                            "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
-                            );
+      if (! options->isListAllAuthSystems()) {
+        if (userId.empty() && authSystemId.empty()) {
+          userIdFilter = userServer.getData().getUserId();
         }
       }
     }
-    else {
-      sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users, "
-                        "authaccount where userid='"+mdatabaseInstance->escapeData(userServer.getData().getUserId())+"'"
-                        "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
-                        );
+
+    if (! userIdFilter.empty()) {
+      std::string subQuery = (boost::format("SELECT DISTINCT numauthsystemid"
+                                            "       FROM authsystem, users, authaccount"
+                                            "       WHERE users.status != '%1%'"
+                                            "        AND users.userid  = '%2%'"
+                                            "        AND authaccount.authsystem_numauthsystemid = authsystem.numauthsystemid"
+                                            "        AND authaccount.users_numuserid = users.numuserid")
+                              % vishnu::STATUS_DELETED
+                              % mdatabase->escapeData(userIdFilter)
+                              ).str();
+
+      sqlRequest.append(" AND numauthsystemid IN ("+subQuery+")");
     }
   }
 
@@ -110,13 +105,14 @@ public:
   */
   UMS_Data::ListAuthSystems* list(UMS_Data::ListAuthSysOptions_ptr option) {
 
-    std::string sql = (boost::format("SELECT authsystemid, name, uri, authlogin, authpassword,"
+    std::string sql = (boost::format("SELECT DISTINCT numauthsystemid, name, uri, authlogin, authpassword,"
                                      "       userpwdencryption, authtype, authsystem.status, ldapbase "
                                      " FROM  authsystem, ldapauthsystem"
-                                     " WHERE ldapauthsystem.authsystem_authsystemid = authsystem.numauthsystemid"
-                                     "  AND authsystem.status!=%1%")%vishnu::STATUS_DELETED).str();
-    std::vector<std::string>::iterator ii;
-    std::vector<std::string> results;
+                                     " WHERE ldapauthsystem.authsystem_numauthsystemid = authsystem.numauthsystemid"
+                                     "  AND authsystem.status != %1%")
+                       % vishnu::STATUS_DELETED).str();
+    std::vector<std::string>::iterator dbResultIter;
+    std::vector<std::string> dbResults;
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListAuthSystems();
 
@@ -124,44 +120,39 @@ public:
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
     //if the user exists
-    if (userServer.exist()) {
+    if (! userServer.exist()) {
+      throw  UMSVishnuException (ERRCODE_UNKNOWN_USER);
+    }
 
-      processOptions(userServer, option, sql);
-      sql.append(" order by authsystemid");
-      //To get the list of authSystems from the database
-      boost::scoped_ptr<DatabaseResult> ListofAuthSystems (mdatabaseInstance->getResult(sql.c_str()));
-      if (ListofAuthSystems->getNbTuples() != 0){
-        for (size_t i = 0; i < ListofAuthSystems->getNbTuples(); ++i) {
-          results.clear();
-          results = ListofAuthSystems->get(i);
-          ii = results.begin();
-          UMS_Data::AuthSystem_ptr authSystem = ecoreFactory->createAuthSystem();
-          authSystem->setAuthSystemId(*ii);
-          authSystem->setName(*(++ii));
-          authSystem->setURI(*(++ii));
-          std::string authLogin(*(++ii));
-          std::string authPassword(*(++ii));
-          int userPasswordEncryption(vishnu::convertToInt(*(++ii)));
-          int type(vishnu::convertToInt(*(++ii)));
-          if (mfullInfo) {
-            authSystem->setAuthLogin(authLogin);
-            authSystem->setAuthPassword(authPassword);
-            authSystem->setUserPasswordEncryption(userPasswordEncryption);
-            authSystem->setType(type);
-          }
-          authSystem->setStatus(vishnu::convertToInt(*(++ii)));
-          authSystem->setLdapBase(*(++ii));
-          mlistObject->getAuthSystems().push_back(authSystem);
+    processOptions(userServer, option, sql);
+    sql.append(" ORDER BY numauthsystemid");
+    //To get the list of authSystems from the database
+    boost::scoped_ptr<DatabaseResult> ListofAuthSystems (mdatabase->getResult(sql.c_str()));
+    if (ListofAuthSystems->getNbTuples() != 0){
+      for (size_t i = 0; i < ListofAuthSystems->getNbTuples(); ++i) {
+        dbResults.clear();
+        dbResults = ListofAuthSystems->get(i);
+        dbResultIter = dbResults.begin();
+        UMS_Data::AuthSystem_ptr authSystem = ecoreFactory->createAuthSystem();
+        authSystem->setAuthSystemId(*dbResultIter);
+        authSystem->setName(*(++dbResultIter));
+        authSystem->setURI(*(++dbResultIter));
+        std::string authLogin(*(++dbResultIter));
+        std::string authPassword(*(++dbResultIter));
+        int userPasswordEncryption(vishnu::convertToInt(*(++dbResultIter)));
+        int type(vishnu::convertToInt(*(++dbResultIter)));
+        if (mfullInfo) {
+          authSystem->setAuthLogin(authLogin);
+          authSystem->setAuthPassword(authPassword);
+          authSystem->setUserPasswordEncryption(userPasswordEncryption);
+          authSystem->setType(type);
         }
+        authSystem->setStatus(vishnu::convertToInt(*(++dbResultIter)));
+        authSystem->setLdapBase(*(++dbResultIter));
+        mlistObject->getAuthSystems().push_back(authSystem);
       }
     }
-    else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-      throw e;
-    }
     return mlistObject;
-
-
   }
 
   /**

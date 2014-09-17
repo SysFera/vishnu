@@ -69,20 +69,20 @@ BOOST_AUTO_TEST_CASE(list_job_normal_call)
       options.setMachine(machineId);
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath,firstJob,options)==0  );
 
-      BOOST_TEST_MESSAGE("************ The first job identifier is " << firstJob.getJobId() );
+      BOOST_TEST_MESSAGE("************ The first job identifier is " << firstJob.getId() );
 
       // submit a second job
 
       Job secondJob;
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath,secondJob,options)==0  );
 
-      BOOST_TEST_MESSAGE("************ The second job identifier is " << secondJob.getJobId() );
+      BOOST_TEST_MESSAGE("************ The second job identifier is " << secondJob.getId() );
 
 
       ListJobs lsJobs;
       ListJobsOptions lsOptions;
       lsOptions.setMachineId(machineId);
-      //lsOptions.setJobId(jobInfo.getJobId());
+      //lsOptions.setJobId(jobInfo.getId());
       // retrieve the two last submitted jobs
       bool found= false;
       bool foundFisrtJob= false;
@@ -119,10 +119,10 @@ BOOST_AUTO_TEST_CASE(list_job_normal_call)
 
     //  Clean up: delete the submitted jobs
       CancelOptions cancelOptions;
-      cancelOptions.setJobId(firstJob.getJobId());
+      cancelOptions.setJobId(firstJob.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions)==0  );
 
-      cancelOptions.setJobId(secondJob.getJobId());
+      cancelOptions.setJobId(secondJob.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions)==0  );
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
@@ -164,11 +164,11 @@ BOOST_AUTO_TEST_CASE(list_job_bad_sessionKey)
       options.setMachine(machineId);
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo,options) == 0  );
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
       ListJobs lsJobs;
       ListJobsOptions lsOptions;
-    // lsOptions.setJobId(jobInfo.getJobId());
+    // lsOptions.setJobId(jobInfo.getId());
 
       lsOptions.setMachineId(machineId);
       BOOST_CHECK_THROW(listJobs("bad sessionKey ", lsJobs, lsOptions), VishnuException);
@@ -178,7 +178,7 @@ BOOST_AUTO_TEST_CASE(list_job_bad_sessionKey)
 
     //  Clean up: delete the submitted job
       CancelOptions cancelOptions;
-      cancelOptions.setJobId(jobInfo.getJobId());
+      cancelOptions.setJobId(jobInfo.getId());
 
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions) == 0);
       bfs::path script(scriptFilePath.c_str());
@@ -223,11 +223,11 @@ BOOST_AUTO_TEST_CASE(list_job_bad_machineId)
 
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo,options) == 0);
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
       ListJobs lsJobs;
       ListJobsOptions lsOptions;
-      lsOptions.setJobId(jobInfo.getJobId());
+      lsOptions.setJobId(jobInfo.getId());
       lsOptions.setMachineId("bad machineId");
 
       BOOST_CHECK_THROW(listJobs(sessionKey, lsJobs, lsOptions), VishnuException);
@@ -238,7 +238,7 @@ BOOST_AUTO_TEST_CASE(list_job_bad_machineId)
 
     //  Clean up: delete the submitted job
       CancelOptions cancelOptions;
-      cancelOptions.setJobId(jobInfo.getJobId());
+      cancelOptions.setJobId(jobInfo.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions)==0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
@@ -278,10 +278,10 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
 
       Job machine1FirstJob;
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath,machine1FirstJob,options)==0  );
-      BOOST_TEST_MESSAGE("************ The first job identifier on " << machineId <<" is " << machine1FirstJob.getJobId() );
+      BOOST_TEST_MESSAGE("************ The first job identifier on " << machineId <<" is " << machine1FirstJob.getId() );
       Job machine1SecondJob;
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath,machine1SecondJob,options)==0  );
-      BOOST_TEST_MESSAGE("************ The second job identifier on " << machineId << " is " << machine1SecondJob.getJobId() );
+      BOOST_TEST_MESSAGE("************ The second job identifier on " << machineId << " is " << machine1SecondJob.getId() );
 
       ListJobs lsJobs;
       ListJobsOptions lsOptions;
@@ -302,14 +302,14 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
 
         if(machine1FirstJob==*(lsJobs.getJobs().get(i))){
           foundMachine1FisrtJob= true;
-          if(machine1FirstJob.getSubmitMachineId() == machineId){
+          if(machine1FirstJob.getMachine() == machineId){
             nbSubmittedJobsMachine1++;
           }
         }
 
         if(machine1SecondJob==*(lsJobs.getJobs().get(i))){
           foundMachine1SecondJob=true;
-          if(machine1SecondJob.getSubmitMachineId()==machineId){
+          if(machine1SecondJob.getMachine()==machineId){
             nbSubmittedJobsMachine1++;
           }
         }
@@ -329,9 +329,9 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
 
       //  Clean up: delete the submitted jobs
       CancelOptions cancelOptions;
-      cancelOptions.setJobId(machine1FirstJob.getJobId());
+      cancelOptions.setJobId(machine1FirstJob.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions) == 0);
-      cancelOptions.setJobId(machine1SecondJob.getJobId());
+      cancelOptions.setJobId(machine1SecondJob.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions) == 0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
@@ -431,9 +431,9 @@ BOOST_AUTO_TEST_CASE(list_job_on_machine_bad_sessionKey)
         if (ifile.is_open()) {
           while (!ifile.eof()) {
             getline(ifile, line);
-            if(line.find(((lsJobs.getJobs().get(i))->getJobId()))!=std::string::npos) {
+            if(line.find(((lsJobs.gets().get(i))->getId()))!=std::string::npos) {
               BOOST_TEST_MESSAGE("************ batch Job Id info: " << line);
-              BOOST_TEST_MESSAGE("************ result Job Id: " << (lsJobs.getJobs().get(i))->getJobId());
+              BOOST_TEST_MESSAGE("************ result Job Id: " << (lsJobs.gets().get(i))->getId());
               found = true;
               break;
             }

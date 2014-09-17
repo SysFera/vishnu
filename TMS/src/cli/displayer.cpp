@@ -53,32 +53,31 @@ displayJob(TMS_Data::Job& job){
 
 
   size_t pos = job.getOutputPath().find(":");
-  std::string prefixOutputPath = (pos == std::string::npos)? job.getSubmitMachineName()+":" : "";
+  std::string prefixOutputPath = (pos == std::string::npos)? job.getMachine()+":" : "";
   pos = job.getErrorPath().find(":");
-  std::string prefixErrorPath = (pos == std::string::npos)? job.getSubmitMachineName()+":" : "";
+  std::string prefixErrorPath = (pos == std::string::npos)? job.getMachine()+":" : "";
   boost::posix_time::ptime pt;
 
-  cout << " Job                    : " << job.getJobId()  << " (Batch ID : "<<job.getBatchJobId() <<")";
+  cout << " Job                    : " << job.getId()  << " (Batch ID : "<<job.getBatchJobId() <<")";
   cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "-");
   if (! job.getRelatedSteps().empty()) {
     cout << "\n Related Jobs         : " << job.getRelatedSteps();
   }
   cout << "\n User                 : " << job.getUserId();
   cout << "\n Session              : " << job.getSessionId();
-  cout << "\n Machine              : " << job.getSubmitMachineId() << " (Host: " << job.getSubmitMachineName() << ")";
+  cout << "\n Machine              : " << job.getMachine() << " (Host: " << job.getMachine() << ")";
   cout << "\n Output path (remote) : " << prefixOutputPath+job.getOutputPath();
   cout << "\n Error path  (remote) : " << prefixErrorPath+job.getErrorPath();
   cout << "\n Output dir (remote)  : " << job.getOutputDir();
-  cout << "\n Job                  : " << job.getJobId()  << " (Batch/Process ID: " << job.getBatchJobId() <<")";
+  cout << "\n Job                  : " << job.getId()  << " (Batch/Process ID: " << job.getBatchJobId() <<")";
   if (! job.getVmId().empty()) {
     cout << "\n Virtual Machine      : " << job.getVmId() << " (IP: " << job.getVmIp()<< ")";
   }
   cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "-");
-  cout << "\n Job name             : " << job.getJobName();
-  cout << "\n Job path             : " << job.getJobPath();
-  cout << "\n Priority             : " << job.getJobPrio() << " (" << convertJobPriorityToString(job.getJobPrio()) << ")";
+  cout << "\n Job name             : " << job.getName();
+  cout << "\n Job path             : " << job.getPath();
   cout << "\n CPU per Node         : " << job.getNbCpus();
-  cout << "\n Working dir (remote) : " << job.getJobWorkingDir();
+  cout << "\n Working dir (remote) : " << job.getWorkingDir();
   cout << "\n Status               : " << vishnu::convertJobStateToString(job.getStatus());
   if (job.getStatus() == vishnu::STATE_FAILED) {
     cout << "\n Submit error       : " << job.getSubmitError();
@@ -96,11 +95,11 @@ displayJob(TMS_Data::Job& job){
   } else {
     cout << "\n End date             : -";
   }
-  cout << "\n Owner                : " << job.getOwner();
-  cout << "\n Queue                : " << job.getJobQueue();
+  cout << "\n Owner                : " << job.getLocalAccount();
+  cout << "\n Queue                : " << job.getQueue();
   cout << "\n Wall clock limit     : " << convertWallTimeToString(job.getWallClockLimit());
   cout << "\n Group name           : " << job.getGroupName();
-  cout << "\n Description          : " << job.getJobDescription();
+  cout << "\n Description          : " << job.getDescription();
   if(job.getMemLimit() > 0) {
     cout << "\n Max memory           : " << job.getMemLimit();
   } else {
@@ -223,7 +222,7 @@ displayQueue(Queue& q){
  */
 void
 displaySubmit(TMS_Data::Job job){
-  cout << "Job Id     : " << job.getJobId() << endl;
+  cout << "Job Id     : " << job.getId() << endl;
 }
 
 
@@ -236,30 +235,30 @@ std::string convertJobPriorityToString(const int& prio) {
 
   string prioStr;
   switch(prio) {
-  case -1:
-    prioStr = "UNDEFINED";
-    break;
-  case 0:
-    prioStr = "VERY_LOW";
-    break;
-  case 1:
-    prioStr = "VERY_LOW";
-    break;
-  case 2:
-    prioStr = "LOW";
-    break;
-  case 3:
-    prioStr = "NORMAL";
-    break;
-  case 4:
-    prioStr = "HIGH";
-    break;
-  case 5:
-    prioStr = "VERY_HIGH";
-    break;
-  default:
-    prioStr = "UNDEFINED";
-    break;
+    case -1:
+      prioStr = "UNDEFINED";
+      break;
+    case 0:
+      prioStr = "VERY_LOW";
+      break;
+    case 1:
+      prioStr = "VERY_LOW";
+      break;
+    case 2:
+      prioStr = "LOW";
+      break;
+    case 3:
+      prioStr = "NORMAL";
+      break;
+    case 4:
+      prioStr = "HIGH";
+      break;
+    case 5:
+      prioStr = "VERY_HIGH";
+      break;
+    default:
+      prioStr = "UNDEFINED";
+      break;
   }
   return prioStr;
 
@@ -416,7 +415,6 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
   std::string ownerHead = "OWNER";
   std::string statusHead = "STATUS";
   std::string queueHead = "QUEUE";
-  std::string priorityHead = "PRIORITY";
   std::string machineIdHead = "MACHINE";
 
   size_t maxJobIdSize = jobIdHead.size();
@@ -425,15 +423,14 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
   size_t maxWorkIdSize = workIdHead.size();
   size_t maxStatusSize = statusHead.size();
   size_t maxQueueSize = queueHead.size();
-  size_t maxPrioritySize = priorityHead.size();
   size_t maxMachineIdSize = machineIdHead.size();
 
   for(size_t i = 0; i < listJobs.getJobs().size(); i++) {
 
-    jobId = (listJobs.getJobs().get(i))->getJobId();
+    jobId = (listJobs.getJobs().get(i))->getId();
     maxJobIdSize = std::max(maxJobIdSize, jobId.size());
 
-    jobName = (listJobs.getJobs().get(i))->getJobName();
+    jobName = (listJobs.getJobs().get(i))->getName();
     maxJobNameSize = std::max(maxJobNameSize, jobName.size());
 
     workId = (listJobs.getJobs().get(i))->getWorkId();
@@ -443,23 +440,19 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     owner = (listJobs.getJobs().get(i))->getUserId();
     maxOwnerSize = std::max(maxOwnerSize, owner.size());
 
-    queue = (listJobs.getJobs().get(i))->getJobQueue();
+    queue = (listJobs.getJobs().get(i))->getQueue();
     maxQueueSize = std::max(maxQueueSize, queue.size());
 
     status = (listJobs.getJobs().get(i))->getStatus();
     maxStatusSize = std::max(maxStatusSize, vishnu::convertJobStateToString(status).size());
 
-    priority = (listJobs.getJobs().get(i))->getJobPrio();
-    maxPrioritySize = std::max(maxPrioritySize, convertJobPriorityToString(priority).size()+3);
-
-    machineId = (listJobs.getJobs().get(i))->getSubmitMachineId();
+    machineId = (listJobs.getJobs().get(i))->getMachine();
     maxMachineIdSize = std::max(maxMachineIdSize, machineId.size());
   }
 
   os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead
      << setw(maxWorkIdSize+2) << left << workIdHead << setw(maxOwnerSize+2) << left << ownerHead
      << setw(maxStatusSize+2) << statusHead << setw(maxQueueSize+2) << left << queueHead
-     << setw(maxPrioritySize+2) << left << priorityHead
      << setw(maxMachineIdSize+2) << left << machineIdHead << endl;
 
 
@@ -469,21 +462,19 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
   setFill(maxOwnerSize, os);
   setFill(maxStatusSize, os);
   setFill(maxQueueSize, os);
-  setFill(maxPrioritySize, os);
   setFill(maxMachineIdSize, os);
   os << endl;
 
   for(size_t i = 0; i < listJobs.getJobs().size(); i++) {
 
-    jobId = (listJobs.getJobs().get(i))->getJobId();
-    jobName = (listJobs.getJobs().get(i))->getJobName();
+    jobId = (listJobs.getJobs().get(i))->getId();
+    jobName = (listJobs.getJobs().get(i))->getName();
     workId = (listJobs.getJobs().get(i))->getWorkId();
     workId_ = (workId!=-1? convertToString(workId) : " -- ") ;
     owner = (listJobs.getJobs().get(i))->getUserId();
     status = (listJobs.getJobs().get(i))->getStatus();
-    queue = (listJobs.getJobs().get(i))->getJobQueue();
-    priority = (listJobs.getJobs().get(i))->getJobPrio();
-    machineId = (listJobs.getJobs().get(i))->getSubmitMachineId();
+    queue = (listJobs.getJobs().get(i))->getQueue();
+    machineId = (listJobs.getJobs().get(i))->getMachine();
 
     os << setw(maxJobIdSize+2) << left << jobId;
     os << setw(maxJobNameSize+2) << left << jobName;
@@ -493,7 +484,6 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     os << setw(maxQueueSize+2) << left << queue;
     ostringstream oss;
     oss << priority  << "(" << convertJobPriorityToString(priority) << ")";
-    os << setw(maxPrioritySize+2) << left << oss.str();
     os << setw(maxMachineIdSize+2) << left << machineId;
     os << endl;
 

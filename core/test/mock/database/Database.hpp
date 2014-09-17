@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <stdint.h>
 #include "DatabaseResult.hpp"
 #include "DbConfiguration.hpp"
 
@@ -26,7 +27,7 @@ public :
    * \param transacId the id of the transaction if one is used
    * \return raises an exception on error
    */
-  virtual int
+  virtual std::pair<int, uint64_t>
   process(std::string request, int transacId = -1) = 0;
   /**
   * \brief To make a connection to the database

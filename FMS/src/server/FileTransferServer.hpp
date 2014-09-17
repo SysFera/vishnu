@@ -131,6 +131,10 @@ public:
 
 private:
   /**
+   * @brief Holds database instance
+   */
+  Database* mdatabase;
+  /**
    * \brief The last execution return value
    */
   mutable int mlastExecStatus;
@@ -324,6 +328,11 @@ public:
 
 private:
   /**
+   * @brief Holds database instance
+   */
+  Database* mdatabase;
+
+  /**
    * \brief The file transfer type  (copy or move)
    */
   File::TransferType mtransferType;
@@ -358,12 +367,11 @@ private:
   void
   waitThread ();
   /**
-   * \brief To get the client machine name and userId from database
-   * \param name to store the client machine name
-   * \param userId to store the userId
+   * @brief return a pair <machineid, userid> corresponding to the user session
+   * @return
    */
-  void
-  getUserInfo(std::string& name, std::string& userId);
+  std::pair<std::string, std::string>
+  getMachineUserPair(void);
   /**
    * \brief acommon add transfer function used by the other add transfer function
    * \param srcUser the source user
@@ -411,11 +419,7 @@ private:
   void
   processOptions(const FMS_Data::StopTransferOptions& options,
                  std::string& sqlRequest);
-  /**
-   * \brief To Update file transfer data
-   */
-  void
-  updateData();
+
   /**
    * \brief To Update file transfer data in database
    * \param status the last execution status
@@ -441,16 +445,8 @@ private:
    * \param transferid the transfer identifier
    * \return the error message
    */
-  static std::string
+  std::string
   getErrorFromDatabase(const std::string& transferid);
-
-
-  /**
-   * \brief To check if the user identifier exists
-   * \param userId the user identifier
-   */
-  static void
-  checkUserId(std::string userId);
 
 
   /**
@@ -459,7 +455,7 @@ private:
    * \param value the option value
    * \param request the sql request to modify
    */
-  static void
+  void
   addOptionRequest(const std::string& name,
                    const std::string& value,
                    std::string& request);
@@ -469,7 +465,7 @@ private:
    * \brief To check if the transfer identifier exists
    * \param  transferId the transfer identifier
    */
-  static void
+  void
   checkTransferId(std::string transferId);
 
   /**
@@ -485,6 +481,13 @@ private:
    */
   static void
   setSSHCommand(const std::string& sshCommand) {msshCommand=sshCommand;}
+
+  /**
+   * @brief Insert the current transfer info into database
+   * @return void. The transfer id will be recored in the encapsulated transfer object description
+   */
+  void
+  dbSave(void);
 
 };
 

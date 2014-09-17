@@ -70,11 +70,11 @@ BOOST_AUTO_TEST_CASE(get_completed_jobs_output_normal_call)
 
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo,options)==0  );
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
       // wait a few seconds and check the success of cancelling job
       Job job;
-      getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
+      getJobInfo(sessionKey, jobInfo.getId(), machineId, job);
 
       // ensure that the job is terminated
 
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(get_completed_jobs_output_normal_call)
         bpt::seconds sleepTime(5);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job);
+        getJobInfo(sessionKey, jobInfo.getId(), machineId, job);
       }
 
       // Check the success of get completed jobs output function
@@ -155,7 +155,7 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_sessionKey)
 
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo, options) == 0);
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
 
       ListJobResults listOfResults;
@@ -169,7 +169,7 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_sessionKey)
 
       //  Clean up: delete the submitted job
       CancelOptions cancelOpts;
-      cancelOpts.setJobId(jobInfo.getJobId());
+      cancelOpts.setJobId(jobInfo.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOpts) == 0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
@@ -211,7 +211,7 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_machineId)
 
       BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo,options) == 0);
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
 
       ListJobResults listOfResults;
@@ -225,7 +225,7 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_machineId)
 
       //  Clean up: delete the submitted job
       CancelOptions cancelOpts;
-      cancelOpts.setJobId(jobInfo.getJobId());
+      cancelOpts.setJobId(jobInfo.getId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOpts) == 0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);

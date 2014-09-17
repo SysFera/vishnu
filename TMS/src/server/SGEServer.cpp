@@ -224,7 +224,7 @@ SGEServer::submit(const std::string& scriptPath,
                                     sizeof(diagnosis)-1);
   if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
 
-    jobPtr->setJobName(jobName);
+    jobPtr->setName(jobName);
     isjobname = true;
 
   }
@@ -238,7 +238,7 @@ SGEServer::submit(const std::string& scriptPath,
     jobDIRECTORY = getenv("HOME");
 
   }
-  jobPtr->setJobWorkingDir(jobDIRECTORY);
+  jobPtr->setWorkingDir(jobDIRECTORY);
 
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_ERROR_PATH,jobErrorPath, size,
                                     diagnosis, sizeof(diagnosis)-1);
@@ -274,7 +274,7 @@ SGEServer::submit(const std::string& scriptPath,
 
   } else{
     if(isjobname){
-      std::string jobErrorFile(jobDIRECTORY+"/"+jobPtr->getJobName()+".e"+jobidstring);//default path
+      std::string jobErrorFile(jobDIRECTORY+"/"+jobPtr->getName()+".e"+jobidstring);//default path
       jobPtr->setErrorPath(jobErrorFile);
     }else{
 
@@ -319,7 +319,7 @@ SGEServer::submit(const std::string& scriptPath,
     if(isjobname){
       jobPtr->setOutputPath( boost::str(boost::format("%1%/%2%.o%3%")
                                         % jobDIRECTORY
-                                        % jobPtr->getJobName()
+                                        % jobPtr->getName()
                                         % jobidstring) );
     } else {
       jobPtr->setOutputPath( boost::str(boost::format("%1%/%2%.o%3%")

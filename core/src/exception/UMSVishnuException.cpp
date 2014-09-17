@@ -35,7 +35,7 @@ UMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_COMMAND_RUNNING, std::string("Commands are running")));
 
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_MACHINE, std::string("The machine id is unknown")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_MACHINE_EXISTING, std::string("The machine id already exists")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_MACHINE_EXISTING, std::string("A machine with the same id or address already exists")));
   mp.insert(std::pair<int, std::string>(ERRCODE_MACHINE_LOCKED, std::string("The machine is locked")));
   mp.insert(std::pair<int, std::string>(ERRCODE_MACHINE_ALREADY_LOCKED, std::string("The machine is already locked")));
   mp.insert(std::pair<int, std::string>(ERRCODE_UNUSABLE_MACHINE, std::string("The machine does not exist or it is locked")));

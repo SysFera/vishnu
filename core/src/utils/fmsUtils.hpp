@@ -13,7 +13,7 @@ namespace vishnu {
    * @return A string
    */
   std::string
-  buildTransferBaseCommand(int type,
+  buildTransferCommand(int type,
                        const bool& isRecursive,
                        const bool& useCompression,
                        int timeout);

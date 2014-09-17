@@ -22,7 +22,7 @@ using namespace std;
  * \return raises an exception on error
  */
 int
-POSTGREDatabase::process(std::string request, int transacId){
+POSTGREDatabase::process(const std::string& request, int transacId){
   int reqPos;
   PGconn* lconn = getConnection(reqPos);
 
@@ -42,7 +42,7 @@ POSTGREDatabase::process(std::string request, int transacId){
     throw SystemException(ERRCODE_DBCONN, std::string(PQerrorMessage(lconn)));
   }
   releaseConnection(reqPos);
-  return SUCCESS;
+  return 0;
 }
 
 
@@ -90,7 +90,7 @@ POSTGREDatabase::connect() {
       throw SystemException(ERRCODE_DBCONN, "The database is already connected");
     }
   }
-  return SUCCESS;
+  return 0;
 }
 
 /**
@@ -129,7 +129,7 @@ POSTGREDatabase::disconnect(){
     }
     pthread_mutex_destroy(&(mpool[i].mmutex));
   }
-  return SUCCESS;
+  return 0;
 }
 
 
@@ -139,7 +139,7 @@ POSTGREDatabase::disconnect(){
  * \return An object which encapsulates the database results
  */
 DatabaseResult*
-POSTGREDatabase::getResult(std::string request, int transacId) {
+POSTGREDatabase::getResult(const std::string& request, int transacId) {
   std::vector<std::vector<std::string> > results;
   std::vector<std::string> attributesNames;
   std::vector<std::string> tmp;

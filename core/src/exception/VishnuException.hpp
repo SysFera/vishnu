@@ -11,10 +11,6 @@
 #include <string>
 
 /**
- * \brief If everything is ok , no need to define exception so
- */
-static const int VISHNU_OK = 0;
-/**
  * \brief This class represents the root of all the exception of the system
  * \class VishnuException
  */

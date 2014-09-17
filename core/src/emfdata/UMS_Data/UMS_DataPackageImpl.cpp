@@ -382,29 +382,18 @@ UMS_DataPackage::UMS_DataPackage()
     m_Machine__machineId->setFeatureID(
             ::UMS_Data::UMS_DataPackage::MACHINE__MACHINEID);
     m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__machineId);
-    m_Machine__name = new ::ecore::EAttribute();
-    m_Machine__name->setFeatureID(::UMS_Data::UMS_DataPackage::MACHINE__NAME);
-    m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__name);
-    m_Machine__site = new ::ecore::EAttribute();
-    m_Machine__site->setFeatureID(::UMS_Data::UMS_DataPackage::MACHINE__SITE);
-    m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__site);
-    m_Machine__machineDescription = new ::ecore::EAttribute();
-    m_Machine__machineDescription->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::MACHINE__MACHINEDESCRIPTION);
-    m_MachineEClass->getEStructuralFeatures().push_back(
-            m_Machine__machineDescription);
-    m_Machine__language = new ::ecore::EAttribute();
-    m_Machine__language->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::MACHINE__LANGUAGE);
-    m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__language);
+    m_Machine__address = new ::ecore::EAttribute();
+    m_Machine__address->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::MACHINE__ADDRESS);
+    m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__address);
+    m_Machine__description = new ::ecore::EAttribute();
+    m_Machine__description->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::MACHINE__DESCRIPTION);
+    m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__description);
     m_Machine__status = new ::ecore::EAttribute();
     m_Machine__status->setFeatureID(
             ::UMS_Data::UMS_DataPackage::MACHINE__STATUS);
     m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__status);
-    m_Machine__sshPublicKey = new ::ecore::EAttribute();
-    m_Machine__sshPublicKey->setFeatureID(
-            ::UMS_Data::UMS_DataPackage::MACHINE__SSHPUBLICKEY);
-    m_MachineEClass->getEStructuralFeatures().push_back(m_Machine__sshPublicKey);
 
     // ListMachines
     m_ListMachinesEClass = new ::ecore::EClass();
@@ -1469,62 +1458,34 @@ UMS_DataPackage::UMS_DataPackage()
     m_Machine__machineId->setUnique(true);
     m_Machine__machineId->setDerived(false);
     m_Machine__machineId->setOrdered(true);
-    m_Machine__name->setEType(
+    m_Machine__address->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Machine__name->setName("name");
-    m_Machine__name->setDefaultValueLiteral("");
-    m_Machine__name->setLowerBound(0);
-    m_Machine__name->setUpperBound(1);
-    m_Machine__name->setTransient(false);
-    m_Machine__name->setVolatile(false);
-    m_Machine__name->setChangeable(true);
-    m_Machine__name->setUnsettable(false);
-    m_Machine__name->setID(false);
-    m_Machine__name->setUnique(true);
-    m_Machine__name->setDerived(false);
-    m_Machine__name->setOrdered(true);
-    m_Machine__site->setEType(
+    m_Machine__address->setName("address");
+    m_Machine__address->setDefaultValueLiteral("");
+    m_Machine__address->setLowerBound(0);
+    m_Machine__address->setUpperBound(1);
+    m_Machine__address->setTransient(false);
+    m_Machine__address->setVolatile(false);
+    m_Machine__address->setChangeable(true);
+    m_Machine__address->setUnsettable(false);
+    m_Machine__address->setID(false);
+    m_Machine__address->setUnique(true);
+    m_Machine__address->setDerived(false);
+    m_Machine__address->setOrdered(true);
+    m_Machine__description->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Machine__site->setName("site");
-    m_Machine__site->setDefaultValueLiteral("");
-    m_Machine__site->setLowerBound(0);
-    m_Machine__site->setUpperBound(1);
-    m_Machine__site->setTransient(false);
-    m_Machine__site->setVolatile(false);
-    m_Machine__site->setChangeable(true);
-    m_Machine__site->setUnsettable(false);
-    m_Machine__site->setID(false);
-    m_Machine__site->setUnique(true);
-    m_Machine__site->setDerived(false);
-    m_Machine__site->setOrdered(true);
-    m_Machine__machineDescription->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Machine__machineDescription->setName("machineDescription");
-    m_Machine__machineDescription->setDefaultValueLiteral("" "");
-    m_Machine__machineDescription->setLowerBound(0);
-    m_Machine__machineDescription->setUpperBound(1);
-    m_Machine__machineDescription->setTransient(false);
-    m_Machine__machineDescription->setVolatile(false);
-    m_Machine__machineDescription->setChangeable(true);
-    m_Machine__machineDescription->setUnsettable(false);
-    m_Machine__machineDescription->setID(false);
-    m_Machine__machineDescription->setUnique(true);
-    m_Machine__machineDescription->setDerived(false);
-    m_Machine__machineDescription->setOrdered(true);
-    m_Machine__language->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Machine__language->setName("language");
-    m_Machine__language->setDefaultValueLiteral("");
-    m_Machine__language->setLowerBound(0);
-    m_Machine__language->setUpperBound(1);
-    m_Machine__language->setTransient(false);
-    m_Machine__language->setVolatile(false);
-    m_Machine__language->setChangeable(true);
-    m_Machine__language->setUnsettable(false);
-    m_Machine__language->setID(false);
-    m_Machine__language->setUnique(true);
-    m_Machine__language->setDerived(false);
-    m_Machine__language->setOrdered(true);
+    m_Machine__description->setName("description");
+    m_Machine__description->setDefaultValueLiteral("" "");
+    m_Machine__description->setLowerBound(0);
+    m_Machine__description->setUpperBound(1);
+    m_Machine__description->setTransient(false);
+    m_Machine__description->setVolatile(false);
+    m_Machine__description->setChangeable(true);
+    m_Machine__description->setUnsettable(false);
+    m_Machine__description->setID(false);
+    m_Machine__description->setUnique(true);
+    m_Machine__description->setDerived(false);
+    m_Machine__description->setOrdered(true);
     m_Machine__status->setEType(m_StatusTypeEEnum);
     m_Machine__status->setName("status");
     m_Machine__status->setDefaultValueLiteral("-1");
@@ -1538,20 +1499,6 @@ UMS_DataPackage::UMS_DataPackage()
     m_Machine__status->setUnique(true);
     m_Machine__status->setDerived(false);
     m_Machine__status->setOrdered(true);
-    m_Machine__sshPublicKey->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Machine__sshPublicKey->setName("sshPublicKey");
-    m_Machine__sshPublicKey->setDefaultValueLiteral("");
-    m_Machine__sshPublicKey->setLowerBound(0);
-    m_Machine__sshPublicKey->setUpperBound(1);
-    m_Machine__sshPublicKey->setTransient(false);
-    m_Machine__sshPublicKey->setVolatile(false);
-    m_Machine__sshPublicKey->setChangeable(true);
-    m_Machine__sshPublicKey->setUnsettable(false);
-    m_Machine__sshPublicKey->setID(false);
-    m_Machine__sshPublicKey->setUnique(true);
-    m_Machine__sshPublicKey->setDerived(false);
-    m_Machine__sshPublicKey->setOrdered(true);
     // ListMachines
     m_ListMachinesEClass->setName("ListMachines");
     m_ListMachinesEClass->setAbstract(false);
@@ -2510,29 +2457,17 @@ UMS_DataPackage::UMS_DataPackage()
 {
     return m_Machine__machineId;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getMachine__name()
+::ecore::EAttribute_ptr UMS_DataPackage::getMachine__address()
 {
-    return m_Machine__name;
+    return m_Machine__address;
 }
-::ecore::EAttribute_ptr UMS_DataPackage::getMachine__site()
+::ecore::EAttribute_ptr UMS_DataPackage::getMachine__description()
 {
-    return m_Machine__site;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getMachine__machineDescription()
-{
-    return m_Machine__machineDescription;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getMachine__language()
-{
-    return m_Machine__language;
+    return m_Machine__description;
 }
 ::ecore::EAttribute_ptr UMS_DataPackage::getMachine__status()
 {
     return m_Machine__status;
-}
-::ecore::EAttribute_ptr UMS_DataPackage::getMachine__sshPublicKey()
-{
-    return m_Machine__sshPublicKey;
 }
 ::ecore::EReference_ptr UMS_DataPackage::getListMachines__machines()
 {

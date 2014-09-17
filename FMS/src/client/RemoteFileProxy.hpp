@@ -173,12 +173,14 @@ private:
      * \param options the transfer options
      * \param serviceName the name of the service
      * \param fileTransfer information about the transfer
+     * \param tell whether the transfer should be done asynchroneous or not
      * \return 0 if the function succeeds or an error code otherwise
      */
   int transferFile(const std::string& dest,
                    const FMS_Data::CpFileOptions& options,
                    const std::string& serviceName,
-                   FMS_Data::FileTransfer& fileTransfer);
+                   FMS_Data::FileTransfer& fileTransfer,
+                   int async);
 
   /**
    * @brief Request the server to update the state of transfer performed locally

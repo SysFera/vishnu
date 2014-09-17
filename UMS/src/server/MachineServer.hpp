@@ -67,19 +67,48 @@ public:
   */
   UMS_Data::Machine*
   getData();
+
   /**
-  * \brief Function to get machine information from the database vishnu
-  * \param condition The condition of the select request
-  * \param attrname the name of the attribut to get
+  * \brief Get a given machine attribute
+  * \param machineId The machine ID
+  * \param attribute The attribute
   * \return the value of the attribut or empty string if no results
   */
   std::string
-  getAttribut(std::string condition, std::string attrname = "nummachineid");
+  getEntryAttribute(std::string machineId, std::string attribute);
+
   /**
    * \brief Function to get the machine
    * \return The name of the machine
    */
-  std::string getMachineName();
+  std::string
+  getMachineAddress();
+
+
+  /**
+   * @brief Find if a given column a the database have a column with value
+   * @param column The column name
+   * @param value The value
+   * @return
+   */
+  std::string
+  findEntry(const std::string& column, const std::string& value);
+
+  /**
+   * @brief Get the nummachine id
+   * @param machineId The machine id
+   * @return
+   */
+  std::string
+  getNumMachine(const std::string& machineId);
+
+  /**
+   * @brief Get the nummachine id
+   * @param machineId The machine id
+   * @return
+   */
+  std::string
+  getNumActiveMachine(const std::string& machineId);
 
   /**
    * \brief Function to check the machineId
@@ -102,6 +131,13 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  Database *mdatabase;
+
+  /**
+   * @brief Insert the current encapsulatedd object info into database
+   * @return
+   */
+  void
+  dbSave(void);
 };
 #endif

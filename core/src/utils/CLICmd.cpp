@@ -19,10 +19,11 @@ CLICmd::parse(const func1 & s){
     mop->parse_cli(margc,margv);
     mop->parse_env(s);
     mop->notify();
-  } catch(po::required_option& e){//  a required parameter is missing
+  } catch(po::required_option&){//  a required parameter is missing
     return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
-  } catch(po::error& e){ // catch all other bad parameter errors
+  } catch(po::error& ex){ // catch all other bad parameter errors
+    std::cout << ex.what() <<"\n";
     return ERRCODE_INVALID_PARAM;
   }
-  return VISHNU_OK;
+  return 0;
 }

@@ -40,7 +40,7 @@ vishnu::submitJob(const std::string& sessionKey,
                   TMS_Data::Job& jobInfo,
                   const TMS_Data::SubmitOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
-// Dirty cast to modify a const object because the loadcriterion field may not be allocated -> allocating him
+  // Dirty cast to modify a const object because the loadcriterion field may not be allocated -> allocating him
   const void *optionPtr = &options;
   TMS_Data::SubmitOptions* optionstmp = (TMS_Data::SubmitOptions*)optionPtr;
   TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();
@@ -94,9 +94,9 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     if (options.getMachineId().empty()) {
       vishnu::getJobInfo(sessionKey, options.getJobId(), "", job);
     } else {
-      job.setSubmitMachineId(options.getMachineId());
+      job.setMachine(options.getMachineId());
     }
-    retCode = JobProxy(sessionKey, job.getSubmitMachineId()).cancelJob(options);
+    retCode = JobProxy(sessionKey, job.getMachine()).cancelJob(options);
   } else {
     std::string machineId = options.getMachineId();
     UMS_Data::ListMachines machines;
@@ -177,7 +177,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   checkJobPriority(options.getPriority()); //check the job priority options
 
   QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
-    query(options, sessionProxy, serviceName, machine->getMachineId());
+      query(options, sessionProxy, serviceName, machine->getMachineId());
   TMS_Data::ListJobs* listJobs_ptr = NULL;
   try {
     listJobs_ptr = query.list();
@@ -287,13 +287,13 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<std::string, TMS_Data::ListQueues>
-    query(queueName, sessionProxy, serviceName, machineId);
+      query(queueName, sessionProxy, serviceName, machineId);
 
   TMS_Data::ListQueues* listQueues_ptr = NULL ;
   try {
     listQueues_ptr = query.list();
   } catch(...) {
-      throw ;
+    throw ;
   }
 
   if(listQueues_ptr != NULL) {
@@ -337,7 +337,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   if (machineId.empty()) {
     TMS_Data::Job jobInfo;
     getJobInfo(sessionKey, jobId, machineId, jobInfo);
-    machineId = jobInfo.getSubmitMachineId();
+    machineId = jobInfo.getMachine();
   }
 
   // Now process the request

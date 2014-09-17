@@ -94,14 +94,10 @@ main(int argc, char* argv[]) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, msg);
   }
 
-  BatchServer* batchServer;
+  BatchServer* batchServer = NULL;
+
   try {
-    //To create batchServer Factory
-    BatchFactory factory;
-    batchServer = factory.getBatchServerInstance(batchType, batchVersion);
-    if (! batchServer) {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: getBatchServerInstance return NULL instance");
-    }
+    batchServer = BatchServer::getBatchServer(batchType, batchVersion);
 
     JsonObject jsonJob(vishnu::get_file_content(jobSerializedPath));
     TMS_Data::Job jobInfo = jsonJob.getJob();
@@ -128,13 +124,13 @@ main(int argc, char* argv[]) {
       vishnu::saveInFile(slaveJobFile, vishnu::emfSerializer<TMS_Data::ListJobs>(&jobSteps));
     } else if (action == "CANCEL") {
       switch (batchType) {
-      case DELTACLOUD:
-      case OPENNEBULA:
-        batchServer->cancel(jobInfo.getVmId());
-        break;
-      default:
-        batchServer->cancel(jobInfo.getBatchJobId());
-        break;
+        case DELTACLOUD:
+        case OPENNEBULA:
+          batchServer->cancel(jobInfo.getVmId());
+          break;
+        default:
+          batchServer->cancel(jobInfo.getBatchJobId());
+          break;
       }
     }
   } catch (VishnuException& ve) {
@@ -144,6 +140,9 @@ main(int argc, char* argv[]) {
     vishnu::saveInFile(slaveErrorPath, e.what());
     ret = EXIT_FAILURE;
   }
-  delete batchServer;
+
+  if (batchServer) {
+    delete batchServer;
+  }
   return ret;
 }

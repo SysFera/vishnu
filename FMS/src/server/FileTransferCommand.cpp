@@ -19,7 +19,7 @@ FileTransferCommand::FileTransferCommand(const std::string& name,
     mrecursive(recursive),
     mcompression(compression),
     mtimeout(timeout),
-    mcommand( vishnu::buildTransferBaseCommand(vishnu::SCP_TRANSFER,
+    mcommand( vishnu::buildTransferCommand(vishnu::SCP_TRANSFER,
                                            recursive,
                                            compression,
                                            timeout) )

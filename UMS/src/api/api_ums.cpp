@@ -451,24 +451,11 @@ vishnu::addMachine(const std::string& sessionKey,
                    UMS_Data::Machine& newMachine)
 throw(UserException, SystemException)
 {
-  checkIfTextIsEmpty(newMachine.getName(),
-                     "The machine name is empty",
-                     ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newMachine.getSite(),
-                     "The machine site is empty",
-                     ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newMachine.getLanguage(),
-                     "The machine language is empty",
-                     ERRCODE_INVALID_PARAM);
-  checkIfTextIsEmpty(newMachine.getMachineDescription(),
-                     "The machine description is empty",
-                     ERRCODE_INVALID_PARAM);
-
+  checkIfTextIsEmpty(newMachine.getMachineId(), "The machine id is empty", ERRCODE_INVALID_PARAM);
   SessionProxy sessionProxy(sessionKey);
   MachineProxy machineProxy(newMachine, sessionProxy);
   int res = machineProxy.add();
   newMachine = machineProxy.getData();
-
   return res;
 }
 

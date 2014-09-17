@@ -51,36 +51,20 @@ public class Machine extends EObject {
     VISHNUJNI.Machine_setMachineId(swigCPtr, this, _machineId);
   }
 
-  public String getName() {
-    return VISHNUJNI.Machine_getName(swigCPtr, this);
+  public String getAddress() {
+    return VISHNUJNI.Machine_getAddress(swigCPtr, this);
   }
 
-  public void setName(String _name) {
-    VISHNUJNI.Machine_setName(swigCPtr, this, _name);
+  public void setAddress(String _address) {
+    VISHNUJNI.Machine_setAddress(swigCPtr, this, _address);
   }
 
-  public String getSite() {
-    return VISHNUJNI.Machine_getSite(swigCPtr, this);
+  public String getDescription() {
+    return VISHNUJNI.Machine_getDescription(swigCPtr, this);
   }
 
-  public void setSite(String _site) {
-    VISHNUJNI.Machine_setSite(swigCPtr, this, _site);
-  }
-
-  public String getMachineDescription() {
-    return VISHNUJNI.Machine_getMachineDescription(swigCPtr, this);
-  }
-
-  public void setMachineDescription(String _machineDescription) {
-    VISHNUJNI.Machine_setMachineDescription(swigCPtr, this, _machineDescription);
-  }
-
-  public String getLanguage() {
-    return VISHNUJNI.Machine_getLanguage(swigCPtr, this);
-  }
-
-  public void setLanguage(String _language) {
-    VISHNUJNI.Machine_setLanguage(swigCPtr, this, _language);
+  public void setDescription(String _description) {
+    VISHNUJNI.Machine_setDescription(swigCPtr, this, _description);
   }
 
   public int getStatus() {
@@ -89,14 +73,6 @@ public class Machine extends EObject {
 
   public void setStatus(int _status) {
     VISHNUJNI.Machine_setStatus(swigCPtr, this, _status);
-  }
-
-  public String getSshPublicKey() {
-    return VISHNUJNI.Machine_getSshPublicKey(swigCPtr, this);
-  }
-
-  public void setSshPublicKey(String _sshPublicKey) {
-    VISHNUJNI.Machine_setSshPublicKey(swigCPtr, this, _sshPublicKey);
   }
 
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {

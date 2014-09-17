@@ -18,9 +18,6 @@
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
-
 struct ListQueuesFunc {
 
   std::string mmachineId;
@@ -32,7 +29,7 @@ struct ListQueuesFunc {
 
   int operator()(std::string sessionKey) {
     TMS_Data::ListQueues queue;
-    int res = listQueues(sessionKey, mmachineId, queue, mqueueName);
+    int res = vishnu::listQueues(sessionKey, mmachineId, queue, mqueueName);
     if (mqueueName.size()!=0){
       displayQueues(queue);
     } else {

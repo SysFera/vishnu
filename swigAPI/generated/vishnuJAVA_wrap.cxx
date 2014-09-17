@@ -3449,7 +3449,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Ma
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1getName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1getAddress(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -3458,13 +3458,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(UMS_Data::Machine **)&jarg1; 
-  result = (::ecore::EString *) &((UMS_Data::Machine const *)arg1)->getName();
+  result = (::ecore::EString *) &((UMS_Data::Machine const *)arg1)->getAddress();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1setName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1setAddress(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -3481,11 +3481,11 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Ma
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setName((::ecore::EString const &)*arg2);
+  (arg1)->setAddress((::ecore::EString const &)*arg2);
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1getSite(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1getDescription(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -3494,13 +3494,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(UMS_Data::Machine **)&jarg1; 
-  result = (::ecore::EString *) &((UMS_Data::Machine const *)arg1)->getSite();
+  result = (::ecore::EString *) &((UMS_Data::Machine const *)arg1)->getDescription();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1setSite(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1setDescription(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -3517,79 +3517,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Ma
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setSite((::ecore::EString const &)*arg2);
-}
-
-
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1getMachineDescription(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
-  ::ecore::EString *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::Machine **)&jarg1; 
-  result = (::ecore::EString *) &((UMS_Data::Machine const *)arg1)->getMachineDescription();
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1setMachineDescription(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
-  UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
-  ::ecore::EString *arg2 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::Machine **)&jarg1; 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return ;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return ;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setMachineDescription((::ecore::EString const &)*arg2);
-}
-
-
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1getLanguage(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
-  ::ecore::EString *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::Machine **)&jarg1; 
-  result = (::ecore::EString *) &((UMS_Data::Machine const *)arg1)->getLanguage();
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1setLanguage(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
-  UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
-  ::ecore::EString *arg2 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::Machine **)&jarg1; 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return ;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return ;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setLanguage((::ecore::EString const &)*arg2);
+  (arg1)->setDescription((::ecore::EString const &)*arg2);
 }
 
 
@@ -3618,42 +3546,6 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Ma
   arg1 = *(UMS_Data::Machine **)&jarg1; 
   arg2 = (::UMS_Data::StatusType)jarg2; 
   (arg1)->setStatus(arg2);
-}
-
-
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1getSshPublicKey(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
-  ::ecore::EString *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::Machine **)&jarg1; 
-  result = (::ecore::EString *) &((UMS_Data::Machine const *)arg1)->getSshPublicKey();
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Machine_1setSshPublicKey(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
-  UMS_Data::Machine *arg1 = (UMS_Data::Machine *) 0 ;
-  ::ecore::EString *arg2 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::Machine **)&jarg1; 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return ;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return ;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setSshPublicKey((::ecore::EString const &)*arg2);
 }
 
 
@@ -3950,410 +3842,6 @@ SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_L
   (void)jcls;
   (void)jarg1_;
   arg1 = *(UMS_Data::ListMachineOptions **)&jarg1; 
-  result = (::ecore::EClass_ptr)(arg1)->_eClass();
-  *(::ecore::EClass_ptr *)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_new_1OptionValue(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  UMS_Data::OptionValue *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (UMS_Data::OptionValue *)new UMS_Data::OptionValue();
-  *(UMS_Data::OptionValue **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_delete_1OptionValue(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  delete arg1;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1_1initialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  (arg1)->_initialize();
-}
-
-
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1getOptionName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  ::ecore::EString *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  result = (::ecore::EString *) &((UMS_Data::OptionValue const *)arg1)->getOptionName();
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1setOptionName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  ::ecore::EString *arg2 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return ;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return ;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setOptionName((::ecore::EString const &)*arg2);
-}
-
-
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1getValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  ::ecore::EString *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  result = (::ecore::EString *) &((UMS_Data::OptionValue const *)arg1)->getValue();
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1setValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  ::ecore::EString *arg2 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return ;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return ;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setValue((::ecore::EString const &)*arg2);
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1eGet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jboolean jarg3) {
-  jlong jresult = 0 ;
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EBoolean arg3 ;
-  ::ecore::EJavaObject result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  arg3 = jarg3 ? true : false; 
-  result = (arg1)->eGet(arg2,arg3);
-  *(::ecore::EJavaObject **)&jresult = new ::ecore::EJavaObject((const ::ecore::EJavaObject &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1eSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3) {
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EJavaObject *arg3 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  arg3 = *(::ecore::EJavaObject **)&jarg3;
-  if (!arg3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "::ecore::EJavaObject const & reference is null");
-    return ;
-  } 
-  (arg1)->eSet(arg2,(::ecore::EJavaObject const &)*arg3);
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1eIsSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jboolean jresult = 0 ;
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EBoolean result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1eUnset(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  ::ecore::EInt arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  (arg1)->eUnset(arg2);
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1_1eClass(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  UMS_Data::OptionValue *arg1 = (UMS_Data::OptionValue *) 0 ;
-  ::ecore::EClass_ptr result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::OptionValue **)&jarg1; 
-  result = (::ecore::EClass_ptr)(arg1)->_eClass();
-  *(::ecore::EClass_ptr *)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_new_1ListOptOptions(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  UMS_Data::ListOptOptions *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (UMS_Data::ListOptOptions *)new UMS_Data::ListOptOptions();
-  *(UMS_Data::ListOptOptions **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_delete_1ListOptOptions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  delete arg1;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1_1initialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  (arg1)->_initialize();
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1isListAllDeftValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jboolean jresult = 0 ;
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EBoolean result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  result = (::ecore::EBoolean)((UMS_Data::ListOptOptions const *)arg1)->isListAllDeftValue();
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1setListAllDeftValue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EBoolean arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  arg2 = jarg2 ? true : false; 
-  (arg1)->setListAllDeftValue(arg2);
-}
-
-
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1getUserId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EString *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  result = (::ecore::EString *) &((UMS_Data::ListOptOptions const *)arg1)->getUserId();
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1setUserId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EString *arg2 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return ;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return ;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setUserId((::ecore::EString const &)*arg2);
-}
-
-
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1getOptionName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EString *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  result = (::ecore::EString *) &((UMS_Data::ListOptOptions const *)arg1)->getOptionName();
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1setOptionName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EString *arg2 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return ;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return ;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setOptionName((::ecore::EString const &)*arg2);
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1eGet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jboolean jarg3) {
-  jlong jresult = 0 ;
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EBoolean arg3 ;
-  ::ecore::EJavaObject result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  arg3 = jarg3 ? true : false; 
-  result = (arg1)->eGet(arg2,arg3);
-  *(::ecore::EJavaObject **)&jresult = new ::ecore::EJavaObject((const ::ecore::EJavaObject &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1eSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3) {
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EJavaObject *arg3 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  arg3 = *(::ecore::EJavaObject **)&jarg3;
-  if (!arg3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "::ecore::EJavaObject const & reference is null");
-    return ;
-  } 
-  (arg1)->eSet(arg2,(::ecore::EJavaObject const &)*arg3);
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1eIsSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jboolean jresult = 0 ;
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EBoolean result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1eUnset(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EInt arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  (arg1)->eUnset(arg2);
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1_1eClass(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  UMS_Data::ListOptOptions *arg1 = (UMS_Data::ListOptOptions *) 0 ;
-  ::ecore::EClass_ptr result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptOptions **)&jarg1; 
   result = (::ecore::EClass_ptr)(arg1)->_eClass();
   *(::ecore::EClass_ptr *)&jresult = result; 
   return jresult;
@@ -5529,7 +5017,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getSubmitMachineId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getMachine(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -5538,13 +5026,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getSubmitMachineId();
+  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getMachine();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setSubmitMachineId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setMachine(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -5561,11 +5049,11 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setSubmitMachineId((::ecore::EString const &)*arg2);
+  (arg1)->setMachine((::ecore::EString const &)*arg2);
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getSubmitMachineName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -5574,13 +5062,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getSubmitMachineName();
+  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getId();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setSubmitMachineName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -5597,11 +5085,11 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setSubmitMachineName((::ecore::EString const &)*arg2);
+  (arg1)->setId((::ecore::EString const &)*arg2);
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getJobId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -5610,13 +5098,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getJobId();
+  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getName();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setJobId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -5633,11 +5121,11 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setJobId((::ecore::EString const &)*arg2);
+  (arg1)->setName((::ecore::EString const &)*arg2);
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getJobName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getPath(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -5646,13 +5134,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getJobName();
+  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getPath();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setJobName(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setPath(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -5669,43 +5157,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setJobName((::ecore::EString const &)*arg2);
-}
-
-
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getJobPath(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jstring jresult = 0 ;
-  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
-  ::ecore::EString *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getJobPath();
-  jresult = jenv->NewStringUTF(result->c_str()); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setJobPath(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
-  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
-  ::ecore::EString *arg2 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(TMS_Data::Job **)&jarg1; 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return ;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return ;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setJobPath((::ecore::EString const &)*arg2);
+  (arg1)->setPath((::ecore::EString const &)*arg2);
 }
 
 
@@ -5781,34 +5233,6 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getJobPrio(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jint jresult = 0 ;
-  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
-  ::TMS_Data::JobPriority result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::TMS_Data::JobPriority)((TMS_Data::Job const *)arg1)->getJobPrio();
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setJobPrio(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
-  ::TMS_Data::JobPriority arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(TMS_Data::Job **)&jarg1; 
-  arg2 = (::TMS_Data::JobPriority)jarg2; 
-  (arg1)->setJobPrio(arg2);
-}
-
-
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getNbCpus(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jint jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
@@ -5837,7 +5261,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getJobWorkingDir(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getWorkingDir(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -5846,13 +5270,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getJobWorkingDir();
+  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getWorkingDir();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setJobWorkingDir(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setWorkingDir(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -5869,7 +5293,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setJobWorkingDir((::ecore::EString const &)*arg2);
+  (arg1)->setWorkingDir((::ecore::EString const &)*arg2);
 }
 
 
@@ -5957,7 +5381,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getOwner(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getLocalAccount(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -5966,13 +5390,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getOwner();
+  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getLocalAccount();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setOwner(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setLocalAccount(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -5989,11 +5413,11 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setOwner((::ecore::EString const &)*arg2);
+  (arg1)->setLocalAccount((::ecore::EString const &)*arg2);
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getJobQueue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getQueue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -6002,13 +5426,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getJobQueue();
+  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getQueue();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setJobQueue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setQueue(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -6025,7 +5449,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setJobQueue((::ecore::EString const &)*arg2);
+  (arg1)->setQueue((::ecore::EString const &)*arg2);
 }
 
 
@@ -6093,7 +5517,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
 }
 
 
-SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getJobDescription(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getDescription(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jstring jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *result = 0 ;
@@ -6102,13 +5526,13 @@ SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI
   (void)jcls;
   (void)jarg1_;
   arg1 = *(TMS_Data::Job **)&jarg1; 
-  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getJobDescription();
+  result = (::ecore::EString *) &((TMS_Data::Job const *)arg1)->getDescription();
   jresult = jenv->NewStringUTF(result->c_str()); 
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setJobDescription(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setDescription(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
   ::ecore::EString *arg2 = 0 ;
   
@@ -6125,7 +5549,7 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
   std::string arg2_str(arg2_pstr);
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  (arg1)->setJobDescription((::ecore::EString const &)*arg2);
+  (arg1)->setDescription((::ecore::EString const &)*arg2);
 }
 
 
@@ -6498,6 +5922,34 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
   arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   (arg1)->setSubmitError((::ecore::EString const &)*arg2);
+}
+
+
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getPriority(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jint jresult = 0 ;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ::TMS_Data::JobStatus result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(TMS_Data::Job **)&jarg1; 
+  result = (::TMS_Data::JobStatus)((TMS_Data::Job const *)arg1)->getPriority();
+  jresult = (jint)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setPriority(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ::TMS_Data::JobStatus arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(TMS_Data::Job **)&jarg1; 
+  arg2 = (::TMS_Data::JobStatus)jarg2; 
+  (arg1)->setPriority(arg2);
 }
 
 
@@ -14056,137 +13508,6 @@ SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_L
 }
 
 
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_new_1ListOptionsValues(JNIEnv *jenv, jclass jcls) {
-  jlong jresult = 0 ;
-  UMS_Data::ListOptionsValues *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (UMS_Data::ListOptionsValues *)new UMS_Data::ListOptionsValues();
-  *(UMS_Data::ListOptionsValues **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_delete_1ListOptionsValues(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  UMS_Data::ListOptionsValues *arg1 = (UMS_Data::ListOptionsValues *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(UMS_Data::ListOptionsValues **)&jarg1; 
-  delete arg1;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptionsValues_1_1initialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  UMS_Data::ListOptionsValues *arg1 = (UMS_Data::ListOptionsValues *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptionsValues **)&jarg1; 
-  (arg1)->_initialize();
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptionsValues_1getOptionValues(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  UMS_Data::ListOptionsValues *arg1 = (UMS_Data::ListOptionsValues *) 0 ;
-  ::ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptionsValues **)&jarg1; 
-  result = (::ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) &(arg1)->getOptionValues();
-  *(::ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptionsValues_1eGet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jboolean jarg3) {
-  jlong jresult = 0 ;
-  UMS_Data::ListOptionsValues *arg1 = (UMS_Data::ListOptionsValues *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EBoolean arg3 ;
-  ::ecore::EJavaObject result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptionsValues **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  arg3 = jarg3 ? true : false; 
-  result = (arg1)->eGet(arg2,arg3);
-  *(::ecore::EJavaObject **)&jresult = new ::ecore::EJavaObject((const ::ecore::EJavaObject &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptionsValues_1eSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3) {
-  UMS_Data::ListOptionsValues *arg1 = (UMS_Data::ListOptionsValues *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EJavaObject *arg3 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptionsValues **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  arg3 = *(::ecore::EJavaObject **)&jarg3;
-  if (!arg3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "::ecore::EJavaObject const & reference is null");
-    return ;
-  } 
-  (arg1)->eSet(arg2,(::ecore::EJavaObject const &)*arg3);
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptionsValues_1eIsSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  jboolean jresult = 0 ;
-  UMS_Data::ListOptionsValues *arg1 = (UMS_Data::ListOptionsValues *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EBoolean result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptionsValues **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
-  jresult = (jboolean)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptionsValues_1eUnset(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
-  UMS_Data::ListOptionsValues *arg1 = (UMS_Data::ListOptionsValues *) 0 ;
-  ::ecore::EInt arg2 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptionsValues **)&jarg1; 
-  arg2 = (::ecore::EInt)jarg2; 
-  (arg1)->eUnset(arg2);
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptionsValues_1_1eClass(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  UMS_Data::ListOptionsValues *arg1 = (UMS_Data::ListOptionsValues *) 0 ;
-  ::ecore::EClass_ptr result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(UMS_Data::ListOptionsValues **)&jarg1; 
-  result = (::ecore::EClass_ptr)(arg1)->_eClass();
-  *(::ecore::EClass_ptr *)&jresult = result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_new_1ListJobResults(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   TMS_Data::ListJobResults *result = 0 ;
@@ -16125,124 +15446,6 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
 }
 
 
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EOptionList_1insert_1all(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) 0 ;
-  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg2 = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg1; 
-  arg2 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg2;
-  if (!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "ecorecpp::mapping::EList< ::UMS_Data::OptionValue > & reference is null");
-    return ;
-  } 
-  (arg1)->insert_all(*arg2);
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EOptionList_1insert_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jlong jarg3, jobject jarg3_) {
-  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) 0 ;
-  size_t arg2 ;
-  ::UMS_Data::OptionValue *arg3 = (::UMS_Data::OptionValue *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg3_;
-  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg1; 
-  arg2 = (size_t)jarg2; 
-  arg3 = *(::UMS_Data::OptionValue **)&jarg3; 
-  (arg1)->insert_at(arg2,arg3);
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EOptionList_1at(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
-  jlong jresult = 0 ;
-  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) 0 ;
-  size_t arg2 ;
-  ::UMS_Data::OptionValue *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg1; 
-  arg2 = (size_t)jarg2; 
-  result = (::UMS_Data::OptionValue *)((ecorecpp::mapping::EList< ::UMS_Data::OptionValue > const *)arg1)->at(arg2);
-  *(::UMS_Data::OptionValue **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EOptionList_1get(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2) {
-  jlong jresult = 0 ;
-  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) 0 ;
-  size_t arg2 ;
-  ::UMS_Data::OptionValue *result = 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg1; 
-  arg2 = (size_t)jarg2; 
-  result = (::UMS_Data::OptionValue *)((ecorecpp::mapping::EList< ::UMS_Data::OptionValue > const *)arg1)->get(arg2);
-  *(::UMS_Data::OptionValue **)&jresult = result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EOptionList_1push_1back(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
-  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) 0 ;
-  ::UMS_Data::OptionValue *arg2 = (::UMS_Data::OptionValue *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  (void)jarg2_;
-  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg1; 
-  arg2 = *(::UMS_Data::OptionValue **)&jarg2; 
-  (arg1)->push_back(arg2);
-}
-
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EOptionList_1size(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  jlong jresult = 0 ;
-  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) 0 ;
-  size_t result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg1; 
-  result = ((ecorecpp::mapping::EList< ::UMS_Data::OptionValue > const *)arg1)->size();
-  jresult = (jlong)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EOptionList_1clear(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
-  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg1; 
-  (arg1)->clear();
-}
-
-
-SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_delete_1EOptionList(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-  ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::OptionValue > *) 0 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = *(ecorecpp::mapping::EList< ::UMS_Data::OptionValue > **)&jarg1; 
-  delete arg1;
-}
-
-
 SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_EAuthSystemList_1insert_1all(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jlong jarg2, jobject jarg2_) {
   ecorecpp::mapping::EList< ::UMS_Data::AuthSystem > *arg1 = (ecorecpp::mapping::EList< ::UMS_Data::AuthSystem > *) 0 ;
   ecorecpp::mapping::EList< ::UMS_Data::AuthSystem > *arg2 = 0 ;
@@ -18171,112 +17374,6 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_configureOption(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  UMS_Data::OptionValue *arg2 = 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg2_;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  arg2 = *(UMS_Data::OptionValue **)&jarg2;
-  if (!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "UMS_Data::OptionValue const & reference is null");
-    return 0;
-  } 
-  {
-    try {
-      result = (int)vishnu::configureOption((std::string const &)*arg1,(UMS_Data::OptionValue const &)*arg2);
-    }
-    catch(UserException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-    catch(SystemException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-  }
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_configureDefaultOption(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  UMS_Data::OptionValue *arg2 = 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg2_;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  arg2 = *(UMS_Data::OptionValue **)&jarg2;
-  if (!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "UMS_Data::OptionValue const & reference is null");
-    return 0;
-  } 
-  {
-    try {
-      result = (int)vishnu::configureDefaultOption((std::string const &)*arg1,(UMS_Data::OptionValue const &)*arg2);
-    }
-    catch(UserException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-    catch(SystemException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-  }
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listSessions(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
   std::string *arg1 = 0 ;
@@ -18494,67 +17591,6 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
   {
     try {
       result = (int)vishnu::listHistoryCmd((std::string const &)*arg1,*arg2,(UMS_Data::ListCmdOptions const &)*arg3);
-    }
-    catch(UserException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-    catch(SystemException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-  }
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listOptions(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  UMS_Data::ListOptionsValues *arg2 = 0 ;
-  UMS_Data::ListOptOptions const &arg3_defvalue = UMS_Data::ListOptOptions() ;
-  UMS_Data::ListOptOptions *arg3 = (UMS_Data::ListOptOptions *) &arg3_defvalue ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg2_;
-  (void)jarg3_;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  arg2 = *(UMS_Data::ListOptionsValues **)&jarg2;
-  if (!arg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "UMS_Data::ListOptionsValues & reference is null");
-    return 0;
-  } 
-  arg3 = *(UMS_Data::ListOptOptions **)&jarg3;
-  if (!arg3) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "UMS_Data::ListOptOptions const & reference is null");
-    return 0;
-  } 
-  {
-    try {
-      result = (int)vishnu::listOptions((std::string const &)*arg1,*arg2,(UMS_Data::ListOptOptions const &)*arg3);
     }
     catch(UserException &_e) {
       {
@@ -19135,342 +18171,6 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_vi
   {
     vishnu::vishnuFinalize(); 
   }
-}
-
-
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineUserIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return 0;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  {
-    try {
-      result = (int)vishnu::defineUserIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
-    }
-    catch(UserException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-    catch(SystemException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-  }
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineMachineIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return 0;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  {
-    try {
-      result = (int)vishnu::defineMachineIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
-    }
-    catch(UserException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-    catch(SystemException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-  }
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineJobIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return 0;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  {
-    try {
-      result = (int)vishnu::defineJobIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
-    }
-    catch(UserException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-    catch(SystemException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-  }
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineTransferIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return 0;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  {
-    try {
-      result = (int)vishnu::defineTransferIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
-    }
-    catch(UserException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-    catch(SystemException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-  }
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineAuthIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return 0;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  {
-    try {
-      result = (int)vishnu::defineAuthIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
-    }
-    catch(UserException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-    catch(SystemException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-  }
-  jresult = (jint)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineWorkIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
-  jint jresult = 0 ;
-  std::string *arg1 = 0 ;
-  std::string *arg2 = 0 ;
-  int result;
-  
-  (void)jenv;
-  (void)jcls;
-  if(!jarg1) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
-  if (!arg1_pstr) return 0;
-  std::string arg1_str(arg1_pstr);
-  arg1 = &arg1_str;
-  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  if(!jarg2) {
-    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
-    return 0;
-  }
-  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
-  if (!arg2_pstr) return 0;
-  std::string arg2_str(arg2_pstr);
-  arg2 = &arg2_str;
-  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
-  {
-    try {
-      result = (int)vishnu::defineWorkIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
-    }
-    catch(UserException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-    catch(SystemException &_e) {
-      {
-        jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalUMSException");
-        std::string ret = (&_e)->buildExceptionString() + "#" + (&_e)->getMsg();
-        if (clazz) {
-          jenv->ThrowNew(clazz, ret.c_str());
-        }
-        return 0;
-      }
-    }
-  }
-  jresult = (jint)result; 
-  return jresult;
 }
 
 
@@ -22041,22 +20741,6 @@ SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_L
     return baseptr;
 }
 
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_OptionValue_1SWIGUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-    jlong baseptr = 0;
-    (void)jenv;
-    (void)jcls;
-    *(ecore::EObject **)&baseptr = *(UMS_Data::OptionValue **)&jarg1;
-    return baseptr;
-}
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptOptions_1SWIGUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-    jlong baseptr = 0;
-    (void)jenv;
-    (void)jcls;
-    *(ecore::EObject **)&baseptr = *(UMS_Data::ListOptOptions **)&jarg1;
-    return baseptr;
-}
-
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_AuthAccount_1SWIGUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
     jlong baseptr = 0;
     (void)jenv;
@@ -22302,14 +20986,6 @@ SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_L
     (void)jenv;
     (void)jcls;
     *(ecore::EObject **)&baseptr = *(UMS_Data::ListMachines **)&jarg1;
-    return baseptr;
-}
-
-SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListOptionsValues_1SWIGUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
-    jlong baseptr = 0;
-    (void)jenv;
-    (void)jcls;
-    *(ecore::EObject **)&baseptr = *(UMS_Data::ListOptionsValues **)&jarg1;
     return baseptr;
 }
 

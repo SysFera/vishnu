@@ -11,8 +11,6 @@ vishnuDir=$1
 destDir=$2
 
 cd $destDir
-mkdir -p Java
-mkdir -p Java/impl
 mkdir -p Java/impl/VishnuLib
 
 cp -r $vishnuDir/swigAPI/VishnuLib/* Java/impl/VishnuLib/

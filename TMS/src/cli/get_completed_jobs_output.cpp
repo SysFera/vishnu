@@ -18,9 +18,6 @@
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
-
 struct JobResultsFunc {
 
   TMS_Data::JobOutputOptions moptions;
@@ -32,7 +29,7 @@ struct JobResultsFunc {
 
   int operator()(const std::string& sessionKey) {
     TMS_Data::ListJobResults jobResults;
-    int res = getCompletedJobsOutput(sessionKey, jobResults, moptions);
+    int res = vishnu::getCompletedJobsOutput(sessionKey, jobResults, moptions);
     displayAllJobOutput(jobResults);
     return res;
   }

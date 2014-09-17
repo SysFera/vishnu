@@ -63,14 +63,23 @@ public:
   */
   UMS_Data::AuthSystem*
   getData();
+
   /**
-  * \brief Function to get localAccount information from the database vishnu
-  * \param condition The condition of the select request
-  * \param attrname the name of the attribut to get
+  * \brief Get the value of a given attribute of a given NON-DELETED entry
+  * \param authSystemID The identifier of the auth system
+  * \param attr The attribute name
   * \return the value of the attribut or empty string if no results
   */
   std::string
-  getAttribut(std::string condition, std::string attrname = "numauthsystemid");
+  getEntryAttribute(const std::string& authSystemID, const std::string& attr);
+
+  /**
+  * \brief Get the database ID of an auth system entry from its auth system identifier
+  * \param authId The auth system identifier
+  * \return the value as string or empty if not found
+  */
+  std::string
+  getNumAuthSystem(const std::string& authId);
 
 private:
   /////////////////////////////////
@@ -87,17 +96,17 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  Database *mdatabase;
 
-  /////////////////////////////////
-  // Functions
-  /////////////////////////////////
- /**
-  * \brief Function to check the user-authentication system on database
-  * \return true if the user-authentication system exists else false
+
+  /**
+  * \brief Check if the auth system exist
+  * \return raise exception if it don't exist
   */
-  bool
-  exist();
+  void
+  checkExistAuthSystem();
+
+
   /**
   * \brief Function to check the user-authentication system parameters values
   *\return raises an exception on error
@@ -110,5 +119,12 @@ private:
   */
   int
   checkLdapBase();
+
+  /**
+   * @brief Insert the current encapsulatedd object info into database
+   * @return
+   */
+  void
+  dbSave(void);
 };
 #endif

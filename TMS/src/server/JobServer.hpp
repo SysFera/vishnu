@@ -8,6 +8,7 @@
 #ifndef _JOB_SERVER_H
 #define _JOB_SERVER_H
 
+#include "BatchServer.hpp"
 #include "utils.hpp"
 #include <string>
 #include "TMS_Data.hpp"
@@ -79,15 +80,6 @@ public:
   getJobInfo(const std::string& jobId);
 
   /**
-   * \brief get Information about a given-job steps
-   * \param jobId The id of the job
-   * \param jobSteps List of job steps
-   * \return The job data structure
-   */
-  void
-  getJobStepInfo(const std::string& jobId, TMS_Data::ListJobs& jobSteps);
-
-  /**
    * \brief To set the main configuration
    */
   void
@@ -106,6 +98,13 @@ public:
    */
   void
   setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
+
+  /**
+   * @brief Return true if the backend is a cloud
+   * @return
+   */
+  static bool
+  isCloudBackend(int batchType) {return batchType == DELTACLOUD || batchType == OPENNEBULA;}
 
 private:
   /**
@@ -175,7 +174,7 @@ private:
    * @param baseJobInfo The base job info
    */
   void
-  updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& defaultJobInfo);
+  saveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& defaultJobInfo);
 
   /**
    * \brief Function to save the encapsulated job into the database
@@ -183,7 +182,7 @@ private:
    * @param job The concerned job
    */
   void
-  updateJobRecordIntoDatabase(int action, TMS_Data::Job& job);
+  dbSave(int action, TMS_Data::Job& job);
 
   /**
    * \brief Function to set the Working Directory
@@ -271,6 +270,13 @@ private:
   void
   exportJobEnvironments(const TMS_Data::Job &defaultJobInfo);
 
+  /**
+   * @brief Check whether the logged user is an admin
+   * @return
+   */
+  bool
+  isAdminSession(void) {return msessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN;}
+
 private:
 
   /**
@@ -281,7 +287,7 @@ private:
   /**
    * @brief Information about the user and the session
    */
-  UserSessionInfo muserSessionInfo;
+  UserSessionInfo msessionInfo;
 
   /**
    * \brief The machine identifier
@@ -301,7 +307,7 @@ private:
   /**
    * \brief An instance of vishnu database
    */
-  Database* mdatabaseInstance;
+  Database* mdatabase;
 
   /**
   * \brief The configuration of the SeD
