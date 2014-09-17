@@ -10,7 +10,6 @@
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
 #include "RemoteFileProxy.hpp"
-#include "LocalFileProxy.hpp"
 #include "boost/filesystem.hpp"
 #include<boost/algorithm/string.hpp>
 #include "FMSServices.hpp"
@@ -413,7 +412,7 @@ RemoteFileProxy::transferFile(const std::string& dest,
                                                                options.isIsRecursive(),
                                                                false,
                                                                0);
-    std::string transferCommand = boost::str(boost::format("%1% %2% %3%")
+    std::string transferCommand = boost::str(boost::format("%1% %2% %3% 2>&1")
                                              % baseCommand
                                              % fileTransfer.getSourceFilePath()
                                              % fileTransfer.getDestinationFilePath());
@@ -437,6 +436,7 @@ RemoteFileProxy::transferFile(const std::string& dest,
         vishnu::execSystemCommand(transferCommand, errorMsg);
         fileTransfer.setErrorMsg(errorMsg);
         finalizeTransfer(fileTransfer, direction);
+        exit(0);
       } else {
         /** parent: just completed execution */
       }

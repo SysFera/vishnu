@@ -14,7 +14,6 @@
 #include <string>
 #include "SessionProxy.hpp"
 #include "FileProxy.hpp"
-#include "LocalFileProxy.hpp"
 #include "RemoteFileProxy.hpp"
 
 /**

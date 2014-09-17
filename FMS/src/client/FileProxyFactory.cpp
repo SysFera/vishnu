@@ -7,7 +7,6 @@
 #include "SessionProxy.hpp"
 
 #include "FileProxy.hpp"
-#include "LocalFileProxy.hpp"
 #include "RemoteFileProxy.hpp"
 #include "FileProxyFactory.hpp"
 #include "utilVishnu.hpp"
