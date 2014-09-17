@@ -16,7 +16,6 @@ include_directories(client api
 )
 
 set(client_SRCS client/FileProxy
-  client/LocalFileProxy
   client/RemoteFileProxy
   client/FileProxyFactory
   client/FileTransferProxy)
