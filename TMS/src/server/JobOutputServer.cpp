@@ -43,9 +43,9 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
   std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, outputDir "
                            "FROM job "
                            "WHERE job.jobId='"+mdatabaseInstance->escapeData(jobId)+"' ";
-  std::string machineTmp = options->getStringProperty(mmachineId);
-  if (! machineTmp.empty()){
-    sqlRequest += "  AND job.submitMachineId='"+mdatabaseInstance->escapeData(machineTmp)+"'" ;
+  std::string machineId = options->getStringProperty("machineid");
+  if (! machineId.empty()){
+    sqlRequest += "  AND job.submitMachineId='"+mdatabaseInstance->escapeData(machineId)+"'" ;
   }
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(sqlRequest));
@@ -60,11 +60,6 @@ JobOutputServer::getJobOutput(JsonObject* options, const std::string& jobId) {
   std::string owner = *iter++;
   int status = vishnu::convertToInt( *iter++ );
   std::string outputDir = *iter++;
-
-  if (owner != muserSessionInfo.user_aclogin) {
-    throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't get the output of "
-                             "this job because it is for an other owner");
-  }
 
   switch(status) {
   case vishnu::STATE_COMPLETED:
