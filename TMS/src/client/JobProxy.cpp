@@ -66,7 +66,7 @@ JobProxy::submitJob(const std::string& scriptPath,
   // Set RPC pameters
   diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
   diet_string_set(profile,0, msessionKey);
-  diet_string_set(profile,1, mmachineId);
+  diet_string_set(profile,1, selectedMachine);
   diet_string_set(profile,2, scriptContent);
   diet_string_set(profile,3, optionsData.encode());
 

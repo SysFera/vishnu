@@ -1001,10 +1001,11 @@ JobServer::dbSave(int action, TMS_Data::Job& job)
 
     // logging
     if (job.getSubmitError().empty()) {
-      LOG(boost::str(boost::format("[INFO] job submitted: %1%. User: %2%. Owner: %3%")
+      LOG(boost::str(boost::format("[INFO] job submitted: %1%. User: %2%. Owner: %3%. Machine ID: %4%")
                      % job.getJobId()
                      % msessionInfo.userid
-                     % msessionInfo.user_aclogin), LogInfo);
+                     % msessionInfo.user_aclogin
+                     % mmachineId), LogInfo);
     } else {
       LOG((boost::str(boost::format("[WARN] submission error: %1% [%2%]")
                       % job.getJobId()
