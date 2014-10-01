@@ -60,14 +60,15 @@ add_library(vishnu-tms-server-mock ${server_mock_SRCS})
 set_target_properties(vishnu-tms-server-mock PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-tms-server-mock vishnu-ums-server-mock mockDb  ${LIBJANSSON_LIB})
 set(sed_mock_SRCS ${VISHNU_SOURCE_DIR}/XMS/src/xmssed.cpp
+  ${VISHNU_SOURCE_DIR}/TMS/src/utils/metasched.cpp
   ${VISHNU_SOURCE_DIR}/XMS/src/ServerXMS.cpp
-  ${VISHNU_SOURCE_DIR}/XMS/src//internalApiUMS.cpp
+  ${VISHNU_SOURCE_DIR}/XMS/src/internalApiUMS.cpp
   ${VISHNU_SOURCE_DIR}/XMS/src/internalApiTMS.cpp
   ${VISHNU_SOURCE_DIR}/XMS/src/internalApiFMS.cpp
   ${VISHNU_SOURCE_DIR}/XMS/src/MonitorXMS.cpp
   ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
   )
-add_library(tmssed-mock ${sed_mock_SRCS})
+add_library(tmssed-mock ${sed_mock_SRCS} )
 target_link_libraries(tmssed-mock
   ${Boost_LIBRARIES}
   mockDb
