@@ -9,10 +9,10 @@
 #define _ABSTRACTDATABASE_H_
 
 #include <string>
+#include <stdint.h>
 #include "DatabaseResult.hpp"
 #include "DbConfiguration.hpp"
 
-static const int SUCCESS = 0;
 /**
  * \class Database
  * \brief This class describes a database
@@ -20,13 +20,13 @@ static const int SUCCESS = 0;
 class Database{
 public :
   /**
-   * \brief Function to process the request in the database
+   * \brief Function to process the request in the database.
    * \param request The request to process (must contain a SINGLE SQL statement without a semicolumn)
    * \param transacId the id of the transaction if one is used
-   * \return raises an exception on error
+   * \return A pair<int, int> containing the return code and LAST_INSERT_ID (only useful for insertion). Raises an exception on error
    */
-  virtual int
-  process(std::string request, int transacId = -1) = 0;
+  virtual std::pair<int, uint64_t>
+  process(const std::string& request, int transacId = -1) = 0;
   /**
   * \brief To make a connection to the database
   * \return raises an exception on error
@@ -40,7 +40,7 @@ public :
   * \return An object which encapsulates the database results
   */
   virtual DatabaseResult*
-  getResult(std::string request, int transacId = -1) = 0;
+  getResult(const std::string& request, int transacId = -1) = 0;
   /**
    * \brief To get the type of database
    * \return An enum identifying the type of database
@@ -48,52 +48,34 @@ public :
   virtual DbConfiguration::db_type_t
   getDbType() = 0;
 
-    /**
+  /**
      * \brief Destructor, raises an exception on error
      */
-virtual ~Database();
-/**
+  virtual ~Database();
+  /**
  * \brief Start a transaction
  * \return The transaction ID
  */
   virtual int
   startTransaction() = 0;
-/**
+  /**
  * \brief End a transaction
  * \param transactionID: The ID of the transaction
  */
   virtual void
   endTransaction(int transactionID) = 0;
-/**
+  /**
  * \brief Cancel a transaction
  * \param transactionID: The ID of the transaction
  */
   virtual void
   cancelTransaction(int transactionID) = 0;
-/**
+  /**
  * \brief To commit a transaction
  * \param transactionID: The ID of the transaction
  */
   virtual void
   flush(int transactionID) = 0;
-/**
- * \brief To get a unique id
- * \param table The table to use to generate the id
- * \param fields The fields of the table
- * \param val The values of the fields to insert
- * \param tid The transaction id
- * \param primary the primary key on the table
- * \return A new integer never returned by this function
- */
-  virtual int
-  generateId(std::string table, std::string fields, std::string val, int tid, std::string primary) = 0;
-/**
- * \brief To get a request from a request file based on a key
- * \param key the key indicating the request to get
- * \return the corresponding sql request
- */
-  virtual std::string
-  getRequest(const int key) = 0;
 
   /**
    * @brief escapeMySQLData : transform a sql data to a SQL-escaped string for MySQL
@@ -108,6 +90,15 @@ protected :
    * \brief Constructor, raises an exception on error
    */
   Database();
+
+  /**
+   * @brief Return the last inserted id
+   * @param transactionId The transaction id
+   * @param errorMsg OUT old error message in case of error
+   * @return the id or -1 in case of error.
+   */
+  virtual int
+  lastInsertedId(int transactionId, std::string& errorMsg) = 0;
 
 private :
   /**

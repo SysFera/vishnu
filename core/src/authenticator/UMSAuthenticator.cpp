@@ -27,12 +27,15 @@ UMSAuthenticator::authenticate(UMS_Data::User& user) {
 
   //To encrypt the clear password
   user.setPassword(vishnu::cryptPassword(user.getUserId(), user.getPassword()));
-  std::string sqlCommand = (boost::format("SELECT numuserid"
-                                          " FROM users"
-                                          " WHERE userid='%1%'"
-                                          " AND pwd='%2%'"
-                                          " AND users.status<>%3%"
-                              )%databaseVishnu->escapeData(user.getUserId()) %databaseVishnu->escapeData(user.getPassword()) %vishnu::STATUS_DELETED).str();
-  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
+  std::string sqlCommand = boost::str(boost::format("SELECT userid"
+                                                    " FROM users"
+                                                    " WHERE userid='%1%'"
+                                                    "   AND pwd='%2%'"
+                                                    "   AND users.status=%3%"
+                                                    )
+                                      % databaseVishnu->escapeData(user.getUserId())
+                                      % databaseVishnu->escapeData(user.getPassword())
+                                      % vishnu::STATUS_ACTIVE);
+  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand));
   return (result->getFirstElement().size() != 0);
 }

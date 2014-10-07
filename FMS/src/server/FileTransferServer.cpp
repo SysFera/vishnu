@@ -43,8 +43,13 @@ FileTransferServer::getDatabaseInstance() {
 
 void
 FileTransferServer::checkTransferId(std::string transferId) {
-  std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+FileTransferServer::getDatabaseInstance()->escapeData(transferId)+"'";
-  boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
+  std::string query = (boost::format("SELECT numfiletransferid"
+                                     " FROM filetransfer"
+                                     " WHERE numfiletransferid=%1%")
+                       % vishnu::convertToLong(transferId)).str();
+
+  boost::scoped_ptr<DatabaseResult> transfer(mdatabase->getResult(query));
+
   if (transfer->getNbTuples()==0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
   }
@@ -56,29 +61,16 @@ void
 FileTransferServer::addOptionRequest(const std::string& name,
                                      const std::string& value,
                                      std::string& request) {
-  request.append(" and "+name+"=");
-  request.append("'"+FileTransferServer::getDatabaseInstance()->escapeData(value)+"'");
-}
-
-
-/**
- * \brief Function to check if a given user identifier exists
- * \param userId the user identifier
- * \return raises an exception on error
- */
-void
-FileTransferServer::checkUserId(std::string userId) {
-  std::string sqlUserRequest = "SELECT userid from users where userid='"+FileTransferServer::getDatabaseInstance()->escapeData(userId)+"'";
-  boost::scoped_ptr<DatabaseResult> user(FileTransferServer::getDatabaseInstance()->getResult(sqlUserRequest.c_str()));
-  if (user->getNbTuples() == 0) {
-    throw UMSVishnuException(ERRCODE_UNKNOWN_USERID);
-  }
+  request.append(" AND "+name+"=");
+  request.append("'"+mdatabase->escapeData(value)+"'");
 }
 
 // A constructor with parameters
 FileTransferServer::FileTransferServer(const SessionServer& sessionServer)
-  : mtransferType(File::undefined),
-    msessionServer(sessionServer) {
+  : mdatabase( getDatabaseInstance() ),
+    mtransferType(File::undefined),
+    msessionServer(sessionServer)
+{
 
 }
 
@@ -88,29 +80,39 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
                                        const std::string& destHost,
                                        const std::string& srcFilePath,
                                        const std::string& destFilePath)
-  : mtransferType(File::undefined),
-    msessionServer(sessionServer) {
+  : mdatabase( getDatabaseInstance() ),
+    mtransferType(File::undefined),
+    msessionServer(sessionServer)
+{
   mfileTransfer.setSourceMachineId(srcHost);
   mfileTransfer.setDestinationMachineId(destHost);
   mfileTransfer.setSourceFilePath(srcFilePath);
   mfileTransfer.setDestinationFilePath(destFilePath);
 }
 
+/**
+ * @brief return a pair <machineid, userid> corresponding to the user session
+ * @return
+ */
+std::pair<std::string, std::string>
+FileTransferServer::getMachineUserPair(void)
+{
 
-// To get a user info from the database
-void
-FileTransferServer::getUserInfo(std::string& clientMachineName,
-                                std::string& userId) {
   std::vector<std::string> result;
   std::vector<std::string>::const_iterator iter;
-  std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
+  std::string sessionId = msessionServer.getAttributFromSessionKey(msessionServer.getData().getSessionKey(), "vsessionid");
+  std::string query=boost::str(
+                      boost::format("SELECT name, userid, vsessionid"
+                                    " FROM clmachine, users, vsession"
+                                    " WHERE vsession.clmachine_numclmachineid=clmachine.numclmachineid  "
+                                    "  AND vsession.users_numuserid=users.numuserid "
+                                    "  AND vsessionid='%1%';")
+                      % mdatabase->escapeData(sessionId));
 
-  std::string sqlTransferRequest="SELECT name, userid,vsessionid from clmachine,users,vsession where vsession.clmachine_numclmachineid=clmachine.numclmachineid  "
-                                 " and vsession.users_numuserid=users.numuserid and "
-                                 "vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
+  boost::scoped_ptr<DatabaseResult> transfer(mdatabase->getResult(query));
 
-  boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
-
+  std::string clientMachineName = "";
+  std::string userId = "";
   if (transfer->getNbTuples() != 0) {
     for (size_t i = 0; i< transfer->getNbTuples(); ++i){
       result.clear();
@@ -118,51 +120,34 @@ FileTransferServer::getUserInfo(std::string& clientMachineName,
       iter=result.begin();
       clientMachineName=*(iter);
       userId=*(++iter);
-
     }
   }
+
+  return std::pair<std::string, std::string>(clientMachineName, userId);
 }
 
 // To log data into database
 void
 FileTransferServer::updateDatabaseRecord()
 {
-  std::string sqlCond = boost::str(boost::format("WHERE sessionkey='%1%'")
-                                   % getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())
-                                   );
-
-  Database* db = FileTransferServer::getDatabaseInstance();
-  std::string sqlUpdate="UPDATE filetransfer set ";
-  sqlUpdate+="vsession_numsessionid=" + msessionServer.getAttribut(sqlCond, "numsessionid") + ",";
-  sqlUpdate+="userId='" + getDatabaseInstance()->escapeData(mfileTransfer.getUserId()) + "',";
-  sqlUpdate+="clientMachineId='" + getDatabaseInstance()->escapeData(mfileTransfer.getClientMachineId()) + "',";
-  sqlUpdate+="sourceMachineId='" + getDatabaseInstance()->escapeData(mfileTransfer.getSourceMachineId()) + "',";
-  sqlUpdate+="destinationMachineId='" + db->escapeData(mfileTransfer.getDestinationMachineId()) + "',";
-  sqlUpdate+="sourceFilePath='" + db->escapeData(mfileTransfer.getSourceFilePath()) + "',";
-  sqlUpdate+="destinationFilePath='" + db->escapeData(mfileTransfer.getDestinationFilePath()) + "',";
+  std::string numSession = msessionServer.getAttributFromSessionKey( msessionServer.getData().getSessionKey(), "numsessionid" );
+  std::string sqlUpdate="UPDATE filetransfer SET ";
+  sqlUpdate+="vsession_numsessionid=" + numSession + ",";
+  sqlUpdate+="clientMachineId='" + mdatabase->escapeData(mfileTransfer.getClientMachineId()) + "',";
+  sqlUpdate+="sourceMachineId='" + mdatabase->escapeData(mfileTransfer.getSourceMachineId()) + "',";
+  sqlUpdate+="destinationMachineId='" + mdatabase->escapeData(mfileTransfer.getDestinationMachineId()) + "',";
+  sqlUpdate+="sourceFilePath='" + mdatabase->escapeData(mfileTransfer.getSourceFilePath()) + "',";
+  sqlUpdate+="destinationFilePath='" + mdatabase->escapeData(mfileTransfer.getDestinationFilePath()) + "',";
   sqlUpdate+="status=" + vishnu::convertToString(mfileTransfer.getStatus()) + ",";
   sqlUpdate+="fileSize=" + vishnu::convertToString(mfileTransfer.getSize()) + ",";
   sqlUpdate+="trCommand=" + vishnu::convertToString(mfileTransfer.getTrCommand()) + ",";
   sqlUpdate+="processid=" + vishnu::convertToString(-1) + ",";
-  sqlUpdate+="errorMsg='" + getDatabaseInstance()->escapeData(mfileTransfer.getErrorMsg()) + "',";
+  sqlUpdate+="errorMsg='" + mdatabase->escapeData(mfileTransfer.getErrorMsg()) + "',";
   sqlUpdate+="startTime=CURRENT_TIMESTAMP ";
-  sqlUpdate+="WHERE transferid='" + FileTransferServer::getDatabaseInstance()->escapeData(mfileTransfer.getTransferId()) + "';";
-  db->process(sqlUpdate);
+  sqlUpdate+="WHERE numfiletransferid='" + mdatabase->escapeData(mfileTransfer.getTransferId()) + "';";
+  mdatabase->process(sqlUpdate);
 }
 
-// update file transfer data
-void
-FileTransferServer::updateData() {
-
-  std::string clientMachineName;
-  std::string userId;
-
-  getUserInfo(clientMachineName, userId);
-
-  mfileTransfer.setTransferId( vishnu::getObjectId(vishnu::FILETRANSFERT, clientMachineName) );
-  mfileTransfer.setClientMachineId(clientMachineName);
-  mfileTransfer.setUserId(userId);
-}
 
 // To add a new file transfer thread
 int
@@ -173,11 +158,17 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
                                       const std::string& destMachineName,
                                       const FMS_Data::CpFileOptions& options)
 {
-  updateData(); // update datas and get the vishnu transfer id
+  std::pair<std::string, std::string> machineUserPair = getMachineUserPair();
+  mfileTransfer.setClientMachineId(machineUserPair.first);
+  mfileTransfer.setUserId(machineUserPair.second);
+
   int direction;
   if (vishnu::ifLocalTransferInvolved(srcMachineName, destMachineName, direction)) {
+
     mfileTransfer.setStatus(vishnu::TRANSFER_WAITING_CLIENT_RESPONSE);
-    updateDatabaseRecord();
+
+    dbSave();
+
     if (destUser.empty()) {
       std::string tmp = mfileTransfer.getSourceFilePath();
       mfileTransfer.setSourceFilePath(srcUser+"@"+srcMachineName+":"+tmp);
@@ -185,32 +176,15 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
       std::string tmp = mfileTransfer.getDestinationFilePath();
       mfileTransfer.setDestinationFilePath(destUser+"@"+destMachineName+":"+tmp);
     }
-    LOG("[INFO] request transfer from client size", 1);
+
+    LOG("[INFO] request transfer from client side", LogInfo);
     return 0;
   }
 
   FMS_Data::CpFileOptions optionsCopy(options);
-  int timeout (0); //FIXE: get timeout from config
-//  if (options.getTrCommand() == vishnu::UNDEFINED_TRANSFER_MANAGER) {
-//    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
+  int timeout (0); //FIXME: get timeout from config
 
-//    std::string query="SELECT users.numuserid,users_numuserid,vsessionid from users,vsession "
-//                      " WHERE vsession.users_numuserid=users.numuserid "
-//                      "  AND vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
-
-//    boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(query));
-
-//    if (dbResult->getNbTuples() != 0) {
-
-//      std::string numuserId= dbResult->getFirstElement();
-//      OptionValueServer optionValueServer;
-//      optionsCopy.setTrCommand(optionValueServer.getOptionValueForUser(numuserId, TRANSFERCMD_OPT));
-//      timeout = optionValueServer.getOptionValueForUser(numuserId, TRANSFER_TIMEOUT_OPT);
-//    }
-//  }
-
-  boost::scoped_ptr<FileTransferCommand> transferManager(
-        FileTransferCommand::getTransferManager(optionsCopy, timeout));
+  boost::scoped_ptr<FileTransferCommand> transferManager( FileTransferCommand::getTransferManager(optionsCopy, timeout) );
 
   boost::scoped_ptr<SSHFile> srcFileServer(
         new SSHFile(msessionServer,
@@ -233,7 +207,9 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
     mfileTransfer.setSize(0);
     mfileTransfer.setStartTime(0);
     mfileTransfer.setErrorMsg(srcFileServer->getErrorMsg());
-    updateDatabaseRecord();
+
+    dbSave();
+
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,srcFileServer->getErrorMsg());
   }
 
@@ -246,7 +222,9 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
   {
     mfileTransfer.setStatus(vishnu::TRANSFER_FAILED); //failed
     mfileTransfer.setErrorMsg("same source and destination");
-    updateDatabaseRecord();
+
+    dbSave();
+
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "same source and destination ");
   }
 
@@ -261,19 +239,13 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
                             mfileTransfer.getDestinationFilePath(),
                             mfileTransfer.getTransferId());
 
-  updateDatabaseRecord();
+  dbSave();
 
   // create the thread to perform the copy
   if (mtransferType == File::copy) {
-    mthread = boost::thread(&FileTransferServer::copy,
-                            this,
-                            transferExec,
-                            transferManager->getCommand());
+    mthread = boost::thread(&FileTransferServer::copy, this, transferExec, transferManager->getCommand());
   } else if (mtransferType == File::move) {
-    mthread = boost::thread(&FileTransferServer::move,
-                            this,
-                            transferExec,
-                            transferManager->getCommand());
+    mthread = boost::thread(&FileTransferServer::move, this, transferExec, transferManager->getCommand());
   }
 
   return 0;
@@ -341,20 +313,23 @@ FileTransferServer::updateStatus(const FMS_Data::Status& status,
                                  const std::string& transferId,
                                  const std::string& errorMsg)
 {
-  std::string sqlUpdateRequest = "UPDATE filetransfer"
-                                 " SET status="+vishnu::convertToString(status)+
-                                 ", errorMsg='"+getDatabaseInstance()->escapeData(errorMsg)+"'"+
-                                 " WHERE transferid='"+getDatabaseInstance()->escapeData(transferId)+"'"
-                                 + " and status<>2";
-  FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest);
+  std::string query = "UPDATE filetransfer"
+                      " SET status="+vishnu::convertToString(status)+
+                      ", errorMsg='"+mdatabase->escapeData(errorMsg)+"'"+
+                      " WHERE numfiletransferid='"+mdatabase->escapeData(transferId)+"'"
+                      + " and status<>2";
+  mdatabase->process(query);
 }
 
 // get error message from database
 std::string
-FileTransferServer::getErrorFromDatabase(const std::string& transferid) {
-  std::string sqlCommand = "SELECT errormsg from filetransfer where transferid='"+ FileTransferServer::getDatabaseInstance()->escapeData(transferid) +"'";
+FileTransferServer::getErrorFromDatabase(const std::string& transferid)
+{
+  std::string query = "SELECT errormsg "
+                      " FROM filetransfer "
+                      " WHERE numfiletransferid='"+ mdatabase->escapeData(transferid) +"'";
 
-  boost::scoped_ptr<DatabaseResult> result(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(query.c_str()));
 
   return result->getFirstElement();
 }
@@ -384,14 +359,14 @@ FileTransferServer::addCpThread(const std::string& srcUser,
                                 const std::string& destUser,
                                 const std::string& destMachineName,
                                 const FMS_Data::CpFileOptions& options) {
-  mtransferType=File::copy;
+  mtransferType = File::copy;
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
   waitThread();
 
-  std::string errorMsg(getErrorFromDatabase(mfileTransfer.getTransferId()));
+  std::string errorMsg = getErrorFromDatabase(mfileTransfer.getTransferId());
 
   if (false == errorMsg.empty()) {
-    throw FMSVishnuException (ERRCODE_RUNTIME_ERROR,errorMsg);
+    throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, errorMsg);
   }
   return 0;
 }
@@ -405,7 +380,7 @@ FileTransferServer::addCpAsyncThread(const std::string& srcUser,
                                      const std::string& destUser,
                                      const std::string& destMachineName,
                                      const FMS_Data::CpFileOptions& options) {
-  mtransferType=File::copy;
+  mtransferType = File::copy;
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
   return 0;
 }
@@ -443,7 +418,7 @@ FileTransferServer::addMvAsyncThread(const std::string& srcUser,
                                      const std::string& destUser,
                                      const std::string& destMachineName,
                                      const FMS_Data::CpFileOptions& options) {
-  mtransferType=File::move;
+  mtransferType = File::move;
   FMS_Data::CpFileOptions mvOptions(options);
   mvOptions.setIsRecursive(true);
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName,mvOptions);
@@ -465,27 +440,23 @@ FileTransferServer::waitThread() {
  */
 void
 FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
-                                   std::string& sqlRequest) {
+                                   std::string& query) {
 
-  std::string transferId(options.getTransferId()),machineName(options.getFromMachineId()),userId(options.getUserId());
+  std::string transferIdOption = options.getTransferId();
+  std::string machineAddrOption = options.getFromMachineId();
+  std::string userIdOption = options.getUserId();
 
   //To check if the transferId is defined
-  if (transferId.size() != 0) {
-
-    if (transferId.compare("all")!=0 && transferId.compare("ALL")!=0){
-      //To check the transfer Id
-      FileTransferServer::checkTransferId(options.getTransferId());
-      //To add the transferId on the request
-      FileTransferServer::addOptionRequest("transferId", options.getTransferId(), sqlRequest);
-
+  if (! transferIdOption.empty()) {
+    if (transferIdOption != "all" && transferIdOption != "ALL") {
+      checkTransferId( options.getTransferId() );
+      addOptionRequest("transferId", options.getTransferId(), query);
     }
-
   }
 
   //To check if the fromMachineId is defined
-  if (machineName.size() != 0) {
-
-    sqlRequest.append(" and (sourceMachineId='"+FileTransferServer::getDatabaseInstance()->escapeData(machineName)+"'"+" or destinationMachineId='"+FileTransferServer::getDatabaseInstance()->escapeData(machineName)+"')");
+  if (! machineAddrOption.empty()) {
+    query.append(" and (sourceMachineId='"+mdatabase->escapeData(machineAddrOption)+"'"+" or destinationMachineId='"+FileTransferServer::getDatabaseInstance()->escapeData(machineAddrOption)+"')");
   }
 
   //Creation of the object user
@@ -494,38 +465,36 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
   userServer.init();
 
   //To check if the userId is defined
-  if (userId.size() != 0) {
-
-    if (!userServer.isAdmin()) {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
-    }
-
-    if (userId.compare("all")!=0 && userId.compare("ALL")!=0){
-      //To check the user Id
-      FileTransferServer::checkUserId(options.getUserId());
-
-      //To add the userId on the request
-      FileTransferServer::addOptionRequest("userId", userId, sqlRequest);
-    }
+  if (userIdOption.empty()) {
+    addOptionRequest("users.userId", userServer.getData().getUserId(), query);
   } else {
-    FileTransferServer::addOptionRequest("userId", userServer.getData().getUserId(), sqlRequest);
+    if (! userServer.isAdmin()) {
+      throw UMSVishnuException (ERRCODE_NO_ADMIN);
+    }
+
+    if (userIdOption != "all" && userIdOption != "ALL") {
+      userServer.checkUserId(userIdOption);
+      addOptionRequest("users.userId", userIdOption, query);
+    }
   }
 }
 
 // Cancel  file transfers
 int
-FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options) {
-
-
+FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options)
+{
   if (! options.getTransferId().empty()
       || ! options.getUserId().empty()
       || ! options.getFromMachineId().empty()) {
 
-    std::string sqlListOfPid = "SELECT transferId,processId "
-                               " FROM filetransfer, vsession "
-                               " WHERE vsession.numsessionid=filetransfer.vsession_numsessionid "
-                               " AND filetransfer.status=0";
+    std::string query4Pid = (boost::format(
+                               "SELECT numfiletransferid, processId "
+                               " FROM filetransfer, vsession, users"
+                               " WHERE filetransfer.status      = %1%"
+                               "   AND vsession.numsessionid    = filetransfer.vsession_numsessionid"
+                               "   AND vsession.users_numuserid = users.numuserid"
+                               )
+                             % vishnu::STATUS_ACTIVE).str();
 
     std::string transferid;
     std::vector<std::string>::iterator iter;
@@ -533,25 +502,24 @@ FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options) {
 
     msessionServer.check();
 
-    processOptions(options, sqlListOfPid);
+    processOptions(options, query4Pid);
 
-    boost::scoped_ptr<DatabaseResult> ListOfPid (FileTransferServer::getDatabaseInstance()->getResult(sqlListOfPid.c_str()));
+    boost::scoped_ptr<DatabaseResult> ListOfPid (mdatabase->getResult(query4Pid.c_str()));
 
-    if (ListOfPid->getNbTuples() != 0){
-      for (size_t i = 0; i < ListOfPid->getNbTuples(); ++i) {
-        int pid;
-        results.clear();
-        results = ListOfPid->get(i);
-        iter = results.begin();
-        transferid = *iter;
-        ++iter;
-        pid = vishnu::convertToInt(*iter);
-        stopThread(transferid,pid);
-        ++iter;
-      }
-
-    } else {
+    if (ListOfPid->getNbTuples() == 0){
       throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "There is no file transfer in progress ");
+    }
+
+    for (size_t i = 0; i < ListOfPid->getNbTuples(); ++i) {
+      int pid;
+      results.clear();
+      results = ListOfPid->get(i);
+      iter = results.begin();
+      transferid = *iter;
+      ++iter;
+      pid = vishnu::convertToInt(*iter);
+      stopThread(transferid, pid);
+      ++iter;
     }
   }
 
@@ -564,8 +532,9 @@ FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options) {
 
 
 int
-FileTransferServer::stopThread(const std::string& transferid,const int& pid) {
-  int result=0;
+FileTransferServer::stopThread(const std::string& transferid,const int& pid)
+{
+  int result = 0;
 
   if (pid != -1) {
     result = kill(pid, SIGKILL);
@@ -577,14 +546,18 @@ FileTransferServer::stopThread(const std::string& transferid,const int& pid) {
 
     // get the user responsible for the stop request
 
-    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
-    std::string sqlCommand="SELECT userid,vsessionid "
-                           " FROM users,vsession "
-                           " WHERE vsession.users_numuserid=users.numuserid"
-                           " AND vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
+    std::string query = boost::str(
+                          boost::format(
+                            "SELECT users.userid, vsessionid "
+                            " FROM users, vsession "
+                            " WHERE vsession.sessionkey      = '%1%'"
+                            "   AND vsession.users_numuserid = users.numuserid;"
+                            )
+                          % mdatabase->escapeData( msessionServer.getData().getSessionKey()) );
 
-    boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand));
-    std::string logMsg= "by: "+ dbResult->getFirstElement();
+    boost::scoped_ptr<DatabaseResult> dbResult(mdatabase->getResult(query));
+
+    std::string logMsg= "BY: "+ dbResult->getFirstElement();
 
     updateStatus(vishnu::TRANSFER_CANCELLED, transferid, logMsg);
   }
@@ -602,16 +575,17 @@ TransferExec::TransferExec (const SessionServer& sessionServer,
                             const std::string& destUser,
                             const std::string& destMachineName,
                             const std::string& destPath,
-                            const std::string& transferId):
-  mtransferId(transferId),
-  msessionServer(sessionServer),
-  msrcUser(srcUser),
-  msrcMachineName(srcMachineName),
-  msrcPath(srcPath),
-  msrcUserKey(srcUserKey),
-  mdestUser(destUser),
-  mdestMachineName(destMachineName),
-  mdestPath(destPath) {
+                            const std::string& transferId)
+  : mdatabase(FileTransferServer::getDatabaseInstance()),
+    mtransferId(transferId),
+    msessionServer(sessionServer),
+    msrcUser(srcUser),
+    msrcMachineName(srcMachineName),
+    msrcPath(srcPath),
+    msrcUserKey(srcUserKey),
+    mdestUser(destUser),
+    mdestMachineName(destMachineName),
+    mdestPath(destPath) {
 
   mprocessId=-1;
   mlastExecStatus=0;
@@ -622,11 +596,13 @@ void
 TransferExec::updatePid(const int& pid) const {
 
   setProcessId(pid);
+
   std::string query = (boost::format("UPDATE filetransfer SET processid=%1%"
-                                     " WHERE transferId='%2%';")
-                       %vishnu::convertToString(pid)
-                       %getTransferId()).str();
-  FileTransferServer::getDatabaseInstance()->process(query);
+                                     " WHERE numfiletransferid=%2%;")
+                       % vishnu::convertToString(pid)
+                       % getTransferId()).str();
+
+  mdatabase->process(query);
 }
 
 // Perform a remote command through ssh
@@ -652,4 +628,39 @@ TransferExec::exec(const std::string& cmd) const
     result.first = output;
   }
   return result;
+}
+
+
+
+/**
+ * @brief Insert the current transfer info into database
+ * @return void. The transfer id will be recored in the encapsulated transfer object description
+ */
+void
+FileTransferServer::dbSave(void)
+{
+  std::string numSession = msessionServer.getAttributFromSessionKey(msessionServer.getData().getSessionKey(), "numsessionid");
+  std::string query = boost::str(
+                        boost::format("INSERT INTO filetransfer"
+                                      " (vsession_numsessionid, clientMachineId, sourceMachineId,"
+                                      " destinationMachineId, sourceFilePath, destinationFilePath,"
+                                      " status, fileSize, trCommand, processid, errorMsg, startTime)"
+                                      " VALUES(%1%,'%2%','%3%','%4%','%5%','%6%',%7%,%8%,%9%,%10%,'%11%',%12%)")
+                        % numSession
+                        % mdatabase->escapeData(mfileTransfer.getClientMachineId())
+                        % mdatabase->escapeData(mfileTransfer.getSourceMachineId())
+                        % mdatabase->escapeData(mfileTransfer.getDestinationMachineId())
+                        % mdatabase->escapeData(mfileTransfer.getSourceFilePath())
+                        % mdatabase->escapeData(mfileTransfer.getDestinationFilePath())
+                        % vishnu::convertToString(mfileTransfer.getStatus())
+                        % vishnu::convertToString(mfileTransfer.getSize())
+                        % vishnu::convertToString(mfileTransfer.getTrCommand())
+                        % vishnu::convertToString(-1)
+                        % mdatabase->escapeData(mfileTransfer.getErrorMsg())
+                        % "CURRENT_TIMESTAMP");
+
+
+  std::pair<int, u_int64_t> result = mdatabase->process(query);
+
+  mfileTransfer.setTransferId( vishnu::convertToString(result.second) );
 }

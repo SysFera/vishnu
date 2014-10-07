@@ -391,29 +391,17 @@
         <details key="shortOption" value=""/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="address" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="represents the name of the machine"/>
-        <details key="shortOption" value="n"/>
+        <details key="content" value="IP or the fully qualified domain name of the machine"/>
+        <details key="shortOption" value="a"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="site" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the location of the machine"/>
-        <details key="shortOption" value="s"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="represents the description of the machine"/>
         <details key="shortOption" value="d"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="language" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="represents the language used for the description of the machine"/>
-        <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//StatusType"
@@ -421,12 +409,6 @@
       <eAnnotations source="Description">
         <details key="content" value="represents the status of the machine"/>
         <details key="shortOption" value="t"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sshPublicKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="contains the SSH public key used by VISHNU to access local user accounts"/>
-        <details key="shortOption" value="k"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

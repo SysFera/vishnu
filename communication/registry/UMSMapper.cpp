@@ -174,109 +174,109 @@ UMSMapper::decode(const string& msg) {
   funcCode = convertToInt(func);
 
   switch (funcCode) {
-  case VISHNU_CONNECT           	    :
-    break;
-  case VISHNU_RECONNECT 	  	:
-    break;
-  case VISHNU_CLOSE 	          	:
-    res = decodeClose(separatorPos, msg);
-    break;
-  case VISHNU_ADD_VISHNU_USER   	:
-    res = decodeAddUser(separatorPos, msg);
-    break;
-  case VISHNU_UPDATE_VISHNU_USER	:
-    res = decodeUpUser(separatorPos, msg);
-    break;
-  case VISHNU_DELETE_VISHNU_USER	:
-    res = decodeDelUser(separatorPos, msg);
-    break;
-  case VISHNU_CHANGE_PASSWORD   	:
-    res = decodeChangePwd(separatorPos, msg);
-    break;
-  case VISHNU_RESET_PASSWORD    	:
-    res = decodeResetPwd(separatorPos, msg);
-    break;
-  case VISHNU_ADD_LOCAL_ACCOUNT 	:
-    res = decodeAddAcc(separatorPos, msg);
-    break;
-  case VISHNU_UPDATE_LOCAL_ACCOUNT    :
-    res = decodeUpAcc(separatorPos, msg);
-    break;
-  case VISHNU_DELETE_LOCAL_ACCOUNT    :
-    res = decodeDelAcc(separatorPos, msg);
-    break;
-  case VISHNU_ADD_MACHINE 	       :
-    res = decodeAddM(separatorPos, msg);
-    break;
-  case VISHNU_UPDATE_MACHINE 	   	:
-    res = decodeUpM(separatorPos, msg);
-    break;
-  case VISHNU_DELETE_MACHINE 	   	:
-    res = decodeDelM(separatorPos, msg);
-    break;
-  case VISHNU_LIST_LOCAL_ACCOUNT      :
-    res = decodeListAcc(separatorPos, msg);
-    break;
-  case VISHNU_LIST_MACHINE 	       :
-    res = decodeListM(separatorPos, msg);
-    break;
-  case VISHNU_LIST_HISTORY_CMD        :
-    res = decodeListH(separatorPos, msg);
-    break;
-  case VISHNU_LIST_USERS 	        :
-    res = decodeListUser(separatorPos, msg);
-    break;
-  case VISHNU_LIST_SESSIONS 	        :
-    res = decodeListSession(separatorPos, msg);
-    break;
-  case VISHNU_ADD_AUTHSYS 	:
-    res = decodeAddAuthSys(separatorPos, msg);
-    break;
-  case VISHNU_UPDATE_AUTHSYS    :
-    res = decodeUpAuthSys(separatorPos, msg);
-    break;
-  case VISHNU_DELETE_AUTHSYS    :
-    res = decodeDelAuthSys(separatorPos, msg);
-    break;
-  case VISHNU_ADD_AUTHACC 	:
-    res = decodeAddAuthAcc(separatorPos, msg);
-    break;
-  case VISHNU_UPDATE_AUTHACC    :
-    res = decodeUpAuthAcc(separatorPos, msg);
-    break;
-  case VISHNU_DELETE_AUTHACC    :
-    res = decodeDelAuthAcc(separatorPos, msg);
-    break;
-  case VISHNU_LIST_AUTHSYS 	        :
-    res = decodeListAuthSys(separatorPos, msg);
-    break;
-  case VISHNU_LIST_AUTHACC 	        :
-    res = decodeListAuthAcc(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_FID    	:
-    res = decodeFid(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_TID 	:
-    res = decodeTid(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_MID 	:
-    res = decodeMid(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_UID 	:
-    res = decodeUid(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_AID 	:
-    res = decodeAid(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_WID 	:
-    res = decodeAid(separatorPos, msg);
-    break;
-  case VISHNU_EXPORT           	    :
-    res = decodeExp(separatorPos, msg);
-    break;
-  default :
-    res = "";
-    break;
+    case VISHNU_CONNECT           	    :
+      break;
+    case VISHNU_RECONNECT 	  	:
+      break;
+    case VISHNU_CLOSE 	          	:
+      res = decodeClose(separatorPos, msg);
+      break;
+    case VISHNU_ADD_VISHNU_USER   	:
+      res = decodeAddUser(separatorPos, msg);
+      break;
+    case VISHNU_UPDATE_VISHNU_USER	:
+      res = decodeUpUser(separatorPos, msg);
+      break;
+    case VISHNU_DELETE_VISHNU_USER	:
+      res = decodeDelUser(separatorPos, msg);
+      break;
+    case VISHNU_CHANGE_PASSWORD   	:
+      res = decodeChangePwd(separatorPos, msg);
+      break;
+    case VISHNU_RESET_PASSWORD    	:
+      res = decodeResetPwd(separatorPos, msg);
+      break;
+    case VISHNU_ADD_LOCAL_ACCOUNT 	:
+      res = decodeAddAcc(separatorPos, msg);
+      break;
+    case VISHNU_UPDATE_LOCAL_ACCOUNT    :
+      res = decodeUpAcc(separatorPos, msg);
+      break;
+    case VISHNU_DELETE_LOCAL_ACCOUNT    :
+      res = decodeDelAcc(separatorPos, msg);
+      break;
+    case VISHNU_ADD_MACHINE 	       :
+      res = decodeAddM(separatorPos, msg);
+      break;
+    case VISHNU_UPDATE_MACHINE 	   	:
+      res = decodeUpM(separatorPos, msg);
+      break;
+    case VISHNU_DELETE_MACHINE 	   	:
+      res = decodeDelM(separatorPos, msg);
+      break;
+    case VISHNU_LIST_LOCAL_ACCOUNT      :
+      res = decodeListAcc(separatorPos, msg);
+      break;
+    case VISHNU_LIST_MACHINE 	       :
+      res = decodeListM(separatorPos, msg);
+      break;
+    case VISHNU_LIST_HISTORY_CMD        :
+      res = decodeListH(separatorPos, msg);
+      break;
+    case VISHNU_LIST_USERS 	        :
+      res = decodeListUser(separatorPos, msg);
+      break;
+    case VISHNU_LIST_SESSIONS 	        :
+      res = decodeListSession(separatorPos, msg);
+      break;
+    case VISHNU_ADD_AUTHSYS 	:
+      res = decodeAddAuthSys(separatorPos, msg);
+      break;
+    case VISHNU_UPDATE_AUTHSYS    :
+      res = decodeUpAuthSys(separatorPos, msg);
+      break;
+    case VISHNU_DELETE_AUTHSYS    :
+      res = decodeDelAuthSys(separatorPos, msg);
+      break;
+    case VISHNU_ADD_AUTHACC 	:
+      res = decodeAddAuthAcc(separatorPos, msg);
+      break;
+    case VISHNU_UPDATE_AUTHACC    :
+      res = decodeUpAuthAcc(separatorPos, msg);
+      break;
+    case VISHNU_DELETE_AUTHACC    :
+      res = decodeDelAuthAcc(separatorPos, msg);
+      break;
+    case VISHNU_LIST_AUTHSYS 	        :
+      res = decodeListAuthSys(separatorPos, msg);
+      break;
+    case VISHNU_LIST_AUTHACC 	        :
+      res = decodeListAuthAcc(separatorPos, msg);
+      break;
+    case VISHNU_DEFINE_FID    	:
+      res = decodeFid(separatorPos, msg);
+      break;
+    case VISHNU_DEFINE_TID 	:
+      res = decodeTid(separatorPos, msg);
+      break;
+    case VISHNU_DEFINE_MID 	:
+      res = decodeMid(separatorPos, msg);
+      break;
+    case VISHNU_DEFINE_UID 	:
+      res = decodeUid(separatorPos, msg);
+      break;
+    case VISHNU_DEFINE_AID 	:
+      res = decodeAid(separatorPos, msg);
+      break;
+    case VISHNU_DEFINE_WID 	:
+      res = decodeAid(separatorPos, msg);
+      break;
+    case VISHNU_EXPORT           	    :
+      res = decodeExp(separatorPos, msg);
+      break;
+    default :
+      res = "";
+      break;
   }
   return res;
 }
@@ -718,11 +718,9 @@ UMSMapper::decodeAddM(vector<unsigned int> separator, const string& msg) {
   }
 
   res+=" ";
-  res += ac->getName();
+  res += ac->getMachineId();
   res+=" ";
-  res += ac->getSite();
-  res+=" ";
-  res += ac->getLanguage();
+  res += ac->getAddress();
 
   if (ac != NULL) {
     delete ac;
@@ -741,36 +739,26 @@ UMSMapper::decodeUpM(vector<unsigned int> separator, const string& msg) {
   UMS_Data::Machine_ptr ac = NULL;
 
   // To parse the object serialized
-  if (!parseEmfObject(std::string(std::string(a)), ac)) {
+  if (! parseEmfObject(std::string(std::string(a)), ac)) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM);
   }
 
   res+= " ";
   res+= ac->getMachineId();
   res+=" ";
-  a = ac->getName();
-  if (a.compare("")) {
-    res+=" -n ";
-    res+=a;
-  }
-  a = ac->getSite();
-  if (a.compare("")) {
+  a = ac->getAddress();
+  if (! a.empty()) {
     res+=" -s ";
     res+=a;
   }
-  a = ac->getMachineDescription();
-  if (a.compare("")) {
+  a = ac->getDescription();
+  if (! a.empty()) {
     res+=" -d ";
     res+=a;
   }
   a = convertToString(ac->getStatus());
-  if (a.compare("")) {
+  if (! a.empty()) {
     res+=" -t ";
-    res+=a;
-  }
-  a = ac->getLanguage();
-  if (a.compare("")) {
-    res+=" -l ";
     res+=a;
   }
 

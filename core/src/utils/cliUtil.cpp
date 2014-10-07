@@ -4,8 +4,6 @@
 #include "Options.hpp"                  // for Options, Configuration, etc
 #include "vishnu_version.hpp"           // for VISHNU_VERSION
 
-
-using namespace std;
 /**
  * \brief helper function to display help about a specific command
  * \param opt: describes all options allowed by the command
@@ -13,8 +11,9 @@ using namespace std;
  *                   message bellow the signature of the command
  */
 void
-helpUsage(const Options& opt,const string& signature) {
-  cout << boost::format("\nVersion: %1%\n\n"
+helpUsage(const Options& opt, const std::string& signature)
+{
+  std::cout << boost::format("\nVersion: %1%\n\n"
                         "Usage: %2% [options] %3%\n"
                         "%4%\n"
                         "%5%\n")
@@ -33,11 +32,12 @@ helpUsage(const Options& opt,const string& signature) {
  * \param err   : The error type
  */
 void
-errorUsage(const string & cli,const string& errMsg,const ErrorType& err){
-  cerr << boost::format("%1%: %2%\n") % cli % errMsg;
+errorUsage(const std::string & cli,const std::string& errMsg,const ErrorType& err){
 
-  if(err == PARAMERROR) {
-    cerr << boost::format("To get help, try << %1% -h >>\n") % cli;
+  std::cerr << boost::format("%1%: %2%\n") % cli % errMsg;
+
+  if (err == PARAMERROR) {
+    std::cerr << boost::format("To get help, try << %1% -h >>\n") % cli;
   }
 }
 
@@ -50,9 +50,9 @@ errorUsage(const string & cli,const string& errMsg,const ErrorType& err){
  * \return 0 if an help is required or 1 if an error must me displayed
  */
 int
-usage(const Options & opt, const std::string& mess, const std::string& eWhat){
+usage(const Options & opt, const std::string& mess, const std::string& eWhat)
+{
   int res(0);
-
   if (opt.count("help")) {
     helpUsage(opt, mess);
   } else {
@@ -69,9 +69,10 @@ usage(const Options & opt, const std::string& mess, const std::string& eWhat){
  *\exception raise a runtime exception if the VISHNU_CONFIG_FILE is not set
  */
 void
-checkVishnuConfig(const Options & opt){
+checkVishnuConfig(const Options & opt)
+{
   if ((opt.count("configFile") == 0) && (opt.count("help") == 0)) {
-    throw runtime_error( "Set the VISHNU_CONFIG_FILE in your environment variable");
+    throw std::runtime_error("Set the VISHNU_CONFIG_FILE in your environment variable");
   }
 
 }

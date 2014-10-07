@@ -31,9 +31,10 @@ using namespace ::TMS_Data;
 
 // Default constructor
 Job::Job() :
-    m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_submitDate(-1), m_endDate(-1),
+    m_nbCpus(-1), m_status(-1), m_submitDate(-1), m_endDate(-1),
             m_wallClockLimit(-1), m_memLimit(-1), m_nbNodes(-1), m_batchJobId(
-                    ""), m_workId(0), m_userId(""), m_vmId(""), m_vmIp("")
+                    ""), m_workId(0), m_userId(""), m_vmId(""), m_vmIp(""),
+            m_priority(-1)
 {
 
     /*PROTECTED REGION ID(JobImpl__JobImpl) START*/
@@ -79,130 +80,104 @@ void Job::setSessionId(::ecore::EString const& _sessionId)
 #endif
 }
 
-::ecore::EString const& Job::getSubmitMachineId() const
+::ecore::EString const& Job::getMachine() const
 {
-    return m_submitMachineId;
+    return m_machine;
 }
 
-void Job::setSubmitMachineId(::ecore::EString const& _submitMachineId)
+void Job::setMachine(::ecore::EString const& _machine)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_submitMachineId = m_submitMachineId;
+    ::ecore::EString _old_machine = m_machine;
 #endif
-    m_submitMachineId = _submitMachineId;
+    m_machine = _machine;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__submitMachineId(),
-                _old_submitMachineId,
-                m_submitMachineId
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__machine(),
+                _old_machine,
+                m_machine
         );
         eNotify(&notification);
     }
 #endif
 }
 
-::ecore::EString const& Job::getSubmitMachineName() const
+::ecore::EString const& Job::getId() const
 {
-    return m_submitMachineName;
+    return m_id;
 }
 
-void Job::setSubmitMachineName(::ecore::EString const& _submitMachineName)
+void Job::setId(::ecore::EString const& _id)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_submitMachineName = m_submitMachineName;
+    ::ecore::EString _old_id = m_id;
 #endif
-    m_submitMachineName = _submitMachineName;
+    m_id = _id;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__submitMachineName(),
-                _old_submitMachineName,
-                m_submitMachineName
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__id(),
+                _old_id,
+                m_id
         );
         eNotify(&notification);
     }
 #endif
 }
 
-::ecore::EString const& Job::getJobId() const
+::ecore::EString const& Job::getName() const
 {
-    return m_jobId;
+    return m_name;
 }
 
-void Job::setJobId(::ecore::EString const& _jobId)
+void Job::setName(::ecore::EString const& _name)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_jobId = m_jobId;
+    ::ecore::EString _old_name = m_name;
 #endif
-    m_jobId = _jobId;
+    m_name = _name;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__jobId(),
-                _old_jobId,
-                m_jobId
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__name(),
+                _old_name,
+                m_name
         );
         eNotify(&notification);
     }
 #endif
 }
 
-::ecore::EString const& Job::getJobName() const
+::ecore::EString const& Job::getPath() const
 {
-    return m_jobName;
+    return m_path;
 }
 
-void Job::setJobName(::ecore::EString const& _jobName)
+void Job::setPath(::ecore::EString const& _path)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_jobName = m_jobName;
+    ::ecore::EString _old_path = m_path;
 #endif
-    m_jobName = _jobName;
+    m_path = _path;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__jobName(),
-                _old_jobName,
-                m_jobName
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-::ecore::EString const& Job::getJobPath() const
-{
-    return m_jobPath;
-}
-
-void Job::setJobPath(::ecore::EString const& _jobPath)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_jobPath = m_jobPath;
-#endif
-    m_jobPath = _jobPath;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__jobPath(),
-                _old_jobPath,
-                m_jobPath
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__path(),
+                _old_path,
+                m_path
         );
         eNotify(&notification);
     }
@@ -261,32 +236,6 @@ void Job::setErrorPath(::ecore::EString const& _errorPath)
 #endif
 }
 
-::TMS_Data::JobPriority Job::getJobPrio() const
-{
-    return m_jobPrio;
-}
-
-void Job::setJobPrio(::TMS_Data::JobPriority _jobPrio)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::TMS_Data::JobPriority _old_jobPrio = m_jobPrio;
-#endif
-    m_jobPrio = _jobPrio;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__jobPrio(),
-                _old_jobPrio,
-                m_jobPrio
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
 ::ecore::EInt Job::getNbCpus() const
 {
     return m_nbCpus;
@@ -313,26 +262,26 @@ void Job::setNbCpus(::ecore::EInt _nbCpus)
 #endif
 }
 
-::ecore::EString const& Job::getJobWorkingDir() const
+::ecore::EString const& Job::getWorkingDir() const
 {
-    return m_jobWorkingDir;
+    return m_workingDir;
 }
 
-void Job::setJobWorkingDir(::ecore::EString const& _jobWorkingDir)
+void Job::setWorkingDir(::ecore::EString const& _workingDir)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_jobWorkingDir = m_jobWorkingDir;
+    ::ecore::EString _old_workingDir = m_workingDir;
 #endif
-    m_jobWorkingDir = _jobWorkingDir;
+    m_workingDir = _workingDir;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__jobWorkingDir(),
-                _old_jobWorkingDir,
-                m_jobWorkingDir
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__workingDir(),
+                _old_workingDir,
+                m_workingDir
         );
         eNotify(&notification);
     }
@@ -417,52 +366,52 @@ void Job::setEndDate(::ecore::ELong _endDate)
 #endif
 }
 
-::ecore::EString const& Job::getOwner() const
+::ecore::EString const& Job::getLocalAccount() const
 {
-    return m_owner;
+    return m_localAccount;
 }
 
-void Job::setOwner(::ecore::EString const& _owner)
+void Job::setLocalAccount(::ecore::EString const& _localAccount)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_owner = m_owner;
+    ::ecore::EString _old_localAccount = m_localAccount;
 #endif
-    m_owner = _owner;
+    m_localAccount = _localAccount;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__owner(),
-                _old_owner,
-                m_owner
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__localAccount(),
+                _old_localAccount,
+                m_localAccount
         );
         eNotify(&notification);
     }
 #endif
 }
 
-::ecore::EString const& Job::getJobQueue() const
+::ecore::EString const& Job::getQueue() const
 {
-    return m_jobQueue;
+    return m_queue;
 }
 
-void Job::setJobQueue(::ecore::EString const& _jobQueue)
+void Job::setQueue(::ecore::EString const& _queue)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_jobQueue = m_jobQueue;
+    ::ecore::EString _old_queue = m_queue;
 #endif
-    m_jobQueue = _jobQueue;
+    m_queue = _queue;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__jobQueue(),
-                _old_jobQueue,
-                m_jobQueue
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__queue(),
+                _old_queue,
+                m_queue
         );
         eNotify(&notification);
     }
@@ -521,26 +470,26 @@ void Job::setGroupName(::ecore::EString const& _groupName)
 #endif
 }
 
-::ecore::EString const& Job::getJobDescription() const
+::ecore::EString const& Job::getDescription() const
 {
-    return m_jobDescription;
+    return m_description;
 }
 
-void Job::setJobDescription(::ecore::EString const& _jobDescription)
+void Job::setDescription(::ecore::EString const& _description)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_jobDescription = m_jobDescription;
+    ::ecore::EString _old_description = m_description;
 #endif
-    m_jobDescription = _jobDescription;
+    m_description = _description;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__jobDescription(),
-                _old_jobDescription,
-                m_jobDescription
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__description(),
+                _old_description,
+                m_description
         );
         eNotify(&notification);
     }
@@ -827,6 +776,32 @@ void Job::setSubmitError(::ecore::EString const& _submitError)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__submitError(),
                 _old_submitError,
                 m_submitError
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::TMS_Data::JobStatus Job::getPriority() const
+{
+    return m_priority;
+}
+
+void Job::setPriority(::TMS_Data::JobStatus _priority)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::TMS_Data::JobStatus _old_priority = m_priority;
+#endif
+    m_priority = _priority;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__priority(),
+                _old_priority,
+                m_priority
         );
         eNotify(&notification);
     }

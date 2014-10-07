@@ -116,46 +116,55 @@ public:
   bool
   isAdmin();
   /**
-   * \brief Function to check the user attribut value
-   * \param attributName The name of the attribut to check
-   * \param valueOk the value which will be compare to attribut name value
-   * \return true if the attributName value is valueOk
-   */
-  bool
-  isAttributOk(std::string attributName, int valueOk);//return if the password state ok
-  /**
    * \brief Function to get user information from the database vishnu
-   * \param condition The condition of the select request
-   * \param attrname the name of the attribut to get
+   * \param userid The user id
+   * \param attribute the attribute to get
    * \return the value of the attribut or empty string if no results
    */
   std::string
-  getAttribut(std::string condition, std::string attrname = "numuserid");
+  getEntryAttribute(const std::string& userid, const std::string& attribute);
+
+  /**
+   * \brief Check if a couple userid/password is valid
+   * \param userid The user id
+   * \param password the user password to get
+   * \return Return the num user if found. Empty otherwise
+   */
+  std::string
+  getNumUserFromLoginInfo(const std::string& userid, const std::string& password);
+
+  /**
+   * @brief Get the DB user identifier
+   * @param userid The user id
+   * @return
+   */
+  std::string
+  getNumUserFromId(const std::string& userid);
+
+  /**
+   * \brief Function to get a user attribute from a session key
+   * \param attr The attribute name
+   * \param sessionKey The session key
+   * \return the value of the attribut or empty string if no results
+   */
+  std::string
+  getAttributeFromSession(const std::string& attr, const std::string& sessionKey);
+
   /**
    * \brief Function to check a userId
    * \param userId The userId to check
-   * \return empty or the index of the user in the database
+   * \return throw exception if user not found
    */
-  std::string
-  getNumUserId(std::string userId);
+  void
+  checkUserId(const std::string& userId);
 
-   /**
+  /**
    * \brief Function to get the user account login
    * \param machineId The machine identifier of machine on which the user have a account
    * \return the user account login
    */
   std::string
   getUserAccountLogin(const std::string& machineId);
-
-
-  /**
-  * \brief Function to get a certain user account property
-  * \param machineId The machine identifier of machine on which the user have a account
-  * \param property The property name
-  * \return the user account login
-  */
-  std::string
-  getUserAccountProperty(const std::string& machineId, const std::string& property) ;
 
 
 private:
@@ -170,7 +179,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  Database *mdatabase;
   /**
   * \brief An object which encapsulates session data
   */
@@ -218,6 +227,14 @@ private:
    */
   void
   CheckUserState(bool flagForChangePwd);
+
+
+  /**
+   * @brief Save the given user object into database
+   * @param user The user object
+   */
+  void
+  dbSave(const UMS_Data::User& user);
 
 };
 #endif

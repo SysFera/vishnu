@@ -50,32 +50,27 @@ public:
     bool onlyProgressFile = true;
 
     //To check if the transferId is defined
-    if (options->getTransferId().size() != 0) {
-      //To check the transfer Id
+    if (! options->getTransferId().empty()) {
       checkTransferId(options->getTransferId());
-      //To add the transferId on the request
-      addOptionRequest("transferid", options->getTransferId(), sqlRequest);
+      addOptionRequest("numfiletransferid", options->getTransferId(), sqlRequest);
       onlyProgressFile = false;
     }
 
     //To check if the fromMachineId is defined
-    if (options->getFromMachineId().size() != 0) {
-      //To add the fromMachineId on the request
-
-      sqlRequest.append(" and (sourceMachineId='"+mdatabaseInstance->escapeData(options->getFromMachineId())+"'"+" or destinationMachineId='"+mdatabaseInstance->escapeData(options->getFromMachineId())+"')");
-
+    if (! options->getFromMachineId().empty()) {
+      sqlRequest.append(" AND (sourceMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"'"
+                        + " OR destinationMachineId='"+mdatabase->escapeData(options->getFromMachineId())+"')");
       onlyProgressFile = false;
     }
 
     // check if the userId filter is defined
     if (! options->getUserId().empty()) {
-
       if (muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN) {
         throw UMSVishnuException (ERRCODE_NO_ADMIN);
       }
 
-      checkUserId(options->getUserId());
-      addOptionRequest("userId", options->getUserId(), sqlRequest);
+      getNumUser(options->getUserId());
+      addOptionRequest("users.userId", options->getUserId(), sqlRequest);
       onlyProgressFile = false;
     }
 
@@ -83,11 +78,10 @@ public:
     if (options->getStatus() != 4) { // UNDEFINED FILE TRANSFER STATUS
       //To check the file status
       checkStatus(options->getStatus());
-      //To add the status on the request
-      addOptionRequest("status", vishnu::convertToString(options->getStatus()), sqlRequest);
+      addOptionRequest("filetransfer.status", vishnu::convertToString(options->getStatus()), sqlRequest);
     } else {
       if(onlyProgressFile) {
-        addOptionRequest("status", "0", sqlRequest);
+        addOptionRequest("filetransfer.status", "0", sqlRequest);
       }
     }
 
@@ -101,24 +95,25 @@ public:
   FMS_Data::FileTransferList*
   list(FMS_Data::LsTransferOptions_ptr options) {
 
-    std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, clientMachineId, "
+    std::string sqlListOfFiles = "SELECT DISTINCT numfiletransferid, filetransfer.status, users.userid, clientMachineId, "
                                  "   sourceMachineId, destinationMachineId, sourceFilePath,"
-                                 "   destinationFilePath, fileSize, startTime,errorMsg, trCommand "
-                                 " FROM filetransfer, vsession "
-                                 " WHERE vsession.numsessionid=filetransfer.vsession_numsessionid";
+                                 "   destinationFilePath, fileSize, startTime, errorMsg, trCommand "
+                                 " FROM filetransfer, vsession, users "
+                                 " WHERE vsession.numsessionid  = filetransfer.vsession_numsessionid"
+                                 "   AND vsession.users_numuserid=users.numuserid";
 
     std::vector<std::string>::iterator iter;
     std::vector<std::string> results;
-    vishnu::validateAuthKey(mauthKey, mdatabaseInstance, muserSessionInfo);
+    vishnu::validateAuthKey(mauthKey, mdatabase, muserSessionInfo);
 
     FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createFileTransferList();
 
     processOptions(options, sqlListOfFiles);
-    sqlListOfFiles.append(" order by startTime");
+    sqlListOfFiles.append(" ORDER BY startTime");
 
 
-    boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabaseInstance->getResult(sqlListOfFiles));
+    boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabase->getResult(sqlListOfFiles));
 
     time_t startTime;
 
@@ -187,8 +182,10 @@ private:
    * \param transferId the file transfer identifier
    */
   void checkTransferId(std::string transferId) {
-    std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+mdatabaseInstance->escapeData(transferId)+"'";
-    boost::scoped_ptr<DatabaseResult> transfer(mdatabaseInstance->getResult(sqlTransferRequest));
+    std::string sqlTransferRequest = "SELECT numfiletransferid"
+                                     " FROM filetransfer"
+                                     " WHERE numfiletransferid='"+mdatabase->escapeData(transferId)+"'";
+    boost::scoped_ptr<DatabaseResult> transfer(mdatabase->getResult(sqlTransferRequest));
     if (transfer->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
     }

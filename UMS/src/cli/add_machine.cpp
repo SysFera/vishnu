@@ -22,20 +22,17 @@ class Options;
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
-
 struct AddMachineFunc {
 
   UMS_Data::Machine mnewMachine;
 
   AddMachineFunc(UMS_Data::Machine newMachine):
     mnewMachine(newMachine)
-  {};
+  {}
 
   int operator()(std::string sessionKey) {
-    int res = addMachine(sessionKey,mnewMachine);
-    cout << "The machine identifier is " << mnewMachine.getMachineId() << endl;
+    int res = vishnu::addMachine(sessionKey,mnewMachine);
+    std::cout << "Machine created: " << mnewMachine.getMachineId() << std::endl;
     return res;
   }
 };
@@ -43,23 +40,18 @@ struct AddMachineFunc {
 
 int main (int ac, char* av[]){
 
-  /******* Parsed value containers ****************/
-
-  string configFile;
-
-
-
-  /********** EMF data ************/
+  std::string configFile;
   UMS_Data::Machine newMachine;
+  boost::function1<void,std::string> fMachineId( boost::bind(&UMS_Data::Machine::setMachineId,boost::ref(newMachine),_1));
+  boost::function1<void,std::string> fAddress( boost::bind(&UMS_Data::Machine::setAddress,boost::ref(newMachine),_1));
+  boost::function1<void,std::string> fMachineDescription( boost::bind(&UMS_Data::Machine::setDescription,boost::ref(newMachine),_1));
 
-  /**************** Callback functions *************/
-
-  boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(newMachine),_1));
-  boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(newMachine),_1));
-  boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
-  boost::function1<void,string> fMachineDescription( boost::bind(&UMS_Data::Machine::setMachineDescription,boost::ref(newMachine),_1));
-
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,configFile, fSite,fLanguage,fMachineDescription,1);
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0],
+      configFile,
+      fMachineId,
+      fAddress,
+      fMachineDescription,
+      1);
 
   bool isEmpty;
   //To process list options

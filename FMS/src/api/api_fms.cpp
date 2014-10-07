@@ -184,30 +184,22 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::cp(const std::string& sessionKey, const std::string& src,
-           const std::string& dest, const FMS_Data::CpFileOptions& options)
+vishnu::cp(const std::string& sessionKey,
+           const std::string& src,
+           const std::string& dest,
+           const FMS_Data::CpFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException,
-       UserException, SystemException) {
-  int result = 0;
-
-  // Check that the file path doesn't contain characters subject to security issues
+       UserException, SystemException)
+{
   vishnu::validatePath(dest);
 
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer command type: its value must be 0 (scp) or 1 (rsync)");
-  }
-  FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknown copy error");
-
-  try {
-    FileTransferProxy fileTransferProxy(sessionKey, src, dest);
-    result = fileTransferProxy.addCpThread(options);
-    return result;
-  } catch (FMSVishnuException& ex){
-    e.appendMsgComp(" "+src+": "+ex.what());
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer command type: must be 0 (scp) or 1 (rsync)");
   }
 
-  throw e;
-  return result;
+  FileTransferProxy fileTransferProxy(sessionKey, src, dest);
+
+  return fileTransferProxy.addCpThread(options);
 }
 
 

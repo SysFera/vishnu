@@ -120,8 +120,7 @@ DatabaseResult::getFirstElement() const {
     std::vector<std::string> tmp = get(0);
     ii=tmp.begin();
     return (*ii);
-  }
-  else {
+  } else {
     return "";
   }
 }

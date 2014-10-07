@@ -68,13 +68,13 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_normal_call)
 
       BOOST_REQUIRE_EQUAL(submitJob(sessionKey, scriptFilePath, jobInfo, options), 0);
 
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getId() );
 
       // now let cancel the job
 
       // setting cancel job parameters
       CancelOptions cancelOpts;
-      cancelOpts.setJobId(jobInfo.getJobId());
+      cancelOpts.setJobId(jobInfo.getId());
       BOOST_CHECK_EQUAL(cancelJob(sessionKey, cancelOpts), 0);
 
       // wait a few seconds and check the success of cancelling job
@@ -82,7 +82,7 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_normal_call)
       boost::this_thread::sleep(sleepTime);
 
       Job job;
-      BOOST_REQUIRE(getJobInfo(sessionKey, jobInfo.getJobId(), machineId, job) == 0);
+      BOOST_REQUIRE(getJobInfo(sessionKey, jobInfo.getId(), machineId, job) == 0);
 
       BOOST_TEST_MESSAGE("************ The job status is " << job.getStatus() );
 
@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_sessionKey)
 
 
       CancelOptions cancelOpts;
-      cancelOpts.setJobId(jobInfo.getJobId());
+      cancelOpts.setJobId(jobInfo.getId());
       BOOST_CHECK_THROW(cancelJob("bad sessionKey ", cancelOpts), VishnuException);
 
       BOOST_TEST_MESSAGE("***********************  cancel a job: bad sessionKey   ok!!!!*****************************");
@@ -279,7 +279,7 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_userId)
       BOOST_REQUIRE(submitJob(adminsessionKey, scriptFilePath, jobInfo, options) == 0);
 
       CancelOptions cancelOpts;
-      cancelOpts.setJobId(jobInfo.getJobId());
+      cancelOpts.setJobId(jobInfo.getId());
       BOOST_CHECK_THROW(cancelJob(userSessionKey, cancelOpts), VishnuException);
 
       bfs::path script(scriptFilePath);

@@ -123,14 +123,6 @@ class SlurmServer : public BatchServer
     fillJobInfo(TMS_Data::ListJobs& jobSteps,  const uint32_t& batchJobId);
 
     /**
-     * \brief Function To convert vishnu job Id to slurm job Id
-     * \param jobId: vishnu job Id
-     * \return the converted slurm job id
-     */
-    uint32_t
-    convertToSlurmJobId(const std::string& jobId);
-
-    /**
      * \brief Function to compute the number of running and waiting jobs of each queue
      * \param run contains the number of running jobs of each queue
      * \param que contains the number of waiting jobs of each queue

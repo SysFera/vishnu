@@ -48,23 +48,25 @@ MonitorXMS::init(const SedConfig& cfg) {
 
 void
 MonitorXMS::checkJobs(int batchtype){
-  std::string sqlRequest = boost::str(boost::format(
-                                        "SELECT jobId, batchJobId, vmIp, vmId, owner "
-                                        " FROM job, vsession "
-                                        " WHERE vsession.numsessionid=job.vsession_numsessionid "
-                                        " AND submitMachineId='%1%' "
-                                        " AND batchType=%2% "
-                                        " AND status >= %3% "
-                                        " AND status < %4% ")
-                                      % mmachineId
-                                      % vishnu::convertToString(batchtype)
-                                      % vishnu::STATE_UNDEFINED
-                                      % vishnu::STATE_COMPLETED);
+  std::string query = boost::str(boost::format(
+                                   "SELECT job.id, batchJobId, vmIp, vmId, account.aclogin "
+                                   " FROM job, vsession, machine, account "
+                                   " WHERE batchType=%1% "
+                                   " AND job.status >= %2% "
+                                   " AND job.status < %3% "
+                                   " AND machine.machineid='%4%' "
+                                   " AND vsession.numsessionid=job.vsession_numsessionid "
+                                   " AND job.machine_nummachineid=machine.nummachineid "
+                                   " AND job.users_numuserid=account.users_numuserid;")
+                                 % vishnu::convertToString(batchtype)
+                                 % vishnu::STATE_UNDEFINED
+                                 % vishnu::STATE_COMPLETED
+                                 % mmachineId);
 
   try {
     BatchFactory factory;
     boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchtype, mbatchVersion));
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(query.c_str()));
 
     std::vector<std::string> buffer;
     std::vector<std::string>::iterator item;
@@ -73,11 +75,11 @@ MonitorXMS::checkJobs(int batchtype){
       buffer = result->get(i);
       item = buffer.begin();
       TMS_Data::Job job;
-      job.setJobId( *item++ );
+      job.setId( *item++ );
       job.setBatchJobId( *item++ );
       job.setVmIp( *item++ );
       job.setVmId( *item++ );
-      job.setOwner( "root"); // job.setOwner( *item );
+      job.setLocalAccount( "root"); // job.setLocalAccount( *item );
 
       try {
         int state;
@@ -93,17 +95,24 @@ MonitorXMS::checkJobs(int batchtype){
         std::string query = "";
 
         if (state == vishnu::STATE_COMPLETED) {
-          query.append(boost::str(boost::format("UPDATE job SET endDate=CURRENT_TIMESTAMP"
-                                                " WHERE jobId='%1%';") % job.getJobId()));
+          query.append(boost::str(
+                         boost::format("UPDATE job"
+                                       " SET endDate=CURRENT_TIMESTAMP "
+                                       " WHERE job.id='%1%';")
+                         % job.getId()));
         }
 
 
-        query = boost::str(boost::format("UPDATE job SET status=%1% WHERE jobId='%2%';")
-                           % vishnu::convertToString(state) % job.getJobId());
+        query = boost::str(boost::format("UPDATE job SET status=%1% WHERE id='%2%';")
+                           % vishnu::convertToString(state)
+                           % job.getId());
 
         if (state == vishnu::STATE_COMPLETED) {
-          query.append( boost::str(boost::format("UPDATE job SET endDate=CURRENT_TIMESTAMP WHERE jobId='%1%';")
-                                   % job.getJobId()) );
+          query.append( boost::str(
+                          boost::format("UPDATE job"
+                                        " SET endDate=CURRENT_TIMESTAMP"
+                                        " WHERE job.id='%1%';")
+                          % job.getId()) );
         } else {
 
           if (batchtype == OPENNEBULA) {
@@ -111,15 +120,15 @@ MonitorXMS::checkJobs(int batchtype){
             if (job.getBatchJobId().empty()) {
               switch (state) {
                 case vishnu::STATE_RUNNING:
-                  query.append( boost::str(boost::format("UPDATE job SET batchJobId='%1%' WHERE jobId='%2%';")
+                  query.append( boost::str(boost::format("UPDATE job SET batchJobId='%1%' WHERE job.id='%2%';")
                                            % executionOutput
-                                           % job.getJobId()) );
+                                           % job.getId()) );
                   break;
                 case vishnu::STATE_FAILED:
                 case vishnu::STATE_CANCELLED:
-                  query.append( boost::str(boost::format("UPDATE job SET jobdescription='%1%' WHERE jobId='%2%';")
+                  query.append( boost::str(boost::format("UPDATE job SET jobdescription='%1%' WHERE job.id='%2%';")
                                            % executionOutput
-                                           % job.getJobId()) );
+                                           % job.getId()) );
                   break;
                 default:
                   break;
@@ -187,11 +196,8 @@ MonitorXMS::checkSession(){
 
 void
 MonitorXMS::checkFile(){
-  std::vector<std::string>::iterator iter;
-  std::vector<std::string> tmp;
-  std::string pid,transferId;
-  std::string sqlUpdatedRequest;
-  std::string sqlRequest = "SELECT transferid,processid "
+
+  std::string sqlRequest = "SELECT numfiletransferid, processid "
                            " FROM filetransfer,vsession"
                            " WHERE vsession.numsessionid=filetransfer.vsession_numsessionid "
                            " AND filetransfer.status=0";
@@ -199,17 +205,17 @@ MonitorXMS::checkFile(){
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest));
     if (result->getNbTuples() != 0) {
       for (size_t i = 0; i < result->getNbTuples(); ++i) {
-        tmp.clear();
-        tmp = result->get(i);
-        iter = tmp.begin();
-        transferId=*iter;
-        ++iter;
-        pid = *iter;
-        ++iter;
+        std::vector<std::string> dbResultEntry = result->get(i);
+        std::vector<std::string>::iterator dbResultEntryIter = dbResultEntry.begin();
+        std::string transferId=*dbResultEntryIter;
+        ++dbResultEntryIter;
+        std::string pid = *dbResultEntryIter;
+        ++dbResultEntryIter;
         try {
           if(false==vishnu::process_exists(vishnu::convertToString(pid))) {
-            sqlUpdatedRequest = "UPDATE filetransfer SET status=3 where transferid='"+transferId+"'";
-            mdatabaseVishnu->process(sqlUpdatedRequest);
+            std::string query = "UPDATE filetransfer SET status=3"
+                                " WHERE numfiletransferid='"+transferId+"'";
+            mdatabaseVishnu->process(query);
           }
         } catch (VishnuException& ex) {
           std::clog << boost::format("[FMSMONITOR][ERROR] %1%\n")%ex.what();

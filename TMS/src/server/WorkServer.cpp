@@ -10,7 +10,8 @@
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
 #include "SystemException.hpp"
-#include "boost/scoped_ptr.hpp"
+#include <boost/scoped_ptr.hpp>
+#include <boost/format.hpp>
 
 /**
 * \brief Constructor
@@ -33,10 +34,11 @@ WorkServer::WorkServer(const std::string& sessionKey,
 * \return raises an exception on error
 */
 int
-WorkServer::add(TMS_Data::AddWorkOptions*& mworkop) {
-
-  std::string sqlUpdate = "update work set ";
-  std::string idWorkGenerated;
+WorkServer::add(TMS_Data::AddWorkOptions*& mworkop)
+{
+  if (muserSessionInfo.user_privilege != vishnu::PRIVILEGE_ADMIN) {
+    throw TMSVishnuException (ERRCODE_PERMISSION_DENIED, "No sufficient permission");
+  }
 
   mwork->setApplicationId(mworkop->getApplicationId());
   mwork->setSubject(mworkop->getSubject());
@@ -44,49 +46,11 @@ WorkServer::add(TMS_Data::AddWorkOptions*& mworkop) {
   mwork->setDescription(mworkop->getDescription());
   mwork->setProjectId(mworkop->getProjectId());
   mwork->setNbCPU(mworkop->getNbCPU());
+  mwork->setStatus(vishnu::STATUS_ACTIVE);
 
-  std::string timestamp = "CURRENT_TIMESTAMP";
-  std::string owner = vishnu::convertToString(muserSessionInfo.num_user);
-  std::string nummachine =   muserSessionInfo.num_machine;
 
-  //if the user is an admin
-  if (muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN) {
+  dbSave();
 
-    //Generation of workid
-    idWorkGenerated = vishnu::getObjectId(vishnu::WORK, mwork->getSubject());
-
-    //if the work id is generated
-    if (idWorkGenerated.size() != 0) {
-      mwork->setWorkId(idWorkGenerated);
-      //if the workId does not exist
-      if (getAttribut("where identifier='"+mdatabaseInstance->escapeData(mwork->getWorkId())+"'","count(*)") == "1") {
-        //To inactive the work status
-        //          mwork->setStatus(INACTIVE_STATUS);
-        // TODO
-        mwork->setStatus(0);
-        //FIXME : set ApplicationId of mwork currently null
-        //sqlUpdate+="application_id="+convertToString(mwork->getApplicationId())+", ";
-        sqlUpdate+="date_created="+timestamp+", ";
-        sqlUpdate+="done_ratio="+vishnu::convertToString(mwork->getDoneRatio())+", ";
-        sqlUpdate+="machine_id="+nummachine+", ";
-        sqlUpdate+="nbcpus="+vishnu::convertToString(mwork->getNbCPU())+", ";
-        sqlUpdate+="owner_id='"+owner+"', ";
-        sqlUpdate+="status="+vishnu::convertToString(mwork->getStatus())+", ";
-        sqlUpdate+="subject='"+mdatabaseInstance->escapeData(mwork->getSubject())+"' ";
-        sqlUpdate+="WHERE identifier='"+mdatabaseInstance->escapeData(mwork->getWorkId())+"';";
-
-        mdatabaseInstance->process(sqlUpdate);
-
-      } else { //if the machine id is generated
-        throw SystemException (ERRCODE_SYSTEM, "There is a problem to parse the formatidwork");
-      }
-    } else { //END if the formatidmachine is defined
-      SystemException e (ERRCODE_SYSTEM, "The formatidwork is not defined");
-      throw e;
-    }
-  } else { //End if the user is an admin
-    throw TMSVishnuException (ERRCODE_PERMISSION_DENIED, "No sufficient permission");
-  }
   return 0;
 }
 
@@ -142,4 +106,31 @@ void WorkServer::checkWork() {
     throw TMSVishnuException(ERRCODE_UNKNOWN_WORKID, mwork->getWorkId()+" does not exist among the defined"
                              " work by VISHNU System");
   }
+}
+
+/**
+ * @brief Insert the current encapsulatedd object info into database
+ * @return
+ */
+void
+WorkServer::dbSave(void)
+{
+  std::string query = boost::str(
+                        boost::format("INSERT INTO work"
+                                      "(date_created, done_ratio, machine_id, nbcpus, owner_id, status, subject)"
+                                      "VALUES('%1%','%2%','%3%','%4%','%5%','%6%','%7%')")
+                        % "CURRENT_TIMESTAMP"
+                        % mwork->getDoneRatio()
+                        % muserSessionInfo.num_machine
+                        % mwork->getNbCPU()
+                        % muserSessionInfo.num_user
+                        % mwork->getStatus()
+                        % mwork->getSubject()
+                        );
+
+
+  std::pair<int, uint64_t>
+      result =  mdatabaseInstance->process(query);
+
+  mwork->setWorkId( vishnu::convertToString(result.second) );
 }

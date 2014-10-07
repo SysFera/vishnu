@@ -140,7 +140,7 @@ DeltaCloudServer::submit(const std::string& scriptPath,
   TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
 
   jobPtr->setBatchJobId(vishnu::convertToString(jobPid));
-  jobPtr->setJobName("PID_"+jobPid);
+  jobPtr->setName("PID_"+jobPid);
   jobPtr->setBatchJobId(vishnu::convertToString(jobPid));
   jobPtr->setVmId(instance.id);
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);

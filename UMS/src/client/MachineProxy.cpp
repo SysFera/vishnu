@@ -37,13 +37,7 @@ MachineProxy::add() {
   diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[MACHINECREATE], 2);
 
   ::ecorecpp::serializer::serializer _ser;
-  //To serialize the mmachine object in to machineToString
   std::string machineToString =  _ser.serialize_str(const_cast<UMS_Data::Machine_ptr>(&mmachine));
-
-  std::string sshKeyFilePath = mmachine.getSshPublicKey();
-  if(sshKeyFilePath.find("\"")!=std::string::npos) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, " The machine SshPublicKey contains special character double quote \"");
-  }
 
   //IN Parameters
   diet_string_set(profile, 0, msessionProxy.getSessionKey());
@@ -81,11 +75,6 @@ MachineProxy::update() {
   // serialize the mmachine object in to machineToString
   ::ecorecpp::serializer::serializer _ser;
   std::string machineToString =  _ser.serialize_str(const_cast<UMS_Data::Machine_ptr>(&mmachine));
-
-  std::string sshKeyFilePath = mmachine.getSshPublicKey();
-  if(sshKeyFilePath.find("\"")!=std::string::npos) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, " The machine SshPublicKey contains special character double quote \"");
-  }
 
   //IN Parameters
   diet_string_set(profile, 0, msessionProxy.getSessionKey());

@@ -36,7 +36,7 @@ MachineClientServer::recordMachineClient() {
     sqlCmd.append(mdatabaseVishnu->escapeData(mmachineSSHKey)+"','");
     sqlCmd.append(mdatabaseVishnu->escapeData(mhostname)+"')");
 
-    mdatabaseVishnu->process(sqlCmd.c_str());
+    mdatabaseVishnu->process(sqlCmd);
 
   } //End if the machine is not on the database
   else {
@@ -55,7 +55,7 @@ MachineClientServer::getId() {
   sqlCommand.append(mdatabaseVishnu->escapeData(mmachineSSHKey)+ "' and name='");
   sqlCommand.append(mdatabaseVishnu->escapeData(mhostname)+"'");
 
-  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand));
   return result->getFirstElement();
 }
 /**

@@ -35,8 +35,8 @@ public:
    */
   ListAuthAccountsServer(const SessionServer session)
     : QueryServer<UMS_Data::ListAuthAccOptions, UMS_Data::ListAuthAccounts>(),
-    mcommandName("vishnu_list_auth_accounts"),
-    msessionServer(session)
+      mcommandName("vishnu_list_auth_accounts"),
+      msessionServer(session)
   {
   }
 
@@ -44,46 +44,32 @@ public:
    * \brief Function to treat the ListAuthAccountsServer options
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListAuthAccountsServer options
-   * \param sqlRequest the sql data base request
+   * \param query the sql data base request
    * \return raises an exception on error
    */
   void
-  processOptions(UserServer userServer, const UMS_Data::ListAuthAccOptions_ptr& options, std::string& sqlRequest)
+  processOptions(UserServer userServer, const UMS_Data::ListAuthAccOptions_ptr& options, std::string& query)
   {
-    std::string sqlListofAuthAccountInitial = sqlRequest;
 
-    size_t userIdSize = options->getUserId().size();
-    size_t authSystemIdSize = options->getAuthSystemId().size();
-    bool isListAll = options->isListAll();
-
-    if ((!userServer.isAdmin()) && (userIdSize!=0 || isListAll)) {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
+    if ((! userServer.isAdmin()) && (! options->getUserId().empty() || options->isListAll())) {
+      throw UMSVishnuException (ERRCODE_NO_ADMIN);
     }
 
     //The admin option
-    if(userIdSize!=0) {
-      //To check if the user id is correct
-      checkUserId(options->getUserId());
-      sqlRequest=sqlListofAuthAccountInitial;
-      addOptionRequest("userid", options->getUserId(), sqlRequest);
-    }
-    else {
-      if(!isListAll) {
-        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+    if(! options->getUserId().empty()) {
+      addOptionRequest("users.userid", options->getUserId(), query);
+    } else {
+      if(! options->isListAll()) {
+        addOptionRequest("users.userid", userServer.getData().getUserId(), query);
       }
     }
 
-    if(authSystemIdSize!=0) {
-      //To check if the machine id is correct
-      checkAuthSystemId(options->getAuthSystemId());
-      if(!isListAll && userIdSize==0) {
-        sqlRequest=sqlListofAuthAccountInitial;
-        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+    if(! options->getAuthSystemId().empty()) {
+      if (! options->isListAll() && options->getUserId().empty()) {
+        addOptionRequest("users.userid", userServer.getData().getUserId(), query);
       }
-      addOptionRequest("authsystemid", options->getAuthSystemId(), sqlRequest);
+      addOptionRequest("authsystem_numauthsystemid", options->getAuthSystemId(), query);
     }
-
   }
 
   /**
@@ -94,12 +80,15 @@ public:
   UMS_Data::ListAuthAccounts*
   list(UMS_Data::ListAuthAccOptions_ptr option)
   {
-    std::string sql = (boost::format("SELECT authsystemid, userid, aclogin"
-                                     " FROM authaccount, authsystem, users"
-                                     " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
-                                     "  AND authaccount.users_numuserid=users.numuserid"
-                                     "  AND authsystem.status!=%1%"
-                                     "  AND authaccount.status!=%1%")%vishnu::STATUS_DELETED).str();
+    std::string query =(boost::format("SELECT DISTINCT numauthsystemid, users.userid, aclogin"
+                                      " FROM authaccount, authsystem, users"
+                                      " WHERE authsystem_numauthsystemid=authsystem.numauthsystemid"
+                                      "  AND authsystem.status!=%1%"
+                                      "  AND users.status!=%1%"
+                                      "  AND authaccount.status!=%1%"
+                                      "  AND authaccount.users_numuserid=users.numuserid"
+                                      "  AND authaccount.status!=%1%") % vishnu::STATUS_DELETED
+                        ).str();
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -110,31 +99,28 @@ public:
     //Creation of the object user
     UserServer userServer = UserServer(msessionServer);
     userServer.init();
-    //if the user exists
-    if (userServer.exist()) {
+    if (! userServer.exist()) {
+      throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
+    }
 
-      //To process options
-      processOptions(userServer, option, sql);
+    //To process options
+    processOptions(userServer, option, query);
 
-      boost::scoped_ptr<DatabaseResult> ListofAuthAccount (mdatabaseInstance->getResult(sql.c_str()));
-      if (ListofAuthAccount->getNbTuples() != 0){
-        for (size_t i = 0; i < ListofAuthAccount->getNbTuples(); ++i) {
-          results.clear();
-          results = ListofAuthAccount->get(i);
-          ii = results.begin();
+    boost::scoped_ptr<DatabaseResult> ListofAuthAccount (mdatabase->getResult(query.c_str()));
+    if (ListofAuthAccount->getNbTuples() != 0){
+      for (size_t i = 0; i < ListofAuthAccount->getNbTuples(); ++i) {
+        results.clear();
+        results = ListofAuthAccount->get(i);
+        ii = results.begin();
 
-          UMS_Data::AuthAccount_ptr authAccount = ecoreFactory->createAuthAccount();
-          authAccount->setAuthSystemId(*ii);
-          authAccount->setUserId(*(++ii));
-          authAccount->setAcLogin(*(++ii));
-          mlistObject->getAuthAccounts().push_back(authAccount);
-        }
+        UMS_Data::AuthAccount_ptr authAccount = ecoreFactory->createAuthAccount();
+        authAccount->setAuthSystemId(*ii);
+        authAccount->setUserId(*(++ii));
+        authAccount->setAcLogin(*(++ii));
+        mlistObject->getAuthAccounts().push_back(authAccount);
       }
     }
-    else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-      throw e;
-    }
+
     return mlistObject;
   }
 
