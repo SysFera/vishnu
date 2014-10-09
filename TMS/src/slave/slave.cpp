@@ -108,14 +108,10 @@ main(int argc, char* argv[]) {
 
     if (action == "SUBMIT") {
       JsonObject jsonOptions(vishnu::get_file_content(optionsPath));
-      if (! jobInfo.getOutputDir().empty()) {
-        bool isWorkingDir = (batchType == DELTACLOUD)? true : false;
-        vishnu::createDir(jobInfo.getOutputDir(), isWorkingDir); // Create the output directory
-      }
-
-      // create output dir if needed
-      if (! jobInfo.getOutputDir().empty()) {
-        vishnu::createDir(jobInfo.getOutputDir());
+      if (! jobInfo.getOutputDir().empty()
+          && batchType != DELTACLOUD
+          && batchType != OPENNEBULA) {
+        vishnu::createDir(jobInfo.getOutputDir()); // Create the output directory
       }
 
       //Submits the job
@@ -128,13 +124,13 @@ main(int argc, char* argv[]) {
       vishnu::saveInFile(slaveJobFile, vishnu::emfSerializer<TMS_Data::ListJobs>(&jobSteps));
     } else if (action == "CANCEL") {
       switch (batchType) {
-      case DELTACLOUD:
-      case OPENNEBULA:
-        batchServer->cancel(jobInfo.getVmId());
-        break;
-      default:
-        batchServer->cancel(jobInfo.getBatchJobId());
-        break;
+        case DELTACLOUD:
+        case OPENNEBULA:
+          batchServer->cancel(jobInfo.getVmId());
+          break;
+        default:
+          batchServer->cancel(jobInfo.getBatchJobId());
+          break;
       }
     }
   } catch (VishnuException& ve) {
