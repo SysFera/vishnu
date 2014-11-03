@@ -350,7 +350,7 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
   std::string pubkey = vishnu::get_file_content(vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false));
   return boost::str(
         boost::format(
-          "NAME=\"vishnu.%1%\"                                                \n"
+          "NAME=\"vishnu.%1%\"                                                   \n"
           "CPU=%2%                                                               \n"
           "VCPU=%2%                                                              \n"
           "MEMORY=%3%                                                            \n"
