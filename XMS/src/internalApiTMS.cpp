@@ -585,21 +585,23 @@ solveScheduling(diet_profile_t* pb)
       metasched_cloud_t cloud = json_to_cloud(&jsonCloud);
       cloud.cloud_id = queues.getQueues().get(queueIndex)->getName();
       clouds.push_back(cloud);
+      //print_cloud(cloud);
     }
 
     JsonObject options(optionsSerialized);
     ServerXMS* serverInstance = ServerXMS::getInstance();
-    JobServer jobServer(authKey, options.getStringProperty("machine"), serverInstance->getSedConfig());
+    std::string machineId = options.getStringProperty("machine");
+    JobServer jobServer(authKey, machineId, serverInstance->getSedConfig());
     UserSessionInfo userInfo = jobServer.getUserSessionInfo();
 
     metasched_task_t task;
-    task.id_cloud_comesFrom = userInfo.num_machine;
-    task.id_cloud_owner = userInfo.userid;
+    task.id_cloud_comesFrom = "";
+    task.id_cloud_owner = machineId;
     task.task_id = vishnu::getObjectId(serverInstance->getVishnuId(), "formatidjob", vishnu::JOB, "metascheduler");
     task.task_type = options.getIntProperty("type");
     task.timestamp = options.getIntProperty("timestamp");
     task.nb_tries = options.getIntProperty("nbretries");
-
+    //print_task(task);
     std::string selectedCloud = choose_cloud(task, clouds);
     if (selectedCloud.empty()) {
       throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Failed to select a cloud for execution");

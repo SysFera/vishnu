@@ -92,7 +92,7 @@ OpenNebulaServer::submit(const std::string& scriptPath,
 
   //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
-  jobPtr->setJobName(returnInputOrDefaultIfEmpty(options.getName(), "PID_"+jobPtr->getBatchJobId()));
+  jobPtr->setJobName(returnInputOrDefaultIfEmpty(options.getName(), "VM_"+jobPtr->getVmId()));
 
   jobPtr->setOutputPath(mbaseDataDir+"/stdout");
   jobPtr->setErrorPath(mbaseDataDir+"/stderr");
@@ -356,7 +356,7 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
           "MEMORY=%3%                                                            \n"
           "DISK = [ IMAGE = \"%4%\", DRIVER=\"qcow2\"]                           \n"
           "OS=[                                                                  \n"
-          "  ARCH=\"i686\",                                                      \n"
+          "  ARCH=\"x86_64\",                                                    \n"
           "  ROOT=\"sda1\",                                                      \n"
           "  BOOT=\"hd,fd,cdrom,network\" ]                                      \n"
           "NIC = [NETWORK=\"%5%\"]                                               \n"

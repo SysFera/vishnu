@@ -91,6 +91,12 @@ find_element_in_data(const std::string& id, std::vector<server_data_t>& data) {
   }
   return -1;
 }
+
+void print_task(metasched_task_t& task) {
+   std::cout << "task.id_cloud_owner=" << task.id_cloud_owner << std::endl;
+   std::cout << "task.id_cloud_comesFrom=" << task.id_cloud_comesFrom << std::endl;
+}
+
 /**
 * @brief Choice function for the clouds
 */
@@ -98,15 +104,17 @@ std::string
 choose_cloud(metasched_task_t& task, std::vector<metasched_cloud_t> clouds) {
 
   std::string chosen_cloud = "";
-
+  print_task(task);
   bool cloudOwnerIsPresent = cloud_is_present(task.id_cloud_owner, clouds).first;
   //Allocate to cloud owner
   if (cloudOwnerIsPresent && task.id_cloud_owner != task.id_cloud_comesFrom) {
+    std::cout << "Cloud owner != cloud_comesfrom" << std::endl;
     return task.id_cloud_owner;
   }
 
   //If first time, we add it
   if (task.nb_tries == 0) {
+    std::cout << "First time" << std::endl;
     ++task.nb_tries;
     task.timestamp = time(NULL);
   } else {
@@ -124,7 +132,9 @@ choose_cloud(metasched_task_t& task, std::vector<metasched_cloud_t> clouds) {
   if (p.first) {
     clouds.erase(clouds.begin() + p.second);
   }
-
+for (int i =0 ; i<clouds.size() ;  i++) {
+print_cloud(clouds.at(i));
+}
 
   std::sort(clouds.begin(), clouds.end(), ranking_clouds);
   float value = -1* std::numeric_limits<float>::infinity();
