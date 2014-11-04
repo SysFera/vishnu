@@ -640,9 +640,9 @@ vishnu::statusToString(const int& status) {
 void
 vishnu::validatePath(const std::string& path)
 {
-  if (path.find_first_of(";&| $(),\t#") != std::string::npos) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path, the following characters are not allowed: <space><tab>()&,|;$#");
-  }
+//  if (path.find_first_of(";&| $(),\t#") != std::string::npos) {
+//    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path, the following characters are not allowed: <space><tab>()&,|;$#");
+//  }
 }
 
 

@@ -82,7 +82,6 @@ JobServer::submitJob(std::string& scriptContent,
                      int vishnuId,
                      const std::vector<std::string>& defaultBatchOption)
 {
-
   LOG("[INFO] Request to submit job", LogInfo);
   const std::string JOB_ID = vishnu::getObjectId(vishnuId, "formatidjob", vishnu::JOB, mmachineId);
   TMS_Data::Job jobInfo;
@@ -372,7 +371,7 @@ JobServer::insertOptionLine(std::string& optionLineToInsert,
         pos1 = content.find("\n", pos1 + 1);
       }
       std::string line = content.substr(pos, pos1-pos);
-      if(content.compare(pos-1,1,"\n")==0) {
+      if(content.compare(pos-1, 1, "\n")==0) {
         if(mbatchType==LOADLEVELER) {
           std::string line_tolower(line);
           std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
@@ -742,11 +741,12 @@ std::string JobServer::getBatchDirective(std::string& seperator) const {
 void JobServer::handleSpecificParams(const std::string& specificParams,
                                      std::string& scriptContent) {
 
+
   std::string sep = " ";
   std::string directive = getBatchDirective(sep);
   size_t pos1 = 0;
   size_t pos2 = 0;
-  std::string& params = const_cast<std::string&>(specificParams);
+  std::string params = specificParams;
   pos2 = params.find("=");
   while (pos2 != std::string::npos) {
     size_t pos3 = 0;
@@ -778,38 +778,36 @@ JobServer::setRealFilePaths(std::string& scriptContent,
 {
   std::string workingDir = msessionInfo.user_achome;
   std::string scriptPath = "";
-  std::string inputDir = "";
 
-  if (mbatchType == DELTACLOUD && mbatchType == OPENNEBULA) {
-    std::string mountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
-    if (mountPoint.empty()) {
+  if (mbatchType == DELTACLOUD || mbatchType == OPENNEBULA) {
+    std::string cloudMountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
+    if (cloudMountPoint.empty()) {
       workingDir = boost::str(boost::format("/tmp/%1%")
                               % vishnu::generatedUniquePatternFromCurTime(jobInfo.getJobId()));
     } else {
-      workingDir = boost::str(boost::format("%1%/%2%")
-                              % mountPoint
+      workingDir = boost::str(boost::format("%1%/data/%2%")
+                              % cloudMountPoint
                               % vishnu::generatedUniquePatternFromCurTime(jobInfo.getJobId()));
     }
 
-    inputDir =  boost::str(boost::format("%1%/INPUT") % workingDir);
-    scriptPath = boost::str(boost::format("%1%/vishnu-job-script-%2%%3%")
-                            % inputDir
-                            % jobInfo.getJobId()
-                            % bfs::unique_path("%%%%%%").string());
+    scriptPath = (boost::format("%1%/vishnu-job-script-%2%%3%")
+                  % workingDir
+                  % jobInfo.getJobId()
+                  % bfs::unique_path("%%%%%%").string()
+                  ).str();
 
     vishnu::createDir(workingDir, true);
-    vishnu::createDir(inputDir, true);
 
-    std::string directory = "";
+    std::string originDirectory = "";
     try {
-      directory = vishnu::moveFileData(options->getStringProperty("fileparams"), inputDir);
+      originDirectory = vishnu::moveFileData(options->getStringProperty("fileparams"), workingDir);
     } catch(bfs::filesystem_error &ex) {
       throw SystemException(ERRCODE_RUNTIME_ERROR, ex.what());
     }
 
-    if(directory.length() > 0) {
+    if (! originDirectory.empty()) {
       std::string fileparams = options->getStringProperty("fileparams");
-      vishnu::replaceAllOccurences(fileparams, directory, inputDir);
+      vishnu::replaceAllOccurences(fileparams, originDirectory, workingDir);
       options->setProperty("fileparams", fileparams);
     }
   } else {
@@ -830,9 +828,12 @@ JobServer::setRealFilePaths(std::string& scriptContent,
     std::string outputDir = boost::str(boost::format("%1%/VISHNU_OUTPUT_DIR_%2%")
                                        % workingDir
                                        % vishnu::generatedUniquePatternFromCurTime(jobInfo.getJobId()));
+
+    vishnu::createDir(outputDir, true);
+    jobInfo.setOutputDir(outputDir);
+
     vishnu::replaceAllOccurences(scriptContent, "$VISHNU_OUTPUT_DIR", outputDir);
     vishnu::replaceAllOccurences(scriptContent, "${VISHNU_OUTPUT_DIR}", outputDir);
-    jobInfo.setOutputDir(outputDir);
   } else {
     jobInfo.setOutputDir("");
   }
@@ -877,10 +878,10 @@ JobServer::processScript(std::string& content,
   }
   std::string sep = " ";
   std::string directive = getBatchDirective(sep);
-  currentOption = options->getStringProperty("specificparams");
-  if (! currentOption.empty()) {
-    handleSpecificParams(currentOption, convertedScript);
-  }
+//  currentOption = options->getStringProperty("specificparams");
+//  if (! currentOption.empty()) {
+//    handleSpecificParams(currentOption, convertedScript);
+//  }
 
   if (! defaultBatchOption.empty()){
     processDefaultOptions(defaultBatchOption, convertedScript, directive);

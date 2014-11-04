@@ -185,8 +185,12 @@ vishnu::sendInputFiles(const std::string& sessionKey,
   ListStrings listFiles ;
   boost::split(listFiles, srcFiles, boost::is_space()) ;
   string remoteDestinationDir = vishnu::generatedUniquePatternFromCurTime("VISHNU_INPUT")+bfs::unique_path("%%").string();
-  if (listFiles.size() > 0 && srcFiles.size() != 0) {
-    string fqdnDestDir = (boost::format("%1%:%2%")%destMachineId%remoteDestinationDir).str();
+
+  if (! listFiles.empty() && ! srcFiles.empty()) {
+    string fqdnDestDir = (boost::format("%1%:$HOME/%2%")
+                          % destMachineId
+                          % remoteDestinationDir).str();
+
     if (vishnu::mkdir(sessionKey, fqdnDestDir)) {
       throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to create the remote directory for input files: "+fqdnDestDir);
     }

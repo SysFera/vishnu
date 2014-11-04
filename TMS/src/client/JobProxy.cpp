@@ -58,7 +58,7 @@ JobProxy::submitJob(const std::string& scriptPath,
   copts.setTrCommand(0);
   string inputFiles = vishnu::sendInputFiles(msessionKey,
                                              optionsData.getStringProperty("fileparams"),
-                                             mmachineId,
+                                             selectedMachine,
                                              copts);
   optionsData.setProperty("fileparams", inputFiles);
   optionsData.setProperty("scriptpath", scriptPath);

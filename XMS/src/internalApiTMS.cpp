@@ -591,8 +591,6 @@ solveScheduling(diet_profile_t* pb)
     JsonObject options(optionsSerialized);
     ServerXMS* serverInstance = ServerXMS::getInstance();
     std::string machineId = options.getStringProperty("machine");
-    JobServer jobServer(authKey, machineId, serverInstance->getSedConfig());
-    UserSessionInfo userInfo = jobServer.getUserSessionInfo();
 
     metasched_task_t task;
     task.id_cloud_comesFrom = "";
