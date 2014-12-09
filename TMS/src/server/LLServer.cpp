@@ -305,7 +305,11 @@ LLServer::getJobState(const std::string& jobId) {
   // Set the type of query
   queryObject = ll_query(JOBS);
   if(!queryObject) {
-    return 5;
+    // Retry in case a temporary problem
+    queryObject = ll_query(JOBS);
+    if(!queryObject) {
+      return 5;
+    }
   }
 
   char* IDlist[2];
@@ -315,21 +319,28 @@ LLServer::getJobState(const std::string& jobId) {
   // Create the request
   rc = ll_set_request(queryObject, QUERY_STEPID, IDlist, ALL_DATA);
 
-  if(rc) {
-    return 5;
+  if(rc || queryObject==NULL) {
+    // Retry in case a temporary problem
+    rc = ll_set_request(queryObject, QUERY_STEPID, IDlist, ALL_DATA);
+    if(rc || queryObject==NULL) {
+      return 5;
+    }
   }
-  if(queryObject==NULL) {
-    return 5;
-  }
+
 
   // Calling to get the results
   queryInfos = ll_get_objs(queryObject, LL_CM, NULL, &objCount, &errCode);
   if(queryInfos==NULL) {
-    return 5;
+    // Retry in case a temporary problem
+    queryInfos = ll_get_objs(queryObject, LL_CM, NULL, &objCount, &errCode);
+    if(queryInfos==NULL) {
+      return 5;
+    }
   }
 
   while(queryInfos)
   {
+    // ll_get_data should always return 0 according to documentation (only error is invalid in DATA for param1 or param2)
     rc = ll_get_data(queryInfos, LL_JobGetFirstStep, &step);
     if(!rc)
     {
