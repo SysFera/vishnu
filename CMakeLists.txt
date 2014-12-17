@@ -20,7 +20,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(VISHNU_SONAME "4.0.0")
-set(VISHNU_VERSION "sop.RC4-SNAPSHOT")
+set(VISHNU_VERSION "4.0.0")
 set(VISHNU_VERSION_COMMENTS "" CACHE STRING " comments about the current version ")
 
 

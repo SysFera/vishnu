@@ -25,6 +25,7 @@ OpenNebulaServer::OpenNebulaServer()
   : mcloudUser(""),
     mcloudUserPassword(""),
     mvmImageId(""),
+    mimageArch(""),
     mvmUser(""),
     mvmUserKey(""),
     mnfsServer(""),
@@ -297,6 +298,8 @@ void OpenNebulaServer::retrieveUserSpecificParams(const std::string& specificPar
         mnfsServer = value;
       } else if (param == "nfs-mountpoint") {
         mnfsMountPoint = value;
+      } else if (param == "sop-owner") {
+        msopOwner = value;
       } else {
         throw TMSVishnuException(ERRCODE_INVALID_PARAM, param);
       }
@@ -356,10 +359,10 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
           "MEMORY=%3%                                                            \n"
           "DISK = [ IMAGE = \"%4%\", DRIVER=\"qcow2\"]                           \n"
           "OS=[                                                                  \n"
-          "  ARCH=\"x86_64\",                                                    \n"
+          "  ARCH=\"%5%\",                                                       \n"
           "  ROOT=\"sda1\",                                                      \n"
           "  BOOT=\"hd,fd,cdrom,network\" ]                                      \n"
-          "NIC = [NETWORK=\"%5%\"]                                               \n"
+          "NIC = [NETWORK=\"%6%\"]                                               \n"
           "GRAPHICS = [TYPE=\"vnc\", LISTEN=\"0.0.0.0\",KEYMAP=\"fr\"]           \n"
           "RAW=[                                                                 \n"
           "  TYPE=\"kvm\",                                                       \n"
@@ -370,21 +373,23 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
           "  HOSTNAME=\"vm-$VMID\",                                              \n"
           "  NETWORK=\"YES\",                                                    \n"
           "  ETH0_IP=\"$NIC[IP, NETWORK=\\\"%4%\\\"]\",                          \n"
-          "  ETH0_NETMASK=\"%6%\",                                               \n"
-          "  ETH0_GATEWAY=\"%7%\",                                               \n"
-          "  ETH0_DNS=\"%8%\",                                                   \n"
-          "  FILES=\"%9%\",                                                      \n"
-          "  USERNAME=\"%10%\",                                                  \n"
-          "  SSH_PUBLIC_KEY=\"%11%\",                                            \n"
-          "  USER_PUBKEY=\"%12%\",                                               \n"
-          "  DATA_SERVER=\"%13%\",                                               \n"
-          "  DATA_MOUNT_POINT=\"%14%\",                                          \n"
+          "  ETH0_NETMASK=\"%7%\",                                               \n"
+          "  ETH0_GATEWAY=\"%8%\",                                               \n"
+          "  ETH0_DNS=\"%9%\",                                                   \n"
+          "  FILES=\"%10%\",                                                      \n"
+          "  USERNAME=\"%11%\",                                                  \n"
+          "  SSH_PUBLIC_KEY=\"%12%\",                                            \n"
+          "  USER_PUBKEY=\"%13%\",                                               \n"
+          "  DATA_SERVER=\"%14%\",                                               \n"
+          "  DATA_MOUNT_POINT=\"%15%\",                                          \n"
+          "  SOP_OWNER=\"%16%\",                                                 \n"
           "  TARGET=\"hdb\"                                                      \n"
           "]")
         % mjobId
         % returnInputOrDefaultIfNegativeNull(options.getNbCpu(), 1)
         % returnInputOrDefaultIfNegativeNull(options.getMemory(), 512)
         % mvmImageId
+        % mimageArch
         % mvirtualNetwork
         % mvirtualNetworkMask
         % mvirtualNetworkGateway
@@ -394,7 +399,8 @@ OpenNebulaServer::generateKvmTemplate(const TMS_Data::SubmitOptions& options)
         % pubkey
         % pubkey
         % mnfsServer
-        % mbaseDataDir);
+        % mbaseDataDir
+        % msopOwner);
 }
 
 
@@ -562,19 +568,36 @@ OpenNebulaServer::handleCloudInfo(const TMS_Data::SubmitOptions& options)
 {
   retrieveUserSpecificParams(options.getSpecificParams());
 
-  // Get configuration parameters
+  int appType = options.getType();
+
   if (mvmImageId.empty()) {
-    mvmImageId = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
+    if (appType == 0) {
+      mvmImageId = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE_0], false);
+    } else {
+      mvmImageId = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE_1], false);
+    }
   }
+
+  if (mimageArch.empty()) {
+    if (appType == 0) {
+      mimageArch = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE_ARCH_0], false);
+    } else {
+      mimageArch = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE_ARCH_1], false);
+    }
+  }
+
   if (mvmUser.empty()) {
     mvmUser = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
   }
+
   if (mvmUserKey.empty()) {
     mvmUserKey = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
   }
+
   if (mnfsServer.empty()) {
     mnfsServer = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], true);
   }
+
   if(mnfsMountPoint.empty()) {
     mnfsMountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
   }

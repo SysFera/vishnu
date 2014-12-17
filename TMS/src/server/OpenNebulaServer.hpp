@@ -155,6 +155,11 @@ private:
   std::string mvmUser;
 
   /**
+   * \brief Holds the name of the SOP user that has initiate the request
+   */
+  std::string msopOwner;
+
+  /**
    * \brief Holds the virtual machine keyname
    */
   std::string mvmUserKey;
@@ -168,6 +173,11 @@ private:
    * \brief Holds the NFS mount point
    */
   std::string mnfsMountPoint;
+
+  /**
+   * \brief Holds the architecture of the VM image
+   */
+  std::string mimageArch;
 
   /**
    * \brief Function for cleaning up virtual machine

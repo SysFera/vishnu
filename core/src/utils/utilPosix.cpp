@@ -72,14 +72,13 @@ vishnu::moveFileData(const std::string& fileparam, std::string dir) {
     size_t pos2 = file.rfind("/");
     if (pos2 != std::string::npos) {
       directory = file.substr(0, pos2);
-
       std::ostringstream oss;
       oss << "mv " << directory << "/* " << dir;
-      if (system(oss.str().c_str())) {
-        throw SystemException(ERRCODE_INVDATA, "Can  not move the input files");
+      std::string msg;
+      if (! vishnu::execSystemCommand(oss.str(), msg)) {
+        throw SystemException(ERRCODE_INVDATA, boost::str(boost::format("Can  not move the input files: %1%") %  msg));
       }
     }
-
   }
   return directory;
 

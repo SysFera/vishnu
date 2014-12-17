@@ -59,24 +59,25 @@ MonitorXMS::init(const SedConfig& cfg) {
 }
 
 void
-MonitorXMS::checkJobs(int batchtype){
-  std::string sqlRequest = boost::str(boost::format(
+MonitorXMS::checkJobs(int batchtype) {
+
+  std::string query = boost::str(boost::format(
                                         "SELECT jobId, batchJobId, vmIp, vmId, owner "
                                         " FROM job, vsession "
                                         " WHERE vsession.numsessionid=job.vsession_numsessionid "
                                         " AND submitMachineId='%1%' "
                                         " AND batchType=%2% "
-                                        " AND status >= %3% "
-                                        " AND status < %4% ")
+                                        " AND (status = %3% OR status = %4% OR status = %5%)")
                                       % mmachineId
                                       % vishnu::convertToString(batchtype)
                                       % vishnu::STATE_UNDEFINED
-                                      % vishnu::STATE_COMPLETED);
+                                      % vishnu::STATE_SUBMITTED
+                                      % vishnu::STATE_RUNNING);
 
   try {
     BatchFactory factory;
     boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchtype, mbatchVersion));
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(query));
 
     std::vector<std::string> buffer;
     std::vector<std::string>::iterator item;
