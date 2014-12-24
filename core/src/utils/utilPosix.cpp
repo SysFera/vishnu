@@ -59,7 +59,7 @@ vishnu::getStatusValue (const std::string& file) {
  */
 std::string
 vishnu::moveFileData(const std::string& fileparam, std::string dir) {
-  std::string directory="";
+  std::string directory = "";
   std::string file="";
   size_t pos = fileparam.find("=");
   if (pos!=std::string::npos) {

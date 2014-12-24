@@ -20,6 +20,11 @@
  */
 class OpenNebulaServer : public BatchServer {
 public:
+  enum JobTypeT {
+    Scilab = 0,
+    LibreOffice = 1
+  };
+
   OpenNebulaServer();
   virtual ~OpenNebulaServer();
 

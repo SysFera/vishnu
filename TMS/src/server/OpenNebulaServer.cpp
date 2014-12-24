@@ -88,8 +88,9 @@ OpenNebulaServer::submit(const std::string& scriptPath,
     jobPtr->setVmIp(vmInfo.ipAddr);
   }
 
-  LOG(boost::str(boost::format("[INFO] Virtual machine created. ID: %1%, IP: %2%"
-                               ) %  jobPtr->getVmId() % jobPtr->getVmIp()), LogInfo);
+  LOG((boost::format("[INFO] Virtual machine created. ID: %1%, IP: %2%")
+       % jobPtr->getVmId()
+       % jobPtr->getVmIp()).str(), LogInfo);
 
   //FIXME: job.setBatchJobId(vishnu::convertToString(jobPid));
   jobPtr->setStatus(vishnu::STATE_SUBMITTED);
@@ -98,7 +99,14 @@ OpenNebulaServer::submit(const std::string& scriptPath,
   jobPtr->setOutputPath(mbaseDataDir+"/stdout");
   jobPtr->setErrorPath(mbaseDataDir+"/stderr");
   jobPtr->setNbNodes(1);
-  jobPtr->setOwner(mvmUser);
+
+
+  int appType = options.getType();
+  if (appType == Scilab) {
+    jobPtr->setOwner(mvmUser);
+  } else {
+    jobPtr->setOwner("root");
+  }
 
   jobSteps.getJobs().push_back(jobPtr);
   return 0;
@@ -571,7 +579,7 @@ OpenNebulaServer::handleCloudInfo(const TMS_Data::SubmitOptions& options)
   int appType = options.getType();
 
   if (mvmImageId.empty()) {
-    if (appType == 0) {
+    if (appType == Scilab) {
       mvmImageId = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE_0], false);
     } else {
       mvmImageId = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE_1], false);
@@ -579,7 +587,7 @@ OpenNebulaServer::handleCloudInfo(const TMS_Data::SubmitOptions& options)
   }
 
   if (mimageArch.empty()) {
-    if (appType == 0) {
+    if (appType == Scilab) {
       mimageArch = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE_ARCH_0], false);
     } else {
       mimageArch = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE_ARCH_1], false);

@@ -90,7 +90,7 @@ MonitorXMS::checkJobs(int batchtype) {
       job.setBatchJobId( *item++ );
       job.setVmIp( *item++ );
       job.setVmId( *item++ );
-      job.setOwner( "root"); // job.setOwner( *item );
+      job.setOwner( *item );
 
       try {
         int state;
